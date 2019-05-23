@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.apache.logging.log4j.Logger;
 
+import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.proxy.IProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -27,6 +28,7 @@ public class VehicleMod {
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent e) {
 		logger = e.getModLog();
+		VMNetworkManager.init();
 		proxy.preInit(e);
 	}
 	

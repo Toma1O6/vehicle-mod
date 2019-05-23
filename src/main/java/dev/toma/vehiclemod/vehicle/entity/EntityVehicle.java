@@ -1,28 +1,267 @@
 package dev.toma.vehiclemod.vehicle.entity;
 
+import java.util.List;
+
 import javax.vecmath.Vector3f;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+
+import dev.toma.vehiclemod.network.VMNetworkManager;
+import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
 import dev.toma.vehiclemod.vehicle.VehicleVariant;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.Config.RequiresWorldRestart;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
 public abstract class EntityVehicle extends Entity implements IEntityAdditionalSpawnData {
 	
+	private static final Predicate<Entity> TARGET = Predicates.and(EntitySelectors.NOT_SPECTATING, EntitySelectors.IS_ALIVE, Entity::canBeCollidedWith);
+	
+	public float health;
+	public VehicleStatsCFG stats;
+	public float currentSpeed;
+	public float turnModifier;
+	public float fuel;
+	public boolean isBroken;
+	private short timeInInvalidState;
+	private int variantType;
+	
+	private boolean inputForward, inputBack, inputRight, inputLeft;
+	
 	public EntityVehicle(World world) {
 		super(world);
+		setSize(1f, 1f);
+		stepHeight = 1f;
+		preventEntitySpawning = true;
 	}
 	
 	public EntityVehicle(World world, BlockPos pos) {
 		this(world);
+		setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
 	}
 	
 	public abstract VehicleVariant[] getVariants();
 	
 	public abstract Vector3f[] getPartVecs();
 	
+	public abstract int maximumAmountOfPassengers();
+	
 	public void updateVehicle() {
+		if(!this.isBeingRidden() && (!noAccelerationInput() || !noTurningInput() || !hasFuel())) {
+			inputForward = false;
+			inputBack = false;
+			inputRight = false;
+			inputLeft = false;
+		}
 		
+		updateMotion();
+		handleEntityCollisions();
+		checkState();
+		
+		if(collidedHorizontally) {
+			currentSpeed *= 0.6;
+		}
+		
+		super.onUpdate();
+		
+		if(!world.isRemote) {
+			VMNetworkManager.instance().sendToAllAround(new CPacketVehicleData(this), new TargetPoint(dimension ,posX, posY, posZ, 256));
+		}
+		//TODO
+		//playSoundAtVehicle();
+		//spawnParticles();
+		move(MoverType.SELF, motionX, motionY, motionZ);
+	}
+	
+	public void updateMotion() {
+		Vec3d lookVec = this.getLookVec();
+		if(!isBroken && hasFuel()) {
+			if(inputForward && !inputBack) {
+				burnFuel();
+				currentSpeed = currentSpeed < stats.maxSpeed ? currentSpeed + stats.acceleration : stats.maxSpeed;
+			}
+			if(!inputForward && inputBack) {
+				burnFuel();
+				currentSpeed = currentSpeed > 0 ? currentSpeed - stats.brakeSpeed : currentSpeed > (-stats.maxSpeed * 0.3f) ? currentSpeed - 0.02f : -stats.maxSpeed * 0.3f;
+			}
+		}
+		
+		if(inputRight && !inputLeft) {
+			turnModifier = turnModifier < stats.maxTurningAngle ? turnModifier + stats.turnSpeed : stats.maxTurningAngle;
+		}
+		if(inputLeft && !inputRight) {
+			turnModifier = turnModifier > -stats.maxTurningAngle ? turnModifier - stats.turnSpeed : -stats.maxTurningAngle;
+		}
+		
+		if(noAccelerationInput() || isBroken) {
+			if(Math.abs(currentSpeed) < 0.01)
+				currentSpeed = 0f;
+			
+			if(currentSpeed != 0) {
+				currentSpeed = currentSpeed > 0 ? currentSpeed - 0.008f : currentSpeed + 0.008f;
+			}
+		}
+		
+		if(noTurningInput()) {
+			if(Math.abs(turnModifier) < 0.1f)
+				turnModifier = 0f;
+			
+			if(turnModifier != 0) {
+				turnModifier = turnModifier > 0 ? turnModifier - 0.3f : turnModifier + 0.3f;
+			}
+		}
+		
+		motionX = lookVec.x * currentSpeed;
+		motionZ = lookVec.z * currentSpeed;
+		
+		if(currentSpeed != 0) {
+			rotationYaw += currentSpeed > 0 ? turnModifier : -turnModifier;
+		}
+		if(!onGround) {
+			motionY -= -0.1d;
+		}
+	}
+	
+	public void checkState() {
+		if(this.isInWater() || world.getBlockState(getPosition().up()).getMaterial().isLiquid()) {
+			timeInInvalidState++;
+			motionX *= 0.4d;
+			motionZ *= 0.4d;
+			motionY = -0.15d;
+		}
+		
+		if(timeInInvalidState > 30) {
+			isBroken = true;
+		}
+		
+		if(isInLava() || health <= 0f) {
+			this.explode();
+		}
+	}
+	
+	@Override
+	public void onUpdate() {
+		
+		updateVehicle();
+	}
+	
+	public void updateInput(boolean forward, boolean back, boolean right, boolean left) {
+		this.inputForward = forward;
+		this.inputBack = back;
+		this.inputRight = right;
+		this.inputLeft = left;
+	}
+	
+	private void handleEntityCollisions() {
+		Vec3d vec1 = new Vec3d(posX, posY, posZ);
+		Vec3d vec2 = new Vec3d(vec1.x + motionX, vec1.y + motionY, vec1.z + motionZ);
+		Entity e = findEntityInPath(vec1, vec2);
+		
+		if(e != null) {
+			e.motionX += motionX * currentSpeed * 3;
+			e.motionY += currentSpeed;
+			e.motionZ += motionZ * currentSpeed * 3;
+			e.attackEntityFrom(DamageSource.FALL, Math.abs(currentSpeed) * 15f);
+		}
+	}
+	
+	private Entity findEntityInPath(Vec3d start, Vec3d end) {
+		Entity e = null;
+		List<Entity> entityList = world.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox().expand(motionX, motionY * 2, motionZ), TARGET);
+		double d0 = 0;
+		for(Entity ent : entityList) {
+			if(ent != this && !this.getPassengers().contains(ent)) {
+				AxisAlignedBB aabb = ent.getEntityBoundingBox().grow(0.3);
+				RayTraceResult rayTrace = aabb.calculateIntercept(start, end);
+				
+				if(rayTrace != null) {
+					double d1 = start.squareDistanceTo(rayTrace.hitVec);
+					if(d1 < d0 || d0 == 0) {
+						e = ent;
+					}
+				}
+			}
+		}
+		return e;
+	}
+	
+	private boolean noAccelerationInput() {
+		return !this.inputForward && !this.inputBack;
+	}
+	
+	private boolean noTurningInput() {
+		return !this.inputRight && !this.inputLeft;
+	}
+	
+	private boolean hasFuel() {
+		return fuel > 0;
+	}
+	
+	private void burnFuel() {
+		this.fuel -= this.stats.fuelConsumption;
+	}
+	
+	private void explode() {
+		if(!world.isRemote) {
+			world.createExplosion(this, posX, posY, posZ, 3.0F, false);
+			setDead();
+		}
+	}
+	
+	public final class VehicleStatsCFG {
+		
+		@Config.Name("Max Health")
+		@RequiresWorldRestart
+		public float maxHealth;
+		
+		@Config.Name("Max Speed")
+		@RequiresWorldRestart
+		public float maxSpeed;
+		
+		@Config.Name("Acceleration")
+		@RequiresWorldRestart
+		public float acceleration;
+		
+		@Config.Name("Turning Speed")
+		@RequiresWorldRestart
+		public float turnSpeed;
+		
+		@Config.Name("Max Turning Angle")
+		@RequiresWorldRestart
+		public float maxTurningAngle;
+		
+		@Config.Name("Braking Speed")
+		@RequiresWorldRestart
+		public float brakeSpeed;
+		
+		@Config.Name("Fuel Consumption")
+		@RequiresWorldRestart
+		public float fuelConsumption;
+		
+		@Config.Name("Texture variants")
+		@RequiresWorldRestart
+		public String[] textures;
+		
+		public VehicleStatsCFG(float maxHP, float maxSpeed, float acceleration, float brakeSpeed, float turningSpeed, float maxAngle, float fuelConsumption, String... textures) {
+			this.maxHealth = maxHP;
+			this.maxSpeed = maxSpeed;
+			this.acceleration = acceleration;
+			this.turnSpeed = turningSpeed;
+			this.maxTurningAngle = maxAngle;
+			this.brakeSpeed = brakeSpeed;
+			this.fuelConsumption = fuelConsumption;
+			this.textures = textures;
+		}
 	}
 }
