@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod;
 
 import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -9,6 +10,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Config(modid = VehicleMod.Constants.ID, name = VehicleMod.Constants.NAME + " Config")
 public class VMConfig {
+	
+	@Name("Simple Vehicle Control")
+	public static boolean simpleVehicleControls = true;
 	
 	@Mod.EventBusSubscriber(modid = VehicleMod.Constants.ID)
 	public static class Event {
@@ -19,9 +23,5 @@ public class VMConfig {
 				ConfigManager.sync(VehicleMod.Constants.ID, Type.INSTANCE);
 			}
 		}
-	}
-	
-	public class Packet {
-		
 	}
 }

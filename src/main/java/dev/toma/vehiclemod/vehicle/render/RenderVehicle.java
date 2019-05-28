@@ -8,12 +8,20 @@ import net.minecraft.util.ResourceLocation;
 
 public abstract class RenderVehicle<E extends EntityVehicle> extends Render<E> {
 	
+	private ResourceLocation location;
+	
 	public RenderVehicle(RenderManager manager) {
 		super(manager);
 	}
 	
 	@Override
 	protected ResourceLocation getEntityTexture(E entity) {
-		return entity.getVariants()[0].getTexturePath();
+		return location != null ? location : init(entity);
+	}
+	
+	private ResourceLocation init(E entity) {
+		int i = VehicleMod.getRNG().nextInt(entity.getVariants().length);
+		location = new ResourceLocation(VehicleMod.Constants.ID + ":textures/vehicle/" + entity.getVariants()[i] + ".png");
+		return location;
 	}
 }

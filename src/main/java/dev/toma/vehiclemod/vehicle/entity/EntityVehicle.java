@@ -7,13 +7,18 @@ import javax.vecmath.Vector3f;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
+import dev.toma.vehiclemod.VMConfig;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
-import dev.toma.vehiclemod.vehicle.VehicleVariant;
+import dev.toma.vehiclemod.vehicle.VehicleSounds;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -51,11 +56,15 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
 	}
 	
-	public abstract VehicleVariant[] getVariants();
+	public abstract String[] getVariants();
 	
 	public abstract Vector3f[] getPartVecs();
 	
+	public abstract VehicleStatsCFG getStats();
+	
 	public abstract int maximumAmountOfPassengers();
+	
+	public abstract VehicleSounds getSounds();
 	
 	public void updateVehicle() {
 		if(!this.isBeingRidden() && (!noAccelerationInput() || !noTurningInput() || !hasFuel())) {
@@ -73,10 +82,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 			currentSpeed *= 0.6;
 		}
 		
-		super.onUpdate();
-		
 		if(!world.isRemote) {
-			VMNetworkManager.instance().sendToAllAround(new CPacketVehicleData(this), new TargetPoint(dimension ,posX, posY, posZ, 256));
+			VMNetworkManager.instance().sendToAllAround(new CPacketVehicleData(this), new TargetPoint(dimension, posX, posY, posZ, 256));
 		}
 		//TODO
 		//playSoundAtVehicle();
@@ -154,13 +161,109 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	public void onUpdate() {
 		
 		updateVehicle();
+		super.onUpdate();
 	}
 	
 	public void updateInput(boolean forward, boolean back, boolean right, boolean left) {
-		this.inputForward = forward;
-		this.inputBack = back;
+		if(hasFuel()) {
+			this.inputForward = forward;
+			this.inputBack = back;
+		}
 		this.inputRight = right;
 		this.inputLeft = left;
+		if(VMConfig.simpleVehicleControls) {
+			if(this.getRidingEntity() != null) {
+				EntityPlayer player = (EntityPlayer)this.getRidingEntity();
+				float playerRot = player.rotationYaw;
+				playerRot = playerRot < 0 ? playerRot + 360f : playerRot > 360f ? playerRot - 360f : playerRot;
+				float delta = rotationYaw - playerRot;
+				if((delta < (-stats.maxTurningAngle*3) && delta > -200f) || delta >= 200f) {
+					inputRight = true;
+				} else if(delta > (stats.maxTurningAngle*3) && delta < 200f || delta <= -200f) {
+					inputLeft = true;
+				}
+			}
+		}
+	}
+	
+	@Override
+	public Entity getRidingEntity() {
+		if(this.getPassengers().size() > 0) {
+			if(this.getPassengers().get(0) instanceof EntityPlayer) {
+				return this.getPassengers().get(0);
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if(!this.getPassengers().contains(source.getTrueSource())) {
+			this.health -= amount;
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean isInRangeToRenderDist(double distance) {
+		return true;
+	}
+	
+	@Override
+	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
+		if(!world.isRemote) {
+			if(canBeRidden(player) && canFitPassenger(player)) {
+				player.startRiding(this);
+			}
+		}
+		return true;
+	}
+	
+	@Override
+	public void writeSpawnData(ByteBuf buf) {
+		buf.writeFloat(health);
+		buf.writeFloat(fuel);
+		buf.writeInt(variantType);
+	}
+	
+	@Override
+	public void readSpawnData(ByteBuf buf) {
+		health = buf.readFloat();
+		fuel = buf.readFloat();
+		variantType = buf.readInt();
+	}
+	
+	@Override
+	protected void writeEntityToNBT(NBTTagCompound compound) {
+		compound.setDouble("posX", this.posX);
+		compound.setDouble("posY", this.posY);
+		compound.setDouble("posZ", this.posZ);
+		compound.setDouble("motionX", this.motionX);
+		compound.setDouble("motionY", this.motionY);
+		compound.setDouble("motionZ", this.motionZ);
+		compound.setFloat("health", this.health);
+		compound.setFloat("fuel", this.fuel);
+		compound.setFloat("speed", this.currentSpeed);
+		compound.setBoolean("isBroken", this.isBroken);
+	}
+	
+	@Override
+	protected void readEntityFromNBT(NBTTagCompound compound) {
+		posX = compound.getDouble("posX");
+		posY = compound.getDouble("posY");
+		posZ = compound.getDouble("posZ");
+		motionX = compound.getDouble("motionX");
+		motionY = compound.getDouble("motionY");
+		motionZ = compound.getDouble("motionZ");
+		health = compound.getFloat("health");
+		fuel = compound.getFloat("fuel");
+		currentSpeed = compound.getFloat("speed");
+		isBroken = compound.getBoolean("isBroken");
+	}
+	
+	@Override
+	protected boolean canFitPassenger(Entity passenger) {
+		return this.getPassengers().size() < maximumAmountOfPassengers();
 	}
 	
 	private void handleEntityCollisions() {
