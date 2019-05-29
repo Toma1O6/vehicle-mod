@@ -1,10 +1,13 @@
 package dev.toma.vehiclemod;
 
+import com.sun.jna.platform.mac.Carbon.EventHotKeyID;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -29,6 +32,12 @@ public class Registries {
 		
 	}
 	
+	@ObjectHolder(VehicleMod.Constants.ID)
+	public static final class VMSounds {
+		
+		public static final SoundEvent VEHICLE_IDLE = null;
+	}
+	
 	@EventBusSubscriber
 	public static class Registry {
 		
@@ -48,7 +57,23 @@ public class Registries {
 		
 		@SubscribeEvent
 		public static void onEntityRegister(RegistryEvent.Register<EntityEntry> e) {
-			
+			final EntityEntry[] entries = {
+					
+			};
+		}
+		
+		@SubscribeEvent
+		public static void onSoundRegister(RegistryEvent.Register<SoundEvent> e) {
+			final SoundEvent[] sounds = {
+				registerSound("vehicle_idle")
+			};
+			e.getRegistry().registerAll(sounds);
+		}
+		
+		private static SoundEvent registerSound(String name) {
+			SoundEvent sound = new SoundEvent(new ResourceLocation(VehicleMod.Constants.ID, name));
+			sound.setRegistryName(name);
+			return sound;
 		}
 		
 		private static EntityEntry registerVehicle(String name, Class<? extends Entity> cls) {

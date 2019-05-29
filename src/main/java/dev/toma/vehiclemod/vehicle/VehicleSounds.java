@@ -4,26 +4,34 @@ import net.minecraft.util.SoundEvent;
 
 public class VehicleSounds {
 	
-	public static final SoundEvent IDLE = null;
-	private final SoundEvent acceleration;
-	private final SoundEvent braking;
-	private final SoundEvent release;
+	public final VMTickableSound idle;
+	private final VMTickableSound acceleration;
+	private final VMTickableSound braking;
+	private final VMTickableSound release;
 	
-	public VehicleSounds(SoundEvent acc, SoundEvent brake, SoundEvent rls) {
+	public VehicleSounds(VMTickableSound idle, VMTickableSound acc, VMTickableSound brake, VMTickableSound rls) {
+		this.idle = idle;
 		this.acceleration = acc;
 		this.braking = brake;
 		this.release = rls;
 	}
 	
-	public SoundEvent getAccelerateSound() {
+	public VMTickableSound getAccelerateSound() {
 		return acceleration;
 	}
 	
-	public SoundEvent getBrakeSound() {
+	public VMTickableSound getBrakeSound() {
 		return braking;
 	}
 	
-	public SoundEvent getGasReleaseSound() {
+	public VMTickableSound getGasReleaseSound() {
 		return release;
+	}
+	
+	public void stopPlaying() {
+		idle.stopSound();
+		acceleration.stopSound();
+		braking.stopSound();
+		release.stopSound();
 	}
 }

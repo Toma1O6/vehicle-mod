@@ -8,8 +8,10 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
 import dev.toma.vehiclemod.VMConfig;
+import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
+import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.VehicleSounds;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
@@ -19,6 +21,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -36,6 +40,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	public float health;
 	public VehicleStatsCFG stats;
 	public float currentSpeed;
+	public float prevSpeed;
 	public float turnModifier;
 	public float fuel;
 	public boolean isBroken;
@@ -58,6 +63,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	
 	public abstract String[] getVariants();
 	
+	//0 = engine, 1 = exhaust
 	public abstract Vector3f[] getPartVecs();
 	
 	public abstract VehicleStatsCFG getStats();
@@ -65,6 +71,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	public abstract int maximumAmountOfPassengers();
 	
 	public abstract VehicleSounds getSounds();
+	
+	public abstract void initSounds();
 	
 	public void updateVehicle() {
 		if(!this.isBeingRidden() && (!noAccelerationInput() || !noTurningInput() || !hasFuel())) {
@@ -85,9 +93,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		if(!world.isRemote) {
 			VMNetworkManager.instance().sendToAllAround(new CPacketVehicleData(this), new TargetPoint(dimension, posX, posY, posZ, 256));
 		}
-		//TODO
-		//playSoundAtVehicle();
-		//spawnParticles();
+
+		playSoundAtVehicle();
+		spawnParticles();
 		move(MoverType.SELF, motionX, motionY, motionZ);
 	}
 	
@@ -162,6 +170,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		
 		updateVehicle();
 		super.onUpdate();
+		prevSpeed = currentSpeed;
 	}
 	
 	public void updateInput(boolean forward, boolean back, boolean right, boolean left) {
@@ -231,6 +240,45 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		health = buf.readFloat();
 		fuel = buf.readFloat();
 		variantType = buf.readInt();
+	}
+	
+	public VMTickableSound getVehicleSound() {
+		if(isAccelerating()) {
+			return this.getSounds().getAccelerateSound();
+		} else if(isBraking()) {
+			return this.getSounds().getBrakeSound();
+		} else if(hasReleasedGas()) {
+			return this.getSounds().getGasReleaseSound();
+		}
+		return this.getSounds().idle;
+	}
+	
+	protected void spawnParticles() {
+		if(world.isRemote) {
+			if(health / stats.maxHealth <= 0.35f) {
+				Vec3d engineVec = (new Vec3d(getPartVecs()[0].x, getPartVecs()[0].y + 0.25d, getPartVecs()[0].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float)Math.PI / 2F));
+				world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, true, posX + engineVec.x, posY + engineVec.y, posZ + engineVec.z, 0d, 0.1d, 0d);
+				
+				if(health / stats.maxHealth <= 0.15f) {
+					double rngX = (rand.nextDouble() - rand.nextDouble()) * 0.1;
+					double rngZ = (rand.nextDouble() - rand.nextDouble()) * 0.1;
+					world.spawnParticle(EnumParticleTypes.FLAME, true, posX + engineVec.x, posY + engineVec.y - 0.2, posZ + engineVec.z, rngX, 0.02d, rngZ);
+				}
+			}
+			
+			if(!isBroken && hasFuel()) {
+				Vec3d exhaustVec = (new Vec3d(getPartVecs()[1].x, getPartVecs()[1].y + 0.25d, getPartVecs()[1].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float)Math.PI / 2F));
+				world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, true, posX + exhaustVec.x, posY + exhaustVec.y, posZ + exhaustVec.z, 0, 0.02d, 0);
+			}
+			if(isBroken) {
+				Vec3d engine = (new Vec3d(getPartVecs()[0].x, getPartVecs()[0].y + 0.25d, getPartVecs()[0].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float)Math.PI / 2F));
+				world.spawnParticle(EnumParticleTypes.CLOUD, true, posX + engine.x, posY + engine.y, posZ + engine.z, 0d, 0.05d, 0d);
+			}
+		}
+	}
+	
+	protected void playSoundAtVehicle() {
+		VehicleMod.proxy.playSoundAt(this);
 	}
 	
 	@Override
@@ -320,6 +368,22 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 			world.createExplosion(this, posX, posY, posZ, 3.0F, false);
 			setDead();
 		}
+	}
+	
+	private boolean isStandingStill() {
+		return noAccelerationInput() && currentSpeed == prevSpeed;
+	}
+	
+	private boolean isAccelerating() {
+		return currentSpeed > prevSpeed;
+	}
+	
+	private boolean isBraking() {
+		return currentSpeed < prevSpeed;
+	}
+	
+	private boolean hasReleasedGas() {
+		return noAccelerationInput() && currentSpeed > 0;
 	}
 	
 	public final class VehicleStatsCFG {
