@@ -24,7 +24,7 @@ public class Registries {
 	
 	@ObjectHolder(VehicleMod.Constants.ID)
 	public static final class VMItems {
-		
+		public static final Item FUEL_CAN = null;
 	}
 	
 	@ObjectHolder(VehicleMod.Constants.ID)

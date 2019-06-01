@@ -1,5 +1,7 @@
 package dev.toma.vehiclemod;
 
+import javax.vecmath.Vector3f;
+
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.common.config.Config.Type;
@@ -13,6 +15,9 @@ public class VMConfig {
 	
 	@Name("Simple Vehicle Control")
 	public static boolean simpleVehicleControls = true;
+	
+	@Name("Fuels")
+	public static String[] fuels = {"modid:item_name"};
 	
 	@Mod.EventBusSubscriber(modid = VehicleMod.Constants.ID)
 	public static class Event {

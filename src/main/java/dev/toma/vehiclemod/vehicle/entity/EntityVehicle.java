@@ -253,6 +253,13 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		return this.getSounds().idle;
 	}
 	
+	public void refillFuel() {
+		fuel += 25f;
+		if(fuel > 100f) {
+			fuel = 100f;
+		}
+	}
+	
 	protected void spawnParticles() {
 		if(world.isRemote) {
 			if(health / stats.maxHealth <= 0.35f) {
