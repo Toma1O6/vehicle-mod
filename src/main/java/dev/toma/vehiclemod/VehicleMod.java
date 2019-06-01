@@ -5,11 +5,15 @@ import java.util.Random;
 import org.apache.logging.log4j.Logger;
 
 import dev.toma.vehiclemod.common.FuelHandler;
+import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.proxy.IProxy;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -18,6 +22,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = VehicleMod.Constants.ID, name = VehicleMod.Constants.NAME, version = VehicleMod.Constants.VERSION)
 public class VehicleMod {
@@ -47,6 +52,7 @@ public class VehicleMod {
 	
 	@EventHandler
 	public static void init(FMLInitializationEvent e) {
+		GameRegistry.registerTileEntity(TileEntitySecret.class, new ResourceLocation(Constants.ID, "secret"));
 		proxy.init(e);
 	}
 	
@@ -58,6 +64,12 @@ public class VehicleMod {
 	@EventHandler
 	public static void serverStart(FMLServerStartingEvent e) {
 		FuelHandler.instance().readAndInitFuels(VMConfig.fuels);
+	}
+	
+	public static void registerItemBlock(Block block) {
+		ItemBlock ib = new ItemBlock(block);
+		ib.setRegistryName(block.getRegistryName());
+		Registries.Registry.ITEM_BLOCKS.add(ib);
 	}
 	
 	public static Random getRNG() {

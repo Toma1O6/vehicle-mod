@@ -29,8 +29,4 @@ public class VehicleInputHandler {
 			}
 		}
 	}
-	
-	private void handleVehicleInput(EntityVehicle car) {
-		
-	}
 }

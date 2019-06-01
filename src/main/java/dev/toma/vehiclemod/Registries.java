@@ -1,11 +1,13 @@
 package dev.toma.vehiclemod;
 
-import com.sun.jna.platform.mac.Carbon.EventHotKeyID;
+import java.util.ArrayList;
 
+import dev.toma.vehiclemod.common.blocks.BlockSecret;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -29,7 +31,7 @@ public class Registries {
 	
 	@ObjectHolder(VehicleMod.Constants.ID)
 	public static final class VMBlocks {
-		
+		public static final BlockSecret SECRET = null;
 	}
 	
 	@ObjectHolder(VehicleMod.Constants.ID)
@@ -42,17 +44,21 @@ public class Registries {
 	public static class Registry {
 		
 		static int id = -1;
+		public static final ArrayList<ItemBlock> ITEM_BLOCKS = new ArrayList<>();
 		
 		@SubscribeEvent
 		public static void onBlockRegister(RegistryEvent.Register<Block> e) {
 			final Block[] blocks = {
+				new BlockSecret("secret")
 			};
+			e.getRegistry().registerAll(blocks);
 		}
 		
 		@SubscribeEvent
 		public static void onItemRegister(RegistryEvent.Register<Item> e) {
 			final Item[] items = {
 			};
+			e.getRegistry().registerAll(ITEM_BLOCKS.toArray(new ItemBlock[0]));
 		}
 		
 		@SubscribeEvent

@@ -6,6 +6,7 @@ import dev.toma.vehiclemod.common.FuelHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -60,12 +61,17 @@ public class BlockFuelTank extends Block {
 	}
 	
 	@Override
-	public boolean hasTileEntity(IBlockState state) {
-		return super.hasTileEntity(state);
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(STATE).intValue();
 	}
 	
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
-		return super.createTileEntity(world, state);
+	public IBlockState getStateFromMeta(int meta) {
+		return this.getDefaultState().withProperty(STATE, meta);
+	}
+	
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, STATE);
 	}
 }

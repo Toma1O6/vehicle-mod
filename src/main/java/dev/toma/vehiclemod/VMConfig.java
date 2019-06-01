@@ -4,6 +4,7 @@ import javax.vecmath.Vector3f;
 
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Name;
+import net.minecraftforge.common.config.Config.RequiresWorldRestart;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -17,6 +18,7 @@ public class VMConfig {
 	public static boolean simpleVehicleControls = true;
 	
 	@Name("Fuels")
+	@RequiresWorldRestart
 	public static String[] fuels = {"modid:item_name"};
 	
 	@Mod.EventBusSubscriber(modid = VehicleMod.Constants.ID)
