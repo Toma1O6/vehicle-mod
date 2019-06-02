@@ -13,6 +13,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -59,6 +60,7 @@ public class VehicleMod {
 	@EventHandler
 	public static void postInit(FMLPostInitializationEvent e) {
 		proxy.postInit(e);
+		ModelCreator.createModels();
 	}
 	
 	@EventHandler
@@ -74,6 +76,10 @@ public class VehicleMod {
 	
 	public static Random getRNG() {
 		return Constants.RNG;
+	}
+	
+	public static boolean isDevEnvironment() {
+		return (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
 	}
 	
 	public static final class Constants {

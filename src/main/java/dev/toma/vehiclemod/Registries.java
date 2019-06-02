@@ -2,7 +2,11 @@ package dev.toma.vehiclemod;
 
 import java.util.ArrayList;
 
+import dev.toma.vehiclemod.common.blocks.BlockFuelTank;
 import dev.toma.vehiclemod.common.blocks.BlockSecret;
+import dev.toma.vehiclemod.common.items.ItemFuelCan;
+import dev.toma.vehiclemod.common.items.ItemVehicleSpawner;
+import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
@@ -10,6 +14,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -27,16 +33,17 @@ public class Registries {
 	@ObjectHolder(VehicleMod.Constants.ID)
 	public static final class VMItems {
 		public static final Item FUEL_CAN = null;
+		public static final ItemVehicleSpawner SPAWN_BEAMERS120 = null;
 	}
 	
 	@ObjectHolder(VehicleMod.Constants.ID)
 	public static final class VMBlocks {
 		public static final BlockSecret SECRET = null;
+		public static final BlockFuelTank FUEL_TANK = null;
 	}
 	
 	@ObjectHolder(VehicleMod.Constants.ID)
 	public static final class VMSounds {
-		
 		public static final SoundEvent VEHICLE_IDLE = null;
 	}
 	
@@ -49,7 +56,8 @@ public class Registries {
 		@SubscribeEvent
 		public static void onBlockRegister(RegistryEvent.Register<Block> e) {
 			final Block[] blocks = {
-				new BlockSecret("secret")
+				new BlockSecret("secret"),
+				new BlockFuelTank("fuel_tank")
 			};
 			e.getRegistry().registerAll(blocks);
 		}
@@ -57,15 +65,24 @@ public class Registries {
 		@SubscribeEvent
 		public static void onItemRegister(RegistryEvent.Register<Item> e) {
 			final Item[] items = {
+				new ItemFuelCan("fuel_can"),
+				new ItemVehicleSpawner("spawn_beamers120") {
+					@Override
+					public void handleAction(World world, BlockPos pos) {
+						world.spawnEntity(new EntityVehicleBeamerS120(world, pos));
+					}
+				}
 			};
+			e.getRegistry().registerAll(items);
 			e.getRegistry().registerAll(ITEM_BLOCKS.toArray(new ItemBlock[0]));
 		}
 		
 		@SubscribeEvent
 		public static void onEntityRegister(RegistryEvent.Register<EntityEntry> e) {
 			final EntityEntry[] entries = {
-					
+				registerVehicle("beamer_s120", EntityVehicleBeamerS120.class)
 			};
+			e.getRegistry().registerAll(entries);
 		}
 		
 		@SubscribeEvent

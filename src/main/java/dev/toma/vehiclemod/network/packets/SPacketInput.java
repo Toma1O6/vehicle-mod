@@ -45,7 +45,7 @@ public class SPacketInput implements IMessage {
 			EntityPlayerMP player = ctx.getServerHandler().player;
 			player.getServer().addScheduledTask(() -> {
 				if(player.isRiding() && player.getRidingEntity() instanceof EntityVehicle) {
-					((EntityVehicle)player.getRidingEntity()).updateInput(p.forward, p.back, p.right, p.left);
+					((EntityVehicle)player.getRidingEntity()).updateInput(p.forward, p.back, p.right, p.left, player);
 				}
 			});
 			return null;

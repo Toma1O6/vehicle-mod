@@ -24,7 +24,7 @@ public class FuelHandler {
 		FUELS.clear();
 		if(array != null && array.length > 0) {
 			IForgeRegistry<Item> items = ForgeRegistries.ITEMS;
-
+			
 			for(String s : array) {
 				ResourceLocation rl = new ResourceLocation(s);
 				Item item = items.getValue(rl);
