@@ -45,6 +45,9 @@ public class Registries {
 	@ObjectHolder(VehicleMod.Constants.ID)
 	public static final class VMSounds {
 		public static final SoundEvent VEHICLE_IDLE = null;
+		public static final SoundEvent BEAMER_ACC = null;
+		public static final SoundEvent BEAMER_BRAKE = null;
+		public static final SoundEvent BEAMER_GAS = null;
 	}
 	
 	@EventBusSubscriber
@@ -88,7 +91,10 @@ public class Registries {
 		@SubscribeEvent
 		public static void onSoundRegister(RegistryEvent.Register<SoundEvent> e) {
 			final SoundEvent[] sounds = {
-				registerSound("vehicle_idle")
+				registerSound("vehicle_idle"),
+				registerSound("beamer_acc"),
+				registerSound("beamer_brake"),
+				registerSound("beamer_gas")
 			};
 			e.getRegistry().registerAll(sounds);
 		}

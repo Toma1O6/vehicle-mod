@@ -54,8 +54,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		setSize(1f, 1f);
 		stepHeight = 1f;
 		preventEntitySpawning = true;
-		variantType = VehicleMod.getRNG().nextInt(this.getVariants().length);
 		this.initSounds();
+		variantType = VehicleMod.getRNG().nextInt(this.getVariants().length);
 		VMNetworkManager.instance().sendToAll(new CPacketVehicleData(this));
 		if(locations.isEmpty()) {
 			for(String s : this.getVariants()) {
@@ -72,7 +72,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	
 	public abstract String[] getVariants();
 	
-	//0 = engine, 1 = exhaust
+	/** 0 = engine, 1 = exhaust **/
 	public abstract Vector3f[] getPartVecs();
 	
 	public abstract VehicleStats getStats();
@@ -82,6 +82,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	public abstract VehicleSounds getSounds();
 	
 	public abstract void initSounds();
+	
+	public static double getMovementSpeed(EntityVehicle vehicle) {
+		return Math.sqrt(vehicle.motionX*vehicle.motionX + vehicle.motionZ*vehicle.motionZ);
+	}
 	
 	public void updateVehicle() {
 		if(!this.isBeingRidden() && (!noAccelerationInput() || !noTurningInput() || !hasFuel())) {
@@ -104,8 +108,18 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		}
 
 		playSoundAtVehicle();
-		//spawnParticles();
+		spawnParticles();
 		move(MoverType.SELF, motionX, motionY, motionZ);
+		
+		if(collidedHorizontally && getMovementSpeed(this) > 0.1) {
+			currentSpeed = 0f;
+			health -= getMovementSpeed(this) * 50f;
+			for(Entity e : this.getPassengers()) {
+				if(!e.getIsInvulnerable()) {
+					e.attackEntityFrom(DamageSource.FALL, (float)getMovementSpeed(this) * 3f);
+				}
+			}
+		}
 	}
 	
 	public void updateMotion() {
@@ -171,7 +185,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		}
 
 		if(isInLava() || health <= 0f) {
-			//this.explode();
+			this.explode();
 		}
 	}
 	
@@ -183,7 +197,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	}
 	
 	public void updateInput(boolean forward, boolean back, boolean right, boolean left, EntityPlayer player) {
-		this.rotationYaw = rotationYaw < 0f ? rotationYaw + 360f : rotationYaw > 360f ? rotationYaw - 360f : rotationYaw;
+		//this.rotationYaw = rotationYaw < 0f ? rotationYaw + 360f : rotationYaw > 360f ? rotationYaw - 360f : rotationYaw;
 		if(hasFuel()) {
 			this.inputForward = forward;
 			this.inputBack = back;
@@ -194,7 +208,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		if(VMConfig.simpleVehicleControls) {
 			if(this.getControllingPassenger() != null && this.getControllingPassenger().getName().equals(player.getName())) {
 				float playerRot = player.rotationYaw;
-				playerRot = playerRot < 0 ? playerRot + 360f : playerRot > 360f ? playerRot - 360f : playerRot;
+				//playerRot = playerRot < 0 ? playerRot + 360f : playerRot > 360f ? playerRot - 360f : playerRot;
 				float delta = rotationYaw - playerRot;
 				if((delta < (-getStats().maxTurningAngle*3) && delta > -200f) || delta >= 200f) {
 					inputRight = true;
@@ -275,6 +289,17 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		}
 	}
 	
+	@Override
+	public void updatePassenger(Entity passenger) {
+		if(this.isPassenger(passenger)) {
+			int id = this.getPassengers().indexOf(passenger);
+			double x = this.getPassengerOffsetX(id);
+			double z = this.getPassengerOffsetZ(id);
+			Vec3d vec = (new Vec3d(x, 0, z)).rotateYaw(-this.rotationYaw*0.017453292F - ((float)Math.PI/2f));
+			passenger.setPosition(posX + vec.x, posY+getMountedYOffset()+passenger.getYOffset(), posZ + vec.z);
+		}
+	}
+	
 	public int getVariantType() {
 		return variantType;
 	}
@@ -285,6 +310,14 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	
 	public void setFuel() {
 		fuel = 60 + rand.nextInt(40);
+	}
+	
+	protected double getPassengerOffsetX(int id) {
+		return 0;
+	}
+	
+	protected double getPassengerOffsetZ(int id) {
+		return 0;
 	}
 	
 	protected void spawnParticles() {
@@ -312,8 +345,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	}
 	
 	protected void playSoundAtVehicle() {
-		// TODO
-		//VehicleMod.proxy.playSoundAt(this);
+		VehicleMod.proxy.playSoundAt(this);
 	}
 	
 	@Override
@@ -328,6 +360,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		compound.setFloat("fuel", this.fuel);
 		compound.setFloat("speed", this.currentSpeed);
 		compound.setBoolean("isBroken", this.isBroken);
+		compound.setInteger("textureid", this.variantType);
 	}
 	
 	@Override
@@ -342,6 +375,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		fuel = compound.getFloat("fuel");
 		currentSpeed = compound.getFloat("speed");
 		isBroken = compound.getBoolean("isBroken");
+		variantType = compound.getInteger("textureid");
 	}
 	
 	@Override

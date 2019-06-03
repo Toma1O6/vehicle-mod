@@ -1,7 +1,5 @@
 package dev.toma.vehiclemod.network.packets;
 
-import java.util.List;
-
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;

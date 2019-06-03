@@ -3,7 +3,6 @@ package dev.toma.vehiclemod.vehicle.model;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
 
 public class ModelBeamerS120 extends ModelVehicle {
 	

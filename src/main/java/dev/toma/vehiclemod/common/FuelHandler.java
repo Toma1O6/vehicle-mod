@@ -3,7 +3,6 @@ package dev.toma.vehiclemod.common;
 import java.util.HashSet;
 
 import dev.toma.vehiclemod.VehicleMod;
-import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

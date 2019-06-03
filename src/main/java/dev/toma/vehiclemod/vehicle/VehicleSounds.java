@@ -1,7 +1,5 @@
 package dev.toma.vehiclemod.vehicle;
 
-import net.minecraft.util.SoundEvent;
-
 public class VehicleSounds {
 	
 	public final VMTickableSound idle;

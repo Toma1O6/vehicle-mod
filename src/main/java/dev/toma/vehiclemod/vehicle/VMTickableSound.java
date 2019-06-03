@@ -1,9 +1,7 @@
 package dev.toma.vehiclemod.vehicle;
 
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSound;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 

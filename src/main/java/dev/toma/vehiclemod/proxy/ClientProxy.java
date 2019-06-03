@@ -6,7 +6,6 @@ import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
 import dev.toma.vehiclemod.vehicle.render.RenderBeamerS120;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

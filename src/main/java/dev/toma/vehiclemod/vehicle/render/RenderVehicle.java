@@ -1,6 +1,5 @@
 package dev.toma.vehiclemod.vehicle.render;
 
-import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import dev.toma.vehiclemod.vehicle.model.ModelVehicle;
 import net.minecraft.client.renderer.entity.Render;

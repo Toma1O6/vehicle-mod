@@ -2,8 +2,8 @@ package dev.toma.vehiclemod.vehicle.entity;
 
 import javax.vecmath.Vector3f;
 
-import dev.toma.vehiclemod.VMConfig;
 import dev.toma.vehiclemod.Registries.VMSounds;
+import dev.toma.vehiclemod.VMConfig;
 import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.VehicleSounds;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
@@ -14,7 +14,7 @@ public class EntityVehicleBeamerS120 extends EntityVehicle {
 	
 	private static VehicleSounds sounds;
 	private static final String[] VARIANTS = {"beamer120_black","beamer120_blue","beamer120_brown","beamer120_green","beamer120_grey","beamer120_light_blue","beamer120_orange","beamer120_red","beamer120_white","beamer120_yellow"};
-	private static final Vector3f[] PARTS = {};
+	private static final Vector3f[] PARTS = {new Vector3f(2.5f, 1f, 0f), new Vector3f(-2.9f, 0.3f, 0.65f)};
 	
 	public EntityVehicleBeamerS120(World world) {
 		super(world);
@@ -27,6 +27,12 @@ public class EntityVehicleBeamerS120 extends EntityVehicle {
 		setPosition(pos.getX(), pos.getY()+1, pos.getZ());
 		health = getStats().maxHealth;
 		setFuel();
+		initSounds();
+	}
+	
+	@Override
+	public double getMountedYOffset() {
+		return this.getStats().passengerOffset;
 	}
 	
 	@Override
@@ -62,5 +68,15 @@ public class EntityVehicleBeamerS120 extends EntityVehicle {
 				new VMTickableSound(VMSounds.VEHICLE_IDLE, this),
 				new VMTickableSound(VMSounds.VEHICLE_IDLE, this)
 		);
+	}
+	
+	@Override
+	protected double getPassengerOffsetX(int id) {
+		return id < 2 ? 0.6 : -0.4;
+	}
+	
+	@Override
+	protected double getPassengerOffsetZ(int id) {
+		return id % 2 == 0 ? -0.5 : 0;
 	}
 }

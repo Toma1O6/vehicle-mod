@@ -1,12 +1,8 @@
 package dev.toma.vehiclemod;
 
-import java.util.ArrayList;
-
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketSyncConfig;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Name;
@@ -17,10 +13,6 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 @Config(modid = VehicleMod.Constants.ID, name = VehicleMod.Constants.NAME + " Config")
 public class VMConfig {
@@ -32,7 +24,7 @@ public class VMConfig {
 	@RequiresWorldRestart
 	public static String[] fuels = {"modid:item_name"};
 	
-	public static VehicleStats beamer_s120 = new VehicleStats(150F, 1.5F, 0.05F, 0.08F, 0.3F, 3.0F, 0.005f);
+	public static VehicleStats beamer_s120 = new VehicleStats(150F, 1.5F, 0.05F, 0.08F, 0.3F, 3.0F, 0.005f, 0.5);
 	
 	@Mod.EventBusSubscriber(modid = VehicleMod.Constants.ID)
 	public static class Event {
