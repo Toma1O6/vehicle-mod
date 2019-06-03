@@ -9,6 +9,8 @@ import dev.toma.vehiclemod.vehicle.VehicleSounds;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityVehicleBeamerS120 extends EntityVehicle {
 	
@@ -27,7 +29,6 @@ public class EntityVehicleBeamerS120 extends EntityVehicle {
 		setPosition(pos.getX(), pos.getY()+1, pos.getZ());
 		health = getStats().maxHealth;
 		setFuel();
-		initSounds();
 	}
 	
 	@Override

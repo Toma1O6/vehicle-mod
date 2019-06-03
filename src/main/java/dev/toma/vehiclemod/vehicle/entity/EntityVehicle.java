@@ -54,9 +54,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		setSize(1f, 1f);
 		stepHeight = 1f;
 		preventEntitySpawning = true;
-		this.initSounds();
 		variantType = VehicleMod.getRNG().nextInt(this.getVariants().length);
-		VMNetworkManager.instance().sendToAll(new CPacketVehicleData(this));
 		if(locations.isEmpty()) {
 			for(String s : this.getVariants()) {
 				ResourceLocation location = new ResourceLocation(VehicleMod.Constants.ID + ":textures/vehicle/"+s+".png");
@@ -106,12 +104,12 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		if(!world.isRemote) {
 			VMNetworkManager.instance().sendToAllAround(new CPacketVehicleData(this), new TargetPoint(dimension, posX, posY, posZ, 256));
 		}
-
-		playSoundAtVehicle();
+		
 		spawnParticles();
 		move(MoverType.SELF, motionX, motionY, motionZ);
 		
-		if(collidedHorizontally && getMovementSpeed(this) > 0.1) {
+		if(collidedHorizontally && getMovementSpeed(this) > 0.2) {
+			System.out.println("collided");
 			currentSpeed = 0f;
 			health -= getMovementSpeed(this) * 50f;
 			for(Entity e : this.getPassengers()) {
