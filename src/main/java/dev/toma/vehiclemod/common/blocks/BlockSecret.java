@@ -8,20 +8,27 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockSecret extends Block {
 	
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	public static final AxisAlignedBB[] AABB = {
+		new AxisAlignedBB(0.1, 0, 0.25, 0.9, 0.5, 0.75),
+		new AxisAlignedBB(0.25, 0, 0.1, 0.75, 0.5, 0.9)
+	};
 	
 	public BlockSecret(String name) {
 		super(Material.ROCK, MapColor.AIR);
@@ -31,6 +38,11 @@ public class BlockSecret extends Block {
 		setBlockUnbreakable();
 		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		VehicleMod.registerItemBlock(this);
+	}
+	
+	@Override
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+		return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand).withProperty(FACING, placer.getHorizontalFacing());
 	}
 	
 	@Override
@@ -83,5 +95,32 @@ public class BlockSecret extends Block {
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, FACING);
+	}
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+		return AABB[getIDFromState(blockState)];
+	}
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return AABB[getIDFromState(state)];
+	}
+	
+	public static int getIDFromState(IBlockState state) {
+		final int i = state.getValue(FACING).getHorizontalIndex();
+		if(i % 2 == 0) {
+			return 0;
+		} else return 1;
 	}
 }

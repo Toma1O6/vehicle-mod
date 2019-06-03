@@ -27,6 +27,7 @@ public class BlockFuelTank extends Block {
 		setRegistryName(name);
 		setCreativeTab(VehicleMod.TAB);
 		setDefaultState(blockState.getBaseState().withProperty(STATE, 0));
+		VehicleMod.registerItemBlock(this);
 	}
 	
 	@Override

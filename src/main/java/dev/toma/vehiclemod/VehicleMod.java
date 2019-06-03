@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.apache.logging.log4j.Logger;
 
+import dev.toma.vehiclemod.Registries.VMBlocks;
 import dev.toma.vehiclemod.common.FuelHandler;
 import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
 import dev.toma.vehiclemod.network.VMNetworkManager;
@@ -37,7 +38,7 @@ public class VehicleMod {
 	public static Logger logger;
 	
 	public static final CreativeTabs TAB = new CreativeTabs("vehicle_mod") {
-		final ItemStack ICON = new ItemStack(Items.DIAMOND);
+		final ItemStack ICON = new ItemStack(VMBlocks.SECRET);
 		@Override
 		public ItemStack getTabIconItem() {
 			return ICON;
