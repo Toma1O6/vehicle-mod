@@ -60,14 +60,16 @@ public class BlockSecret extends Block {
 		} else if(!playerIn.isSneaking()) {
 			if(!worldIn.isRemote) {
 				TileEntitySecret te = (TileEntitySecret)worldIn.getTileEntity(pos);
-				for(EntityPlayer player : worldIn.playerEntities) {
+				
+				worldIn.playerEntities.forEach(player -> {
 					if(!player.getName().equals(playerIn.getName())) {
-						player.sendMessage(new TextComponentString(TextFormatting.GREEN + playerIn.getName() + " has found a secret: " + te.getObjectName() + "!"));
+						player.sendMessage(new TextComponentString(TextFormatting.GREEN + playerIn.getName() + " has found a secret: " +TextFormatting.AQUA+ te.getObjectName() +TextFormatting.GREEN+"!"));
 					} else {
-						player.sendMessage(new TextComponentString(TextFormatting.GREEN + "You have just found a secret: " + te.getObjectName()));
+						player.sendMessage(new TextComponentString(TextFormatting.GREEN + "You have just found a secret: " +TextFormatting.AQUA+ te.getObjectName()));
 					}
-				}
+				});
 			}
+			// TODO: sound
 		}
 		return true;
 	}

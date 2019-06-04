@@ -4,16 +4,14 @@ import java.util.Random;
 
 import org.apache.logging.log4j.Logger;
 
-import dev.toma.vehiclemod.Registries.VMBlocks;
 import dev.toma.vehiclemod.common.FuelHandler;
+import dev.toma.vehiclemod.common.VMTab;
+import dev.toma.vehiclemod.common.tileentity.TileEntityFuelTank;
 import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.proxy.IProxy;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
@@ -37,13 +35,7 @@ public class VehicleMod {
 	
 	public static Logger logger;
 	
-	public static final CreativeTabs TAB = new CreativeTabs("vehicle_mod") {
-		final ItemStack ICON = new ItemStack(VMBlocks.SECRET);
-		@Override
-		public ItemStack getTabIconItem() {
-			return ICON;
-		}
-	};
+	public static final VMTab TAB = new VMTab();
 	
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent e) {
@@ -55,6 +47,7 @@ public class VehicleMod {
 	@EventHandler
 	public static void init(FMLInitializationEvent e) {
 		GameRegistry.registerTileEntity(TileEntitySecret.class, new ResourceLocation(Constants.ID, "secret"));
+		GameRegistry.registerTileEntity(TileEntityFuelTank.class, new ResourceLocation(Constants.ID, "fuel_tank"));
 		proxy.init(e);
 	}
 	

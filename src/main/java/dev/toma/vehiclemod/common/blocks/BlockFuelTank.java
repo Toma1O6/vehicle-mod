@@ -1,8 +1,10 @@
 package dev.toma.vehiclemod.common.blocks;
 
 import dev.toma.vehiclemod.Registries.VMItems;
+import dev.toma.vehiclemod.VMConfig;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.FuelHandler;
+import dev.toma.vehiclemod.common.tileentity.TileEntityFuelTank;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -10,11 +12,12 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 public class BlockFuelTank extends Block {
@@ -31,30 +34,40 @@ public class BlockFuelTank extends Block {
 	}
 	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		ItemStack stack = playerIn.getHeldItem(hand);
-		
-		if(stack.getItem() == VMItems.FUEL_CAN) {
-			if(playerIn.isSneaking()) {
-				if(stack.getItemDamage() < stack.getMaxDamage()) {
-					stack.damageItem(1, playerIn);
-					playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1f, 1f);
-				}
-			} else {
-				if(stack.getItemDamage() > 0) {
-					stack.setItemDamage(stack.getItemDamage()-1);
-					playerIn.playSound(SoundEvents.ITEM_BUCKET_EMPTY, 1f, 1f);
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		ItemStack stack = player.getHeldItem(hand);
+		TileEntityFuelTank te = (TileEntityFuelTank)world.getTileEntity(pos);
+		if(player.isSneaking() && stack.isEmpty() && !world.isRemote) {
+			player.sendStatusMessage(new TextComponentString("Fuel: " + te.fuelLevel + "l"), true);
+		} else if(stack.getItem() != VMItems.FUEL_CAN) {
+			if(FuelHandler.instance().isFuel(stack)) {
+				String name = stack.getItem().getRegistryName().getResourcePath();
+				float fuelValue = name.contains("bottle") ? VMConfig.values.bottle : name.contains("bucket") ? VMConfig.values.bucket : VMConfig.values.other;
+				if(!player.isSneaking() && te.fuelLevel < te.MAX_FUEL_LEVEL) {
+					te.onFuelUpdate(world, state, fuelValue);
+					if(!player.capabilities.isCreativeMode) {
+						stack.shrink(1);
+						if(name.contains("bottle")) {
+							player.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+						} else if(name.contains("bucket")) {
+							player.addItemStackToInventory(new ItemStack(Items.BUCKET));
+						}
+					}
 				}
 			}
-		}
-		
-		else if(state.getValue(STATE).intValue() < 7 && FuelHandler.instance().isFuel(stack)) {
-			worldIn.setBlockState(pos, state.withProperty(STATE, state.getValue(STATE).intValue() + 1), 3);
-			if(!playerIn.capabilities.isCreativeMode) {
-				if(stack.getItem().getRegistryName().getResourcePath().contains("bucket")) {
-					playerIn.addItemStackToInventory(new ItemStack(Items.BUCKET));
+		} else if(stack.getItem() == VMItems.FUEL_CAN) {
+			if(player.isSneaking()) {
+				if(stack.getItemDamage() < stack.getMaxDamage() && te.fuelLevel < te.MAX_FUEL_LEVEL) {
+					te.onFuelUpdate(world, state, 25);
+					if(!player.capabilities.isCreativeMode) {
+						stack.damageItem(1, player);
+					}
 				}
-				stack.shrink(1);	
+			} else {
+				if(stack.getItemDamage() > 0 && te.fuelLevel >= 25) {
+					stack.setItemDamage(stack.getItemDamage() - 1);
+					te.onFuelUpdate(world, state, -25);
+				}
 			}
 		}
 		return false;
@@ -73,5 +86,15 @@ public class BlockFuelTank extends Block {
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, STATE);
+	}
+	
+	@Override
+	public boolean hasTileEntity(IBlockState state) {
+		return true;
+	}
+	
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) {
+		return new TileEntityFuelTank();
 	}
 }

@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.common;
 
 import java.util.HashSet;
 
+import dev.toma.vehiclemod.VMConfig;
 import dev.toma.vehiclemod.VehicleMod;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -10,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
-public class FuelHandler {
+public final class FuelHandler {
 
 	public static final HashSet<Item> FUELS = new HashSet<>();
 	private static final FuelHandler INSTANCE = new FuelHandler();
@@ -33,7 +34,7 @@ public class FuelHandler {
 					VehicleMod.logger.error("Couldn't get item from {}, skipping fuel..", rl.toString());
 				}
 			}
-			
+
 			VehicleMod.logger.info("Initialized fuels: {}", FUELS);
 		}
 	}
