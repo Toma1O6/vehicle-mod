@@ -37,9 +37,18 @@ public class BlockFuelTank extends Block {
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack stack = player.getHeldItem(hand);
 		TileEntityFuelTank te = (TileEntityFuelTank)world.getTileEntity(pos);
-		if(player.isSneaking() && stack.isEmpty() && !world.isRemote) {
-			player.sendStatusMessage(new TextComponentString("Fuel: " + te.fuelLevel + "l"), true);
-		} else if(stack.getItem() != VMItems.FUEL_CAN) {
+		if(stack.isEmpty()) {
+			if(!player.isSneaking() && !world.isRemote) {
+				player.sendStatusMessage(new TextComponentString("Fuel: " + te.fuelLevel + "l"), true);
+			}
+		}
+		if(stack.getItem() == VMItems.FUEL_CAN) {
+			if(stack.getItemDamage() > 0 && te.fuelLevel > 25) {
+				stack.setItemDamage(stack.getItemDamage() - 1);
+				te.onFuelUpdate(world, state, -25);
+			}
+		}
+		if(stack.getItem() != VMItems.FUEL_CAN) {
 			if(FuelHandler.instance().isFuel(stack)) {
 				String name = stack.getItem().getRegistryName().getResourcePath();
 				float fuelValue = name.contains("bottle") ? VMConfig.values.bottle : name.contains("bucket") ? VMConfig.values.bucket : VMConfig.values.other;
@@ -53,20 +62,6 @@ public class BlockFuelTank extends Block {
 							player.addItemStackToInventory(new ItemStack(Items.BUCKET));
 						}
 					}
-				}
-			}
-		} else if(stack.getItem() == VMItems.FUEL_CAN) {
-			if(player.isSneaking()) {
-				if(stack.getItemDamage() < stack.getMaxDamage() && te.fuelLevel < te.MAX_FUEL_LEVEL) {
-					te.onFuelUpdate(world, state, 25);
-					if(!player.capabilities.isCreativeMode) {
-						stack.damageItem(1, player);
-					}
-				}
-			} else {
-				if(stack.getItemDamage() > 0 && te.fuelLevel >= 25) {
-					stack.setItemDamage(stack.getItemDamage() - 1);
-					te.onFuelUpdate(world, state, -25);
 				}
 			}
 		}

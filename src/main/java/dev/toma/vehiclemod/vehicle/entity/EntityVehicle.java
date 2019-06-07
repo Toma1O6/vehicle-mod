@@ -29,6 +29,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -109,7 +110,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		move(MoverType.SELF, motionX, motionY, motionZ);
 		
 		if(collidedHorizontally && getMovementSpeed(this) > 0.2) {
-			System.out.println("collided");
 			currentSpeed = 0f;
 			health -= getMovementSpeed(this) * 50f;
 			for(Entity e : this.getPassengers()) {
@@ -195,25 +195,25 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	}
 	
 	public void updateInput(boolean forward, boolean back, boolean right, boolean left, EntityPlayer player) {
-		//this.rotationYaw = rotationYaw < 0f ? rotationYaw + 360f : rotationYaw > 360f ? rotationYaw - 360f : rotationYaw;
-		if(hasFuel()) {
-			this.inputForward = forward;
-			this.inputBack = back;
-		}
-		this.inputRight = right;
-		this.inputLeft = left;
-		
-		if(VMConfig.simpleVehicleControls) {
-			if(this.getControllingPassenger() != null && this.getControllingPassenger().getName().equals(player.getName())) {
+		if(this.getControllingPassenger() == player) {
+			this.rotationYaw = rotationYaw < 0f ? rotationYaw + 360f : rotationYaw > 360f ? rotationYaw - 360f : rotationYaw;
+			if(hasFuel()) {
+				this.inputForward = forward;
+				this.inputBack = back;
+			}
+			this.inputRight = right;
+			this.inputLeft = left;
+			
+			/*if(VMConfig.simpleVehicleControls) {
 				float playerRot = player.rotationYaw;
-				//playerRot = playerRot < 0 ? playerRot + 360f : playerRot > 360f ? playerRot - 360f : playerRot;
+				playerRot = playerRot < 0 ? playerRot + 360f : playerRot > 360f ? playerRot - 360f : playerRot;
 				float delta = rotationYaw - playerRot;
 				if((delta < (-getStats().maxTurningAngle*3) && delta > -200f) || delta >= 200f) {
 					inputRight = true;
 				} else if(delta > (getStats().maxTurningAngle*3) && delta < 200f || delta <= -200f) {
 					inputLeft = true;
 				}
-			}
+			}*/
 		}
 	}
 	
@@ -243,8 +243,13 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	@Override
 	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
 		if(!world.isRemote) {
-			if(canBeRidden(player) && canFitPassenger(player)) {
-				player.startRiding(this);
+			if(!player.isSneaking()) {
+				if(canBeRidden(player) && canFitPassenger(player)) {
+					player.startRiding(this);
+				}
+			} else {
+				player.sendMessage(new TextComponentString("Health: " + health));
+				player.sendMessage(new TextComponentString("Fuel: " + fuel + "l / 100l"));
 			}
 		}
 		return true;

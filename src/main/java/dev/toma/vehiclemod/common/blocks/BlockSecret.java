@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.common.blocks;
 
+import dev.toma.vehiclemod.Registries.VMSounds;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
 import net.minecraft.block.Block;
@@ -11,10 +12,12 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
@@ -69,7 +72,7 @@ public class BlockSecret extends Block {
 					}
 				});
 			}
-			// TODO: sound
+			worldIn.playSound(null, pos, VMSounds.SECRET, SoundCategory.MASTER, 3f, 1f);
 		}
 		return true;
 	}

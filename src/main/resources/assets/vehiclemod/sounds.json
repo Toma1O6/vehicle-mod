@@ -1,0 +1,4 @@
+{
+    "secret": {"category": "master", "sounds": [{"name": "vehiclemod:secret", "stream": "true"}]},
+    "vehicle_idle": {"category": "master", "sounds": [{"name": "vehiclemod:vehicle_idle", "stream": "true"}]}
+}

@@ -1,13 +1,11 @@
 package dev.toma.vehiclemod;
 
-import dev.toma.vehiclemod.common.FuelEntry;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketSyncConfig;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Comment;
-import net.minecraftforge.common.config.Config.Ignore;
 import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.common.config.Config.RequiresWorldRestart;
 import net.minecraftforge.common.config.Config.Type;
@@ -19,12 +17,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 @Config(modid = VehicleMod.Constants.ID, name = VehicleMod.Constants.NAME + " Config")
 public class VMConfig {
-	
-	@Ignore
-	public static FuelEntry[] entries;
-	
-	@Name("Simple Vehicle Control")
-	public static boolean simpleVehicleControls = true;
 	
 	@Name("Fuels")
 	@RequiresWorldRestart

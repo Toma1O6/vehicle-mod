@@ -48,6 +48,10 @@ public class Registries {
 		public static final SoundEvent BEAMER_ACC = null;
 		public static final SoundEvent BEAMER_BRAKE = null;
 		public static final SoundEvent BEAMER_GAS = null;
+		public static final SoundEvent SECRET = null;
+		public static final SoundEvent TRACER_ACC = null;
+		public static final SoundEvent TRACER_BRAKE = null;
+		public static final SoundEvent TRACER_GAS = null;
 	}
 	
 	@EventBusSubscriber
@@ -91,10 +95,14 @@ public class Registries {
 		@SubscribeEvent
 		public static void onSoundRegister(RegistryEvent.Register<SoundEvent> e) {
 			final SoundEvent[] sounds = {
+				registerSound("secret"),
 				registerSound("vehicle_idle"),
 				registerSound("beamer_acc"),
 				registerSound("beamer_brake"),
-				registerSound("beamer_gas")
+				registerSound("beamer_gas"),
+				registerSound("tracer_acc"),
+				registerSound("tracer_brake"),
+				registerSound("tracer_gas")
 			};
 			e.getRegistry().registerAll(sounds);
 		}
