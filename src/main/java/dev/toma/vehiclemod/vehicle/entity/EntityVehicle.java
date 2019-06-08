@@ -31,8 +31,10 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
+import net.minecraftforge.fml.relauncher.Side;
 
 public abstract class EntityVehicle extends Entity implements IEntityAdditionalSpawnData {
 	
@@ -47,6 +49,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	public boolean isBroken;
 	private short timeInInvalidState;
 	private int variantType;
+	private double distanceTraveled = 0;
 	
 	private boolean inputForward, inputBack, inputRight, inputLeft;
 	
@@ -104,7 +107,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		
 		if(!world.isRemote) {
 			VMNetworkManager.instance().sendToAllAround(new CPacketVehicleData(this), new TargetPoint(dimension, posX, posY, posZ, 256));
-		}
+		} else playSoundAtVehicle();
 		
 		spawnParticles();
 		move(MoverType.SELF, motionX, motionY, motionZ);
@@ -123,10 +126,15 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	public void updateMotion() {
 		Vec3d lookVec = this.getLookVec();
 		VehicleStats stats = this.getStats();
+		
 		if(!isBroken && hasFuel()) {
 			if(inputForward && !inputBack) {
+				boolean flag = this.health/stats.maxHealth <= 0.5f;
+				float damagedAcc = this.health/stats.maxHealth;
+				float acceleration = flag ? stats.acceleration*damagedAcc : stats.acceleration;
+				float max = flag ? stats.maxSpeed*0.6f : stats.maxSpeed;
 				burnFuel();
-				currentSpeed = currentSpeed < stats.maxSpeed ? currentSpeed + stats.acceleration : stats.maxSpeed;
+				currentSpeed = currentSpeed < max ? currentSpeed + acceleration : max;
 			}
 			if(!inputForward && inputBack) {
 				burnFuel();
@@ -191,6 +199,13 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	public void onUpdate() {
 		updateVehicle();
 		super.onUpdate();
+		distanceTraveled += Math.sqrt(motionX*motionX + motionZ*motionZ)/1000.0D;
+		if(world.isRemote) {
+			if(getSounds() != null) {
+			} else {
+				initSounds();
+			}
+		}
 		prevSpeed = currentSpeed;
 	}
 	
@@ -250,6 +265,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 			} else {
 				player.sendMessage(new TextComponentString("Health: " + health));
 				player.sendMessage(new TextComponentString("Fuel: " + fuel + "l / 100l"));
+				player.sendMessage(new TextComponentString("Distance driven: " + distanceTraveled + "km"));
 			}
 		}
 		return true;
@@ -315,6 +331,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		fuel = 60 + rand.nextInt(40);
 	}
 	
+	public double getTravelledDistance() {
+		return distanceTraveled;
+	}
+	
 	protected double getPassengerOffsetX(int id) {
 		return 0;
 	}
@@ -336,7 +356,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 				}
 			}
 			
-			if(!isBroken && hasFuel()) {
+			if(!isBroken && hasFuel() && !this.getPassengers().isEmpty()) {
 				Vec3d exhaustVec = (new Vec3d(getPartVecs()[1].x, getPartVecs()[1].y + 0.25d, getPartVecs()[1].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float)Math.PI / 2F));
 				world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, true, posX + exhaustVec.x, posY + exhaustVec.y, posZ + exhaustVec.z, 0, 0.02d, 0);
 			}
@@ -364,6 +384,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		compound.setFloat("speed", this.currentSpeed);
 		compound.setBoolean("isBroken", this.isBroken);
 		compound.setInteger("textureid", this.variantType);
+		compound.setDouble("traveledDist", this.distanceTraveled);
 	}
 	
 	@Override
@@ -379,6 +400,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		currentSpeed = compound.getFloat("speed");
 		isBroken = compound.getBoolean("isBroken");
 		variantType = compound.getInteger("textureid");
+		distanceTraveled = compound.getDouble("traveledDist");
 	}
 	
 	@Override
@@ -454,7 +476,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	}
 	
 	private boolean isBraking() {
-		return currentSpeed < prevSpeed;
+		return currentSpeed < prevSpeed && inputBack;
 	}
 	
 	private boolean hasReleasedGas() {

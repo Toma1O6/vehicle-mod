@@ -1,6 +1,8 @@
 package dev.toma.vehiclemod.proxy;
 
+import dev.toma.vehiclemod.Registries.VMSounds;
 import dev.toma.vehiclemod.VehicleInputHandler;
+import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
 import dev.toma.vehiclemod.vehicle.render.RenderBeamerS120;
@@ -31,15 +33,6 @@ public class ClientProxy implements IProxy {
 	
 	@Override
 	public void playSoundAt(EntityVehicle v) {
-		SoundHandler handler = Minecraft.getMinecraft().getSoundHandler();
-		if(v.getSounds() != null) {
-			if(!handler.isSoundPlaying(v.getVehicleSound())) {
-				v.getSounds().stopPlaying();
-				handler.playSound(v.getVehicleSound());
-			}
-		} else {
-			v.initSounds();
-		}
 	}
 	
 	private static void registerEntityRenderers() {

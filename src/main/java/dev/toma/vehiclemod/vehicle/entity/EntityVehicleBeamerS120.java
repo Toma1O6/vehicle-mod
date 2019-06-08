@@ -63,9 +63,9 @@ public class EntityVehicleBeamerS120 extends EntityVehicle {
 	public void initSounds() {
 		sounds = new VehicleSounds(
 				new VMTickableSound(VMSounds.VEHICLE_IDLE, this),
-				new VMTickableSound(VMSounds.VEHICLE_IDLE, this),
-				new VMTickableSound(VMSounds.VEHICLE_IDLE, this),
-				new VMTickableSound(VMSounds.VEHICLE_IDLE, this)
+				new VMTickableSound(VMSounds.BEAMER_ACC, this),
+				new VMTickableSound(VMSounds.BEAMER_BRAKE, this),
+				new VMTickableSound(VMSounds.BEAMER_GAS, this)
 		);
 	}
 	
