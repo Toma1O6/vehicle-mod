@@ -1,5 +1,6 @@
 tile.secret.name=Secret
 tile.fuel_tank.name=Fuel Tank
+tile.state_cell.name=State Cell
 
 item.fuel_can.name=Fuel Can
 

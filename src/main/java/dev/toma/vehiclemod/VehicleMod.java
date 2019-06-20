@@ -8,6 +8,7 @@ import dev.toma.vehiclemod.common.FuelHandler;
 import dev.toma.vehiclemod.common.VMTab;
 import dev.toma.vehiclemod.common.tileentity.TileEntityFuelTank;
 import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
+import dev.toma.vehiclemod.common.tileentity.TileEntityStateCell;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.proxy.IProxy;
 import net.minecraft.block.Block;
@@ -48,6 +49,7 @@ public class VehicleMod {
 	public static void init(FMLInitializationEvent e) {
 		GameRegistry.registerTileEntity(TileEntitySecret.class, new ResourceLocation(Constants.ID, "secret"));
 		GameRegistry.registerTileEntity(TileEntityFuelTank.class, new ResourceLocation(Constants.ID, "fuel_tank"));
+		GameRegistry.registerTileEntity(TileEntityStateCell.class, new ResourceLocation(Constants.ID, "state_cell"));
 		proxy.init(e);
 	}
 	
@@ -80,7 +82,7 @@ public class VehicleMod {
 		
 		public static final String ID = "vehiclemod";
 		public static final String NAME = "Toma's Vehicle Mod";
-		public static final String VERSION = "1.0";
+		public static final String VERSION = "1.1";
 		
 		public static final Random RNG = new Random();
 	}

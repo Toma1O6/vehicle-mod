@@ -22,8 +22,10 @@ public class VMConfig {
 	@RequiresWorldRestart
 	public static String[] fuels = {"modid:item_name"};
 	
+	@Name("Fuel Values")
 	public static DefaultFuelValues values = new DefaultFuelValues(15, 35, 20);
 	
+	@Name("Beamer S120")
 	public static VehicleStats beamer_s120 = new VehicleStats(150F, 1.5F, 0.05F, 0.08F, 0.3F, 3.0F, 0.005f, 0.5);
 	
 	@Mod.EventBusSubscriber(modid = VehicleMod.Constants.ID)

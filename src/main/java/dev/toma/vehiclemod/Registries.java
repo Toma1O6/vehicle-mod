@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import dev.toma.vehiclemod.common.blocks.BlockFuelTank;
 import dev.toma.vehiclemod.common.blocks.BlockSecret;
+import dev.toma.vehiclemod.common.blocks.BlockStateCell;
 import dev.toma.vehiclemod.common.items.ItemFuelCan;
 import dev.toma.vehiclemod.common.items.ItemVehicleSpawner;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
@@ -40,6 +41,7 @@ public class Registries {
 	public static final class VMBlocks {
 		public static final BlockSecret SECRET = null;
 		public static final BlockFuelTank FUEL_TANK = null;
+		public static final BlockStateCell STATE_CELL = null;
 	}
 	
 	@ObjectHolder(VehicleMod.Constants.ID)
@@ -64,7 +66,8 @@ public class Registries {
 		public static void onBlockRegister(RegistryEvent.Register<Block> e) {
 			final Block[] blocks = {
 				new BlockSecret("secret"),
-				new BlockFuelTank("fuel_tank")
+				new BlockFuelTank("fuel_tank"),
+				new BlockStateCell("state_cell")
 			};
 			e.getRegistry().registerAll(blocks);
 		}

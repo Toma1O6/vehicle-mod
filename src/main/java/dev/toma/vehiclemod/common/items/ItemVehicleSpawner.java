@@ -9,7 +9,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemVehicleSpawner extends Item {
+public abstract class ItemVehicleSpawner extends Item {
 	
 	public ItemVehicleSpawner(String name) {
 		setUnlocalizedName(name);
@@ -28,7 +28,5 @@ public class ItemVehicleSpawner extends Item {
 		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 	}
 	
-	public void handleAction(World world, BlockPos pos) {
-		
-	}
+	public abstract void handleAction(World world, BlockPos pos);
 }

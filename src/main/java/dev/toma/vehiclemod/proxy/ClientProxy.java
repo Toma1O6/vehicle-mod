@@ -1,13 +1,9 @@
 package dev.toma.vehiclemod.proxy;
 
-import dev.toma.vehiclemod.Registries.VMSounds;
 import dev.toma.vehiclemod.VehicleInputHandler;
-import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
 import dev.toma.vehiclemod.vehicle.render.RenderBeamerS120;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
