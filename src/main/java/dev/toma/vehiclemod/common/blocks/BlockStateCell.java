@@ -5,6 +5,7 @@ import java.util.Random;
 import dev.toma.vehiclemod.Registries.VMBlocks;
 import dev.toma.vehiclemod.common.tileentity.TileEntityStateCell;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
@@ -12,12 +13,14 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
@@ -27,6 +30,7 @@ public class BlockStateCell extends BlockBasic {
 	
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	public static final PropertyBool ON = PropertyBool.create("on");
+	private static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.2, 1);
 	
 	public BlockStateCell(String name) {
 		super(name, Material.ROCK);
@@ -85,7 +89,8 @@ public class BlockStateCell extends BlockBasic {
 	
 	@Override
 	public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-		return blockState.getValue(ON) ? 15 : 0;
+		boolean flag = side == this.getInputSide(blockState).getOpposite();
+		return blockState.getValue(ON) && !flag ? 15 : 0;
 	}
 	
 	public EnumFacing getInputSide(IBlockState state) {
@@ -107,6 +112,10 @@ public class BlockStateCell extends BlockBasic {
 	public boolean isPowered(World world, BlockPos pos, IBlockState state) {
 		EnumFacing facing = this.getInputSide(state);
 		int i = world.getRedstonePower(pos.offset(facing), facing);
+		IBlockState st = world.getBlockState(pos.offset(facing));
+		if(i == 0 && st.getBlock() == Blocks.REDSTONE_WIRE) {
+			i = st.getValue(BlockRedstoneWire.POWER).intValue();
+		}
 		return i > 0;
 	}
 	
@@ -162,5 +171,20 @@ public class BlockStateCell extends BlockBasic {
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
+	}
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return AABB;
+	}
+	
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+		return AABB;
 	}
 }
