@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.proxy;
 
+import dev.toma.vehiclemod.common.tileentity.TileEntityMusicPlayer;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -32,7 +33,7 @@ public class ServerProxy implements IProxy {
 	}
 	
 	@Override
-	public void displayGuiMusicPlayer() {
+	public void displayGuiMusicPlayer(TileEntityMusicPlayer te) {
 		// TODO Auto-generated method stub
 		
 	}

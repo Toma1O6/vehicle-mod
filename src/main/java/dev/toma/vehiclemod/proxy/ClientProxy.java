@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.proxy;
 
 import dev.toma.vehiclemod.VehicleInputHandler;
 import dev.toma.vehiclemod.client.gui.GuiMusicPlayer;
+import dev.toma.vehiclemod.common.tileentity.TileEntityMusicPlayer;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
 import dev.toma.vehiclemod.vehicle.render.RenderBeamerS120;
@@ -35,8 +36,8 @@ public class ClientProxy implements IProxy {
 	}
 	
 	@Override
-	public void displayGuiMusicPlayer() {
-		Minecraft.getMinecraft().displayGuiScreen(new GuiMusicPlayer());
+	public void displayGuiMusicPlayer(TileEntityMusicPlayer te) {
+		Minecraft.getMinecraft().displayGuiScreen(new GuiMusicPlayer(te));
 	}
 	
 	private static void registerEntityRenderers() {

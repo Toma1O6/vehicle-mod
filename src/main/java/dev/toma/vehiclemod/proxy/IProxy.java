@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.proxy;
 
+import dev.toma.vehiclemod.common.tileentity.TileEntityMusicPlayer;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -16,5 +17,5 @@ public interface IProxy {
 	
 	void playSoundAt(EntityVehicle v);
 	
-	void displayGuiMusicPlayer();
+	void displayGuiMusicPlayer(TileEntityMusicPlayer te);
 }

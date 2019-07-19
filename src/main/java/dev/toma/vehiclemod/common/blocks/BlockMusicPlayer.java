@@ -3,6 +3,7 @@ package dev.toma.vehiclemod.common.blocks;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMusicPlayer;
 import dev.toma.vehiclemod.util.MusicEntry;
 import net.minecraft.block.Block;
@@ -44,7 +45,8 @@ public class BlockMusicPlayer extends BlockBasic {
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+		VehicleMod.proxy.displayGuiMusicPlayer((TileEntityMusicPlayer)worldIn.getTileEntity(pos));
+		return true;
 	}
 	
 	@Override
@@ -88,10 +90,13 @@ public class BlockMusicPlayer extends BlockBasic {
 	}
 	
 	private static boolean isPowered(World world, BlockPos pos) {
-		int i = world.getRedstonePower(pos.offset(EnumFacing.NORTH), EnumFacing.NORTH);
-		IBlockState st = world.getBlockState(pos.offset(EnumFacing.NORTH));
-		if(i == 0 && st.getBlock() == Blocks.REDSTONE_WIRE) {
-			i = st.getValue(BlockRedstoneWire.POWER).intValue();
+		int i = 0;
+		for(EnumFacing facing : EnumFacing.values()) {
+			i = world.getRedstonePower(pos.offset(facing), facing) > i ? world.getRedstonePower(pos.offset(facing), facing) : i;
+			IBlockState st = world.getBlockState(pos.offset(facing));
+			if(i == 0 && st.getBlock() == Blocks.REDSTONE_WIRE) {
+				i = st.getValue(BlockRedstoneWire.POWER).intValue();
+			}
 		}
 		return i > 0;
 	}
