@@ -3,10 +3,13 @@ package dev.toma.vehiclemod;
 import java.util.ArrayList;
 
 import dev.toma.vehiclemod.common.blocks.BlockFuelTank;
+import dev.toma.vehiclemod.common.blocks.BlockMusicPlayer;
 import dev.toma.vehiclemod.common.blocks.BlockSecret;
+import dev.toma.vehiclemod.common.blocks.BlockSpikes;
 import dev.toma.vehiclemod.common.blocks.BlockStateCell;
 import dev.toma.vehiclemod.common.items.ItemFuelCan;
 import dev.toma.vehiclemod.common.items.ItemVehicleSpawner;
+import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -42,6 +45,8 @@ public class Registries {
 		public static final BlockSecret SECRET = null;
 		public static final BlockFuelTank FUEL_TANK = null;
 		public static final BlockStateCell STATE_CELL = null;
+		public static final BlockSpikes SPIKES = null;
+		public static final BlockMusicPlayer MUSIC_PLAYER = null;
 	}
 	
 	@ObjectHolder(VehicleMod.Constants.ID)
@@ -67,7 +72,9 @@ public class Registries {
 			final Block[] blocks = {
 				new BlockSecret("secret"),
 				new BlockFuelTank("fuel_tank"),
-				new BlockStateCell("state_cell")
+				new BlockStateCell("state_cell"),
+				new BlockSpikes("spikes"),
+				new BlockMusicPlayer("music_player"),
 			};
 			e.getRegistry().registerAll(blocks);
 		}
@@ -134,7 +141,7 @@ public class Registries {
 		public static void onModelRegister(ModelRegistryEvent e) {
 			final IForgeRegistry<Item> ITEMS = ForgeRegistries.ITEMS;
 			final IForgeRegistry<Block> BLOCKS = ForgeRegistries.BLOCKS;
-			
+			DevUtil.creator().createAllFiles();
 			for(ResourceLocation rl : ITEMS.getKeys()) {
 				if(rl.getResourceDomain().equalsIgnoreCase(VehicleMod.Constants.ID)) {
 					registerModel(ITEMS.getValue(rl));

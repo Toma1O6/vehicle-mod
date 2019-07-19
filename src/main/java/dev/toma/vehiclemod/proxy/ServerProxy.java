@@ -30,4 +30,10 @@ public class ServerProxy implements IProxy {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void displayGuiMusicPlayer() {
+		// TODO Auto-generated method stub
+		
+	}
 }

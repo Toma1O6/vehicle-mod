@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import dev.toma.vehiclemod.common.FuelHandler;
 import dev.toma.vehiclemod.common.VMTab;
 import dev.toma.vehiclemod.common.tileentity.TileEntityFuelTank;
+import dev.toma.vehiclemod.common.tileentity.TileEntityMusicPlayer;
 import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
 import dev.toma.vehiclemod.common.tileentity.TileEntityStateCell;
 import dev.toma.vehiclemod.network.VMNetworkManager;
@@ -50,13 +51,13 @@ public class VehicleMod {
 		GameRegistry.registerTileEntity(TileEntitySecret.class, new ResourceLocation(Constants.ID, "secret"));
 		GameRegistry.registerTileEntity(TileEntityFuelTank.class, new ResourceLocation(Constants.ID, "fuel_tank"));
 		GameRegistry.registerTileEntity(TileEntityStateCell.class, new ResourceLocation(Constants.ID, "state_cell"));
+		GameRegistry.registerTileEntity(TileEntityMusicPlayer.class, new ResourceLocation(Constants.ID, "music_player"));
 		proxy.init(e);
 	}
 	
 	@EventHandler
 	public static void postInit(FMLPostInitializationEvent e) {
 		proxy.postInit(e);
-		ModelCreator.createModels();
 	}
 	
 	@EventHandler

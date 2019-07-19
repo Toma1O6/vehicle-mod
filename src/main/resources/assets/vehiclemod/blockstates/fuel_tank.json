@@ -1,0 +1,12 @@
+{
+	"variants": {
+		"state=0": {"model": "vehiclemod:fuel_tank_stage_0"},
+		"state=1": {"model": "vehiclemod:fuel_tank_stage_1"},
+		"state=2": {"model": "vehiclemod:fuel_tank_stage_2"},
+		"state=3": {"model": "vehiclemod:fuel_tank_stage_3"},
+		"state=4": {"model": "vehiclemod:fuel_tank_stage_4"},
+		"state=5": {"model": "vehiclemod:fuel_tank_stage_5"},
+		"state=6": {"model": "vehiclemod:fuel_tank_stage_6"},
+		"state=7": {"model": "vehiclemod:fuel_tank_stage_7"}
+	}
+}

@@ -1,0 +1,12 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "particle": "vehiclemod:blocks/music_player_side",
+        "up": "vehiclemod:blocks/music_player",
+        "down": "vehiclemod:blocks/music_player_side",
+        "north": "vehiclemod:blocks/music_player_side",
+        "south": "vehiclemod:blocks/music_player_side",
+        "west": "vehiclemod:blocks/music_player_side",
+        "east": "vehiclemod:blocks/music_player_side"
+    }
+}
