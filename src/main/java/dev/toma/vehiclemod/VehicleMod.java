@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.apache.logging.log4j.Logger;
 
+import dev.toma.vehiclemod.Registries.Registry;
 import dev.toma.vehiclemod.common.FuelHandler;
 import dev.toma.vehiclemod.common.VMTab;
 import dev.toma.vehiclemod.common.tileentity.TileEntityFuelTank;
@@ -58,6 +59,7 @@ public class VehicleMod {
 	@EventHandler
 	public static void postInit(FMLPostInitializationEvent e) {
 		proxy.postInit(e);
+		Registry.registerMusicEntries();
 	}
 	
 	@EventHandler

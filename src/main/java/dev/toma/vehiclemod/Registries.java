@@ -10,6 +10,7 @@ import dev.toma.vehiclemod.common.blocks.BlockStateCell;
 import dev.toma.vehiclemod.common.items.ItemFuelCan;
 import dev.toma.vehiclemod.common.items.ItemVehicleSpawner;
 import dev.toma.vehiclemod.util.DevUtil;
+import dev.toma.vehiclemod.util.MusicEntry;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -59,6 +60,35 @@ public class Registries {
 		public static final SoundEvent TRACER_ACC = null;
 		public static final SoundEvent TRACER_BRAKE = null;
 		public static final SoundEvent TRACER_GAS = null;
+		
+		// music entries
+		public static final SoundEvent DANGER1 = null;
+		public static final SoundEvent DANGER2 = null;
+		public static final SoundEvent DANGER3 = null;
+		public static final SoundEvent DANGER4 = null;
+		public static final SoundEvent DANGER5 = null;
+		public static final SoundEvent DANGER6 = null;
+		public static final SoundEvent DANGER7 = null;
+		public static final SoundEvent DANGER8 = null;
+		public static final SoundEvent DANGER9 = null;
+		public static final SoundEvent RELAXED1 = null;
+		public static final SoundEvent RELAXED2 = null;
+		public static final SoundEvent RHYTMIC1 = null;
+		public static final SoundEvent RHYTMIC2 = null;
+		public static final SoundEvent SURPRISE1 = null;
+		public static final SoundEvent SURPRISE2 = null;
+		public static final SoundEvent SURPRISE3 = null;
+		public static final SoundEvent SURPRISE4 = null;
+		public static final SoundEvent WONDER1 = null;
+		public static final SoundEvent WONDER2 = null;
+		public static final SoundEvent WONDER3 = null;
+		public static final SoundEvent WONDER4 = null;
+		public static final SoundEvent WONDER5 = null;
+		public static final SoundEvent WONDER6 = null;
+		public static final SoundEvent WONDER7 = null;
+		public static final SoundEvent WONDER8 = null;
+		public static final SoundEvent WONDER9 = null;
+		public static final SoundEvent WONDER10 = null;
 	}
 	
 	@EventBusSubscriber
@@ -112,7 +142,34 @@ public class Registries {
 				registerSound("beamer_gas"),
 				registerSound("tracer_acc"),
 				registerSound("tracer_brake"),
-				registerSound("tracer_gas")
+				registerSound("tracer_gas"),
+				registerSound("danger1"),
+				registerSound("danger2"),
+				registerSound("danger3"),
+				registerSound("danger4"),
+				registerSound("danger5"),
+				registerSound("danger6"),
+				registerSound("danger7"),
+				registerSound("danger8"),
+				registerSound("danger9"),
+				registerSound("relaxed1"),
+				registerSound("relaxed2"),
+				registerSound("rhytmic1"),
+				registerSound("rhytmic2"),
+				registerSound("surprise1"),
+				registerSound("surprise2"),
+				registerSound("surprise3"),
+				registerSound("surprise4"),
+				registerSound("wonder1"),
+				registerSound("wonder2"),
+				registerSound("wonder3"),
+				registerSound("wonder4"),
+				registerSound("wonder5"),
+				registerSound("wonder6"),
+				registerSound("wonder7"),
+				registerSound("wonder8"),
+				registerSound("wonder9"),
+				registerSound("wonder10"),
 			};
 			e.getRegistry().registerAll(sounds);
 		}
@@ -131,6 +188,40 @@ public class Registries {
 			EntityEntryBuilder<E> builder = EntityEntryBuilder.create();
 			ResourceLocation rl = new ResourceLocation(VehicleMod.Constants.ID, name);
 			return builder.id(rl, id++).name(rl.toString());
+		}
+		
+		public static void registerMusicEntries() {
+			registerMusicEntry(VMSounds.DANGER1, 15);
+			registerMusicEntry(VMSounds.DANGER2, 79);
+			registerMusicEntry(VMSounds.DANGER3, 12);
+			registerMusicEntry(VMSounds.DANGER4, 17);
+			registerMusicEntry(VMSounds.DANGER5, 22);
+			registerMusicEntry(VMSounds.DANGER6, 67);
+			registerMusicEntry(VMSounds.DANGER7, 37);
+			registerMusicEntry(VMSounds.DANGER8,  6);
+			registerMusicEntry(VMSounds.DANGER9, 13);
+			registerMusicEntry(VMSounds.RELAXED1, 61);
+			registerMusicEntry(VMSounds.RELAXED2, 19);
+			registerMusicEntry(VMSounds.RHYTMIC1, 146);
+			registerMusicEntry(VMSounds.RHYTMIC2, 99);
+			registerMusicEntry(VMSounds.SURPRISE1, 22);
+			registerMusicEntry(VMSounds.SURPRISE2, 6);
+			registerMusicEntry(VMSounds.SURPRISE3, 11);
+			registerMusicEntry(VMSounds.SURPRISE4, 11);
+			registerMusicEntry(VMSounds.WONDER1, 18);
+			registerMusicEntry(VMSounds.WONDER2, 139);
+			registerMusicEntry(VMSounds.WONDER3, 31);
+			registerMusicEntry(VMSounds.WONDER4, 31);
+			registerMusicEntry(VMSounds.WONDER5, 25);
+			registerMusicEntry(VMSounds.WONDER6, 18);
+			registerMusicEntry(VMSounds.WONDER7, 11);
+			registerMusicEntry(VMSounds.WONDER8, 39);
+			registerMusicEntry(VMSounds.WONDER9, 15);
+			registerMusicEntry(VMSounds.WONDER10, 11);
+		}
+		
+		private static void registerMusicEntry(SoundEvent e, int time) {
+			MusicEntry.registerMusicEntry(e, time);
 		}
 	}
 	

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.toma.vehiclemod.VehicleMod.Constants;
+import dev.toma.vehiclemod.common.blocks.BlockMusicPlayer;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMusicPlayer;
 import dev.toma.vehiclemod.util.MusicEntry;
 import net.minecraft.client.Minecraft;
@@ -25,6 +26,7 @@ public class GuiMusicPlayer extends GuiScreen {
 	private int guiTop;
 	private int xSize;
 	private int ySize;
+	private int page;
 	
 	public GuiMusicPlayer(TileEntityMusicPlayer te) {
 		this.te = te;
@@ -32,10 +34,23 @@ public class GuiMusicPlayer extends GuiScreen {
 		ySize = 166;
 	}
 	
+	public void refresh() {
+		for(int i = page * 10; i < (page + 1) * 16; i++) {
+			int j = i - page*10;
+			if(i >= BlockMusicPlayer.SONGS.size()) {
+				return;
+			}
+			int k = j;
+			if(j >= 8) k -= 8;
+			this.musicButtons.add(new MusicButton(j, guiLeft + (j >= 8 ? 108 : 4), guiTop + 4 + k * 20, BlockMusicPlayer.SONGS.get(i)));
+		}
+	}
+	
 	@Override
 	public void initGui() {
 		this.guiLeft = (this.width - this.xSize) / 2;
         this.guiTop = (this.height - this.ySize) / 2;
+        this.refresh();
 	}
 	
 	@Override
@@ -75,11 +90,11 @@ public class GuiMusicPlayer extends GuiScreen {
 			hovered = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
 			GlStateManager.pushMatrix();
 			String name = entry.music.getRegistryName().getResourcePath();
-			String displayName = name.substring(0).toUpperCase() + name.substring(1, name.length());
-			mc.fontRenderer.drawString(displayName, x+2, y+2, 0xFFFFFF);
+			String displayName = name.substring(0, 1).toUpperCase() + name.substring(1);
 			double v0 = hovered ? 0.5D : 0;
 			double v1 = hovered ? 1.0D : 0.5D;
 			drawButton(mc, BUTTON, x, y, v0, v1);
+			mc.fontRenderer.drawString(displayName, x+4, y+5, 0xFFFFFF);
 			GlStateManager.popMatrix();
 		}
 		
@@ -89,10 +104,10 @@ public class GuiMusicPlayer extends GuiScreen {
 			BufferBuilder buf = ts.getBuffer();
 			
 			buf.begin(7, DefaultVertexFormats.POSITION_TEX);
-			buf.pos(x, y, 0).tex(0, v0).endVertex();
-			buf.pos(x + 180, y, 0).tex(1, v0).endVertex();
-			buf.pos(x + 180, y + 18, 0).tex(1, v1).endVertex();
 			buf.pos(x, y + 18, 0).tex(0, v1).endVertex();
+			buf.pos(x + 100, y + 18, 0).tex(1, v1).endVertex();
+			buf.pos(x + 100, y, 0).tex(1, v0).endVertex();
+			buf.pos(x, y, 0).tex(0, v0).endVertex();
 			
 			GlStateManager.color(1f, 1f, 1f);
 			ts.draw();
