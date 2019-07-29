@@ -218,6 +218,7 @@ public class Registries {
 			registerMusicEntry(VMSounds.WONDER8, 39);
 			registerMusicEntry(VMSounds.WONDER9, 15);
 			registerMusicEntry(VMSounds.WONDER10, 11);
+			VehicleMod.logger.info("Registered {} music entries", BlockMusicPlayer.SONGS.size());
 		}
 		
 		private static void registerMusicEntry(SoundEvent e, int time) {

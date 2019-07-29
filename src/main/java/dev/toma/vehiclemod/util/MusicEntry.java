@@ -16,7 +16,6 @@ public class MusicEntry {
 	
 	public static void registerMusicEntry(SoundEvent e, int time) {
 		BlockMusicPlayer.SONGS.add(new MusicEntry(e, time));
-		VehicleMod.logger.info("Registered new music entry");
 	}
 	
 	@Override
