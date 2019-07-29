@@ -3,6 +3,7 @@ package dev.toma.vehiclemod.network;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.network.packets.CPacketSyncConfig;
 import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
+import dev.toma.vehiclemod.network.packets.PacketUpdateMusicEntry;
 import dev.toma.vehiclemod.network.packets.SPacketInput;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -27,6 +28,7 @@ public class VMNetworkManager {
 	
 	private static void registerServerPackets() {
 		registerServerPacket(SPacketInput.Handler.class, SPacketInput.class);
+		registerServerPacket(PacketUpdateMusicEntry.Handler.class, PacketUpdateMusicEntry.class);
 	}
 	
 	/** ================================================================================================ **/

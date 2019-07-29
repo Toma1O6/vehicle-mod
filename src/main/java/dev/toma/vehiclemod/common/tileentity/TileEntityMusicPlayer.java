@@ -15,22 +15,21 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TileEntityMusicPlayer extends TileEntity {
-	
-	@Nullable
+
 	public MusicEntry currentEntry;
 	public long expectedSongEnd;
 	private boolean playing = false;
 	private int selectedIndex;
 	
 	public void play() {
-		if(BlockMusicPlayer.SONGS.isEmpty() || selectedIndex >= BlockMusicPlayer.SONGS.size()) {
+		if(currentEntry == null) {
+			playing = false;
 			return;
 		}
-		
-		MusicEntry entry = BlockMusicPlayer.SONGS.get(selectedIndex);
+
 		if(!playing) {
-			update(entry);
-			this.world.playSound(this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ()+0.5, entry.music, SoundCategory.MASTER, 8f, 1f, false);
+			this.update(currentEntry);
+			this.world.playSound(null, this.getPos().getX() + 0.5, this.getPos().getY() + 0.5, this.getPos().getZ()+0.5, currentEntry.music, SoundCategory.MASTER, 10f, 1f);
 		}
 	}
 	
@@ -42,7 +41,7 @@ public class TileEntityMusicPlayer extends TileEntity {
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
-		compound.setInteger("index", selectedIndex);
+		compound.setInteger("index", currentEntry == null ? -1 : BlockMusicPlayer.SONGS.indexOf(currentEntry));
 		return compound;
 	}
 	
@@ -50,10 +49,15 @@ public class TileEntityMusicPlayer extends TileEntity {
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		selectedIndex = compound.getInteger("index");
+		currentEntry = selectedIndex > -1 ? BlockMusicPlayer.SONGS.get(selectedIndex) : null;
 	}
 	
 	public boolean isPlaying() {
 		return playing;
+	}
+
+	public void stopPlaying() {
+		playing = false;
 	}
 	
 	private void update(MusicEntry entry) {
@@ -61,7 +65,7 @@ public class TileEntityMusicPlayer extends TileEntity {
 			return;
 		}
 		currentEntry = entry;
+		playing = true;
 		world.setBlockState(pos, VMBlocks.MUSIC_PLAYER.getDefaultState().withProperty(BlockMusicPlayer.ON, true), 3);
-		world.scheduleBlockUpdate(pos, blockType, entry.recordTime, 0);
 	}
 }

@@ -42,6 +42,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	public float prevSpeed;
 	public float turnModifier;
 	public float fuel;
+	public EnumVehicleState prevState, currentState;
 	public List<ResourceLocation> locations = new ArrayList<>();
 	public boolean isBroken;
 	private short timeInInvalidState;
@@ -190,6 +191,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		if(isInLava() || health <= 0f) {
 			this.explode();
 		}
+		currentState = this.getVehicleState();
 	}
 	
 	@Override
@@ -198,12 +200,12 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 		super.onUpdate();
 		distanceTraveled += Math.sqrt(motionX*motionX + motionZ*motionZ)/1000.0D;
 		if(world.isRemote) {
-			if(getSounds() != null) {
-			} else {
+			if(getSounds() == null) {
 				initSounds();
 			}
 		}
 		prevSpeed = currentSpeed;
+		prevState = currentState;
 	}
 	
 	public void updateInput(boolean forward, boolean back, boolean right, boolean left, EntityPlayer player) {
@@ -407,6 +409,17 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	
 	@Override
 	protected void entityInit() {}
+
+	private EnumVehicleState getVehicleState() {
+		if(isAccelerating()) {
+			return EnumVehicleState.ACCELERATING;
+		} else if(isBraking()) {
+			return EnumVehicleState.BRAKING;
+		} else if(Math.abs(currentSpeed) < 0.15) {
+			return EnumVehicleState.IDLE;
+		}
+		return EnumVehicleState.KEEPING_SPEED;
+	}
 	
 	private void handleEntityCollisions() {
 		Vec3d vec1 = new Vec3d(posX, posY, posZ);
@@ -424,7 +437,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 	private Entity findEntityInPath(Vec3d start, Vec3d end) {
 		Entity e = null;
 		List<Entity> entityList = world.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox().expand(motionX, motionY * 2, motionZ), TARGET);
-		double d0 = 0;
 		for(Entity ent : entityList) {
 			if(ent != this && !this.getPassengers().contains(ent)) {
 				AxisAlignedBB aabb = ent.getEntityBoundingBox().grow(0.3);
@@ -432,9 +444,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 				
 				if(rayTrace != null) {
 					double d1 = start.squareDistanceTo(rayTrace.hitVec);
-					if(d1 < d0 || d0 == 0) {
-						e = ent;
-					}
+					e = ent;
 				}
 			}
 		}

@@ -8,6 +8,7 @@ import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
 import dev.toma.vehiclemod.vehicle.render.RenderBeamerS120;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -36,8 +37,8 @@ public class ClientProxy implements IProxy {
 	}
 	
 	@Override
-	public void displayGuiMusicPlayer(TileEntityMusicPlayer te) {
-		Minecraft.getMinecraft().displayGuiScreen(new GuiMusicPlayer(te));
+	public void displayGuiMusicPlayer(TileEntityMusicPlayer te, BlockPos pos) {
+		Minecraft.getMinecraft().displayGuiScreen(new GuiMusicPlayer(te, pos));
 	}
 	
 	private static void registerEntityRenderers() {

@@ -1,12 +1,10 @@
 package dev.toma.vehiclemod.client.gui;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import dev.toma.vehiclemod.VehicleMod.Constants;
 import dev.toma.vehiclemod.common.blocks.BlockMusicPlayer;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMusicPlayer;
+import dev.toma.vehiclemod.network.VMNetworkManager;
+import dev.toma.vehiclemod.network.packets.PacketUpdateMusicEntry;
 import dev.toma.vehiclemod.util.MusicEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -16,6 +14,12 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import org.lwjgl.input.Mouse;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuiMusicPlayer extends GuiScreen {
 	
@@ -26,23 +30,27 @@ public class GuiMusicPlayer extends GuiScreen {
 	private int guiTop;
 	private int xSize;
 	private int ySize;
-	private int page;
+	private int page, maxPage;
+	private BlockPos pos;
 	
-	public GuiMusicPlayer(TileEntityMusicPlayer te) {
+	public GuiMusicPlayer(TileEntityMusicPlayer te, BlockPos pos) {
 		this.te = te;
 		xSize = 214;
 		ySize = 166;
+		maxPage = this.getPageCount();
+		this.pos = pos;
 	}
 	
 	public void refresh() {
-		for(int i = page * 10; i < (page + 1) * 16; i++) {
-			int j = i - page*10;
+		this.musicButtons.clear();
+		for(int i = 16 * page; i < 16 * (page+1); i++) {
+			int j = i % 16;
+			boolean half = j >= 8;
 			if(i >= BlockMusicPlayer.SONGS.size()) {
-				return;
+				break;
 			}
-			int k = j;
-			if(j >= 8) k -= 8;
-			this.musicButtons.add(new MusicButton(j, guiLeft + (j >= 8 ? 108 : 4), guiTop + 4 + k * 20, BlockMusicPlayer.SONGS.get(i)));
+			this.musicButtons.add(new MusicButton(i, guiLeft + (half ? 109 : 7), guiTop + 4 + (half ? (j-8)*20 : j*20), BlockMusicPlayer.SONGS.get(i), te));
+			// x 8 : 108; y: top + 4
 		}
 	}
 	
@@ -68,21 +76,54 @@ public class GuiMusicPlayer extends GuiScreen {
 			for(int i = 0; i < musicButtons.size(); i++) {
 				MusicButton btn = musicButtons.get(i);
 				if(btn.mousePressed(mc, mouseX, mouseY)) {
-					// TODO updateTileentity
-					te.currentEntry = btn.entry;
+					btn.playPressSound(mc.getSoundHandler());
+					if(!btn.isSelected) {
+						te.currentEntry = btn.entry;
+					} else {
+						te.currentEntry = null;
+					}
+					VMNetworkManager.instance().sendToServer(new PacketUpdateMusicEntry(te.currentEntry, pos));
+					btn.isSelected = !btn.isSelected;
+					this.refresh();
 				}
 			}
 		}
 	}
-	
+
+	@Override
+	public void handleMouseInput() throws IOException {
+		int i = Integer.signum(Mouse.getEventDWheel());
+		if(i < 0 && page < maxPage) {
+			page -= i;
+			this.refresh();
+		}
+		if(i > 0 && page > 0) {
+			page -= i;
+			this.refresh();
+		}
+		super.handleMouseInput();
+	}
+
+	private int getPageCount() {
+		int entriesLeft = BlockMusicPlayer.SONGS.size();
+		int pages = 0;
+		while (entriesLeft > 16) {
+			++pages;
+			entriesLeft -= 16;
+		}
+		return pages;
+	}
+
 	private static class MusicButton extends GuiButton {
 		
 		static final ResourceLocation BUTTON = new ResourceLocation(Constants.ID + ":textures/gui/mp_button.png");
 		final MusicEntry entry;
+		public boolean isSelected;
 		
-		public MusicButton(int id, int x, int y, MusicEntry entry) {
+		public MusicButton(int id, int x, int y, MusicEntry entry, TileEntityMusicPlayer te) {
 			super(id, x, y, 100, 18, "");
 			this.entry = entry;
+			isSelected = te.currentEntry == null ? false : te.currentEntry.equals(entry);
 		}
 		
 		@Override
@@ -91,8 +132,8 @@ public class GuiMusicPlayer extends GuiScreen {
 			GlStateManager.pushMatrix();
 			String name = entry.music.getRegistryName().getResourcePath();
 			String displayName = name.substring(0, 1).toUpperCase() + name.substring(1);
-			double v0 = hovered ? 0.5D : 0;
-			double v1 = hovered ? 1.0D : 0.5D;
+			double v0 = hovered || isSelected ? 0.5D : 0;
+			double v1 = hovered || isSelected ? 1.0D : 0.5D;
 			drawButton(mc, BUTTON, x, y, v0, v1);
 			mc.fontRenderer.drawString(displayName, x+4, y+5, 0xFFFFFF);
 			GlStateManager.popMatrix();

@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.common.tileentity;
 
+import dev.toma.vehiclemod.VMConfig;
 import dev.toma.vehiclemod.common.blocks.BlockStateCell;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,11 +30,11 @@ public class TileEntityStateCell extends TileEntity implements ITickable {
 	}
 	
 	public void cycleForward() {
-		totalDelay += 20;
+		totalDelay += VMConfig.cellTimerModifier;
 	}
 	
 	public void cycleBackward() {
-		totalDelay = totalDelay > 20 ? totalDelay - 20 : totalDelay;
+		totalDelay = totalDelay > VMConfig.cellTimerModifier ? totalDelay - VMConfig.cellTimerModifier : 0;
 	}
 	
 	public int getDelay() {

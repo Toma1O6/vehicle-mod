@@ -2,7 +2,9 @@ package dev.toma.vehiclemod.common.blocks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMusicPlayer;
 import dev.toma.vehiclemod.util.MusicEntry;
@@ -17,6 +19,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -45,7 +48,7 @@ public class BlockMusicPlayer extends BlockBasic {
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		VehicleMod.proxy.displayGuiMusicPlayer((TileEntityMusicPlayer)worldIn.getTileEntity(pos));
+		VehicleMod.proxy.displayGuiMusicPlayer((TileEntityMusicPlayer)worldIn.getTileEntity(pos), pos);
 		return true;
 	}
 	
@@ -56,10 +59,20 @@ public class BlockMusicPlayer extends BlockBasic {
 			if(isPowered(worldIn, pos)) {
 				te.play();
 				worldIn.setBlockState(pos, state.withProperty(ON, true));
+				worldIn.notifyNeighborsOfStateChange(pos, this, false);
+				if(te.currentEntry != null) {
+					worldIn.scheduleBlockUpdate(pos, this, te.currentEntry.recordTime*20, 0);
+				}
 			}
 		}
 	}
-	
+
+	@Override
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		worldIn.setBlockState(pos, state.withProperty(ON, false), 3);
+		((TileEntityMusicPlayer)worldIn.getTileEntity(pos)).stopPlaying();
+	}
+
 	@Override
 	public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
 		return blockState.getValue(ON) && side == EnumFacing.SOUTH ? 15 : 0;
