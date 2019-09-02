@@ -59,7 +59,6 @@ public class BlockMusicPlayer extends BlockBasic {
 			if(isPowered(worldIn, pos)) {
 				te.play();
 				worldIn.setBlockState(pos, state.withProperty(ON, true));
-				worldIn.notifyNeighborsOfStateChange(pos, this, false);
 				if(te.currentEntry != null) {
 					worldIn.scheduleBlockUpdate(pos, this, te.currentEntry.recordTime*20, 0);
 				}
@@ -71,6 +70,7 @@ public class BlockMusicPlayer extends BlockBasic {
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		worldIn.setBlockState(pos, state.withProperty(ON, false), 3);
 		((TileEntityMusicPlayer)worldIn.getTileEntity(pos)).stopPlaying();
+		worldIn.notifyNeighborsOfStateChange(pos, this, false);
 	}
 
 	@Override

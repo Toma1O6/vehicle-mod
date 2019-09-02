@@ -32,6 +32,8 @@ public class VMConfig {
 	
 	@Name("Beamer S120")
 	public static VehicleStats beamer_s120 = new VehicleStats(150F, 1.5F, 0.05F, 0.08F, 0.3F, 3.0F, 0.005f, 0.5);
+
+	public static VehicleStats federati_vulcan = new VehicleStats(150F, 1.5F, 0.05F, 0.08F, 0.3F, 3.0F, 0.005F, 0.5);
 	
 	@Mod.EventBusSubscriber(modid = VehicleMod.Constants.ID)
 	public static class Event {
