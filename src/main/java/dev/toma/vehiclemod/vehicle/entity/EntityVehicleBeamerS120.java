@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class EntityVehicleBeamerS120 extends EntityVehicle {
 	
 	private VehicleSounds sounds;
-	private static final String[] VARIANTS = {"beamer120_black","beamer120_blue","beamer120_brown","beamer120_green","beamer120_grey","beamer120_light_blue","beamer120_orange","beamer120_red","beamer120_white","beamer120_yellow"};
+	private static final String[] VARIANTS = {"beamer120_white","beamer120_orange","beamer120_magenta","beamer120_light_blue","beamer120_yellow","beamer120_lime","beamer120_pink","beamer120_gray","beamer120_silver","beamer120_cyan","beamer120_purple","beamer120_blue","beamer120_brown","beamer120_green","beamer120_red","beamer120_black"};
 	private static final Vector3f[] PARTS = {new Vector3f(2.5f, 1f, 0f), new Vector3f(-2.9f, 0.3f, 0.65f)};
 	
 	public EntityVehicleBeamerS120(World world) {

@@ -6,4 +6,22 @@ tile.music_player.name=Music Box
 
 item.fuel_can.name=Fuel Can
 
+item.empty_spray_can.name=Empty Spray Can
+item.white_spray_can.name=White Spray Can
+item.orange_spray_can.name=Orange Spray Can
+item.magenta_spray_can.name=Magenta Spray Can
+item.light_blue_spray_can.name=Light Blue Spray Can
+item.yellow_spray_can.name=Yellow Spray Can
+item.lime_spray_can.name=Lime Spray Can
+item.pink_spray_can.name=Pink Spray Can
+item.gray_spray_can.name=Gray Spray Can
+item.silver_spray_can.name=Silver Spray Can
+item.cyan_spray_can.name=Cyan Spray Can
+item.purple_spray_can.name=Purple Spray Can
+item.blue_spray_can.name=Blue Spray Can
+item.brown_spray_can.name=Brown Spray Can
+item.green_spray_can.name=Green Spray Can
+item.red_spray_can.name=Red Spray Can
+item.black_spray_can.name=Black Spray Can
+
 item.spawn_beamers120.name=Beamer S120

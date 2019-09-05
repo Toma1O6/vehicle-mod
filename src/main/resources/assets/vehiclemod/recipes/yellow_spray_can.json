@@ -1,0 +1,11 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {"item": "vehiclemod:empty_spray_can"},
+        {"item": "minecraft:dye", "data": 11}
+    ],
+    "result": {
+        "item": "vehiclemod:yellow_spray_can",
+        "count": 1
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " X ",
+        "X X",
+        "XXX"
+    ],
+    "key": {
+        "X": {
+            "item": "minecraft:iron_nugget"
+        }
+    },
+    "result": {
+        "item": "vehiclemod:empty_spray_can",
+        "count": 1
+    }
+}

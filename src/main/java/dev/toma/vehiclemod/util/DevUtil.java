@@ -1,5 +1,20 @@
 package dev.toma.vehiclemod.util;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import dev.toma.vehiclemod.VehicleMod;
+import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
+import net.minecraft.launchwrapper.Launch;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -8,22 +23,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-
-import dev.toma.vehiclemod.VehicleMod;
-import net.minecraft.block.Block;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.launchwrapper.Launch;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
 
 public class DevUtil {
 	
@@ -42,7 +41,11 @@ private static final ModelCreator CREATOR = new ModelCreator();
 		public void createAllFiles() {
 			ForgeRegistries.BLOCKS.getValuesCollection().stream()
 					.filter(b -> b.getRegistryName().getResourceDomain().equals(VehicleMod.Constants.ID))
-					.forEach(b -> {createBlockFiles(b);});
+					.forEach(this::createBlockFiles);
+
+			ForgeRegistries.ITEMS.getValuesCollection().stream()
+					.filter(i -> i.getRegistryName().getResourceDomain().equals(VehicleMod.Constants.ID))
+					.forEach(this::createItemModelFile);
 		}
 		
 		public void createBlockFiles(Block block) {
@@ -241,6 +244,29 @@ private static final ModelCreator CREATOR = new ModelCreator();
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
+			}
+		}
+
+		public void createItemModelFile(Item item) {
+			String name = item.getRegistryName().getResourcePath();
+			File file = new File("D:/mcmods/1.12.2/vehicle-mod/src/main/resources/assets/vehiclemod/models/item/" + name + ".json");
+			if(file.exists()) {
+				return;
+			}
+			try {
+				file.createNewFile();
+				StringBuilder sb = new StringBuilder();
+				sb.append("{\n");
+				sb.append("\t\"parent\": \"item/generated\",\n");
+				sb.append("\t\"textures\": {\n");
+				sb.append("\t\t\"layer0\": \"vehiclemod:items/" + name + "\"\n");
+				sb.append("\t}\n");
+				sb.append("}");
+				FileWriter writer = new FileWriter(file);
+				writer.write(sb.toString());
+				writer.close();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
