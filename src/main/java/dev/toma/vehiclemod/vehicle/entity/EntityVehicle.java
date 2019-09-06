@@ -6,6 +6,7 @@ import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.items.ItemSprayCan;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
+import dev.toma.vehiclemod.util.IVehicleAccessory;
 import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.VehicleSounds;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
@@ -263,9 +264,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             if (!world.isRemote && canBeRidden(player) && canFitPassenger(player)) {
                 player.startRiding(this);
             }
-        } else if (player.getHeldItemMainhand().getItem() instanceof ItemSprayCan) {
-            ItemSprayCan sprayCan = (ItemSprayCan) player.getHeldItemMainhand().getItem();
-            this.setVariant(sprayCan.getColor().ordinal());
+        } else if (player.getHeldItemMainhand().getItem() instanceof IVehicleAccessory) {
+            ((IVehicleAccessory)player.getHeldItemMainhand().getItem()).apply(this, world, player);
         } else {
             if (!world.isRemote) {
                 return false;
