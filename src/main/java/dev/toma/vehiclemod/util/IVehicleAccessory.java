@@ -6,5 +6,5 @@ import net.minecraft.world.World;
 
 public interface IVehicleAccessory {
 
-    void apply(EntityVehicle vehicle, World world, EntityPlayer player);
+    void applyOnVehicle(EntityVehicle vehicle, World world, EntityPlayer player);
 }

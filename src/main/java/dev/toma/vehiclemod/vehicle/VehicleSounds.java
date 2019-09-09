@@ -27,9 +27,9 @@ public class VehicleSounds {
 	}
 	
 	public void stopPlaying() {
-		idle.stopSound();
+		/*idle.stopSound();
 		acceleration.stopSound();
 		braking.stopSound();
-		release.stopSound();
+		release.stopSound();*/
 	}
 }

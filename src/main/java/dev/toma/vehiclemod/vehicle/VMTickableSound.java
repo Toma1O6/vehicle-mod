@@ -8,9 +8,11 @@ import net.minecraft.util.SoundEvent;
 public class VMTickableSound extends MovingSound {
 	
 	private final EntityVehicle vehicle;
+	public final SoundEvent event;
 	
 	public VMTickableSound(SoundEvent event, EntityVehicle parent) {
 		super(event, SoundCategory.MASTER);
+		this.event = event;
 		this.vehicle = parent;
 		this.repeat = true;
 		this.attenuationType = AttenuationType.LINEAR;

@@ -10,9 +10,16 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.Item;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.io.BufferedWriter;
@@ -34,6 +41,28 @@ private static final ModelCreator CREATOR = new ModelCreator();
 	
 	public static boolean isDev() {
 		return (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
+	}
+
+	public static void drawImage2D(Minecraft mc, ResourceLocation location, int x, int y, int width, int height, double uStart, double vStart, double uEnd, double vEnd) {
+		mc.getTextureManager().bindTexture(location);
+		GlStateManager.color(1f, 1f, 1f);
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferBuilder = tessellator.getBuffer();
+		bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+		bufferBuilder.pos(x, y + height, 0).tex(uStart, vEnd).endVertex();
+		bufferBuilder.pos(x + width, y + height, 0).tex(uEnd, vEnd).endVertex();
+		bufferBuilder.pos(x + width, y, 0).tex(uEnd, vStart).endVertex();
+		bufferBuilder.pos(x, y, 0).tex(uStart, vStart).endVertex();
+		tessellator.draw();
+	}
+
+	public static void drawImage2D(Minecraft mc, ResourceLocation location, int x, int y, int width, int height) {
+		drawImage2D(mc, location, x, y, width, height, 0, 0, 1, 1);
+	}
+
+	public static void drawImage2D(Minecraft mc, ResourceLocation location) {
+		ScaledResolution resolution = new ScaledResolution(mc);
+		drawImage2D(mc, location, 0, 0, resolution.getScaledWidth(), resolution.getScaledHeight());
 	}
 	
 	public static final class ModelCreator {

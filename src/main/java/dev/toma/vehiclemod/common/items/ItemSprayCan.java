@@ -18,7 +18,7 @@ public class ItemSprayCan extends VMItem implements IVehicleAccessory {
     }
 
     @Override
-    public void apply(EntityVehicle vehicle, World world, EntityPlayer player) {
+    public void applyOnVehicle(EntityVehicle vehicle, World world, EntityPlayer player) {
         vehicle.setVariant(this.colorVar.ordinal());
         if(!player.capabilities.isCreativeMode) {
             player.getHeldItemMainhand().shrink(1);

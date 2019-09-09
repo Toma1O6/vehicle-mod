@@ -1,6 +1,9 @@
 {
     "secret": {"category": "master", "sounds": [{"name": "vehiclemod:secret", "stream": "true"}]},
     "vehicle_idle": {"category": "master", "sounds": [{"name": "vehiclemod:vehicle_idle", "stream": "true"}]},
+    "beamer_acc": {"category":  "master", "sounds": [{"name": "vehiclemod:beamer_accelerate", "stream": "true"}]},
+    "beamer_brake": {"category":  "master", "sounds": [{"name": "vehiclemod:beamer_brake", "stream": "true"}]},
+    "beamer_gas": {"category":  "master", "sounds": [{"name": "vehiclemod:beamer_release", "stream": "true"}]},
     "danger1": {"category": "master", "sounds": [{"name": "vehiclemod:danger1", "stream": "true"}]},
     "danger2": {"category": "master", "sounds": [{"name": "vehiclemod:danger2", "stream": "true"}]},
     "danger3": {"category": "master", "sounds": [{"name": "vehiclemod:danger3", "stream": "true"}]},

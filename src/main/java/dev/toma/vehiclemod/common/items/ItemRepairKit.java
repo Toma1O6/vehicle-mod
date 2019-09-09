@@ -13,7 +13,7 @@ public class ItemRepairKit extends VMItem implements IVehicleAccessory {
     }
 
     @Override
-    public void apply(EntityVehicle vehicle, World world, EntityPlayer player) {
+    public void applyOnVehicle(EntityVehicle vehicle, World world, EntityPlayer player) {
         vehicle.health = vehicle.getStats().maxHealth;
         if(!player.capabilities.isCreativeMode) {
             player.getHeldItemMainhand().shrink(1);

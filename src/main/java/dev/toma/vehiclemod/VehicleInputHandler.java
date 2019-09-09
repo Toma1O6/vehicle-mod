@@ -23,6 +23,8 @@ public class VehicleInputHandler {
 			
 			if(e.phase == Phase.END) {
 				if(player.isRiding() && player.getRidingEntity() instanceof EntityVehicle) {
+					((EntityVehicle)player.getRidingEntity()).updateInput(gs.keyBindForward.isKeyDown(), gs.keyBindBack.isKeyDown(),
+							gs.keyBindRight.isKeyDown(), gs.keyBindLeft.isKeyDown(), player);
 					VMNetworkManager.instance().sendToServer(new SPacketInput(gs.keyBindForward.isKeyDown(), 
 							gs.keyBindBack.isKeyDown(), gs.keyBindRight.isKeyDown(), gs.keyBindLeft.isKeyDown()));
 				}

@@ -3,7 +3,6 @@ package dev.toma.vehiclemod.vehicle.entity;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import dev.toma.vehiclemod.VehicleMod;
-import dev.toma.vehiclemod.common.items.ItemSprayCan;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
 import dev.toma.vehiclemod.util.IVehicleAccessory;
@@ -109,7 +108,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
         if (!world.isRemote) {
             VMNetworkManager.instance().sendToAllAround(new CPacketVehicleData(this), new TargetPoint(dimension, posX, posY, posZ, 256));
-        } else playSoundAtVehicle();
+        }
 
         spawnParticles();
         move(MoverType.SELF, motionX, motionY, motionZ);
@@ -208,8 +207,16 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                 initSounds();
             }
         }
+        if(world.isRemote && prevState != currentState) {
+            this.vehicleStateChanged();
+        }
         prevSpeed = currentSpeed;
         prevState = currentState;
+    }
+
+    public void vehicleStateChanged() {
+        VehicleMod.proxy.playSoundAt(this);
+        System.out.println(currentState);
     }
 
     public void updateInput(boolean forward, boolean back, boolean right, boolean left, EntityPlayer player) {
@@ -221,17 +228,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             }
             this.inputRight = right;
             this.inputLeft = left;
-			
-			/*if(VMConfig.simpleVehicleControls) {
-				float playerRot = player.rotationYaw;
-				playerRot = playerRot < 0 ? playerRot + 360f : playerRot > 360f ? playerRot - 360f : playerRot;
-				float delta = rotationYaw - playerRot;
-				if((delta < (-getStats().maxTurningAngle*3) && delta > -200f) || delta >= 200f) {
-					inputRight = true;
-				} else if(delta > (getStats().maxTurningAngle*3) && delta < 200f || delta <= -200f) {
-					inputLeft = true;
-				}
-			}*/
         }
     }
 
@@ -265,7 +261,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                 player.startRiding(this);
             }
         } else if (player.getHeldItemMainhand().getItem() instanceof IVehicleAccessory) {
-            ((IVehicleAccessory)player.getHeldItemMainhand().getItem()).apply(this, world, player);
+            ((IVehicleAccessory)player.getHeldItemMainhand().getItem()).applyOnVehicle(this, world, player);
         } else {
             if (!world.isRemote) {
                 return false;
@@ -487,7 +483,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     private boolean isAccelerating() {
-        return currentSpeed > prevSpeed;
+        return (currentState != EnumVehicleState.BRAKING && currentSpeed > prevSpeed) || inputForward;
     }
 
     private boolean isBraking() {
