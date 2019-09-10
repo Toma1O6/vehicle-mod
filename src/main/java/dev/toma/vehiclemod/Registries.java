@@ -1,10 +1,7 @@
 package dev.toma.vehiclemod;
 
 import dev.toma.vehiclemod.common.blocks.*;
-import dev.toma.vehiclemod.common.items.ItemFuelCan;
-import dev.toma.vehiclemod.common.items.ItemSprayCan;
-import dev.toma.vehiclemod.common.items.ItemVehicleSpawner;
-import dev.toma.vehiclemod.common.items.VMItem;
+import dev.toma.vehiclemod.common.items.*;
 import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.util.MusicEntry;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
@@ -57,6 +54,7 @@ public class Registries {
         public static final ItemSprayCan GREEN_SPRAY_CAN = null;
         public static final ItemSprayCan RED_SPRAY_CAN = null;
         public static final ItemSprayCan BLACK_SPRAY_CAN = null;
+        public static final ItemRepairKit REPAIR_KIT = null;
     }
 
     @ObjectHolder(VehicleMod.Constants.ID)
@@ -137,7 +135,8 @@ public class Registries {
                             world.spawnEntity(new EntityVehicleBeamerS120(world, pos));
                         }
                     },
-                    new VMItem("empty_spray_can")
+                    new VMItem("empty_spray_can"),
+                    new ItemRepairKit("repair_kit")
             };
             for (int i = 0; i < EnumDyeColor.values().length; i++) {
                 EnumDyeColor color = EnumDyeColor.values()[i];
@@ -262,7 +261,7 @@ public class Registries {
         public static void onModelRegister(ModelRegistryEvent e) {
             final IForgeRegistry<Item> ITEMS = ForgeRegistries.ITEMS;
             final IForgeRegistry<Block> BLOCKS = ForgeRegistries.BLOCKS;
-            DevUtil.creator().createAllFiles();
+            /*DevUtil.creator().createAllFiles();*/
             for (ResourceLocation rl : ITEMS.getKeys()) {
                 if (rl.getResourceDomain().equalsIgnoreCase(VehicleMod.Constants.ID)) {
                     registerModel(ITEMS.getValue(rl));

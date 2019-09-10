@@ -40,12 +40,13 @@ public class ClientProxy implements IProxy {
 	public void playSoundAt(EntityVehicle v) {
 		SoundHandler handler = Minecraft.getMinecraft().getSoundHandler();
 		VehicleSounds sounds = v.getSounds();
-		/*handler.stopSound(sounds.idle);
-		handler.stopSound(sounds.getAccelerateSound());
-		handler.stopSound(sounds.getBrakeSound());
-		handler.stopSound(sounds.getGasReleaseSound());*/
 		SoundEvent event = v.getVehicleSound().event;
-		handler.playSound(new VMTickableSound(event, v));
+		if(v.currentSound != null && handler.isSoundPlaying(v.currentSound)) {
+			handler.stopSound(v.currentSound);
+		}
+		VMTickableSound sound = new VMTickableSound(event, v);
+		v.currentSound = sound;
+		handler.playSound(sound);
 	}
 	
 	@Override

@@ -23,6 +23,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.vecmath.Vector3f;
 import java.util.ArrayList;
@@ -44,6 +46,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     private short timeInInvalidState;
     private int variantType;
     private double distanceTraveled = 0;
+
+    @SideOnly(Side.CLIENT)
+    public VMTickableSound currentSound;
 
     private boolean inputForward, inputBack, inputRight, inputLeft;
 
@@ -216,7 +221,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public void vehicleStateChanged() {
         VehicleMod.proxy.playSoundAt(this);
-        System.out.println(currentState);
     }
 
     public void updateInput(boolean forward, boolean back, boolean right, boolean left, EntityPlayer player) {
