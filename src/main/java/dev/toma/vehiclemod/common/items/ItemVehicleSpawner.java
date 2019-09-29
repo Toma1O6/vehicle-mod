@@ -9,12 +9,15 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class ItemVehicleSpawner extends Item {
-	
-	public ItemVehicleSpawner(String name) {
+public class ItemVehicleSpawner extends Item {
+
+	private final IClickAction action;
+
+	public ItemVehicleSpawner(String name, IClickAction action) {
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		setCreativeTab(VehicleMod.TAB);
+		this.action = action;
 	}
 	
 	@Override
@@ -23,10 +26,13 @@ public abstract class ItemVehicleSpawner extends Item {
 			if(!player.capabilities.isCreativeMode) {
 				player.getHeldItem(hand).shrink(1);
 			}
-			this.handleAction(worldIn, pos);
+			action.click(worldIn, pos);
 		}
 		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 	}
-	
-	public abstract void handleAction(World world, BlockPos pos);
+
+	@FunctionalInterface
+	public interface IClickAction {
+		void click(World world, BlockPos pos);
+	}
 }

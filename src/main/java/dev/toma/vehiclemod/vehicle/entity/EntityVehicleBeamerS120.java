@@ -7,6 +7,7 @@ import dev.toma.vehiclemod.VMConfig;
 import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.VehicleSounds;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -30,15 +31,15 @@ public class EntityVehicleBeamerS120 extends EntityVehicle {
 	}
 	
 	@Override
-	public double getMountedYOffset() {
-		return this.getStats().passengerOffset;
-	}
-	
-	@Override
 	public int maximumAmountOfPassengers() {
 		return 4;
 	}
-	
+
+	@Override
+	public SoundEvent getStartSound() {
+		return VMSounds.BEAMER_START;
+	}
+
 	@Override
 	public VehicleSounds getSounds() {
 		initSounds();
@@ -66,7 +67,8 @@ public class EntityVehicleBeamerS120 extends EntityVehicle {
 				new VMTickableSound(VMSounds.VEHICLE_IDLE, this),
 				new VMTickableSound(VMSounds.BEAMER_ACC, this),
 				new VMTickableSound(VMSounds.BEAMER_BRAKE, this),
-				new VMTickableSound(VMSounds.BEAMER_GAS, this)
+				new VMTickableSound(VMSounds.BEAMER_GAS, this),
+				new VMTickableSound(VMSounds.BEAMER_TOP_SPEED, this)
 		);
 	}
 	

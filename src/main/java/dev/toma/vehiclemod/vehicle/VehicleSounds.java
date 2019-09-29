@@ -6,12 +6,14 @@ public class VehicleSounds {
 	private final VMTickableSound acceleration;
 	private final VMTickableSound braking;
 	private final VMTickableSound release;
+	private final VMTickableSound topSpeed;
 	
-	public VehicleSounds(VMTickableSound idle, VMTickableSound acc, VMTickableSound brake, VMTickableSound rls) {
+	public VehicleSounds(VMTickableSound idle, VMTickableSound acc, VMTickableSound brake, VMTickableSound rls, VMTickableSound topSpeed) {
 		this.idle = idle;
 		this.acceleration = acc;
 		this.braking = brake;
 		this.release = rls;
+		this.topSpeed = topSpeed;
 	}
 	
 	public VMTickableSound getAccelerateSound() {
@@ -25,11 +27,8 @@ public class VehicleSounds {
 	public VMTickableSound getGasReleaseSound() {
 		return release;
 	}
-	
-	public void stopPlaying() {
-		/*idle.stopSound();
-		acceleration.stopSound();
-		braking.stopSound();
-		release.stopSound();*/
+
+	public VMTickableSound getTopSpeedSound() {
+		return topSpeed;
 	}
 }

@@ -10,32 +10,17 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class ServerProxy implements IProxy {
 	
 	@Override
-	public void preInit(FMLPreInitializationEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void preInit(FMLPreInitializationEvent e) {}
 	
 	@Override
-	public void init(FMLInitializationEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void init(FMLInitializationEvent e) {}
 	
 	@Override
-	public void postInit(FMLPostInitializationEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void postInit(FMLPostInitializationEvent e) {}
 	
 	@Override
-	public void playSoundAt(EntityVehicle v) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void playSoundAt(EntityVehicle v) {}
 	
 	@Override
-	public void displayGuiMusicPlayer(TileEntityMusicPlayer te, BlockPos pos) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void displayGuiMusicPlayer(TileEntityMusicPlayer te, BlockPos pos) {}
 }

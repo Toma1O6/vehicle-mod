@@ -143,8 +143,8 @@ private static final ModelCreator CREATOR = new ModelCreator();
 						}
 						for(int i = 0; i < properties.size(); i++) {
 							boolean flag1 = i == properties.size()-1;
-							sb.append(names[i]+"="+values[i]+(flag1?("\": {" + getModel(block, values[i], hasIntegerProp, value) +
-									(hasDirectionProp&&facing!=null?",\"y\": "+facing.getOpposite().getHorizontalAngle()+"}"+(flag0?",":"")+"\n":"}"+(flag0?",":"")+"\n")):","));
+							sb.append(names[i]).append("=").append(values[i]).append(flag1 ? ("\": {" + getModel(block, values[i], hasIntegerProp, value) +
+									(hasDirectionProp && facing != null ? ",\"y\": " + facing.getOpposite().getHorizontalAngle() + "}" + (flag0 ? "," : "") + "\n" : "}" + (flag0 ? "," : "") + "\n")) : ",");
 						}
 					}
 					sb.append("\t}\n");
@@ -168,9 +168,9 @@ private static final ModelCreator CREATOR = new ModelCreator();
 			Collection<IProperty<?>> props = block.getBlockState().getProperties();
 			boolean bool = contains(PropertyBool.class, props);
 			StringBuilder sb = new StringBuilder();
-			sb.append("\"model\": \"" + block.getRegistryName().toString());
+			sb.append("\"model\": \"").append(block.getRegistryName().toString());
 			if(integerProperty) {
-				sb.append(integerName + value);
+				sb.append(integerName).append(value);
 			}
 			if(bool) {
 				boolean flag = additional != null && additional.contains("true");

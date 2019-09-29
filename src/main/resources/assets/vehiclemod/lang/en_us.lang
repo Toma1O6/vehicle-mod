@@ -25,3 +25,7 @@ item.red_spray_can.name=Red Spray Can
 item.black_spray_can.name=Black Spray Can
 item.repair_kit.name=Repair Kit
 item.spawn_beamers120.name=Beamer S120
+item.spawn_fedorattivulcan.name=Fedoratti Vulcan
+item.spawn_tracert1.name=Tracer T1
+
+itemGroup.vehicle_mod=Vehicle Mod

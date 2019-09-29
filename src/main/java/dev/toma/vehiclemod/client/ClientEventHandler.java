@@ -6,24 +6,22 @@ import dev.toma.vehiclemod.common.FuelHandler;
 import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
+
+import java.text.DecimalFormat;
 
 @EventBusSubscriber(Side.CLIENT)
 public class ClientEventHandler {
 
 	private static final ResourceLocation VEHICLE_HUD = new ResourceLocation(VehicleMod.Constants.ID + ":textures/vehicle/vehicle_hud.png");
+	private static final DecimalFormat format = new DecimalFormat("###0.0");
 
 	@SubscribeEvent
 	public static void renderTooltip(ItemTooltipEvent e) {
@@ -46,6 +44,8 @@ public class ClientEventHandler {
 				boolean lowFuel = fuel <= 0.17F;
 				float health = car.health / car.getStats().maxHealth;
 				boolean lowHealth = health <= 0.35;
+				double speed = Math.sqrt(car.motionX*car.motionX + car.motionZ*car.motionZ) * 20;
+				mc.fontRenderer.drawStringWithShadow(format.format(speed*3.6F) + " km/h", 16, resolution.getScaledHeight() - 35, 0xFFFFFF);
 				VehicleHUDType type = VehicleHUDType.FUEL_STATE;
 				DevUtil.drawImage2D(mc, VEHICLE_HUD, 0, resolution.getScaledHeight() - 25, 120, 20, type.uv.uStart, type.uv.vStart, type.uv.uEnd, type.uv.vEnd);
 				type = lowFuel ? VehicleHUDType.FUEL_LOW : VehicleHUDType.FUEL;

@@ -16,7 +16,6 @@ public class CPacketVehicleData implements IMessage {
 	private boolean isBroken;
 	
 	public CPacketVehicleData() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public CPacketVehicleData(EntityVehicle vehicle) {

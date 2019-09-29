@@ -27,8 +27,10 @@ public class RenderBeamerS120 extends RenderVehicle<EntityVehicleBeamerS120> {
 		GlStateManager.scale(0.05, 0.05, 0.05);
 		GlStateManager.rotate(180f, 1f, 0f, 0f);
 		GlStateManager.translate(0, -5, 0);
-		GlStateManager.rotate(entity.rotationYaw, 0f, 1f, 0f);
+		GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
+		GlStateManager.disableLighting();
 		model.doVehicleRender();
+		GlStateManager.enableLighting();
 		GlStateManager.popMatrix();
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 	}

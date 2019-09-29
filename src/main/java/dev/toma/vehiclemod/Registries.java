@@ -2,9 +2,10 @@ package dev.toma.vehiclemod;
 
 import dev.toma.vehiclemod.common.blocks.*;
 import dev.toma.vehiclemod.common.items.*;
-import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.util.MusicEntry;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
+import dev.toma.vehiclemod.vehicle.entity.VehicleFedorattiVulcan;
+import dev.toma.vehiclemod.vehicle.entity.VehicleTracerT1;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
@@ -13,8 +14,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -37,6 +36,8 @@ public class Registries {
     public static final class VMItems {
         public static final Item FUEL_CAN = null;
         public static final ItemVehicleSpawner SPAWN_BEAMERS120 = null;
+        public static final ItemVehicleSpawner SPAWN_FEDORATTIVULCAN = null;
+        public static final ItemVehicleSpawner SPAWN_TRACERT1 = null;
         public static final VMItem EMPTY_SPRAY_CAN = null;
         public static final ItemSprayCan WHITE_SPRAY_CAN = null;
         public static final ItemSprayCan ORANGE_SPRAY_CAN = null;
@@ -72,10 +73,19 @@ public class Registries {
         public static final SoundEvent BEAMER_ACC = null;
         public static final SoundEvent BEAMER_BRAKE = null;
         public static final SoundEvent BEAMER_GAS = null;
-        public static final SoundEvent SECRET = null;
+        public static final SoundEvent BEAMER_TOP_SPEED = null;
+        public static final SoundEvent BEAMER_START = null;
         public static final SoundEvent TRACER_ACC = null;
         public static final SoundEvent TRACER_BRAKE = null;
         public static final SoundEvent TRACER_GAS = null;
+        public static final SoundEvent TRACER_TOP_SPEED = null;
+        public static final SoundEvent TRACER_START = null;
+        public static final SoundEvent FEDORATTI_ACC = null;
+        public static final SoundEvent FEDORATTI_BRAKE = null;
+        public static final SoundEvent FEDORATTI_GAS = null;
+        public static final SoundEvent FEDORATTI_TOP_SPEED = null;
+        public static final SoundEvent FEDORATTI_START = null;
+        public static final SoundEvent SECRET = null;
 
         // music entries
         public static final SoundEvent DANGER1 = null;
@@ -129,12 +139,9 @@ public class Registries {
         public static void onItemRegister(RegistryEvent.Register<Item> e) {
             final Item[] items = {
                     new ItemFuelCan("fuel_can"),
-                    new ItemVehicleSpawner("spawn_beamers120") {
-                        @Override
-                        public void handleAction(World world, BlockPos pos) {
-                            world.spawnEntity(new EntityVehicleBeamerS120(world, pos));
-                        }
-                    },
+                    new ItemVehicleSpawner("spawn_beamers120",(w, p) -> w.spawnEntity(new EntityVehicleBeamerS120(w, p))),
+                    new ItemVehicleSpawner("spawn_fedorattivulcan", (w, p) -> w.spawnEntity(new VehicleFedorattiVulcan(w, p))),
+                    new ItemVehicleSpawner("spawn_tracert1", (w, p) -> w.spawnEntity(new VehicleTracerT1(w, p))),
                     new VMItem("empty_spray_can"),
                     new ItemRepairKit("repair_kit")
             };
@@ -149,7 +156,9 @@ public class Registries {
         @SubscribeEvent
         public static void onEntityRegister(RegistryEvent.Register<EntityEntry> e) {
             final EntityEntry[] entries = {
-                    registerVehicle("beamer_s120", EntityVehicleBeamerS120.class)
+                    registerVehicle("beamer_s120", EntityVehicleBeamerS120.class),
+                    registerVehicle("fedoratti_vulcan", VehicleFedorattiVulcan.class),
+                    registerVehicle("tracer_t1", VehicleTracerT1.class)
             };
             e.getRegistry().registerAll(entries);
         }
@@ -162,9 +171,18 @@ public class Registries {
                     registerSound("beamer_acc"),
                     registerSound("beamer_brake"),
                     registerSound("beamer_gas"),
+                    registerSound("beamer_top_speed"),
+                    registerSound("beamer_start"),
+                    registerSound("fedoratti_acc"),
+                    registerSound("fedoratti_brake"),
+                    registerSound("fedoratti_gas"),
+                    registerSound("fedoratti_top_speed"),
+                    registerSound("fedoratti_start"),
                     registerSound("tracer_acc"),
                     registerSound("tracer_brake"),
                     registerSound("tracer_gas"),
+                    registerSound("tracer_top_speed"),
+                    registerSound("tracer_start"),
                     registerSound("danger1"),
                     registerSound("danger2"),
                     registerSound("danger3"),

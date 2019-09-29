@@ -31,10 +31,14 @@ public class VMConfig {
 	public static int cellTimerModifier = 20;
 	
 	@Name("Beamer S120")
-	public static VehicleStats beamer_s120 = new VehicleStats(150F, 1.5F, 0.05F, 0.08F, 0.3F, 3.0F, 0.005f, 0.5);
+	public static VehicleStats beamer_s120 = new VehicleStats(150F, 3.0F, 0.012F, 0.02F, 0.3F, 3.0F, 0.005f, 0.5);
 
-	public static VehicleStats federati_vulcan = new VehicleStats(150F, 1.5F, 0.05F, 0.08F, 0.3F, 3.0F, 0.005F, 0.5);
-	
+	@Name("Federati Vulcan")
+	public static VehicleStats fedoratti_vulcan = new VehicleStats(150F, 3.0F, 0.012F, 0.02F, 0.3F, 3.0F, 0.005F, 0.5);
+
+	@Name("Tracer T1")
+	public static VehicleStats tracer_t1 = new VehicleStats(150F, 3.0F, 0.012F, 0.02F, 0.3F, 3.0F, 0.005F, 0.2);
+
 	@Mod.EventBusSubscriber(modid = VehicleMod.Constants.ID)
 	public static class Event {
 		

@@ -3,9 +3,9 @@ package dev.toma.vehiclemod.vehicle.entity;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.common.items.ItemSprayCan;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
-import dev.toma.vehiclemod.util.IVehicleAccessory;
 import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.VehicleSounds;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
@@ -36,8 +36,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     private static final Predicate<Entity> TARGET = Predicates.and(EntitySelectors.NOT_SPECTATING, EntitySelectors.IS_ALIVE, Entity::canBeCollidedWith);
 
     public float health;
-    public float currentSpeed;
-    public float prevSpeed;
+    public float currentSpeed, prevSpeed, damagedMaxSpeed;
     public float turnModifier;
     public float fuel;
     public EnumVehicleState prevState, currentState;
@@ -46,6 +45,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     private short timeInInvalidState;
     private int variantType;
     private double distanceTraveled = 0;
+    private boolean isStarted = false;
 
     @SideOnly(Side.CLIENT)
     public VMTickableSound currentSound;
@@ -54,10 +54,12 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public EntityVehicle(World world) {
         super(world);
-        setSize(1f, 1f);
+        setSize(2f, 1.5f);
         stepHeight = 1f;
         preventEntitySpawning = true;
         variantType = VehicleMod.getRNG().nextInt(this.getVariants().length);
+        this.health = this.getStats().maxHealth;
+        this.setFuel();
         if (locations.isEmpty()) {
             for (int i = 0; i < this.getVariants().length; i++) {
                 String s = this.getVariants()[i];
@@ -76,6 +78,11 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         return Math.sqrt(vehicle.motionX * vehicle.motionX + vehicle.motionZ * vehicle.motionZ);
     }
 
+    @Override
+    public double getMountedYOffset() {
+        return this.getStats().passengerOffset;
+    }
+
     public abstract String[] getVariants();
 
     /**
@@ -88,6 +95,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public abstract int maximumAmountOfPassengers();
 
     public abstract VehicleSounds getSounds();
+
+    public abstract SoundEvent getStartSound();
 
     public abstract void initSounds();
 
@@ -136,11 +145,12 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         if (!isBroken && hasFuel()) {
             if (inputForward && !inputBack) {
                 boolean flag = this.health / stats.maxHealth <= 0.5f;
-                float damagedAcc = this.health / stats.maxHealth;
+                float diff = this.health / stats.maxHealth;
+                float damagedAcc = diff + 0.15F > 1.0F ? 1.0F : diff + 0.15F;
                 float acceleration = flag ? stats.acceleration * damagedAcc : stats.acceleration;
-                float max = flag ? stats.maxSpeed * 0.6f : stats.maxSpeed;
+                this.damagedMaxSpeed = flag ? stats.maxSpeed * 0.6f : stats.maxSpeed;
                 burnFuel();
-                currentSpeed = currentSpeed < max ? currentSpeed + acceleration : max;
+                currentSpeed = currentSpeed < damagedMaxSpeed ? currentSpeed + acceleration : damagedMaxSpeed;
             }
             if (!inputForward && inputBack) {
                 burnFuel();
@@ -212,7 +222,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                 initSounds();
             }
         }
-        if(world.isRemote && prevState != currentState) {
+        if(world.isRemote && prevState != currentState && isStarted) {
             this.vehicleStateChanged();
         }
         prevSpeed = currentSpeed;
@@ -264,8 +274,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             if (!world.isRemote && canBeRidden(player) && canFitPassenger(player)) {
                 player.startRiding(this);
             }
-        } else if (player.getHeldItemMainhand().getItem() instanceof IVehicleAccessory) {
-            ((IVehicleAccessory)player.getHeldItemMainhand().getItem()).applyOnVehicle(this, world, player);
+        } else if (player.getHeldItemMainhand().getItem() instanceof ItemSprayCan) {
+            ((ItemSprayCan)player.getHeldItemMainhand().getItem()).applyOnVehicle(this, world, player);
         } else {
             if (!world.isRemote) {
                 return false;
@@ -297,20 +307,43 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     public VMTickableSound getVehicleSound() {
-        if (isAccelerating()) {
-            return this.getSounds().getAccelerateSound();
-        } else if (isBraking()) {
-            return this.getSounds().getBrakeSound();
-        } else if (hasReleasedGas()) {
-            return this.getSounds().getGasReleaseSound();
+        VehicleSounds sounds = this.getSounds();
+        switch (currentState) {
+            case BRAKING: return sounds.getBrakeSound();
+            case ACCELERATING: return sounds.getAccelerateSound();
+            case KEEPING_SPEED: return sounds.getGasReleaseSound();
+            case TOP_SPEED: return sounds.getTopSpeedSound();
+            case IDLE: default: return sounds.idle;
+
         }
-        return this.getSounds().idle;
     }
 
     public void refillFuel() {
         fuel += 25f;
         if (fuel > 100f) {
             fuel = 100f;
+        }
+    }
+
+    public void repair() {
+        float amount = this.getStats().maxHealth * 0.3F;
+        this.health = this.health + amount > this.getStats().maxHealth ? this.getStats().maxHealth : this.health + amount;
+    }
+
+    @Override
+    protected void addPassenger(Entity passenger) {
+        if(this.getPassengers().isEmpty() && !isStarted) {
+            world.playSound(null, posX, posY, posZ, this.getStartSound(), SoundCategory.MASTER, 1.0F, 1.0F);
+            isStarted = true;
+        }
+        super.addPassenger(passenger);
+    }
+
+    @Override
+    protected void removePassenger(Entity passenger) {
+        super.removePassenger(passenger);
+        if(this.getPassengers().size() == 0) {
+            this.isStarted = false;
         }
     }
 
@@ -351,30 +384,24 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     protected void spawnParticles() {
         if (world.isRemote) {
-            if (health / getStats().maxHealth <= 0.35f) {
+            if (health / getStats().maxHealth <= 0.15f) {
                 Vec3d engineVec = (new Vec3d(getPartVecs()[0].x, getPartVecs()[0].y + 0.25d, getPartVecs()[0].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
                 world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, true, posX + engineVec.x, posY + engineVec.y, posZ + engineVec.z, 0d, 0.1d, 0d);
-
-                if (health / getStats().maxHealth <= 0.15f) {
-                    double rngX = (rand.nextDouble() - rand.nextDouble()) * 0.1;
-                    double rngZ = (rand.nextDouble() - rand.nextDouble()) * 0.1;
-                    world.spawnParticle(EnumParticleTypes.FLAME, true, posX + engineVec.x, posY + engineVec.y - 0.2, posZ + engineVec.z, rngX, 0.02d, rngZ);
-                }
             }
 
             if (!isBroken && hasFuel() && !this.getPassengers().isEmpty()) {
-                Vec3d exhaustVec = (new Vec3d(getPartVecs()[1].x, getPartVecs()[1].y + 0.25d, getPartVecs()[1].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
-                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, true, posX + exhaustVec.x, posY + exhaustVec.y, posZ + exhaustVec.z, 0, 0.02d, 0);
+                int i = 1;
+                while (i < this.getPartVecs().length) {
+                    Vec3d exhaustVec = (new Vec3d(getPartVecs()[i].x, getPartVecs()[i].y + 0.25d, getPartVecs()[i].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
+                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, true, posX + exhaustVec.x, posY + exhaustVec.y, posZ + exhaustVec.z, 0, 0.02d, 0);
+                    ++i;
+                }
             }
             if (isBroken) {
                 Vec3d engine = (new Vec3d(getPartVecs()[0].x, getPartVecs()[0].y + 0.25d, getPartVecs()[0].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
                 world.spawnParticle(EnumParticleTypes.CLOUD, true, posX + engine.x, posY + engine.y, posZ + engine.z, 0d, 0.05d, 0d);
             }
         }
-    }
-
-    protected void playSoundAtVehicle() {
-        VehicleMod.proxy.playSoundAt(this);
     }
 
     @Override
@@ -419,14 +446,17 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     private EnumVehicleState getVehicleState() {
-        if (isAccelerating()) {
+        if (this.isAccelerating()) {
+            if(this.currentSpeed == damagedMaxSpeed) {
+                return EnumVehicleState.TOP_SPEED;
+            }
             return EnumVehicleState.ACCELERATING;
-        } else if (isBraking()) {
+        } else if (this.isBraking()) {
             return EnumVehicleState.BRAKING;
-        } else if (Math.abs(currentSpeed) < 0.15) {
-            return EnumVehicleState.IDLE;
+        } else if ((prevState == EnumVehicleState.ACCELERATING || prevState == EnumVehicleState.TOP_SPEED || prevState == EnumVehicleState.KEEPING_SPEED) && currentSpeed != 0) {
+            return EnumVehicleState.KEEPING_SPEED;
         }
-        return EnumVehicleState.KEEPING_SPEED;
+        return EnumVehicleState.IDLE;
     }
 
     private void handleEntityCollisions() {
