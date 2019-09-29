@@ -5,6 +5,7 @@ import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
@@ -29,7 +30,7 @@ public class EntityAIAttackClosestTarget extends EntityAINearestAttackableTarget
         EntityPlayer closest = null;
         for(EntityPlayer player : world.playerEntities) {
             double d1 = this.distanceTo(player);
-            boolean b = !player.isCreative() && !(player.getRidingEntity() instanceof EntityVehicle);
+            boolean b = !player.isCreative() && !(player.getRidingEntity() instanceof EntityVehicle) && !(player.getRidingEntity() instanceof EntityMinecart);
             if(d1 < d0 && b) {
                 d0 = d1;
                 closest = player;
