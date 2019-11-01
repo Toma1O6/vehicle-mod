@@ -26,7 +26,7 @@ public class RenderTracerT1 extends RenderVehicle<VehicleTracerT1> {
         bindEntityTexture(entity);
         GlStateManager.translate(x, y, z);
         GlStateManager.rotate(180F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(0.05F, 0.05F, 0.05F);
+        GlStateManager.scale(0.035F, 0.035F, 0.035F);
         GlStateManager.translate(0, -8, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.disableLighting();

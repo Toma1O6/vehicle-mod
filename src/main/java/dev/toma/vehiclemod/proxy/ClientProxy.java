@@ -5,17 +5,13 @@ import dev.toma.vehiclemod.client.gui.GuiMusicPlayer;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMusicPlayer;
 import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.VehicleSounds;
-import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
-import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
-import dev.toma.vehiclemod.vehicle.entity.VehicleFedorattiVulcan;
-import dev.toma.vehiclemod.vehicle.entity.VehicleTracerT1;
+import dev.toma.vehiclemod.vehicle.entity.*;
 import dev.toma.vehiclemod.vehicle.render.RenderBeamerS120;
 import dev.toma.vehiclemod.vehicle.render.RenderFedorattiVulcan;
+import dev.toma.vehiclemod.vehicle.render.RenderSputnik2000L;
 import dev.toma.vehiclemod.vehicle.render.RenderTracerT1;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
@@ -60,8 +56,9 @@ public class ClientProxy implements IProxy {
 	}
 	
 	private static void registerEntityRenderers() {
-		RenderingRegistry.registerEntityRenderingHandler(EntityVehicleBeamerS120.class, RenderBeamerS120::new);
+		RenderingRegistry.registerEntityRenderingHandler(VehicleBeamerS120.class, RenderBeamerS120::new);
 		RenderingRegistry.registerEntityRenderingHandler(VehicleFedorattiVulcan.class, RenderFedorattiVulcan::new);
 		RenderingRegistry.registerEntityRenderingHandler(VehicleTracerT1.class, RenderTracerT1::new);
+		RenderingRegistry.registerEntityRenderingHandler(VehicleSputnik2000L.class, RenderSputnik2000L::new);
 	}
 }

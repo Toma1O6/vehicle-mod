@@ -1,12 +1,12 @@
 package dev.toma.vehiclemod.vehicle.render;
 
-import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
+import dev.toma.vehiclemod.vehicle.entity.VehicleBeamerS120;
 import dev.toma.vehiclemod.vehicle.model.ModelBeamerS120;
 import dev.toma.vehiclemod.vehicle.model.ModelVehicle;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 
-public class RenderBeamerS120 extends RenderVehicle<EntityVehicleBeamerS120> {
+public class RenderBeamerS120 extends RenderVehicle<VehicleBeamerS120> {
 	
 	private final ModelBeamerS120 model = new ModelBeamerS120();
 	
@@ -20,11 +20,11 @@ public class RenderBeamerS120 extends RenderVehicle<EntityVehicleBeamerS120> {
 	}
 	
 	@Override
-	public void doRender(EntityVehicleBeamerS120 entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public void doRender(VehicleBeamerS120 entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
 		bindEntityTexture(entity);
 		GlStateManager.translate(x, y, z);
-		GlStateManager.scale(0.05, 0.05, 0.05);
+		GlStateManager.scale(0.035, 0.035, 0.035);
 		GlStateManager.rotate(180f, 1f, 0f, 0f);
 		GlStateManager.translate(0, -5, 0);
 		GlStateManager.rotate(entityYaw, 0f, 1f, 0f);

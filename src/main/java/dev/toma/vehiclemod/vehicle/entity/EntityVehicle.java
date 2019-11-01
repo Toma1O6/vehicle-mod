@@ -78,11 +78,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         return Math.sqrt(vehicle.motionX * vehicle.motionX + vehicle.motionZ * vehicle.motionZ);
     }
 
-    @Override
-    public double getMountedYOffset() {
-        return this.getStats().passengerOffset;
-    }
-
     public abstract String[] getVariants();
 
     /**

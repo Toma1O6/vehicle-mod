@@ -11,25 +11,30 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class EntityVehicleBeamerS120 extends EntityVehicle {
+public class VehicleBeamerS120 extends EntityVehicle {
 	
 	private VehicleSounds sounds;
 	private static final String[] VARIANTS = {"beamer120_white","beamer120_orange","beamer120_magenta","beamer120_light_blue","beamer120_yellow","beamer120_lime","beamer120_pink","beamer120_gray","beamer120_silver","beamer120_cyan","beamer120_purple","beamer120_blue","beamer120_brown","beamer120_green","beamer120_red","beamer120_black"};
-	private static final Vector3f[] PARTS = {new Vector3f(2.5f, 1f, 0f), new Vector3f(-2.9f, 0.3f, 0.65f)};
+	private static final Vector3f[] PARTS = {new Vector3f(2.0f, 0.5f, 0f), new Vector3f(-2.0f, 0.15f, 0.47f)};
 	
-	public EntityVehicleBeamerS120(World world) {
+	public VehicleBeamerS120(World world) {
 		super(world);
 		setSize(2.0f, 1.5f);
 		health = this.getStats().maxHealth;
 	}
 	
-	public EntityVehicleBeamerS120(World world, BlockPos pos) {
+	public VehicleBeamerS120(World world, BlockPos pos) {
 		this(world);
 		setPosition(pos.getX(), pos.getY()+1, pos.getZ());
 		health = getStats().maxHealth;
 		setFuel();
 	}
-	
+
+	@Override
+	public double getMountedYOffset() {
+		return -0.15;
+	}
+
 	@Override
 	public int maximumAmountOfPassengers() {
 		return 4;
@@ -63,22 +68,21 @@ public class EntityVehicleBeamerS120 extends EntityVehicle {
 	
 	@Override
 	public void initSounds() {
-		sounds = new VehicleSounds(
-				new VMTickableSound(VMSounds.VEHICLE_IDLE, this),
-				new VMTickableSound(VMSounds.BEAMER_ACC, this),
-				new VMTickableSound(VMSounds.BEAMER_BRAKE, this),
-				new VMTickableSound(VMSounds.BEAMER_GAS, this),
-				new VMTickableSound(VMSounds.BEAMER_TOP_SPEED, this)
-		);
+		sounds = VehicleSounds.Builder.create()
+				.withAccelerateSound(VMSounds.BEAMER_ACC)
+				.withBrakeSound(VMSounds.BEAMER_BRAKE)
+				.withGasReleaseSound(VMSounds.TRACER_GAS)
+				.withTopSpeedSound(VMSounds.BEAMER_TOP_SPEED)
+				.build(this);
 	}
 	
 	@Override
 	protected double getPassengerOffsetX(int id) {
-		return id < 2 ? 0.6 : -0.4;
+		return id < 2 ? 0.6 : -0.3;
 	}
 	
 	@Override
 	protected double getPassengerOffsetZ(int id) {
-		return id % 2 == 0 ? -0.5 : 0;
+		return id % 2 == 0 ? -0.4 : 0.4;
 	}
 }

@@ -2,7 +2,6 @@ package dev.toma.vehiclemod.vehicle.entity;
 
 import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.VMConfig;
-import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.VehicleSounds;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
 import net.minecraft.util.SoundEvent;
@@ -11,22 +10,27 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleTracerT1 extends EntityVehicle {
+public class VehicleSputnik2000L extends EntityVehicle {
 
     private VehicleSounds sounds;
-    private static final Vector3f[] VECTOR_3_FS = {new Vector3f(1.5F, 0.25F, 0), new Vector3f(-2.2F, 0.05F, 0.3F)};
+    private static final Vector3f[] PARTS = new Vector3f[] {new Vector3f(1.7F, 0.5F, 0.0F), new Vector3f(-2.3F, 0.15F, 0.5F)};
 
-    public VehicleTracerT1(World world) {
+    public VehicleSputnik2000L(World world) {
         super(world);
     }
 
-    public VehicleTracerT1(World world, BlockPos pos) {
+    public VehicleSputnik2000L(World world, BlockPos pos) {
         super(world, pos);
     }
 
     @Override
+    public int maximumAmountOfPassengers() {
+        return 2;
+    }
+
+    @Override
     public double getMountedYOffset() {
-        return -0.15;
+        return 0.1;
     }
 
     @Override
@@ -36,47 +40,42 @@ public class VehicleTracerT1 extends EntityVehicle {
 
     @Override
     public SoundEvent getStartSound() {
-        return Registries.VMSounds.TRACER_START;
-    }
-
-    @Override
-    public VehicleSounds getSounds() {
-        if(sounds == null) this.initSounds();
-        return sounds;
+        return Registries.VMSounds.SPUTNIK_START;
     }
 
     @Override
     public VehicleStats getStats() {
-        return VMConfig.tracer_t1;
+        return VMConfig.sputnik2000L;
     }
 
     @Override
     public Vector3f[] getPartVecs() {
-        return VECTOR_3_FS;
+        return PARTS;
     }
 
     @Override
-    public int maximumAmountOfPassengers() {
-        return 2;
+    public VehicleSounds getSounds() {
+        if(this.sounds == null) this.initSounds();
+        return sounds;
     }
 
     @Override
     public void initSounds() {
-        sounds = VehicleSounds.Builder.create()
-                .withAccelerateSound(Registries.VMSounds.TRACER_ACC)
-                .withBrakeSound(Registries.VMSounds.TRACER_BRAKE)
-                .withGasReleaseSound(Registries.VMSounds.TRACER_GAS)
-                .withTopSpeedSound(Registries.VMSounds.TRACER_TOP_SPEED)
+        this.sounds = VehicleSounds.Builder.create()
+                .withAccelerateSound(Registries.VMSounds.BEAMER_ACC)
+                .withBrakeSound(Registries.VMSounds.SPUTNIK_BRAKE)
+                .withGasReleaseSound(Registries.VMSounds.SPUTNIK_GAS)
+                .withTopSpeedSound(Registries.VMSounds.SPUTNIK_TOP_SPEED)
                 .build(this);
     }
 
     @Override
     protected double getPassengerOffsetX(int id) {
-        return -0.2;
+        return 0.1;
     }
 
     @Override
     protected double getPassengerOffsetZ(int id) {
-        return id == 0 ? -0.4 : 0.4;
+        return id == 0 ? -0.45 : 0.45;
     }
 }

@@ -1,27 +1,27 @@
 package dev.toma.vehiclemod.vehicle.render;
 
-import dev.toma.vehiclemod.vehicle.entity.VehicleFedorattiVulcan;
-import dev.toma.vehiclemod.vehicle.model.ModelFedorattiVulcan;
+import dev.toma.vehiclemod.vehicle.entity.VehicleSputnik2000L;
+import dev.toma.vehiclemod.vehicle.model.ModelSputnik2000L;
 import dev.toma.vehiclemod.vehicle.model.ModelVehicle;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 
-public class RenderFedorattiVulcan extends RenderVehicle<VehicleFedorattiVulcan> {
+public class RenderSputnik2000L extends RenderVehicle<VehicleSputnik2000L> {
 
-    private final ModelFedorattiVulcan model;
+    private final ModelSputnik2000L sputnik2000L;
 
-    public RenderFedorattiVulcan(RenderManager manager) {
+    public RenderSputnik2000L(RenderManager manager) {
         super(manager);
-        this.model = new ModelFedorattiVulcan();
+        this.sputnik2000L = new ModelSputnik2000L();
     }
 
     @Override
     public ModelVehicle getVehicleModel() {
-        return model;
+        return sputnik2000L;
     }
 
     @Override
-    public void doRender(VehicleFedorattiVulcan entity, double x, double y, double z, float entityYaw, float partialTicks) {
+    public void doRender(VehicleSputnik2000L entity, double x, double y, double z, float entityYaw, float partialTicks) {
         GlStateManager.pushMatrix();
         GlStateManager.color(1f, 1f, 1f);
         bindEntityTexture(entity);
@@ -31,7 +31,7 @@ public class RenderFedorattiVulcan extends RenderVehicle<VehicleFedorattiVulcan>
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.translate(0, -20, 0);
         GlStateManager.disableLighting();
-        model.doVehicleRender();
+        sputnik2000L.doVehicleRender();
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

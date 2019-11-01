@@ -3,8 +3,9 @@ package dev.toma.vehiclemod;
 import dev.toma.vehiclemod.common.blocks.*;
 import dev.toma.vehiclemod.common.items.*;
 import dev.toma.vehiclemod.util.MusicEntry;
-import dev.toma.vehiclemod.vehicle.entity.EntityVehicleBeamerS120;
+import dev.toma.vehiclemod.vehicle.entity.VehicleBeamerS120;
 import dev.toma.vehiclemod.vehicle.entity.VehicleFedorattiVulcan;
+import dev.toma.vehiclemod.vehicle.entity.VehicleSputnik2000L;
 import dev.toma.vehiclemod.vehicle.entity.VehicleTracerT1;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -85,6 +86,11 @@ public class Registries {
         public static final SoundEvent FEDORATTI_GAS = null;
         public static final SoundEvent FEDORATTI_TOP_SPEED = null;
         public static final SoundEvent FEDORATTI_START = null;
+        public static final SoundEvent SPUTNIK_ACC = null;
+        public static final SoundEvent SPUTNIK_BRAKE = null;
+        public static final SoundEvent SPUTNIK_GAS = null;
+        public static final SoundEvent SPUTNIK_TOP_SPEED = null;
+        public static final SoundEvent SPUTNIK_START = null;
         public static final SoundEvent SECRET = null;
 
         // music entries
@@ -139,9 +145,10 @@ public class Registries {
         public static void onItemRegister(RegistryEvent.Register<Item> e) {
             final Item[] items = {
                     new ItemFuelCan("fuel_can"),
-                    new ItemVehicleSpawner("spawn_beamers120",(w, p) -> w.spawnEntity(new EntityVehicleBeamerS120(w, p))),
+                    new ItemVehicleSpawner("spawn_beamers120",(w, p) -> w.spawnEntity(new VehicleBeamerS120(w, p))),
                     new ItemVehicleSpawner("spawn_fedorattivulcan", (w, p) -> w.spawnEntity(new VehicleFedorattiVulcan(w, p))),
                     new ItemVehicleSpawner("spawn_tracert1", (w, p) -> w.spawnEntity(new VehicleTracerT1(w, p))),
+                    new ItemVehicleSpawner("spawn_sputnik2000l", (w, p) -> w.spawnEntity(new VehicleSputnik2000L(w, p))),
                     new VMItem("empty_spray_can"),
                     new ItemRepairKit("repair_kit")
             };
@@ -156,9 +163,10 @@ public class Registries {
         @SubscribeEvent
         public static void onEntityRegister(RegistryEvent.Register<EntityEntry> e) {
             final EntityEntry[] entries = {
-                    registerVehicle("beamer_s120", EntityVehicleBeamerS120.class),
+                    registerVehicle("beamer_s120", VehicleBeamerS120.class),
                     registerVehicle("fedoratti_vulcan", VehicleFedorattiVulcan.class),
-                    registerVehicle("tracer_t1", VehicleTracerT1.class)
+                    registerVehicle("tracer_t1", VehicleTracerT1.class),
+                    registerVehicle("sputnik_2000l", VehicleSputnik2000L.class)
             };
             e.getRegistry().registerAll(entries);
         }
@@ -183,6 +191,11 @@ public class Registries {
                     registerSound("tracer_gas"),
                     registerSound("tracer_top_speed"),
                     registerSound("tracer_start"),
+                    registerSound("sputnik_acc"),
+                    registerSound("sputnik_brake"),
+                    registerSound("sputnik_gas"),
+                    registerSound("sputnik_top_speed"),
+                    registerSound("sputnik_start"),
                     registerSound("danger1"),
                     registerSound("danger2"),
                     registerSound("danger3"),
@@ -279,7 +292,6 @@ public class Registries {
         public static void onModelRegister(ModelRegistryEvent e) {
             final IForgeRegistry<Item> ITEMS = ForgeRegistries.ITEMS;
             final IForgeRegistry<Block> BLOCKS = ForgeRegistries.BLOCKS;
-            /*DevUtil.creator().createAllFiles();*/
             for (ResourceLocation rl : ITEMS.getKeys()) {
                 if (rl.getResourceDomain().equalsIgnoreCase(VehicleMod.Constants.ID)) {
                     registerModel(ITEMS.getValue(rl));

@@ -13,7 +13,7 @@ import javax.vecmath.Vector3f;
 
 public class VehicleFedorattiVulcan extends EntityVehicle {
 
-    private static final Vector3f[] VECTOR_3_FS = {new Vector3f(-1.8F, 1.3F, 0), new Vector3f(-2.9F, 0.3F, -0.8F), new Vector3f(-2.9F, 0.3F, 0.8F)};
+    private static final Vector3f[] VECTOR_3_FS = {new Vector3f(-1.3F, 0.7F, 0), new Vector3f(-2.1F, 0.15F, -0.55F), new Vector3f(-2.1F, 0.15F, 0.55F)};
     private VehicleSounds sounds;
 
     public VehicleFedorattiVulcan(World world) {
@@ -23,6 +23,11 @@ public class VehicleFedorattiVulcan extends EntityVehicle {
 
     public VehicleFedorattiVulcan(World world, BlockPos pos) {
         super(world, pos);
+    }
+
+    @Override
+    public double getMountedYOffset() {
+        return -0.1;
     }
 
     @Override
@@ -47,7 +52,7 @@ public class VehicleFedorattiVulcan extends EntityVehicle {
 
     @Override
     public int maximumAmountOfPassengers() {
-        return 5;
+        return 4;
     }
 
     @Override
@@ -57,22 +62,21 @@ public class VehicleFedorattiVulcan extends EntityVehicle {
 
     @Override
     public void initSounds() {
-        sounds = new VehicleSounds(
-                new VMTickableSound(Registries.VMSounds.VEHICLE_IDLE, this),
-                new VMTickableSound(Registries.VMSounds.FEDORATTI_ACC, this),
-                new VMTickableSound(Registries.VMSounds.FEDORATTI_BRAKE, this),
-                new VMTickableSound(Registries.VMSounds.FEDORATTI_GAS, this),
-                new VMTickableSound(Registries.VMSounds.FEDORATTI_TOP_SPEED, this)
-        );
+        this.sounds = VehicleSounds.Builder.create()
+                .withAccelerateSound(Registries.VMSounds.FEDORATTI_ACC)
+                .withBrakeSound(Registries.VMSounds.FEDORATTI_BRAKE)
+                .withGasReleaseSound(Registries.VMSounds.FEDORATTI_GAS)
+                .withTopSpeedSound(Registries.VMSounds.FEDORATTI_TOP_SPEED)
+                .build(this);
     }
 
     @Override
     protected double getPassengerOffsetX(int id) {
-        return id < 2 ? 0.6 : -0.3;
+        return id < 2 ? 0.5 : -0.2;
     }
 
     @Override
     protected double getPassengerOffsetZ(int id) {
-        return id % 2 == 0 ? -0.5 : 0.65;
+        return id % 2 == 0 ? -0.4 : 0.4;
     }
 }
