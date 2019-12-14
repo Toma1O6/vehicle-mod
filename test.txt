@@ -1,3 +1,4 @@
+Random json file
 {
   "something": {
       "test": true
