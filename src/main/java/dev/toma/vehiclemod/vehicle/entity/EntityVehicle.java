@@ -27,6 +27,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.vecmath.Vector3f;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -197,11 +198,12 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             motionY = -0.15d;
         }
 
-        if (timeInInvalidState > 30) {
+        if (timeInInvalidState > 30 || health < 0) {
             isBroken = true;
+            this.health = 0;
         }
 
-        if (isInLava() || health <= 0f) {
+        if (isInLava()) {
             this.explode();
         }
         currentState = this.getVehicleState();
@@ -266,8 +268,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     @Override
     public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
         if (!player.isSneaking()) {
-            if (!world.isRemote && canBeRidden(player) && canFitPassenger(player)) {
+            if (!world.isRemote && canBeRidden(player) && canFitPassenger(player) && player.getRidingEntity() == null) {
                 player.startRiding(this);
+                return true;
             }
         } else if (player.getHeldItemMainhand().getItem() instanceof ItemSprayCan) {
             ((ItemSprayCan)player.getHeldItemMainhand().getItem()).applyOnVehicle(this, world, player);
@@ -275,11 +278,11 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             if (!world.isRemote) {
                 return false;
             }
-            player.sendMessage(new TextComponentString("Health: " + health));
-            player.sendMessage(new TextComponentString("Fuel: " + fuel + "L / 100L"));
-            player.sendMessage(new TextComponentString("Distance driven: " + distanceTraveled + "km"));
+            player.sendMessage(new TextComponentString("Health: " + new DecimalFormat("###.##").format(health)));
+            player.sendMessage(new TextComponentString("Fuel: " + new DecimalFormat("##.#").format(fuel) + "L / 100.0L"));
+            player.sendMessage(new TextComponentString("Distance driven: " + new DecimalFormat("######.#").format(distanceTraveled) + "km"));
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -323,6 +326,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public void repair() {
         float amount = this.getStats().maxHealth * 0.3F;
         this.health = this.health + amount > this.getStats().maxHealth ? this.getStats().maxHealth : this.health + amount;
+        if(isBroken) this.isBroken = false;
     }
 
     @Override

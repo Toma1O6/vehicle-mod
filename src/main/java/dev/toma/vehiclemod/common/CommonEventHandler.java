@@ -1,6 +1,5 @@
 package dev.toma.vehiclemod.common;
 
-import dev.toma.vehiclemod.common.ai.EntityAIAttackClosestTarget;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -19,15 +18,13 @@ public class CommonEventHandler {
         if(e.getEntity() instanceof EntityCreature) {
             EntityCreature livingEntity = (EntityCreature)e.getEntity();
             EntityAINearestAttackableTarget ai = getTaskToBeRemoved(livingEntity);
-            boolean f = ai != null;
-            boolean g = false;
-            while(f) {
-                g = true;
-                livingEntity.targetTasks.removeTask(getTaskToBeRemoved(livingEntity));
-                f = getTaskToBeRemoved(livingEntity) != null;
-            }
-            if(g) {
-                livingEntity.targetTasks.addTask(1, new EntityAIAttackClosestTarget(livingEntity, true));
+            EntityAITasks.EntityAITaskEntry[] entries = ((EntityCreature) e.getEntity()).targetTasks.taskEntries.toArray(new EntityAITasks.EntityAITaskEntry[0]);
+            for(int i = 0; i < entries.length; i++) {
+                EntityAITasks.EntityAITaskEntry entry = entries[i];
+                if(entry.action instanceof EntityAINearestAttackableTarget<?>) {
+                    livingEntity.targetTasks.removeTask(entry.action);
+                    livingEntity.targetTasks.addTask(3, entry.action);
+                }
             }
             livingEntity.tasks.addTask(0, new EntityAIAvoidEntity<>(livingEntity, EntityVehicle.class, 20.0F, 1.5D, 1.2D));
             livingEntity.tasks.addTask(0, new EntityAIAvoidEntity<>(livingEntity, EntityMinecart.class, 20.0F, 1.5D, 1.2D));

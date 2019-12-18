@@ -26,7 +26,7 @@ public class RenderSputnik2000L extends RenderVehicle<VehicleSputnik2000L> {
         GlStateManager.color(1f, 1f, 1f);
         bindEntityTexture(entity);
         GlStateManager.translate(x, y, z);
-        GlStateManager.scale(0.035, 0.035, 0.035);
+        GlStateManager.scale(0.03, 0.03, 0.03);
         GlStateManager.rotate(180F, 1F, 0F, 0F);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.translate(0, -20, 0);

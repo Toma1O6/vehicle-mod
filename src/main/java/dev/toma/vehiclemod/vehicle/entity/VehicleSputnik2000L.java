@@ -13,7 +13,7 @@ import javax.vecmath.Vector3f;
 public class VehicleSputnik2000L extends EntityVehicle {
 
     private VehicleSounds sounds;
-    private static final Vector3f[] PARTS = new Vector3f[] {new Vector3f(1.7F, 0.5F, 0.0F), new Vector3f(-2.3F, 0.15F, 0.5F)};
+    private static final Vector3f[] PARTS = {new Vector3f(1.7F, 0.5F, 0.0F), new Vector3f(-1.95F, 0.15F, 0.3F)};
 
     public VehicleSputnik2000L(World world) {
         super(world);
@@ -30,7 +30,7 @@ public class VehicleSputnik2000L extends EntityVehicle {
 
     @Override
     public double getMountedYOffset() {
-        return 0.1;
+        return -0.05;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class VehicleSputnik2000L extends EntityVehicle {
     @Override
     public void initSounds() {
         this.sounds = VehicleSounds.Builder.create()
-                .withAccelerateSound(Registries.VMSounds.BEAMER_ACC)
+                .withAccelerateSound(Registries.VMSounds.SPUTNIK_ACC)
                 .withBrakeSound(Registries.VMSounds.SPUTNIK_BRAKE)
                 .withGasReleaseSound(Registries.VMSounds.SPUTNIK_GAS)
                 .withTopSpeedSound(Registries.VMSounds.SPUTNIK_TOP_SPEED)
@@ -76,6 +76,6 @@ public class VehicleSputnik2000L extends EntityVehicle {
 
     @Override
     protected double getPassengerOffsetZ(int id) {
-        return id == 0 ? -0.45 : 0.45;
+        return id == 0 ? -0.4 : 0.4;
     }
 }
