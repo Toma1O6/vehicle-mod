@@ -29,9 +29,6 @@ public class VMConfig {
 	@Comment("Amount of ticks added or substracted/click")
 	@Config.RangeInt(min = 0, max = 100)
 	public static int cellTimerModifier = 20;
-
-	@Name("Vehicle max speed sound")
-	public static boolean playMaxSpeedSounds = true;
 	
 	@Name("Beamer S120")
 	public static VehicleStats beamer_s120 = new VehicleStats(150F, 1.3F, 0.005400000104308128F, 0.019999999552965164F, 0.3F, 3.0F, 0.005f);

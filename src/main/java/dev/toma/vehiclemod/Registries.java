@@ -74,22 +74,18 @@ public class Registries {
         public static final SoundEvent BEAMER_ACC = null;
         public static final SoundEvent BEAMER_BRAKE = null;
         public static final SoundEvent BEAMER_GAS = null;
-        public static final SoundEvent BEAMER_TOP_SPEED = null;
         public static final SoundEvent BEAMER_START = null;
         public static final SoundEvent TRACER_ACC = null;
         public static final SoundEvent TRACER_BRAKE = null;
         public static final SoundEvent TRACER_GAS = null;
-        public static final SoundEvent TRACER_TOP_SPEED = null;
         public static final SoundEvent TRACER_START = null;
         public static final SoundEvent FEDORATTI_ACC = null;
         public static final SoundEvent FEDORATTI_BRAKE = null;
         public static final SoundEvent FEDORATTI_GAS = null;
-        public static final SoundEvent FEDORATTI_TOP_SPEED = null;
         public static final SoundEvent FEDORATTI_START = null;
         public static final SoundEvent SPUTNIK_ACC = null;
         public static final SoundEvent SPUTNIK_BRAKE = null;
         public static final SoundEvent SPUTNIK_GAS = null;
-        public static final SoundEvent SPUTNIK_TOP_SPEED = null;
         public static final SoundEvent SPUTNIK_START = null;
         public static final SoundEvent SECRET = null;
 
@@ -179,22 +175,18 @@ public class Registries {
                     registerSound("beamer_acc"),
                     registerSound("beamer_brake"),
                     registerSound("beamer_gas"),
-                    registerSound("beamer_top_speed"),
                     registerSound("beamer_start"),
                     registerSound("fedoratti_acc"),
                     registerSound("fedoratti_brake"),
                     registerSound("fedoratti_gas"),
-                    registerSound("fedoratti_top_speed"),
                     registerSound("fedoratti_start"),
                     registerSound("tracer_acc"),
                     registerSound("tracer_brake"),
                     registerSound("tracer_gas"),
-                    registerSound("tracer_top_speed"),
                     registerSound("tracer_start"),
                     registerSound("sputnik_acc"),
                     registerSound("sputnik_brake"),
                     registerSound("sputnik_gas"),
-                    registerSound("sputnik_top_speed"),
                     registerSound("sputnik_start"),
                     registerSound("danger1"),
                     registerSound("danger2"),

@@ -1,15 +1,14 @@
 package dev.toma.vehiclemod.vehicle.entity;
 
-import javax.vecmath.Vector3f;
-
 import dev.toma.vehiclemod.Registries.VMSounds;
 import dev.toma.vehiclemod.VMConfig;
-import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.VehicleSounds;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import javax.vecmath.Vector3f;
 
 public class VehicleBeamerS120 extends EntityVehicle {
 	
@@ -71,8 +70,7 @@ public class VehicleBeamerS120 extends EntityVehicle {
 		sounds = VehicleSounds.Builder.create()
 				.withAccelerateSound(VMSounds.BEAMER_ACC)
 				.withBrakeSound(VMSounds.BEAMER_BRAKE)
-				.withGasReleaseSound(VMSounds.TRACER_GAS)
-				.withTopSpeedSound(VMSounds.BEAMER_TOP_SPEED)
+				.withGasReleaseSound(VMSounds.BEAMER_GAS)
 				.build(this);
 	}
 	

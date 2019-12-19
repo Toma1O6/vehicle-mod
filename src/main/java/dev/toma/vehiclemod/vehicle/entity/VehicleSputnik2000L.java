@@ -65,7 +65,6 @@ public class VehicleSputnik2000L extends EntityVehicle {
                 .withAccelerateSound(Registries.VMSounds.SPUTNIK_ACC)
                 .withBrakeSound(Registries.VMSounds.SPUTNIK_BRAKE)
                 .withGasReleaseSound(Registries.VMSounds.SPUTNIK_GAS)
-                .withTopSpeedSound(Registries.VMSounds.SPUTNIK_TOP_SPEED)
                 .build(this);
     }
 

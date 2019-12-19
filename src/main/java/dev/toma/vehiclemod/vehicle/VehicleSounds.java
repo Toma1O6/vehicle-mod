@@ -11,14 +11,12 @@ public class VehicleSounds {
 	private final VMTickableSound acceleration;
 	private final VMTickableSound braking;
 	private final VMTickableSound release;
-	private final VMTickableSound topSpeed;
 	
-	private VehicleSounds(VMTickableSound idle, VMTickableSound acc, VMTickableSound brake, VMTickableSound rls, VMTickableSound topSpeed) {
+	private VehicleSounds(VMTickableSound idle, VMTickableSound acc, VMTickableSound brake, VMTickableSound rls) {
 		this.idle = idle;
 		this.acceleration = acc;
 		this.braking = brake;
 		this.release = rls;
-		this.topSpeed = topSpeed;
 	}
 	
 	public VMTickableSound getAccelerateSound() {
@@ -33,13 +31,9 @@ public class VehicleSounds {
 		return release;
 	}
 
-	public VMTickableSound getTopSpeedSound() {
-		return topSpeed;
-	}
-
 	public static class Builder {
 
-		private SoundEvent acc, brake, rls, top;
+		private SoundEvent acc, brake, rls;
 
 		private Builder() {
 
@@ -64,22 +58,15 @@ public class VehicleSounds {
 			return this;
 		}
 
-		public Builder withTopSpeedSound(SoundEvent event) {
-			this.top = event;
-			return this;
-		}
-
 		public VehicleSounds build(EntityVehicle vehicle) {
 			Preconditions.checkNotNull(acc, "Not building: Accelerate sound cannot be null!");
 			Preconditions.checkNotNull(brake, "Not building: Brake sound cannot be null");
 			Preconditions.checkNotNull(rls, "Not building: Gas release sound cannot be null!");
-			Preconditions.checkNotNull(top, "Not building: Top speed sound cannot be null!");
 			VMTickableSound IDLE = new VMTickableSound(Registries.VMSounds.VEHICLE_IDLE, vehicle);
 			VMTickableSound ACC = new VMTickableSound(this.acc, vehicle);
 			VMTickableSound BRAKE = new VMTickableSound(this.brake, vehicle);
 			VMTickableSound RELEASE = new VMTickableSound(this.rls, vehicle);
-			VMTickableSound TOP_SPEED = new VMTickableSound(this.top, vehicle);
-			return new VehicleSounds(IDLE, ACC, BRAKE, RELEASE, TOP_SPEED);
+			return new VehicleSounds(IDLE, ACC, BRAKE, RELEASE);
 		}
 	}
 }

@@ -1,7 +1,6 @@
 package dev.toma.vehiclemod.vehicle.entity;
 
 import com.google.common.base.Predicate;
-import dev.toma.vehiclemod.VMConfig;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.items.ItemSprayCan;
 import dev.toma.vehiclemod.network.VMNetworkManager;
@@ -298,7 +297,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             case BRAKING: return sounds.getBrakeSound();
             case ACCELERATING: return sounds.getAccelerateSound();
             case KEEPING_SPEED: return sounds.getGasReleaseSound();
-            case TOP_SPEED: return VMConfig.playMaxSpeedSounds ? sounds.getTopSpeedSound() : sounds.idle;
             case IDLE: default: return sounds.idle;
 
         }
@@ -431,13 +429,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     private EnumVehicleState getVehicleState() {
         if (this.isAccelerating()) {
-            if(this.currentSpeed == this.getStats().maxSpeed) {
-                return EnumVehicleState.TOP_SPEED;
-            }
             return EnumVehicleState.ACCELERATING;
         } else if (this.isBraking()) {
             return EnumVehicleState.BRAKING;
-        } else if ((prevState == EnumVehicleState.ACCELERATING || prevState == EnumVehicleState.TOP_SPEED || prevState == EnumVehicleState.KEEPING_SPEED) && currentSpeed != 0) {
+        } else if ((prevState == EnumVehicleState.ACCELERATING || prevState == EnumVehicleState.KEEPING_SPEED) && currentSpeed != 0) {
             return EnumVehicleState.KEEPING_SPEED;
         }
         return EnumVehicleState.IDLE;

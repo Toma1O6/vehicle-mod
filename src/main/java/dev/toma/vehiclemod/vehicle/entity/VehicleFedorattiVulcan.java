@@ -2,7 +2,6 @@ package dev.toma.vehiclemod.vehicle.entity;
 
 import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.VMConfig;
-import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.VehicleSounds;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
 import net.minecraft.util.SoundEvent;
@@ -66,7 +65,6 @@ public class VehicleFedorattiVulcan extends EntityVehicle {
                 .withAccelerateSound(Registries.VMSounds.FEDORATTI_ACC)
                 .withBrakeSound(Registries.VMSounds.FEDORATTI_BRAKE)
                 .withGasReleaseSound(Registries.VMSounds.FEDORATTI_GAS)
-                .withTopSpeedSound(Registries.VMSounds.FEDORATTI_TOP_SPEED)
                 .build(this);
     }
 
