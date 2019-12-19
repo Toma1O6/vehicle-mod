@@ -7,16 +7,20 @@ import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import org.lwjgl.opengl.GL11;
 
 import java.text.DecimalFormat;
 
@@ -46,15 +50,36 @@ public class ClientEventHandler {
 				float fuel = car.fuel / 100.0F;
 				boolean lowFuel = fuel <= 0.17F;
 				float health = car.health / car.getStats().maxHealth;
-				boolean lowHealth = health <= 0.35;
+				boolean lowHealth = health <= 0.5;
 				double speed = Math.sqrt(car.motionX*car.motionX + car.motionZ*car.motionZ) * 40;
 				mc.fontRenderer.drawStringWithShadow(format.format(speed*3.6F) + " km/h", 16, resolution.getScaledHeight() - 35, 0xFFFFFF);
 				VehicleHUDType type = VehicleHUDType.FUEL_STATE;
+				int x = (int)((33 * 120) / 256F);
+				int y = resolution.getScaledHeight() - 15;
+				int w = (int)((222 * 120) / 256F) - x + 1;
+				int h = 8;
+				Tessellator tessellator = Tessellator.getInstance();
+				BufferBuilder builder = tessellator.getBuffer();
+				GlStateManager.disableTexture2D();
+				GlStateManager.color(1f, 1f, 1f, 1f);
+				GlStateManager.shadeModel(GL11.GL_SMOOTH);
+				builder.begin(7, DefaultVertexFormats.POSITION_COLOR);
+				builder.pos(x, y + h, 0).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+				builder.pos(x + w * fuel, y + h, 0).color(1.0F * (1 - fuel), 1.0F * fuel, 0.0F, 1.0F).endVertex();
+				builder.pos(x + w * fuel, y, 0).color(1.0F * (1 - fuel), 1.0F * fuel, 0.0F, 1.0F).endVertex();
+				builder.pos(x, y, 0).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+				tessellator.draw();
+				// 256 ... 33
+				// 120 ... x
+				// x = (33 * 120) / 256
+				GlStateManager.shadeModel(GL11.GL_FLAT);
+				GlStateManager.disableBlend();
+				GlStateManager.enableTexture2D();
 				DevUtil.drawImage2D(mc, VEHICLE_HUD, 0, resolution.getScaledHeight() - 25, 120, 20, type.uv.uStart, type.uv.vStart, type.uv.uEnd, type.uv.vEnd);
 				type = lowFuel ? VehicleHUDType.FUEL_LOW : VehicleHUDType.FUEL;
 				DevUtil.drawImage2D(mc, VEHICLE_HUD, 110, resolution.getScaledHeight() - 26,20, 20, type.uv.uStart, type.uv.vStart, type.uv.uEnd, type.uv.vEnd);
 				type = VehicleHUDType.INDICATOR;
-				DevUtil.drawImage2D(mc, VEHICLE_HUD, (int)(-1 + fuel * 90), resolution.getScaledHeight() - 25, 32, 20, type.uv.uStart, type.uv.vStart, type.uv.uEnd, type.uv.vEnd);
+				DevUtil.drawImage2D(mc, VEHICLE_HUD, (int)(-1 + fuel * 90), resolution.getScaledHeight() - 30, 32, 25, type.uv.uStart, type.uv.vStart, type.uv.uEnd, type.uv.vEnd);
 				if(!lowHealth) {
 					return;
 				}

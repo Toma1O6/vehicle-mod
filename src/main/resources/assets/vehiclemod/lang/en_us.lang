@@ -27,5 +27,11 @@ item.repair_kit.name=Repair Kit
 item.spawn_beamers120.name=Beamer S120
 item.spawn_fedorattivulcan.name=Fedoratti Vulcan
 item.spawn_tracert1.name=Tracer T1
+item.spawn_sputnik2000l.name=Sputnik 2000L
+
+entity.vehiclemod:beamer_s120.name=Beamer S120
+entity.vehiclemod:fedoratti_vulcan.name=Fedoratti Vulcan
+entity.vehiclemod:tracer_t1.name=Tracer T1
+entity.vehiclemod:sputnik_2000l.name=Sputnik 2000L
 
 itemGroup.vehicle_mod=Vehicle Mod

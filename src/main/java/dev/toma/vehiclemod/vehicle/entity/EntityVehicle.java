@@ -1,7 +1,7 @@
 package dev.toma.vehiclemod.vehicle.entity;
 
 import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
+import dev.toma.vehiclemod.VMConfig;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.items.ItemSprayCan;
 import dev.toma.vehiclemod.network.VMNetworkManager;
@@ -19,7 +19,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -27,23 +26,20 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.vecmath.Vector3f;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class EntityVehicle extends Entity implements IEntityAdditionalSpawnData {
 
     public static final String[] DEF_COLORS = {"white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "silver", "cyan", "purple", "blue", "brown", "green", "red", "black"};
-    private static final Predicate<Entity> TARGET = Predicates.and(EntitySelectors.NOT_SPECTATING, EntitySelectors.IS_ALIVE, Entity::canBeCollidedWith);
+    private static final Predicate<Entity> TARGET = entity -> EntitySelectors.NOT_SPECTATING.apply(entity) && EntitySelectors.IS_ALIVE.apply(entity) && entity.canBeCollidedWith();
 
     public float health;
-    public float currentSpeed, prevSpeed, damagedMaxSpeed;
+    public float currentSpeed, prevSpeed;
     public float turnModifier;
     public float fuel;
     public EnumVehicleState prevState, currentState;
     public List<ResourceLocation> locations = new ArrayList<>();
-    public boolean isBroken;
-    private short timeInInvalidState;
     private int variantType;
     private double distanceTraveled = 0;
     private boolean isStarted = false;
@@ -137,20 +133,16 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public void updateMotion() {
         Vec3d lookVec = this.getLookVec();
         VehicleStats stats = this.getStats();
-
-        if (!isBroken && hasFuel()) {
+        float modifier = this.health / stats.maxHealth < 0.5F ? this.health / stats.maxHealth : 1.0F;
+        if (hasFuel()) {
             if (inputForward && !inputBack) {
-                boolean flag = this.health / stats.maxHealth <= 0.5f;
-                float diff = this.health / stats.maxHealth;
-                float damagedAcc = diff + 0.15F > 1.0F ? 1.0F : diff + 0.15F;
-                float acceleration = flag ? stats.acceleration * damagedAcc : stats.acceleration;
-                this.damagedMaxSpeed = flag ? stats.maxSpeed * 0.6f : stats.maxSpeed;
+                float acceleration = stats.acceleration * modifier;
                 burnFuel();
-                currentSpeed = currentSpeed < damagedMaxSpeed ? currentSpeed + acceleration : damagedMaxSpeed;
+                currentSpeed = currentSpeed < stats.maxSpeed ? currentSpeed + acceleration : stats.maxSpeed;
             }
             if (!inputForward && inputBack) {
                 burnFuel();
-                currentSpeed = currentSpeed > 0 ? currentSpeed - stats.brakeSpeed : currentSpeed > (-stats.maxSpeed * 0.3f) ? currentSpeed - 0.02f : -stats.maxSpeed * 0.3f;
+                currentSpeed = currentSpeed > 0 ? currentSpeed - stats.brakeSpeed : currentSpeed > (-stats.maxSpeed * 0.3f) ? currentSpeed - (stats.brakeSpeed * modifier) : -stats.maxSpeed * 0.3f;
             }
         }
 
@@ -161,7 +153,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             turnModifier = turnModifier > -stats.maxTurningAngle ? turnModifier - stats.turnSpeed : -stats.maxTurningAngle;
         }
 
-        if (noAccelerationInput() || isBroken) {
+        if (noAccelerationInput() || health < 0 || !hasFuel()) {
             if (Math.abs(currentSpeed) < 0.01)
                 currentSpeed = 0f;
 
@@ -192,14 +184,15 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public void checkState() {
         if (this.isInWater() || world.getBlockState(getPosition().up()).getMaterial().isLiquid()) {
-            timeInInvalidState++;
+            if(this.health > 0) {
+                this.health -= 2.5;
+            }
             motionX *= 0.4d;
             motionZ *= 0.4d;
             motionY = -0.15d;
         }
 
-        if (timeInInvalidState > 30 || health < 0) {
-            isBroken = true;
+        if (health < 0) {
             this.health = 0;
         }
 
@@ -274,13 +267,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             }
         } else if (player.getHeldItemMainhand().getItem() instanceof ItemSprayCan) {
             ((ItemSprayCan)player.getHeldItemMainhand().getItem()).applyOnVehicle(this, world, player);
-        } else {
-            if (!world.isRemote) {
-                return false;
-            }
-            player.sendMessage(new TextComponentString("Health: " + new DecimalFormat("###.##").format(health)));
-            player.sendMessage(new TextComponentString("Fuel: " + new DecimalFormat("##.#").format(fuel) + "L / 100.0L"));
-            player.sendMessage(new TextComponentString("Distance driven: " + new DecimalFormat("######.#").format(distanceTraveled) + "km"));
         }
         return false;
     }
@@ -295,6 +281,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         buf.writeFloat(health);
         buf.writeFloat(fuel);
         buf.writeInt(variantType);
+        buf.writeDouble(distanceTraveled);
     }
 
     @Override
@@ -302,6 +289,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         health = buf.readFloat();
         fuel = buf.readFloat();
         variantType = buf.readInt();
+        distanceTraveled = buf.readDouble();
     }
 
     public VMTickableSound getVehicleSound() {
@@ -310,7 +298,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             case BRAKING: return sounds.getBrakeSound();
             case ACCELERATING: return sounds.getAccelerateSound();
             case KEEPING_SPEED: return sounds.getGasReleaseSound();
-            case TOP_SPEED: return sounds.getTopSpeedSound();
+            case TOP_SPEED: return VMConfig.playMaxSpeedSounds ? sounds.getTopSpeedSound() : sounds.idle;
             case IDLE: default: return sounds.idle;
 
         }
@@ -326,7 +314,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public void repair() {
         float amount = this.getStats().maxHealth * 0.3F;
         this.health = this.health + amount > this.getStats().maxHealth ? this.getStats().maxHealth : this.health + amount;
-        if(isBroken) this.isBroken = false;
     }
 
     @Override
@@ -383,12 +370,12 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     protected void spawnParticles() {
         if (world.isRemote) {
-            if (health / getStats().maxHealth <= 0.15f) {
+            if (health / getStats().maxHealth <= 0.5f) {
                 Vec3d engineVec = (new Vec3d(getPartVecs()[0].x, getPartVecs()[0].y + 0.25d, getPartVecs()[0].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
                 world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, true, posX + engineVec.x, posY + engineVec.y, posZ + engineVec.z, 0d, 0.1d, 0d);
             }
 
-            if (!isBroken && hasFuel() && !this.getPassengers().isEmpty()) {
+            if (hasFuel() && !this.getPassengers().isEmpty()) {
                 int i = 1;
                 while (i < this.getPartVecs().length) {
                     Vec3d exhaustVec = (new Vec3d(getPartVecs()[i].x, getPartVecs()[i].y + 0.25d, getPartVecs()[i].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
@@ -396,7 +383,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                     ++i;
                 }
             }
-            if (isBroken) {
+            if (health < 0) {
                 Vec3d engine = (new Vec3d(getPartVecs()[0].x, getPartVecs()[0].y + 0.25d, getPartVecs()[0].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
                 world.spawnParticle(EnumParticleTypes.CLOUD, true, posX + engine.x, posY + engine.y, posZ + engine.z, 0d, 0.05d, 0d);
             }
@@ -414,7 +401,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         compound.setFloat("health", this.health);
         compound.setFloat("fuel", this.fuel);
         compound.setFloat("speed", this.currentSpeed);
-        compound.setBoolean("isBroken", this.isBroken);
         compound.setInteger("textureid", this.variantType);
         compound.setDouble("traveledDist", this.distanceTraveled);
     }
@@ -430,7 +416,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         health = compound.getFloat("health");
         fuel = compound.getFloat("fuel");
         currentSpeed = compound.getFloat("speed");
-        isBroken = compound.getBoolean("isBroken");
         variantType = compound.getInteger("textureid");
         distanceTraveled = compound.getDouble("traveledDist");
     }
@@ -446,7 +431,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     private EnumVehicleState getVehicleState() {
         if (this.isAccelerating()) {
-            if(this.currentSpeed == damagedMaxSpeed) {
+            if(this.currentSpeed == this.getStats().maxSpeed) {
                 return EnumVehicleState.TOP_SPEED;
             }
             return EnumVehicleState.ACCELERATING;

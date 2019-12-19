@@ -13,14 +13,12 @@ public class CPacketVehicleData implements IMessage {
 
 	private int vehicleID;
 	private float currentSpeed, turnModifier, health, fuel;
-	private boolean isBroken;
 	
 	public CPacketVehicleData() {
 	}
 	
 	public CPacketVehicleData(EntityVehicle vehicle) {
 		this.vehicleID = vehicle.getEntityId();
-		this.isBroken = vehicle.isBroken;
 		this.currentSpeed = vehicle.currentSpeed;
 		this.turnModifier = vehicle.turnModifier;
 		this.health = vehicle.health;
@@ -30,7 +28,6 @@ public class CPacketVehicleData implements IMessage {
 	@Override
 	public void toBytes(ByteBuf buf) {
 		buf.writeInt(vehicleID);
-		buf.writeBoolean(isBroken);
 		buf.writeFloat(currentSpeed);
 		buf.writeFloat(turnModifier);
 		buf.writeFloat(health);
@@ -40,7 +37,6 @@ public class CPacketVehicleData implements IMessage {
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		vehicleID = buf.readInt();
-		isBroken = buf.readBoolean();
 		currentSpeed = buf.readFloat();
 		turnModifier = buf.readFloat();
 		health = buf.readFloat();
@@ -63,7 +59,6 @@ public class CPacketVehicleData implements IMessage {
 			if(e != null) {
 				if(e instanceof EntityVehicle) {
 					EntityVehicle car = (EntityVehicle)e;
-					car.isBroken = p.isBroken;
 					car.currentSpeed = p.currentSpeed;
 					car.turnModifier = p.turnModifier;
 					car.health = p.health;
