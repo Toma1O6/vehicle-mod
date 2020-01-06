@@ -1,8 +1,6 @@
 package dev.toma.vehiclemod.client;
 
-import dev.toma.vehiclemod.VMConfig;
 import dev.toma.vehiclemod.VehicleMod;
-import dev.toma.vehiclemod.common.FuelHandler;
 import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.client.Minecraft;
@@ -14,9 +12,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -29,15 +25,6 @@ public class ClientEventHandler {
 
 	private static final ResourceLocation VEHICLE_HUD = new ResourceLocation(VehicleMod.Constants.ID + ":textures/vehicle/vehicle_hud.png");
 	private static final DecimalFormat format = new DecimalFormat("###0.0");
-
-	@SubscribeEvent
-	public static void renderTooltip(ItemTooltipEvent e) {
-		if(FuelHandler.instance().isFuel(e.getItemStack())) {
-			String name = e.getItemStack().getItem().getRegistryName().getResourcePath();
-			float f = name.contains("bottle") ? VMConfig.values.bottle : name.contains("bucket") ? VMConfig.values.bucket : VMConfig.values.other;
-			e.getToolTip().add("Fuel: " + f + "l");
-		}
-	}
 
 	@SubscribeEvent
 	public static void renderOverlayEvent(RenderGameOverlayEvent.Post e) {

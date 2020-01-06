@@ -28,6 +28,10 @@ item.spawn_beamers120.name=Beamer S120
 item.spawn_fedorattivulcan.name=Fedoratti Vulcan
 item.spawn_tracert1.name=Tracer T1
 item.spawn_sputnik2000l.name=Sputnik 2000L
+item.bucket_of_liquid_coal.name=Liquid Coal Bucker
+item.bucket_of_fuel.name=Fuel Bucket
+item.bucket_of_activated_fuel_substance.name=Activated Fuel Substance Bucket
+item.fuel_filter.name=Fuel Filter
 
 entity.vehiclemod:beamer_s120.name=Beamer S120
 entity.vehiclemod:fedoratti_vulcan.name=Fedoratti Vulcan

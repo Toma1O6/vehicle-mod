@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 import java.text.DecimalFormat;
 
-public class ItemVehicleAccessory extends VMItem {
+public abstract class ItemVehicleAccessory extends VMItem {
 
     protected int time;
     static DecimalFormat df = new DecimalFormat("##0.00");
@@ -23,6 +23,9 @@ public class ItemVehicleAccessory extends VMItem {
         this.setMaxStackSize(1);
         this.time = seconds * 20;
     }
+
+    @Override
+    public abstract ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entityLivingBase);
 
     public String getActionMessage() {
         return "";
@@ -44,6 +47,12 @@ public class ItemVehicleAccessory extends VMItem {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         if(playerIn.isRiding() && playerIn.getRidingEntity() instanceof EntityVehicle) {
+            if(((EntityVehicle) playerIn.getRidingEntity()).currentSpeed != 0) {
+                if(!worldIn.isRemote) {
+                    playerIn.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Vehicle must be stationary!"), true);
+                    return new ActionResult<>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
+                }
+            }
             playerIn.setActiveHand(handIn);
             return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
         } else {

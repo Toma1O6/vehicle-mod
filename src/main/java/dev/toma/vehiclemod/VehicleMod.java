@@ -1,18 +1,15 @@
 package dev.toma.vehiclemod;
 
-import java.util.Random;
-
-import org.apache.logging.log4j.Logger;
-
 import dev.toma.vehiclemod.Registries.Registry;
-import dev.toma.vehiclemod.common.FuelHandler;
 import dev.toma.vehiclemod.common.VMTab;
-import dev.toma.vehiclemod.common.tileentity.TileEntityFuelTank;
+import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMusicPlayer;
+import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
 import dev.toma.vehiclemod.common.tileentity.TileEntityStateCell;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.proxy.IProxy;
+import dev.toma.vehiclemod.util.GuiHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.launchwrapper.Launch;
@@ -24,8 +21,11 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Random;
 
 @Mod(modid = VehicleMod.Constants.ID, name = VehicleMod.Constants.NAME, version = VehicleMod.Constants.VERSION)
 public class VehicleMod {
@@ -45,14 +45,16 @@ public class VehicleMod {
 		logger = e.getModLog();
 		VMNetworkManager.init();
 		proxy.preInit(e);
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 	}
 	
 	@EventHandler
 	public static void init(FMLInitializationEvent e) {
 		GameRegistry.registerTileEntity(TileEntitySecret.class, new ResourceLocation(Constants.ID, "secret"));
-		GameRegistry.registerTileEntity(TileEntityFuelTank.class, new ResourceLocation(Constants.ID, "fuel_tank"));
 		GameRegistry.registerTileEntity(TileEntityStateCell.class, new ResourceLocation(Constants.ID, "state_cell"));
 		GameRegistry.registerTileEntity(TileEntityMusicPlayer.class, new ResourceLocation(Constants.ID, "music_player"));
+		GameRegistry.registerTileEntity(TileEntityPetrolPump.class, new ResourceLocation(Constants.ID, "petrol_pump"));
+		GameRegistry.registerTileEntity(TileEntityFuelMaker.class, getResource("fuel_maker"));
 		proxy.init(e);
 	}
 	
@@ -62,15 +64,14 @@ public class VehicleMod {
 		Registry.registerMusicEntries();
 	}
 	
-	@EventHandler
-	public static void serverStart(FMLServerStartingEvent e) {
-		FuelHandler.instance().readAndInitFuels(VMConfig.fuels);
-	}
-	
 	public static void registerItemBlock(Block block) {
 		ItemBlock ib = new ItemBlock(block);
 		ib.setRegistryName(block.getRegistryName());
 		Registries.Registry.ITEM_BLOCKS.add(ib);
+	}
+
+	public static ResourceLocation getResource(String path) {
+		return new ResourceLocation(Constants.ID, path);
 	}
 	
 	public static Random getRNG() {

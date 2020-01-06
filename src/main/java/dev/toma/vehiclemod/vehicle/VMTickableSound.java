@@ -37,8 +37,6 @@ public class VMTickableSound extends MovingSound {
 	public boolean equals(Object obj) {
 		if(obj instanceof SoundEvent) {
 			SoundEvent e = ((SoundEvent)obj);
-			System.out.println(e.getSoundName());
-			System.out.println(this.getSoundLocation());
 			return e.getSoundName().equals(this.getSoundLocation());
 		}
 		return false;

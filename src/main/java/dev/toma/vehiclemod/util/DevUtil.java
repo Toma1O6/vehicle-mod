@@ -38,6 +38,24 @@ private static final ModelCreator CREATOR = new ModelCreator();
 	public static ModelCreator creator() {
 		return CREATOR;
 	}
+
+	public static <T> boolean contains(T t, T[] array, ComparableFunction<T> function) {
+		for(T entry : array) {
+			if(function.compare(t, entry)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static <T> boolean contains(T t, Collection<T> collection, ComparableFunction<T> function) {
+		for(T entry : collection) {
+			if(function.compare(t, entry)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public static boolean isDev() {
 		return (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
@@ -64,14 +82,26 @@ private static final ModelCreator CREATOR = new ModelCreator();
 		ScaledResolution resolution = new ScaledResolution(mc);
 		drawImage2D(mc, location, 0, 0, resolution.getScaledWidth(), resolution.getScaledHeight());
 	}
+
+	public interface ComparableFunction<T> {
+
+		boolean compare(T t1, T t2);
+	}
 	
 	public static final class ModelCreator {
 		
 		public void createAllFiles() {
+			this.createBlockFiles();
+			this.createItemFiles();
+		}
+
+		public void createBlockFiles() {
 			ForgeRegistries.BLOCKS.getValuesCollection().stream()
 					.filter(b -> b.getRegistryName().getResourceDomain().equals(VehicleMod.Constants.ID))
 					.forEach(this::createBlockFiles);
+		}
 
+		public void createItemFiles() {
 			ForgeRegistries.ITEMS.getValuesCollection().stream()
 					.filter(i -> i.getRegistryName().getResourceDomain().equals(VehicleMod.Constants.ID))
 					.forEach(this::createItemModelFile);

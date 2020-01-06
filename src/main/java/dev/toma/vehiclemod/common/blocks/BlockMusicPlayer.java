@@ -108,7 +108,7 @@ public class BlockMusicPlayer extends BlockBasic {
 			i = world.getRedstonePower(pos.offset(facing), facing) > i ? world.getRedstonePower(pos.offset(facing), facing) : i;
 			IBlockState st = world.getBlockState(pos.offset(facing));
 			if(i == 0 && st.getBlock() == Blocks.REDSTONE_WIRE) {
-				i = st.getValue(BlockRedstoneWire.POWER).intValue();
+				i = st.getValue(BlockRedstoneWire.POWER);
 			}
 		}
 		return i > 0;

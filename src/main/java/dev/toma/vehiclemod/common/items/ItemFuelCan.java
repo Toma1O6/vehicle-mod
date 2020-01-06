@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class ItemFuelCan extends ItemVehicleAccessory {
 	
 	public ItemFuelCan(String name) {
-		super(name, 5);
+		super(name, 15);
 		setMaxDamage(4);
 		setMaxStackSize(1);
 	}
@@ -34,15 +34,5 @@ public class ItemFuelCan extends ItemVehicleAccessory {
 			}
 		}
 		return stack;
-	}
-
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		ItemStack stack = playerIn.getHeldItem(handIn);
-		if(stack.getItemDamage() < stack.getMaxDamage()) {
-			playerIn.setActiveHand(handIn);
-			return new ActionResult<>(EnumActionResult.PASS, stack);
-		}
-		return new ActionResult<>(EnumActionResult.FAIL, stack);
 	}
 }

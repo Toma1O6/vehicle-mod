@@ -17,13 +17,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 @Config(modid = VehicleMod.Constants.ID, name = VehicleMod.Constants.NAME + " Config")
 public class VMConfig {
-	
-	@Name("Fuels")
-	@RequiresWorldRestart
-	public static String[] fuels = {"modid:item_name"};
-	
-	@Name("Fuel Values")
-	public static DefaultFuelValues values = new DefaultFuelValues(15, 35, 20);
 
 	@Name("State cell modifier")
 	@Comment("Amount of ticks added or substracted/click")

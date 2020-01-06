@@ -1,7 +1,9 @@
 package dev.toma.vehiclemod;
 
 import dev.toma.vehiclemod.common.blocks.*;
+import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
 import dev.toma.vehiclemod.common.items.*;
+import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.util.MusicEntry;
 import dev.toma.vehiclemod.vehicle.entity.VehicleBeamerS120;
 import dev.toma.vehiclemod.vehicle.entity.VehicleFedorattiVulcan;
@@ -57,15 +59,20 @@ public class Registries {
         public static final ItemSprayCan RED_SPRAY_CAN = null;
         public static final ItemSprayCan BLACK_SPRAY_CAN = null;
         public static final ItemRepairKit REPAIR_KIT = null;
+        public static final VMItem BUCKET_OF_LIQUID_COAL = null;
+        public static final VMItem BUCKET_OF_ACTIVATED_FUEL_SUBSTANCE = null;
+        public static final VMItem BUCKET_OF_FUEL = null;
+        public static final VMItem FUEL_FILTER = null;
     }
 
     @ObjectHolder(VehicleMod.Constants.ID)
     public static final class VMBlocks {
         public static final BlockSecret SECRET = null;
-        public static final BlockFuelTank FUEL_TANK = null;
+        public static final BlockPetrolPump PETROL_PUMP = null;
         public static final BlockStateCell STATE_CELL = null;
         public static final BlockSpikes SPIKES = null;
         public static final BlockMusicPlayer MUSIC_PLAYER = null;
+        public static final BlockFuelMaker FUEL_MAKER = null;
     }
 
     @ObjectHolder(VehicleMod.Constants.ID)
@@ -129,10 +136,11 @@ public class Registries {
         public static void onBlockRegister(RegistryEvent.Register<Block> e) {
             final Block[] blocks = {
                     new BlockSecret("secret"),
-                    new BlockFuelTank("fuel_tank"),
                     new BlockStateCell("state_cell"),
                     new BlockSpikes("spikes"),
                     new BlockMusicPlayer("music_player"),
+                    new BlockPetrolPump("petrol_pump"),
+                    new BlockFuelMaker("fuel_maker")
             };
             e.getRegistry().registerAll(blocks);
         }
@@ -146,7 +154,11 @@ public class Registries {
                     new ItemVehicleSpawner("spawn_tracert1", (w, p) -> w.spawnEntity(new VehicleTracerT1(w, p))),
                     new ItemVehicleSpawner("spawn_sputnik2000l", (w, p) -> w.spawnEntity(new VehicleSputnik2000L(w, p))),
                     new VMItem("empty_spray_can"),
-                    new ItemRepairKit("repair_kit")
+                    new ItemRepairKit("repair_kit"),
+                    new VMItem("bucket_of_liquid_coal").setMaxStackSize(1),
+                    new VMItem("bucket_of_activated_fuel_substance").setMaxStackSize(1),
+                    new VMItem("bucket_of_fuel").setMaxStackSize(1),
+                    new VMItem("fuel_filter").setMaxDamage(75).setMaxStackSize(1)
             };
             for (int i = 0; i < EnumDyeColor.values().length; i++) {
                 EnumDyeColor color = EnumDyeColor.values()[i];
@@ -284,6 +296,7 @@ public class Registries {
         public static void onModelRegister(ModelRegistryEvent e) {
             final IForgeRegistry<Item> ITEMS = ForgeRegistries.ITEMS;
             final IForgeRegistry<Block> BLOCKS = ForgeRegistries.BLOCKS;
+
             for (ResourceLocation rl : ITEMS.getKeys()) {
                 if (rl.getResourceDomain().equalsIgnoreCase(VehicleMod.Constants.ID)) {
                     registerModel(ITEMS.getValue(rl));
