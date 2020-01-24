@@ -141,7 +141,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             }
             if (!inputForward && inputBack) {
                 burnFuel();
-                currentSpeed = currentSpeed > 0 ? currentSpeed - stats.brakeSpeed : currentSpeed > (-stats.maxSpeed * 0.3f) ? currentSpeed - (stats.brakeSpeed * modifier) : -stats.maxSpeed * 0.3f;
+                currentSpeed = currentSpeed > 0 ? currentSpeed - stats.brakeSpeed : currentSpeed > (-stats.maxSpeed * 0.3f) ? currentSpeed - (stats.acceleration * modifier) : -stats.maxSpeed * 0.3f;
             }
         }
 

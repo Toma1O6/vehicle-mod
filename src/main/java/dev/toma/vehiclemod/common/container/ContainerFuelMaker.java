@@ -15,38 +15,35 @@ public class ContainerFuelMaker extends Container {
 
     public ContainerFuelMaker(InventoryPlayer player, TileEntityFuelMaker tileEntityFuelMaker) {
         this.tileEntityFuelMaker = tileEntityFuelMaker;
-        addSlotToContainer(new Slot(tileEntityFuelMaker, 0, 98, 9) {
+        addSlotToContainer(new Slot(tileEntityFuelMaker, 0, 29, 7) {
             @Override
             public boolean isItemValid(ItemStack stack) {
                 return stack.getItem() == Registries.VMItems.BUCKET_OF_ACTIVATED_FUEL_SUBSTANCE;
             }
-
-            @Override
-            public int getSlotStackLimit() {
-                return 1;
-            }
         });
-        this.addSlotToContainer(new Slot(tileEntityFuelMaker, 4, 98, 64) {
+        addSlotToContainer(new Slot(tileEntityFuelMaker, 1, 29, 62) {
             @Override
             public boolean isItemValid(ItemStack stack) {
                 return stack.getItem() == Items.BUCKET;
             }
-
+        });
+        addSlotToContainer(new Slot(tileEntityFuelMaker, 2, 131, 7) {
             @Override
-            public int getSlotStackLimit() {
-                return 1;
+            public boolean isItemValid(ItemStack stack) {
+                return stack.getItem() == Items.BUCKET;
+            }
+        });
+        addSlotToContainer(new Slot(tileEntityFuelMaker, 3, 131, 62) {
+            @Override
+            public boolean isItemValid(ItemStack stack) {
+                return stack.getItem() == Registries.VMItems.BUCKET_OF_FUEL;
             }
         });
         for(int i = 0; i < 3; i++) {
-            addSlotToContainer(new Slot(tileEntityFuelMaker, 1 + i, 8, 28 + i * 18) {
+            addSlotToContainer(new Slot(tileEntityFuelMaker, 4 + i, 62 + i * 18, 46) {
                 @Override
                 public boolean isItemValid(ItemStack stack) {
                     return stack.getItem() == Registries.VMItems.FUEL_FILTER;
-                }
-
-                @Override
-                public int getSlotStackLimit() {
-                    return 1;
                 }
             });
         }

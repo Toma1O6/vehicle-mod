@@ -6,6 +6,7 @@ import dev.toma.vehiclemod.util.GuiHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
@@ -26,6 +27,7 @@ public class BlockFuelMaker extends BlockBasic {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(!worldIn.isRemote) {
+            ((EntityPlayerMP)playerIn).connection.sendPacket(worldIn.getTileEntity(pos).getUpdatePacket());
             playerIn.openGui(VehicleMod.instance, GuiHandler.FUEL_MAKER, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;

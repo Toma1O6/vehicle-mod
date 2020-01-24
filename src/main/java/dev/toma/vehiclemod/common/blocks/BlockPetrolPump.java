@@ -8,6 +8,8 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -26,6 +28,16 @@ public class BlockPetrolPump extends BlockBasic {
         super(name, Material.IRON);
         this.setHardness(1.5F);
         this.setDefaultState(this.getBlockState().getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(UP, false));
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        TileEntityPetrolPump petrolPump = (TileEntityPetrolPump) worldIn.getTileEntity(pos);
+        if(!worldIn.isRemote) {
+            petrolPump.pair(state.getValue(FACING));
+            ((EntityPlayerMP) playerIn).connection.sendPacket(petrolPump.getUpdatePacket());
+        }
+        return true;
     }
 
     @Override

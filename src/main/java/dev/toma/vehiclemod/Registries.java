@@ -155,10 +155,10 @@ public class Registries {
                     new ItemVehicleSpawner("spawn_sputnik2000l", (w, p) -> w.spawnEntity(new VehicleSputnik2000L(w, p))),
                     new VMItem("empty_spray_can"),
                     new ItemRepairKit("repair_kit"),
-                    new VMItem("bucket_of_liquid_coal").setMaxStackSize(1),
-                    new VMItem("bucket_of_activated_fuel_substance").setMaxStackSize(1),
-                    new VMItem("bucket_of_fuel").setMaxStackSize(1),
-                    new VMItem("fuel_filter").setMaxDamage(75).setMaxStackSize(1)
+                    new VMItem("bucket_of_liquid_coal"),
+                    new VMItem("bucket_of_activated_fuel_substance"),
+                    new VMItem("bucket_of_fuel"),
+                    new VMItem("fuel_filter")
             };
             for (int i = 0; i < EnumDyeColor.values().length; i++) {
                 EnumDyeColor color = EnumDyeColor.values()[i];

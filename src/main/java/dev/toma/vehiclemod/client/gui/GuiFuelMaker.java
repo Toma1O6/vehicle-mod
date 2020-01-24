@@ -14,9 +14,6 @@ import net.minecraft.util.ResourceLocation;
 public class GuiFuelMaker extends GuiContainer {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(VehicleMod.Constants.ID, "textures/gui/fuel_maker.png");
-    private static final ResourceLocation OUTLINE = new ResourceLocation(VehicleMod.Constants.ID, "textures/gui/fuel_maker_outline.png");
-    private static final ResourceLocation INGREDIENT = new ResourceLocation(VehicleMod.Constants.ID, "textures/gui/fuel_maker_ingredient.png");
-    private static final ResourceLocation PRODUCT = new ResourceLocation(VehicleMod.Constants.ID, "textures/gui/fuel_maker_product.png");
     private final TileEntityFuelMaker tileEntityFuelMaker;
 
     public GuiFuelMaker(InventoryPlayer player, TileEntityFuelMaker tileEntityFuelMaker) {
@@ -29,30 +26,34 @@ public class GuiFuelMaker extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         GlStateManager.disableLighting();
-        drawFuelBar(134, INGREDIENT, tileEntityFuelMaker.getIngredientAmount());
-        drawFuelBar(134, OUTLINE, 1000);
-        drawFuelBar(152, PRODUCT, tileEntityFuelMaker.getProductAmount());
-        drawFuelBar(152, OUTLINE, 1000);
-        /*Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder builder = tessellator.getBuffer();
-        builder.begin(7, DefaultVertexFormats.POSITION_TEX);
-        mc.getTextureManager().bindTexture(OUTLINE);
-        builder.pos(134, 81, 0).tex(0, 1).endVertex();
-        builder.pos(150, 81, 0).tex(1, 1).endVertex();
-        builder.pos(150, 8, 0).tex(1, 0).endVertex();
-        builder.pos(134, 8, 0).tex(0, 0).endVertex();
-        builder.pos(152, 81, 0).tex(0, 1).endVertex();
-        builder.pos(168, 81, 0).tex(1, 1).endVertex();
-        builder.pos(168, 8, 0).tex(1, 0).endVertex();
-        builder.pos(152, 8, 0).tex(0, 0).endVertex();
-        tessellator.draw();*/
+        drawFuelBar(5, 1, tileEntityFuelMaker.getIngredientAmount());
+        drawFuelBar(5, 0, TileEntityFuelMaker.MAX_STORED_AMOUNT);
+        drawFuelBar(151, 2, tileEntityFuelMaker.getProductAmount());
+        drawFuelBar(151, 0, TileEntityFuelMaker.MAX_STORED_AMOUNT);
+        if(tileEntityFuelMaker.isWorking()) {
+            float prg = tileEntityFuelMaker.getProcessTimer() / 600.0F;
+            int diff = 208 - 176;
+            double aus = 176 / 256D;
+            double aue = (176 + diff * prg) / 256D;
+            double avs = 73 / 256D;
+            double ave = 84 / 256D;
+            mc.getTextureManager().bindTexture(TEXTURE);
+            Tessellator tessellator = Tessellator.getInstance();
+            BufferBuilder builder = tessellator.getBuffer();
+            builder.begin(7, DefaultVertexFormats.POSITION_TEX);
+            builder.pos(72, 36, 0).tex(aus, ave).endVertex();
+            builder.pos(72 + diff * prg, 36, 0).tex(aue, ave).endVertex();
+            builder.pos(72 + diff * prg, 25, 0).tex(aue, avs).endVertex();
+            builder.pos(72, 25, 0).tex(aus, avs).endVertex();
+            tessellator.draw();
+        }
         GlStateManager.enableLighting();
         int x = mouseX - guiLeft;
         int y = mouseY - guiTop;
-        if(x >= 134 && x <= 150 && y >= 8 && y <= 81) {
-            this.drawHoveringText("Active substance: " + tileEntityFuelMaker.getIngredientAmount() / 10 + "%", x, y);
-        } else if(x >= 152 && x <= 168 && y >= 8 && y <= 81) {
-            this.drawHoveringText("Fuel: " + tileEntityFuelMaker.getProductAmount() / 10 + "%", x, y);
+        if(x >= 5 && x <= 24 && y >= 6 && y <= 78) {
+            this.drawHoveringText("Active substance: " + 100*(tileEntityFuelMaker.getIngredientAmount() / (float)TileEntityFuelMaker.MAX_STORED_AMOUNT) + "%", x, y);
+        } else if(x >= 151 && x <= 170 && y >= 6 && y <= 78) {
+            this.drawHoveringText("Fuel: " + 100*(tileEntityFuelMaker.getProductAmount() / (float)TileEntityFuelMaker.MAX_STORED_AMOUNT) + "%", x, y);
         } else this.renderHoveredToolTip(mouseX - guiLeft, mouseY - guiTop);
     }
 
@@ -63,17 +64,19 @@ public class GuiFuelMaker extends GuiContainer {
         this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
     }
 
-    private void drawFuelBar(int x, ResourceLocation location, int value) {
-        float tex = value / 1000F;
+    private void drawFuelBar(int x, int texture, int value) {
+        float tex = (float)value / TileEntityFuelMaker.MAX_STORED_AMOUNT;
         float posMod = 73 * Math.abs(1.0F - tex);
-        mc.getTextureManager().bindTexture(location);
+        double startU = (176 + texture * 20) / 256.0D;
+        double endU = startU + 20 / 256.0D;
+        mc.getTextureManager().bindTexture(TEXTURE);
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
         builder.begin(7, DefaultVertexFormats.POSITION_TEX);
-        builder.pos(x, 81, 0).tex(0, 0).endVertex();
-        builder.pos(x + 16, 81, 0).tex(1, 0).endVertex();
-        builder.pos(x + 16, 8 + posMod, 0).tex(1, tex).endVertex();
-        builder.pos(x, 8 + posMod, 0).tex(0, tex).endVertex();
+        builder.pos(x, 79, 0).tex(startU, 73/256d).endVertex();
+        builder.pos(x + 20, 79, 0).tex(endU, 73/256d).endVertex();
+        builder.pos(x + 20, 6 + posMod, 0).tex(endU, 0).endVertex();
+        builder.pos(x, 6 + posMod, 0).tex(startU, 0).endVertex();
         tessellator.draw();
     }
 }

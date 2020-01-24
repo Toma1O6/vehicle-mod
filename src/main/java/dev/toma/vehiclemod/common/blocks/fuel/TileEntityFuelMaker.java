@@ -1,11 +1,9 @@
 package dev.toma.vehiclemod.common.blocks.fuel;
 
 import dev.toma.vehiclemod.Registries;
-import dev.toma.vehiclemod.VehicleMod;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,13 +17,12 @@ import javax.annotation.Nullable;
 
 public class TileEntityFuelMaker extends TileEntity implements IInventory, ITickable {
 
-    private static final int SIZE = 5;
-    private static final int INPUT = 0;
-    private static final int OUTPUT = 4;
+    public static final int MAX_STORED_AMOUNT = 25000;
 
     private int ingredient = 0;
     private int product = 0;
-    private NonNullList<ItemStack> inventory = NonNullList.withSize(SIZE, ItemStack.EMPTY);
+    private NonNullList<ItemStack> inventory = NonNullList.withSize(7, ItemStack.EMPTY);
+    private int processTimer;
 
     public int getIngredientAmount() {
         return ingredient;
@@ -33,6 +30,14 @@ public class TileEntityFuelMaker extends TileEntity implements IInventory, ITick
 
     public int getProductAmount() {
         return product;
+    }
+
+    public boolean isWorking() {
+        return processTimer > 0;
+    }
+
+    public int getProcessTimer() {
+        return processTimer;
     }
 
     @Override
@@ -54,26 +59,34 @@ public class TileEntityFuelMaker extends TileEntity implements IInventory, ITick
 
     @Override
     public void update() {
-        if(world.getWorldTime() % 20 == 0 && hasFilters() && ingredient >= 2 && product < 1000) {
-            ingredient -= 2;
-            ++product;
-            if(!world.isRemote) {
-                int slot = 1 + VehicleMod.getRNG().nextInt(3);
-                ItemStack stack = this.getStackInSlot(slot);
-                if(stack.getItemDamage() == stack.getMaxDamage() - 1) {
-                    setInventorySlotContents(slot, ItemStack.EMPTY);
-                } else {
-                    stack.setItemDamage(stack.getItemDamage() + 1);
+        if(hasFilters() && ingredient > 0 && product < MAX_STORED_AMOUNT) {
+            if(++processTimer >= 600) {
+                processTimer = 0;
+                for(int i = 4; i < 7; i++) {
+                    getStackInSlot(i).shrink(1);
                 }
+                world.playEvent(1035, pos, 0);
+                int amount = ingredient > 1000 ? 1000 : ingredient;
+                ingredient -= amount;
+                product += amount / 2;
+            }
+        } else {
+            processTimer = 0;
+        }
+        if(ingredient < MAX_STORED_AMOUNT) {
+            if(getStackInSlot(0).getItem() == Registries.VMItems.BUCKET_OF_ACTIVATED_FUEL_SUBSTANCE && getStackInSlot(1).getCount() < 64) {
+                getStackInSlot(0).shrink(1);
+                setInventorySlotContents(1, new ItemStack(Items.BUCKET, getStackInSlot(1).isEmpty() ? 1 : getStackInSlot(1).getCount() + 1));
+                ingredient += 1000;
             }
         }
-        if(getStackInSlot(INPUT).getItem() == Registries.VMItems.BUCKET_OF_ACTIVATED_FUEL_SUBSTANCE && ingredient < 1000) {
-            this.ingredient = ingredient <= 900 ? ingredient + 100 : 1000;
-            setInventorySlotContents(INPUT, new ItemStack(Items.BUCKET));
-        }
-        if(getStackInSlot(OUTPUT).getItem() == Items.BUCKET && product >= 100) {
-            product -= 100;
-            setInventorySlotContents(OUTPUT, new ItemStack(Registries.VMItems.BUCKET_OF_FUEL));
+        if(product >= 1000) {
+            if(!getStackInSlot(2).isEmpty()) {
+                getStackInSlot(2).shrink(1);
+                ItemStack stack = getStackInSlot(3);
+                setInventorySlotContents(3, new ItemStack(Registries.VMItems.BUCKET_OF_FUEL, stack.isEmpty() ? 1 : stack.getCount() + 1));
+                product -= 1000;
+            }
         }
     }
 
@@ -94,7 +107,7 @@ public class TileEntityFuelMaker extends TileEntity implements IInventory, ITick
     }
 
     private boolean hasFilters() {
-        for(int i = 1; i < 4; i++) {
+        for(int i = 4; i < 7; i++) {
             if(getStackInSlot(i).getItem() != Registries.VMItems.FUEL_FILTER) {
                 return false;
             }
@@ -116,7 +129,7 @@ public class TileEntityFuelMaker extends TileEntity implements IInventory, ITick
 
     @Override
     public int getSizeInventory() {
-        return SIZE;
+        return 7;
     }
 
     @Override
@@ -131,7 +144,7 @@ public class TileEntityFuelMaker extends TileEntity implements IInventory, ITick
 
     @Override
     public void clear() {
-        inventory = NonNullList.withSize(SIZE, ItemStack.EMPTY);
+        inventory = NonNullList.withSize(7, ItemStack.EMPTY);
         markDirty();
     }
 
@@ -202,7 +215,7 @@ public class TileEntityFuelMaker extends TileEntity implements IInventory, ITick
 
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
-        return index < SIZE - 1;
+        return index == 6;
     }
 
     @Override

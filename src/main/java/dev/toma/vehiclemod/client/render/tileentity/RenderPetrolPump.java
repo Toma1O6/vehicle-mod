@@ -99,8 +99,8 @@ public class RenderPetrolPump extends TileEntitySpecialRenderer<TileEntityPetrol
             case EAST: {
                 builder.pos(x + 1.011, y + 0.15, z + 0.79 - (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
                 builder.pos(x + 1.011, y + 0.15, z + 0.81 - (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 1.011, y, z + 0.81 - (0.6 * amount)).color(0.0F, 0.0F, 1.0F, 0.0F).endVertex();
-                builder.pos(x + 1.011, y, z + 0.79 - (0.6 * amount)).color(0.0F, 0.0F, 1.0F, 0.0F).endVertex();
+                builder.pos(x + 1.011, y, z + 0.81 - (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 1.011, y, z + 0.79 - (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
                 break;
 
             }
