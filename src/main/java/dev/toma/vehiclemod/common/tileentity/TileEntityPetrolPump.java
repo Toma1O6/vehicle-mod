@@ -53,7 +53,7 @@ public class TileEntityPetrolPump extends TileEntity implements ITickable {
 
     @Override
     public void update() {
-        if(!world.isRemote && this.pairedVehicle != null) {
+        if(this.pairedVehicle != null) {
             if(canReach()) {
                 if(pairedVehicle.fuel < 100.0F && storedAmount > 0.0F) {
                     pairedVehicle.fuel += 0.1F;
