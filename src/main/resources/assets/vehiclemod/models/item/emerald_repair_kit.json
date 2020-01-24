@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "vehiclemod:items/repair_kit"
+		"layer0": "vehiclemod:items/emerald_repair_kit"
 	}
 }

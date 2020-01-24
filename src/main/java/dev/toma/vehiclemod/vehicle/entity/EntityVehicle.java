@@ -309,8 +309,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
     }
 
-    public void repair() {
-        float amount = this.getStats().maxHealth * 0.3F;
+    public void repair(int amount) {
         this.health = this.health + amount > this.getStats().maxHealth ? this.getStats().maxHealth : this.health + amount;
     }
 

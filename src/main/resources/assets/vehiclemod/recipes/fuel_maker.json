@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "IPI",
+        "IFI",
+        "IPI"
+    ],
+    "key": {
+        "I": {
+            "item": "minecraft:iron_block"
+        },
+        "P": {
+            "item": "minecraft:piston",
+            "data": 0
+        },
+        "F": {
+            "item": "vehiclemod:fuel_filter"
+        }
+    },
+    "result": {
+        "item": "vehiclemod:fuel_maker",
+        "count": 1
+    }
+}

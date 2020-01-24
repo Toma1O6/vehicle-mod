@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "LXL",
+        "XPX",
+        "LKL"
+    ],
+    "key": {
+        "X": {
+            "item": "minecraft:emerald"
+        },
+        "L": {
+            "item": "minecraft:leather"
+        },
+        "P": {
+            "item": "minecraft:level"
+        },
+        "K": {
+            "item": "minecraft:iron_pickaxe"
+        }
+    },
+    "result": {
+        "item": "vehiclemod:emerald_repair_kit",
+        "count": 1
+    }
+}

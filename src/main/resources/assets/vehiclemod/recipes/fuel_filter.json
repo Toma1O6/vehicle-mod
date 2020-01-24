@@ -1,0 +1,14 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {"item": "minecraft:paper"},
+        {"item": "minecraft:paper"},
+        {"item": "minecraft:redstone"},
+        {"item": "minecraft:redstone"},
+        {"item": "minecraft:coal", "data": 1}
+    ],
+    "result": {
+        "item": "vehiclemod:fuel_filter",
+        "count": 10
+    }
+}

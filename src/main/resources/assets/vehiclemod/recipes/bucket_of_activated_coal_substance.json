@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {"item": "vehiclemod:bucket_of_liquid_coal"},
+        {"item": "minecraft:redstone"},
+        {"item": "minecraft:redstone"},
+        {"item": "minecraft:redstone"},
+        {"item": "minecraft:redstone"},
+        {"item": "minecraft:glowstone_dust"},
+        {"item": "minecraft:glowstone_dust"},
+        {"item": "minecraft:blaze_powder"},
+        {"item": "minecraft:blaze_powder"}
+    ],
+    "result": {
+        "item": "vehiclemod:bucket_of_activated_fuel_substance",
+        "count": 1
+    }
+}

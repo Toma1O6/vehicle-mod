@@ -3,7 +3,6 @@ package dev.toma.vehiclemod;
 import dev.toma.vehiclemod.common.blocks.*;
 import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
 import dev.toma.vehiclemod.common.items.*;
-import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.util.MusicEntry;
 import dev.toma.vehiclemod.vehicle.entity.VehicleBeamerS120;
 import dev.toma.vehiclemod.vehicle.entity.VehicleFedorattiVulcan;
@@ -58,7 +57,12 @@ public class Registries {
         public static final ItemSprayCan GREEN_SPRAY_CAN = null;
         public static final ItemSprayCan RED_SPRAY_CAN = null;
         public static final ItemSprayCan BLACK_SPRAY_CAN = null;
-        public static final ItemRepairKit REPAIR_KIT = null;
+        public static final ItemRepairKit IRON_REPAIR_KIT = null;
+        public static final ItemRepairKit GOLD_REPAIR_KIT = null;
+        public static final ItemRepairKit DIAMOND_REPAIR_KIT = null;
+        public static final ItemRepairKit EMERALD_REPAIR_KIT = null;
+        public static final ItemRepairKit REDSTONE_REPAIR_KIT = null;
+        public static final ItemRepairKit OBSIDIAN_REPAIR_KIT = null;
         public static final VMItem BUCKET_OF_LIQUID_COAL = null;
         public static final VMItem BUCKET_OF_ACTIVATED_FUEL_SUBSTANCE = null;
         public static final VMItem BUCKET_OF_FUEL = null;
@@ -154,7 +158,6 @@ public class Registries {
                     new ItemVehicleSpawner("spawn_tracert1", (w, p) -> w.spawnEntity(new VehicleTracerT1(w, p))),
                     new ItemVehicleSpawner("spawn_sputnik2000l", (w, p) -> w.spawnEntity(new VehicleSputnik2000L(w, p))),
                     new VMItem("empty_spray_can"),
-                    new ItemRepairKit("repair_kit"),
                     new VMItem("bucket_of_liquid_coal"),
                     new VMItem("bucket_of_activated_fuel_substance"),
                     new VMItem("bucket_of_fuel"),
@@ -163,6 +166,9 @@ public class Registries {
             for (int i = 0; i < EnumDyeColor.values().length; i++) {
                 EnumDyeColor color = EnumDyeColor.values()[i];
                 e.getRegistry().register(new ItemSprayCan(color.getName() + "_spray_can", color));
+            }
+            for (ItemRepairKit.Tier tier : ItemRepairKit.Tier.values()) {
+                e.getRegistry().register(new ItemRepairKit("repair_kit", tier));
             }
             e.getRegistry().registerAll(items);
             registerAll(e, ITEM_BLOCKS);

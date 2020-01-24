@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "BGB",
+        "BSB",
+        "III"
+    ],
+    "key": {
+        "B": {
+            "item": "minecraft:bucket"
+        },
+        "G": {
+            "item": "minecraft:glass"
+        },
+        "I": {
+            "item": "minecraft:iron_block"
+        },
+        "S": {
+            "item": "minecraft:gold_block"
+        }
+    },
+    "result": {
+        "item": "vehiclemod:petrol_pump",
+        "count": 1
+    }
+}
