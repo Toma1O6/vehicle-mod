@@ -30,12 +30,12 @@ public class ItemRepairKit extends ItemVehicleAccessory {
     }
 
     public enum Tier {
-        IRON(50, 50),
-        GOLD(30, 40),
-        DIAMOND(40, 100),
-        EMERALD(20, 75),
-        REDSTONE(20, 100),
-        OBSIDIAN(10, 200);
+        IRON(50, 80),
+        GOLD(30, 60),
+        DIAMOND(40, 150),
+        EMERALD(25, 120),
+        REDSTONE(10, 15),
+        OBSIDIAN(90, 225);
 
         int repairTime;
         int amount;

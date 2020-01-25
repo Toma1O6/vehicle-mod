@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "facing=north,up=false": {"model": "vehiclemod:petrol_pump_bottom", "y": 0},
+        "facing=east,up=false": {"model": "vehiclemod:petrol_pump_bottom", "y": 90},
+        "facing=south,up=false": {"model": "vehiclemod:petrol_pump_bottom", "y": 180},
+        "facing=west,up=false": {"model": "vehiclemod:petrol_pump_bottom", "y": 270},
+        "facing=north,up=true": {"model": "vehiclemod:petrol_pump_top", "y": 0},
+        "facing=east,up=true": {"model": "vehiclemod:petrol_pump_top", "y": 90},
+        "facing=south,up=true": {"model": "vehiclemod:petrol_pump_top", "y": 180},
+        "facing=west,up=true": {"model": "vehiclemod:petrol_pump_top", "y": 270}
+    }
+}

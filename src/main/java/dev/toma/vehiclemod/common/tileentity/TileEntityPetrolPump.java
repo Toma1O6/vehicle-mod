@@ -46,9 +46,9 @@ public class TileEntityPetrolPump extends TileEntity implements ITickable {
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
         storedAmount = compound.getFloat("stored");
         pairedVehicle = compound.hasKey("vehicleID") ? (EntityVehicle) world.getEntityByID(compound.getInteger("vehicleID")) : null;
-        super.readFromNBT(compound);
     }
 
     @Override
@@ -61,7 +61,9 @@ public class TileEntityPetrolPump extends TileEntity implements ITickable {
                 }
             } else {
                 pairedVehicle = null;
-                world.getMinecraftServer().getPlayerList().getPlayers().forEach(entityPlayerMP -> entityPlayerMP.connection.sendPacket(this.getUpdatePacket()));
+                if(!world.isRemote) {
+                    world.getMinecraftServer().getPlayerList().getPlayers().forEach(entityPlayerMP -> entityPlayerMP.connection.sendPacket(this.getUpdatePacket()));
+                }
             }
         }
     }
@@ -97,6 +99,7 @@ public class TileEntityPetrolPump extends TileEntity implements ITickable {
     }
 
     private boolean canReach() {
-        return distanceTo(pairedVehicle, pos) < 3;
+        double dist = distanceTo(pairedVehicle, pos);
+        return dist < 5;
     }
 }

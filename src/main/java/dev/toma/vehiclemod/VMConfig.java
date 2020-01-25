@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
-@Config(modid = VehicleMod.Constants.ID, name = VehicleMod.Constants.NAME + " Config")
+@Config(modid = VehicleMod.Constants.ID, name = "Toma's Vehicle Mod Config")
 public class VMConfig {
 
 	@Name("State cell modifier")

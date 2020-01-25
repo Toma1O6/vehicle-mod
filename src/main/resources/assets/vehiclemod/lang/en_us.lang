@@ -3,9 +3,10 @@ tile.fuel_tank.name=Fuel Tank
 tile.state_cell.name=State Cell
 tile.spikes.name=Spikes
 tile.music_player.name=Music Box
+tile.fuel_maker.name=Fuel Maker
+tile.petrol_pump.name=Petrol Pump
 
 item.fuel_can.name=Fuel Can
-
 item.empty_spray_can.name=Empty Spray Can
 item.white_spray_can.name=White Spray Can
 item.orange_spray_can.name=Orange Spray Can
@@ -32,6 +33,12 @@ item.bucket_of_liquid_coal.name=Liquid Coal Bucker
 item.bucket_of_fuel.name=Fuel Bucket
 item.bucket_of_activated_fuel_substance.name=Activated Fuel Substance Bucket
 item.fuel_filter.name=Fuel Filter
+item.iron_repair_kit.name=Iron Repair Kit
+item.gold_repair_kit.name=Golden Repair Kit
+item.diamond_repair_kit.name=Diamond Repair Kit
+item.emerald_repair_kit.name=Emerald Repair Kit
+item.redstone_repair_kit.name=Redstone Repair Kit
+item.obsidian_repair_kit.name=Obsidian Repair Kit
 
 entity.vehiclemod:beamer_s120.name=Beamer S120
 entity.vehiclemod:fedoratti_vulcan.name=Fedoratti Vulcan

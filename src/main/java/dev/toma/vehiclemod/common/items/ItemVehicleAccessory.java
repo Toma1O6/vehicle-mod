@@ -38,6 +38,15 @@ public abstract class ItemVehicleAccessory extends VMItem {
 
     @Override
     public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
+        if(!player.world.isRemote) {
+            if(player.isRiding() && player.getRidingEntity() instanceof EntityVehicle) {
+                if(((EntityVehicle) player.getRidingEntity()).currentSpeed != 0) {
+                    player.sendMessage(new TextComponentString(TextFormatting.RED + "Vehicle must be stationary!"));
+                    player.resetActiveHand();
+                    return;
+                }
+            }
+        }
         if(player instanceof EntityPlayer && player.world.isRemote) {
             String left = df.format(count / 20.0F) + "s";
             ((EntityPlayer)player).sendStatusMessage(new TextComponentString(this.getActionMessage() + ": " + left), true);

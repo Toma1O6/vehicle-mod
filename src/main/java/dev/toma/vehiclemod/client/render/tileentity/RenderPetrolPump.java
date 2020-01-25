@@ -24,47 +24,47 @@ public class RenderPetrolPump extends TileEntitySpecialRenderer<TileEntityPetrol
         builder.begin(7, DefaultVertexFormats.POSITION_COLOR);
         switch (facing) {
             case NORTH: {
-                builder.pos(x + 0.2, y + 0.9, z - 0.01).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.8, y + 0.9, z - 0.01).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.8, y + 0.75, z - 0.01).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.2, y + 0.75, z - 0.01).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.2, y + 0.7, z - 0.01).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.8, y + 0.7, z - 0.01).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.8, y + 0.55, z - 0.01).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.2, y + 0.55, z - 0.01).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.2, y + 0.85, z + 0.11).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.8, y + 0.85, z + 0.11).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.8, y + 0.7, z + 0.11).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.2, y + 0.7, z + 0.11).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.2, y + 0.6, z + 0.11).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.8, y + 0.6, z + 0.11).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.8, y + 0.45, z + 0.11).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.2, y + 0.45, z + 0.11).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
                 break;
             }
             case SOUTH: {
-                builder.pos(x + 0.2, y + 0.9, z + 1.01).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.8, y + 0.9, z + 1.01).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.8, y + 0.75, z + 1.01).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.2, y + 0.75, z + 1.01).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.2, y + 0.7, z + 1.01).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.8, y + 0.7, z + 1.01).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.8, y + 0.55, z + 1.01).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.2, y + 0.55, z + 1.01).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.2, y + 0.85, z + 0.89).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.8, y + 0.85, z + 0.89).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.8, y + 0.7, z + 0.89).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.2, y + 0.7, z + 0.89).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.2, y + 0.6, z + 0.89).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.8, y + 0.6, z + 0.89).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.8, y + 0.45, z + 0.89).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.2, y + 0.45, z + 0.89).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
                 break;
             }
             case EAST: {
-                builder.pos(x + 1.01, y + 0.9, z + 0.2).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 1.01, y + 0.9, z + 0.8).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 1.01, y + 0.75, z + 0.8).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 1.01, y + 0.75, z + 0.2).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 1.01, y + 0.7, z + 0.2).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 1.01, y + 0.7, z + 0.8).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 1.01, y + 0.55, z + 0.8).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 1.01, y + 0.55, z + 0.2).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.89, y + 0.85, z + 0.2).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.89, y + 0.85, z + 0.8).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.89, y + 0.7, z + 0.8).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.89, y + 0.7, z + 0.2).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.89, y + 0.6, z + 0.2).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.89, y + 0.6, z + 0.8).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.89, y + 0.45, z + 0.8).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.89, y + 0.45, z + 0.2).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
                 break;
             }
             case WEST: {
-                builder.pos(x - 0.01, y + 0.9, z + 0.2).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x - 0.01, y + 0.9, z + 0.8).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x - 0.01, y + 0.75, z + 0.8).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x - 0.01, y + 0.75, z + 0.2).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x - 0.01, y + 0.7, z + 0.2).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x - 0.01, y + 0.7, z + 0.8).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x - 0.01, y + 0.55, z + 0.8).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x - 0.01, y + 0.55, z + 0.2).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.11, y + 0.85, z + 0.2).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.11, y + 0.85, z + 0.8).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.11, y + 0.7, z + 0.8).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.11, y + 0.7, z + 0.2).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.11, y + 0.6, z + 0.2).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.11, y + 0.6, z + 0.8).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.11, y + 0.45, z + 0.8).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.11, y + 0.45, z + 0.2).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
                 break;
             }
         }
@@ -77,38 +77,38 @@ public class RenderPetrolPump extends TileEntitySpecialRenderer<TileEntityPetrol
 
     private void renderIcons(EnumFacing facing, BufferBuilder builder, TileEntityPetrolPump tileEntityPetrolPump, double x, double y, double z) {
         this.renderIcon(facing, builder, tileEntityPetrolPump.storedAmount / 100.0F, x, y + 0.75, z);
-        if(tileEntityPetrolPump.pairedVehicle != null) this.renderIcon(facing, builder, tileEntityPetrolPump.pairedVehicle.fuel / 100.0F, x, y + 0.55, z);
+        if(tileEntityPetrolPump.pairedVehicle != null) this.renderIcon(facing, builder, tileEntityPetrolPump.pairedVehicle.fuel / 100.0F, x, y + 0.5, z);
     }
 
     private void renderIcon(EnumFacing facing, BufferBuilder builder, float amount, double x, double y, double z) {
         switch (facing) {
             case NORTH: {
-                builder.pos(x + 0.79 - (0.6 * amount), y + 0.15, z - 0.011).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.81 - (0.6 * amount), y + 0.15, z - 0.011).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.81 - (0.6 * amount), y, z - 0.011).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.79 - (0.6 * amount), y, z - 0.011).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.79 - (0.6 * amount), y + 0.1, z + 0.1).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.81 - (0.6 * amount), y + 0.1, z + 0.1).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.81 - (0.6 * amount), y - 0.05, z + 0.1).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.79 - (0.6 * amount), y - 0.05, z + 0.1).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
                 break;
             }
             case SOUTH: {
-                builder.pos(x + 0.19 + (0.6 * amount), y + 0.15, z + 1.011).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.21 + (0.6 * amount), y + 0.15, z + 1.011).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.21 + (0.6 * amount), y, z + 1.011).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 0.19 + (0.6 * amount), y, z + 1.011).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.19 + (0.6 * amount), y + 0.1, z + 0.9).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.21 + (0.6 * amount), y + 0.1, z + 0.9).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.21 + (0.6 * amount), y - 0.05, z + 0.9).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.19 + (0.6 * amount), y - 0.05, z + 0.9).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
                 break;
             }
             case EAST: {
-                builder.pos(x + 1.011, y + 0.15, z + 0.79 - (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 1.011, y + 0.15, z + 0.81 - (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 1.011, y, z + 0.81 - (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x + 1.011, y, z + 0.79 - (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.9, y + 0.1, z + 0.79 - (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.9, y + 0.1, z + 0.81 - (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.9, y - 0.05, z + 0.81 - (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.9, y - 0.05, z + 0.79 - (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
                 break;
 
             }
             case WEST: {
-                builder.pos(x - 0.011, y + 0.15, z + 0.19 + (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x - 0.011, y + 0.15, z + 0.21 + (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x - 0.011, y, z + 0.21 + (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
-                builder.pos(x - 0.011, y, z + 0.19 + (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.1, y + 0.1, z + 0.19 + (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.1, y + 0.1, z + 0.21 + (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.1, y - 0.05, z + 0.21 + (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+                builder.pos(x + 0.1, y - 0.05, z + 0.19 + (0.6 * amount)).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
                 break;
             }
         }

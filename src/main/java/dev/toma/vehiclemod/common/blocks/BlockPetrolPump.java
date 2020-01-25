@@ -34,10 +34,25 @@ public class BlockPetrolPump extends BlockBasic {
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         TileEntityPetrolPump petrolPump = (TileEntityPetrolPump) worldIn.getTileEntity(pos);
         if(!worldIn.isRemote) {
-            petrolPump.pair(state.getValue(FACING));
-            ((EntityPlayerMP) playerIn).connection.sendPacket(petrolPump.getUpdatePacket());
+            if(playerIn.getHeldItemMainhand().isEmpty()) {
+                petrolPump.pair(state.getValue(FACING));
+                ((EntityPlayerMP) playerIn).connection.sendPacket(petrolPump.getUpdatePacket());
+            } else if(playerIn.getHeldItemMainhand().getItem() == Registries.VMItems.BUCKET_OF_FUEL) {
+                TileEntityPetrolPump te = (TileEntityPetrolPump) worldIn.getTileEntity(pos);
+                float add = te.storedAmount <= 75F ? 25F : 100 - te.storedAmount;
+                te.storedAmount += add;
+                ((EntityPlayerMP) playerIn).connection.sendPacket(te.getUpdatePacket());
+                if(!playerIn.isCreative()) {
+                    playerIn.getHeldItemMainhand().shrink(1);
+                }
+            }
         }
         return true;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
     }
 
     @Override
