@@ -132,7 +132,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public void updateMotion() {
         Vec3d lookVec = this.getLookVec();
         VehicleStats stats = this.getStats();
-        float modifier = this.health / stats.maxHealth < 0.5F ? this.health / stats.maxHealth : 1.0F;
+        float modifier = this.health / stats.maxHealth < 0.33F ? this.health / stats.maxHealth : 1.0F;
         if (hasFuel()) {
             if (inputForward && !inputBack) {
                 float acceleration = stats.acceleration * modifier;

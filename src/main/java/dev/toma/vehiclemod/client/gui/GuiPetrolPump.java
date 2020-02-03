@@ -63,6 +63,9 @@ public class GuiPetrolPump extends GuiContainer {
         mc.getTextureManager().bindTexture(TEXTURE);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
         drawFuelBar(11, petrolPump.storedAmount / 2500F);
+        if(petrolPump.pairedVehicle != null) {
+            drawFuelBar(50, petrolPump.pairedVehicle.fuel / 100F);
+        }
         mc.fontRenderer.drawStringWithShadow("Stored: " + (int)petrolPump.storedAmount + "L", guiLeft + 33, guiTop + 25, 0xFFFFFFFF);
         mc.fontRenderer.drawStringWithShadow("Vehicle: " + (petrolPump.pairedVehicle != null ? (int)petrolPump.pairedVehicle.fuel + "L" : "No vehicle"), guiLeft + 33, guiTop + 63, 0xFFFFFFFF);
     }
@@ -81,6 +84,10 @@ public class GuiPetrolPump extends GuiContainer {
         builder.pos(guiLeft + 133, guiTop + y + 10, 0).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
         builder.pos(guiLeft + 133, guiTop + y, 0).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
         builder.pos(guiLeft + 32, guiTop + y, 0).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
+        builder.pos(guiLeft + 32 + 101 * amount - 1, guiTop + y + 10, 0).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+        builder.pos(guiLeft + 32 + 101 * amount + 1, guiTop + y + 10, 0).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+        builder.pos(guiLeft + 32 + 101 * amount + 1, guiTop + y, 0).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
+        builder.pos(guiLeft + 32 + 101 * amount - 1, guiTop + y, 0).color(0.0F, 0.0F, 0.0F, 1.0F).endVertex();
         tessellator.draw();
         GlStateManager.shadeModel(GL11.GL_FLAT);
         GlStateManager.enableTexture2D();

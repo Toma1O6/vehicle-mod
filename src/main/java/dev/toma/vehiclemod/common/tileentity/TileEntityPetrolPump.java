@@ -1,8 +1,10 @@
 package dev.toma.vehiclemod.common.tileentity;
 
+import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -58,6 +60,7 @@ public class TileEntityPetrolPump extends TileEntityInventory implements ITickab
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         compound.setFloat("stored", storedAmount);
+        compound.setBoolean("transfer", transfer);
         if(pairedVehicle != null) compound.setInteger("vehicleID", pairedVehicle.getEntityId());
         return compound;
     }
@@ -66,17 +69,25 @@ public class TileEntityPetrolPump extends TileEntityInventory implements ITickab
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         storedAmount = compound.getFloat("stored");
+        transfer = compound.getBoolean("transfer");
         pairedVehicle = compound.hasKey("vehicleID") ? (EntityVehicle) world.getEntityByID(compound.getInteger("vehicleID")) : null;
     }
 
     @Override
     public void update() {
+        if(getStackInSlot(0).getItem() == Registries.VMItems.BUCKET_OF_FUEL) {
+            if(storedAmount < 2500 && getStackInSlot(1).getCount() < 16) {
+                getStackInSlot(0).shrink(1);
+                setInventorySlotContents(1, new ItemStack(Items.BUCKET, getStackInSlot(1).getCount() + 1));
+                storedAmount = storedAmount > 2400 ? 2500 : storedAmount + 100;
+            }
+        }
         if(this.pairedVehicle != null) {
             if(canReach()) {
                 if(transfer && pairedVehicle.fuel < 100.0F && storedAmount > 0.0F) {
                     pairedVehicle.fuel += 0.1F;
                     storedAmount -= 0.1F;
-                }
+                } else transfer = false;
             } else {
                 pairedVehicle = null;
                 if(!world.isRemote) {
