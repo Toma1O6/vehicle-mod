@@ -1,7 +1,9 @@
 package dev.toma.vehiclemod.common.blocks;
 
 import dev.toma.vehiclemod.Registries;
+import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
+import dev.toma.vehiclemod.util.GuiHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
@@ -32,20 +34,10 @@ public class BlockPetrolPump extends BlockBasic {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        TileEntityPetrolPump petrolPump = (TileEntityPetrolPump) worldIn.getTileEntity(pos);
+        BlockPos top = state.getValue(UP) ? pos : pos.up();
+        TileEntityPetrolPump petrolPump = (TileEntityPetrolPump) worldIn.getTileEntity(top);
         if(!worldIn.isRemote) {
-            if(playerIn.getHeldItemMainhand().isEmpty()) {
-                petrolPump.pair(state.getValue(FACING));
-                ((EntityPlayerMP) playerIn).connection.sendPacket(petrolPump.getUpdatePacket());
-            } else if(playerIn.getHeldItemMainhand().getItem() == Registries.VMItems.BUCKET_OF_FUEL) {
-                TileEntityPetrolPump te = (TileEntityPetrolPump) worldIn.getTileEntity(pos);
-                float add = te.storedAmount <= 75F ? 25F : 100 - te.storedAmount;
-                te.storedAmount += add;
-                ((EntityPlayerMP) playerIn).connection.sendPacket(te.getUpdatePacket());
-                if(!playerIn.isCreative()) {
-                    playerIn.getHeldItemMainhand().shrink(1);
-                }
-            }
+            playerIn.openGui(VehicleMod.instance, GuiHandler.PETROL_PUMP, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
     }

@@ -3,22 +3,40 @@ package dev.toma.vehiclemod.common.tileentity;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityPetrolPump extends TileEntity implements ITickable {
+public class TileEntityPetrolPump extends TileEntityInventory implements ITickable {
 
+    public NonNullList<ItemStack> inventory = NonNullList.withSize(2, ItemStack.EMPTY);
     public float storedAmount;
     @Nullable
     public EntityVehicle pairedVehicle;
+    public boolean transfer;
+
+    @Override
+    public NonNullList<ItemStack> getInventory() {
+        return inventory;
+    }
+
+    @Override
+    public void setInventory(NonNullList<ItemStack> inventory) {
+        this.inventory = inventory;
+    }
+
+    @Override
+    public String getKeyForName() {
+        return "petrol_pump";
+    }
 
     @Override
     public NBTTagCompound getUpdateTag() {
@@ -55,7 +73,7 @@ public class TileEntityPetrolPump extends TileEntity implements ITickable {
     public void update() {
         if(this.pairedVehicle != null) {
             if(canReach()) {
-                if(pairedVehicle.fuel < 100.0F && storedAmount > 0.0F) {
+                if(transfer && pairedVehicle.fuel < 100.0F && storedAmount > 0.0F) {
                     pairedVehicle.fuel += 0.1F;
                     storedAmount -= 0.1F;
                 }

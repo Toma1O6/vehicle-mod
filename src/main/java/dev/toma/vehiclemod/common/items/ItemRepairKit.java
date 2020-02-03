@@ -1,9 +1,13 @@
 package dev.toma.vehiclemod.common.items;
 
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemRepairKit extends ItemVehicleAccessory {
 
@@ -11,7 +15,7 @@ public class ItemRepairKit extends ItemVehicleAccessory {
 
     public ItemRepairKit(String name, Tier tier) {
         super(tier.name().toLowerCase() + "_" + name, tier.getRepairTime());
-        this.setMaxStackSize(1);
+        this.setMaxStackSize(10);
         this.tier = tier;
     }
 
@@ -27,6 +31,12 @@ public class ItemRepairKit extends ItemVehicleAccessory {
             stack.shrink(1);
         }
         return stack;
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        tooltip.add("Time: " + tier.getRepairTime() + "s");
+        tooltip.add("Amount: " + tier.getAmount() + "HP");
     }
 
     public enum Tier {
