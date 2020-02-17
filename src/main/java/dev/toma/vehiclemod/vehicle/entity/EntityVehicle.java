@@ -39,6 +39,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public float fuel;
     public EnumVehicleState prevState, currentState;
     public List<ResourceLocation> locations = new ArrayList<>();
+    private String specialVariant;
     private int variantType;
     private double distanceTraveled = 0;
     private boolean isStarted = false;
@@ -91,7 +92,16 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public abstract void initSounds();
 
+    public boolean hasSpecialVariant() {
+        return specialVariant != null;
+    }
+
+    public void setSpecialVariant(String variant) {
+        this.specialVariant = variant;
+    }
+
     public void setVariant(int color) {
+        specialVariant = null;
         this.variantType = color;
     }
 
@@ -184,19 +194,19 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public void checkState() {
         if (this.isInWater() || world.getBlockState(getPosition().up()).getMaterial().isLiquid()) {
             if(this.health > 0) {
-                this.health -= 2.5;
+                this.health -= 0.25;
             }
             motionX *= 0.4d;
             motionZ *= 0.4d;
             motionY = -0.15d;
         }
 
-        if (health < 0) {
-            this.health = 0;
+        if (health <= 0) {
+            explode();
         }
 
         if (isInLava()) {
-            this.explode();
+            explode();
         }
         currentState = this.getVehicleState();
     }
@@ -304,8 +314,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public void refillFuel() {
         fuel += 25f;
-        if (fuel > 100f) {
-            fuel = 100f;
+        if (fuel > getStats().fuelCapacity) {
+            fuel = getStats().fuelCapacity;
         }
     }
 
@@ -350,7 +360,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     public void setFuel() {
-        fuel = 60 + rand.nextInt(40);
+        fuel = 5.0F;
     }
 
     public double getTravelledDistance() {

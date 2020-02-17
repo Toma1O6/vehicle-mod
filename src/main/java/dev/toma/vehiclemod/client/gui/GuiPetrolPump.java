@@ -64,7 +64,7 @@ public class GuiPetrolPump extends GuiContainer {
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
         drawFuelBar(11, petrolPump.storedAmount / 2500F);
         if(petrolPump.pairedVehicle != null) {
-            drawFuelBar(50, petrolPump.pairedVehicle.fuel / 100F);
+            drawFuelBar(50, petrolPump.pairedVehicle.fuel / (float)petrolPump.pairedVehicle.getStats().fuelCapacity);
         }
         mc.fontRenderer.drawStringWithShadow("Stored: " + (int)petrolPump.storedAmount + "L", guiLeft + 33, guiTop + 25, 0xFFFFFFFF);
         mc.fontRenderer.drawStringWithShadow("Vehicle: " + (petrolPump.pairedVehicle != null ? (int)petrolPump.pairedVehicle.fuel + "L" : "No vehicle"), guiLeft + 33, guiTop + 63, 0xFFFFFFFF);

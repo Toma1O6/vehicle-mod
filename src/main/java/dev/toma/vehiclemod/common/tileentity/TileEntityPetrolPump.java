@@ -79,7 +79,7 @@ public class TileEntityPetrolPump extends TileEntityInventory implements ITickab
             if(storedAmount < 2500 && getStackInSlot(1).getCount() < 16) {
                 getStackInSlot(0).shrink(1);
                 setInventorySlotContents(1, new ItemStack(Items.BUCKET, getStackInSlot(1).getCount() + 1));
-                storedAmount = storedAmount > 2400 ? 2500 : storedAmount + 100;
+                storedAmount = storedAmount > 2490 ? 2500 : storedAmount + 10;
             }
         }
         if(this.pairedVehicle != null) {

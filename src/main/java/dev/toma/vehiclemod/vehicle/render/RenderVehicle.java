@@ -70,7 +70,7 @@ public abstract class RenderVehicle<E extends EntityVehicle> extends Render<E> {
 		GlStateManager.depthMask(true);
 		renderer.drawString(e.getName(), -i + 5, -26, -1);
 		renderer.drawString("Health: " + (int)((e.health/e.getStats().maxHealth)*100) + " %", -i + 5, -13, -1);
-		renderer.drawString("Fuel: " + (int)e.fuel + " %", -i + 5, 0, -1);
+		renderer.drawString("Fuel: " + (int)(100 * (e.fuel / e.getStats().fuelCapacity)) + " %", -i + 5, 0, -1);
 		renderer.drawString("Distance: " + new DecimalFormat("#.#").format(e.getTravelledDistance()) + " km", -i + 5, 13, -1);
 		GlStateManager.enableLighting();
 		GlStateManager.disableBlend();

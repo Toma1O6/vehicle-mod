@@ -7,7 +7,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.Name;
-import net.minecraftforge.common.config.Config.RequiresWorldRestart;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -24,16 +23,16 @@ public class VMConfig {
 	public static int cellTimerModifier = 20;
 	
 	@Name("Beamer S120")
-	public static VehicleStats beamer_s120 = new VehicleStats(150F, 1.3F, 0.005400000104308128F, 0.019999999552965164F, 0.3F, 3.0F, 0.005f);
+	public static VehicleStats beamer_s120 = new VehicleStats(150F, 1.3F, 0.005400000104308128F, 0.019999999552965164F, 0.3F, 3.0F, 0.005f, 100);
 
 	@Name("Federati Vulcan")
-	public static VehicleStats fedoratti_vulcan = new VehicleStats(150F, 2.25F, 0.00900000000104308128F, 0.028999999552965164F, 0.3F, 3.0F, 0.005F);
+	public static VehicleStats fedoratti_vulcan = new VehicleStats(150F, 2.25F, 0.00900000000104308128F, 0.028999999552965164F, 0.3F, 3.0F, 0.005F, 100);
 
 	@Name("Tracer T1")
-	public static VehicleStats tracer_t1 = new VehicleStats(150F, 1.62F, 0.007000000104308128F, 0.023999999552965164F, 0.3F, 3.0F, 0.005F);
+	public static VehicleStats tracer_t1 = new VehicleStats(150F, 1.62F, 0.007000000104308128F, 0.023999999552965164F, 0.3F, 3.0F, 0.005F, 100);
 
 	@Name("Sputnik 2000L")
-	public static VehicleStats sputnik2000L = new VehicleStats(150F, 1.12F, 0.004600000104308128F, 0.019999999552965164F, 0.3F, 3.0F, 0.005F);
+	public static VehicleStats sputnik2000L = new VehicleStats(150F, 1.12F, 0.004600000104308128F, 0.019999999552965164F, 0.3F, 3.0F, 0.005F, 100);
 
 	@Mod.EventBusSubscriber(modid = VehicleMod.Constants.ID)
 	public static class Event {

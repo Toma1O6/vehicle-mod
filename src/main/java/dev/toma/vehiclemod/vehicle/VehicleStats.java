@@ -33,8 +33,13 @@ public final class VehicleStats {
 	@Config.Name("Fuel Consumption")
 	@RequiresWorldRestart
 	public float fuelConsumption;
+
+	@Config.Name("Fuel Capacity")
+	@Config.RangeInt(min = 10)
+	@RequiresWorldRestart
+	public int fuelCapacity;
 	
-	public VehicleStats(float maxHP, float maxSpeed, float acceleration, float brakeSpeed, float turningSpeed, float maxAngle, float fuelConsumption) {
+	public VehicleStats(float maxHP, float maxSpeed, float acceleration, float brakeSpeed, float turningSpeed, float maxAngle, float fuelConsumption, int capacity) {
 		this.maxHealth = maxHP;
 		this.maxSpeed = maxSpeed;
 		this.acceleration = acceleration;
@@ -42,6 +47,7 @@ public final class VehicleStats {
 		this.maxTurningAngle = maxAngle;
 		this.brakeSpeed = brakeSpeed;
 		this.fuelConsumption = fuelConsumption;
+		this.fuelCapacity = capacity;
 	}
 	
 	public static void writeStatsToBuf(ByteBuf buf, VehicleStats stats) {
@@ -52,10 +58,11 @@ public final class VehicleStats {
 		buf.writeFloat(stats.maxTurningAngle);
 		buf.writeFloat(stats.brakeSpeed);
 		buf.writeFloat(stats.fuelConsumption);
+		buf.writeInt(stats.fuelCapacity);
 	}
 	
 	public static VehicleStats readStatsFromBuf(ByteBuf buf) {
-		VehicleStats stats = new VehicleStats(0F, 0F, 0F, 0F, 0F, 0F, 0F);
+		VehicleStats stats = new VehicleStats(0F, 0F, 0F, 0F, 0F, 0F, 0F, 10);
 		stats.maxHealth = buf.readFloat();
 		stats.maxSpeed = buf.readFloat();
 		stats.acceleration = buf.readFloat();
@@ -63,6 +70,7 @@ public final class VehicleStats {
 		stats.maxTurningAngle = buf.readFloat();
 		stats.brakeSpeed = buf.readFloat();
 		stats.fuelConsumption = buf.readFloat();
+		stats.fuelCapacity = buf.readInt();
 		return stats;
 	}
 }
