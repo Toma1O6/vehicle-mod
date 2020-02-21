@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.vehicle.render;
 
+import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import dev.toma.vehiclemod.vehicle.model.ModelVehicle;
 import net.minecraft.client.Minecraft;
@@ -28,6 +29,16 @@ public abstract class RenderVehicle<E extends EntityVehicle> extends Render<E> {
 	
 	@Override
 	protected ResourceLocation getEntityTexture(E entity) {
+		if(entity.hasSpecialVariant()) {
+			ResourceLocation rl = entity.cachedLocation;
+			String path = "textures/vehicle/" + entity.getSpecialVariant() + ".png";
+			if(rl != null && rl.getResourcePath().equals(path)) {
+				return rl;
+			}
+			rl = new ResourceLocation(VehicleMod.Constants.ID, path);
+			entity.cachedLocation = rl;
+			return rl;
+		}
 		return entity.getTextures().get(entity.getVariantType());
 	}
 
@@ -58,20 +69,21 @@ public abstract class RenderVehicle<E extends EntityVehicle> extends Render<E> {
 		int i = mc.fontRenderer.getStringWidth(e.getName()) / 2;
 		if(i < 50) i = 50;
 		GlStateManager.disableTexture2D();
+		double of = -e.height -40;
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
-		bufferbuilder.pos((double)(-i - 1), -30, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-		bufferbuilder.pos((double)(-i - 1), 23, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-		bufferbuilder.pos((double)(i + 10), 23, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-		bufferbuilder.pos((double)(i + 10), -30, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		bufferbuilder.pos((double)(-i - 1), of, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		bufferbuilder.pos((double)(-i - 1), of + 53, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		bufferbuilder.pos((double)(i + 10), of + 53, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		bufferbuilder.pos((double)(i + 10), of, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
 		tessellator.draw();
 		GlStateManager.enableTexture2D();
 		GlStateManager.depthMask(true);
-		renderer.drawString(e.getName(), -i + 5, -26, -1);
-		renderer.drawString("Health: " + (int)((e.health/e.getStats().maxHealth)*100) + " %", -i + 5, -13, -1);
-		renderer.drawString("Fuel: " + (int)(100 * (e.fuel / e.getStats().fuelCapacity)) + " %", -i + 5, 0, -1);
-		renderer.drawString("Distance: " + new DecimalFormat("#.#").format(e.getTravelledDistance()) + " km", -i + 5, 13, -1);
+		renderer.drawString(e.getName(), -i + 5, -38, -1);
+		renderer.drawString("Health: " + (int)((e.health/e.getStats().maxHealth)*100) + " %", -i + 5, -25, -1);
+		renderer.drawString("Fuel: " + (int)(100 * (e.fuel / e.getStats().fuelCapacity)) + " %", -i + 5, -12, -1);
+		renderer.drawString("Distance: " + new DecimalFormat("#.#").format(e.getTravelledDistance()) + " km", -i + 5, 1, -1);
 		GlStateManager.enableLighting();
 		GlStateManager.disableBlend();
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

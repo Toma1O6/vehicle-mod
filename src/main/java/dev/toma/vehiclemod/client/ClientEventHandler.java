@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.client;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.util.DevUtil;
+import dev.toma.vehiclemod.vehicle.VehicleStats;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -15,6 +16,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -31,6 +33,16 @@ public class ClientEventHandler {
 	private static final DecimalFormat format = new DecimalFormat("###0.0");
 
 	@SubscribeEvent
+	public static void setupCamera(EntityViewRenderEvent.CameraSetup event) {
+		if(Minecraft.getMinecraft().gameSettings.thirdPersonView != 1) return;
+		if(event.getEntity().isRiding() && event.getEntity().getRidingEntity() instanceof EntityVehicle) {
+			EntityVehicle vehicle = (EntityVehicle) event.getEntity().getRidingEntity();
+			VehicleStats.Vector3i vector3i = vehicle.getStats().cameraOff;
+			GlStateManager.translate(vector3i.getX(), vector3i.getY(), vector3i.getZ());
+		}
+	}
+
+	@SubscribeEvent
 	public static void renderOverlayEvent(RenderGameOverlayEvent.Post e) {
 		if(e.getType() == RenderGameOverlayEvent.ElementType.ALL) {
 			Minecraft mc = Minecraft.getMinecraft();
@@ -38,7 +50,7 @@ public class ClientEventHandler {
 			EntityPlayer player = mc.player;
 			if(player.isRiding() && player.getRidingEntity() instanceof EntityVehicle) {
 				EntityVehicle car = (EntityVehicle)player.getRidingEntity();
-				float fuel = car.fuel / 100.0F;
+				float fuel = car.fuel / (float)car.getStats().fuelCapacity;
 				boolean lowFuel = fuel <= 0.17F;
 				float health = car.health / car.getStats().maxHealth;
 				boolean lowHealth = health <= 0.5;
@@ -60,9 +72,6 @@ public class ClientEventHandler {
 				builder.pos(x + w * fuel, y, 0).color(1.0F * (1 - fuel), 1.0F * fuel, 0.0F, 1.0F).endVertex();
 				builder.pos(x, y, 0).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
 				tessellator.draw();
-				// 256 ... 33
-				// 120 ... x
-				// x = (33 * 120) / 256
 				GlStateManager.shadeModel(GL11.GL_FLAT);
 				GlStateManager.disableBlend();
 				GlStateManager.enableTexture2D();

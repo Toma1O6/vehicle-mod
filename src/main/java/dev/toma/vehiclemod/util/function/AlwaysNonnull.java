@@ -1,4 +1,4 @@
-package dev.toma.vehiclemod.util;
+package dev.toma.vehiclemod.util.function;
 
 import java.util.function.Supplier;
 

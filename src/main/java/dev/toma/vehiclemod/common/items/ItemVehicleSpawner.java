@@ -9,11 +9,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.function.BiConsumer;
+
 public class ItemVehicleSpawner extends Item {
 
-	private final IClickAction action;
+	private final BiConsumer<World, BlockPos> action;
 
-	public ItemVehicleSpawner(String name, IClickAction action) {
+	public ItemVehicleSpawner(String name, BiConsumer<World, BlockPos> action) {
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		setCreativeTab(VehicleMod.TAB);
@@ -26,13 +28,8 @@ public class ItemVehicleSpawner extends Item {
 			if(!player.capabilities.isCreativeMode) {
 				player.getHeldItem(hand).shrink(1);
 			}
-			action.click(worldIn, pos);
+			action.accept(worldIn, pos);
 		}
 		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-	}
-
-	@FunctionalInterface
-	public interface IClickAction {
-		void click(World world, BlockPos pos);
 	}
 }

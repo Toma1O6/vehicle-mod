@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,13 +40,15 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public float fuel;
     public EnumVehicleState prevState, currentState;
     public List<ResourceLocation> locations = new ArrayList<>();
-    private String specialVariant;
+    private String specialVariant = "";
     private int variantType;
     private double distanceTraveled = 0;
     private boolean isStarted = false;
 
     @SideOnly(Side.CLIENT)
     public VMTickableSound currentSound;
+    @SideOnly(Side.CLIENT)
+    public ResourceLocation cachedLocation;
 
     private boolean inputForward, inputBack, inputRight, inputLeft;
 
@@ -93,11 +96,15 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public abstract void initSounds();
 
     public boolean hasSpecialVariant() {
-        return specialVariant != null;
+        return specialVariant != null && !specialVariant.isEmpty();
     }
 
     public void setSpecialVariant(String variant) {
         this.specialVariant = variant;
+    }
+
+    public String getSpecialVariant() {
+        return specialVariant;
     }
 
     public void setVariant(int color) {
@@ -142,16 +149,16 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public void updateMotion() {
         Vec3d lookVec = this.getLookVec();
         VehicleStats stats = this.getStats();
-        float modifier = this.health / stats.maxHealth < 0.33F ? this.health / stats.maxHealth : 1.0F;
+        float accModifier = this.health / stats.maxHealth < 0.33F ? this.health / stats.maxHealth : 1.0F;
         if (hasFuel()) {
             if (inputForward && !inputBack) {
-                float acceleration = stats.acceleration * modifier;
+                float acceleration = stats.acceleration * accModifier;
                 burnFuel();
                 currentSpeed = currentSpeed < stats.maxSpeed ? currentSpeed + acceleration : stats.maxSpeed;
             }
             if (!inputForward && inputBack) {
                 burnFuel();
-                currentSpeed = currentSpeed > 0 ? currentSpeed - stats.brakeSpeed : currentSpeed > (-stats.maxSpeed * 0.3f) ? currentSpeed - (stats.acceleration * modifier) : -stats.maxSpeed * 0.3f;
+                currentSpeed = currentSpeed > 0 ? currentSpeed - stats.brakeSpeed : currentSpeed > (-stats.maxSpeed * 0.3f) ? currentSpeed - (stats.acceleration * accModifier) : -stats.maxSpeed * 0.3f;
             }
         }
 
@@ -291,6 +298,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         buf.writeFloat(fuel);
         buf.writeInt(variantType);
         buf.writeDouble(distanceTraveled);
+        ByteBufUtils.writeUTF8String(buf, specialVariant);
     }
 
     @Override
@@ -299,6 +307,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         fuel = buf.readFloat();
         variantType = buf.readInt();
         distanceTraveled = buf.readDouble();
+        specialVariant = ByteBufUtils.readUTF8String(buf);
     }
 
     public VMTickableSound getVehicleSound() {
@@ -410,6 +419,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         compound.setFloat("speed", this.currentSpeed);
         compound.setInteger("textureid", this.variantType);
         compound.setDouble("traveledDist", this.distanceTraveled);
+        if(specialVariant != null) compound.setString("specialTxt", specialVariant);
     }
 
     @Override
@@ -425,6 +435,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         currentSpeed = compound.getFloat("speed");
         variantType = compound.getInteger("textureid");
         distanceTraveled = compound.getDouble("traveledDist");
+        if(compound.hasKey("specialTxt")) specialVariant = compound.getString("specialTxt");
     }
 
     @Override

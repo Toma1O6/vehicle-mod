@@ -38,8 +38,12 @@ public final class VehicleStats {
 	@Config.RangeInt(min = 10)
 	@RequiresWorldRestart
 	public int fuelCapacity;
+
+	@Config.Name("TPP Camera Offset")
+	@RequiresWorldRestart
+	public Vector3i cameraOff;
 	
-	public VehicleStats(float maxHP, float maxSpeed, float acceleration, float brakeSpeed, float turningSpeed, float maxAngle, float fuelConsumption, int capacity) {
+	public VehicleStats(float maxHP, float maxSpeed, float acceleration, float brakeSpeed, float turningSpeed, float maxAngle, float fuelConsumption, int capacity, Vector3i offset) {
 		this.maxHealth = maxHP;
 		this.maxSpeed = maxSpeed;
 		this.acceleration = acceleration;
@@ -48,6 +52,11 @@ public final class VehicleStats {
 		this.brakeSpeed = brakeSpeed;
 		this.fuelConsumption = fuelConsumption;
 		this.fuelCapacity = capacity;
+		this.cameraOff = offset;
+	}
+
+	public VehicleStats(float maxHP, float maxSpeed, float acceleration, float brakeSpeed, float turningSpeed, float maxAngle, float fuelConsumption, int capacity) {
+		this(maxHP, maxSpeed, acceleration, brakeSpeed, turningSpeed, maxAngle, fuelConsumption, capacity, new Vector3i(0, 0, 0));
 	}
 	
 	public static void writeStatsToBuf(ByteBuf buf, VehicleStats stats) {
@@ -59,6 +68,7 @@ public final class VehicleStats {
 		buf.writeFloat(stats.brakeSpeed);
 		buf.writeFloat(stats.fuelConsumption);
 		buf.writeInt(stats.fuelCapacity);
+		stats.cameraOff.toBuffer(buf);
 	}
 	
 	public static VehicleStats readStatsFromBuf(ByteBuf buf) {
@@ -71,6 +81,42 @@ public final class VehicleStats {
 		stats.brakeSpeed = buf.readFloat();
 		stats.fuelConsumption = buf.readFloat();
 		stats.fuelCapacity = buf.readInt();
+		stats.cameraOff.fromBuffer(buf);
 		return stats;
+	}
+
+	public static class Vector3i {
+
+		private int x, y, z;
+
+		public Vector3i(int x, int y, int z) {
+			this.x = x;
+			this.y = y;
+			this.z = z;
+		}
+
+		public int getX() {
+			return x;
+		}
+
+		public int getY() {
+			return y;
+		}
+
+		public int getZ() {
+			return z;
+		}
+
+		public void toBuffer(ByteBuf buf) {
+			buf.writeInt(x);
+			buf.writeInt(y);
+			buf.writeInt(z);
+		}
+
+		public void fromBuffer(ByteBuf buf) {
+			x = buf.readInt();
+			y = buf.readInt();
+			z = buf.readInt();
+		}
 	}
 }

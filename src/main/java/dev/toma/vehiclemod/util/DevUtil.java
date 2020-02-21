@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.util.function.ComparableFunction;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -81,11 +82,6 @@ private static final ModelCreator CREATOR = new ModelCreator();
 	public static void drawImage2D(Minecraft mc, ResourceLocation location) {
 		ScaledResolution resolution = new ScaledResolution(mc);
 		drawImage2D(mc, location, 0, 0, resolution.getScaledWidth(), resolution.getScaledHeight());
-	}
-
-	public interface ComparableFunction<T> {
-
-		boolean compare(T t1, T t2);
 	}
 	
 	public static final class ModelCreator {

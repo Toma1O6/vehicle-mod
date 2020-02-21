@@ -5,6 +5,8 @@ import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class ItemSprayCan extends VMItem {

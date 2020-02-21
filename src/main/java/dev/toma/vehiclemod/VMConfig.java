@@ -34,6 +34,12 @@ public class VMConfig {
 	@Name("Sputnik 2000L")
 	public static VehicleStats sputnik2000L = new VehicleStats(150F, 1.12F, 0.004600000104308128F, 0.019999999552965164F, 0.3F, 3.0F, 0.005F, 100);
 
+	@Name("Beamer S320 RS")
+	public static VehicleStats beamers320rs = new VehicleStats(150F, 1.3F, 0.005F, 0.02F, 0.3F, 3.0F, 0.005f, 100);
+
+	@Name("MCG MultiVan")
+	public static VehicleStats mcgMultiVan = new VehicleStats(300F, 0.8F, 0.0015F, 0.005F, 0.25F, 2.5F, 0.02f, 150, new VehicleStats.Vector3i(0, 0, -3));
+
 	@Mod.EventBusSubscriber(modid = VehicleMod.Constants.ID)
 	public static class Event {
 		
@@ -49,27 +55,6 @@ public class VMConfig {
 			if(e.player instanceof EntityPlayerMP) {
 				VMNetworkManager.instance().sendTo(new CPacketSyncConfig(), (EntityPlayerMP)e.player);
 			}
-		}
-	}
-	
-	public static class DefaultFuelValues {
-		
-		@Name("Bottle")
-		@Comment("Amount of fuel to fuel tank which is going to add bottle of fuel")
-		public float bottle;
-		
-		@Name("Bucket")
-		@Comment("Amount of fuel to fuel tank which is going to add bucket of fuel")
-		public float bucket;
-		
-		@Name("Other")
-		@Comment("Amount of fuel which will be added to fuel tank from regular items")
-		public float other;
-		
-		public DefaultFuelValues(float f0, float f1, float f2) {
-			this.bottle = f0;
-			this.bucket = f1;
-			this.other = f2;
 		}
 	}
 }

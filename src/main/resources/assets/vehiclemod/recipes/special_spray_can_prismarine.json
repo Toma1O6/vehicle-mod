@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {"item": "vehiclemod:empty_spray_can"},
+        {"item": "minecraft:glowstone_dust"},
+        {"item": "minecraft:prismarine", "data": 0}
+    ],
+    "result": {
+        "item": "vehiclemod:special_spray_can_prismarine",
+        "count": 1
+    }
+}

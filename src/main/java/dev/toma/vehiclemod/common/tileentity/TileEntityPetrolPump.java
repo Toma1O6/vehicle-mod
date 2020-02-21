@@ -70,7 +70,11 @@ public class TileEntityPetrolPump extends TileEntityInventory implements ITickab
         super.readFromNBT(compound);
         storedAmount = compound.getFloat("stored");
         transfer = compound.getBoolean("transfer");
-        pairedVehicle = compound.hasKey("vehicleID") ? (EntityVehicle) world.getEntityByID(compound.getInteger("vehicleID")) : null;
+        if(world == null) return;
+        Entity entity = compound.hasKey("vehicleID") ? world.getEntityByID(compound.getInteger("vehicleID")) : null;
+        if(entity instanceof EntityVehicle) {
+            pairedVehicle = (EntityVehicle) entity;
+        }
     }
 
     @Override
@@ -84,7 +88,7 @@ public class TileEntityPetrolPump extends TileEntityInventory implements ITickab
         }
         if(this.pairedVehicle != null) {
             if(canReach()) {
-                if(transfer && pairedVehicle.fuel < 100.0F && storedAmount > 0.0F) {
+                if(transfer && pairedVehicle.fuel < pairedVehicle.getStats().fuelCapacity && storedAmount > 0.0F) {
                     pairedVehicle.fuel += 0.1F;
                     storedAmount -= 0.1F;
                 } else transfer = false;

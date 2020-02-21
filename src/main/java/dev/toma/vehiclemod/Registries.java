@@ -4,10 +4,7 @@ import dev.toma.vehiclemod.common.blocks.*;
 import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
 import dev.toma.vehiclemod.common.items.*;
 import dev.toma.vehiclemod.util.MusicEntry;
-import dev.toma.vehiclemod.vehicle.entity.VehicleBeamerS120;
-import dev.toma.vehiclemod.vehicle.entity.VehicleFedorattiVulcan;
-import dev.toma.vehiclemod.vehicle.entity.VehicleSputnik2000L;
-import dev.toma.vehiclemod.vehicle.entity.VehicleTracerT1;
+import dev.toma.vehiclemod.vehicle.entity.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
@@ -57,6 +54,7 @@ public class Registries {
         public static final ItemSprayCan GREEN_SPRAY_CAN = null;
         public static final ItemSprayCan RED_SPRAY_CAN = null;
         public static final ItemSprayCan BLACK_SPRAY_CAN = null;
+        public static final ItemSpecialSprayCan SPECIAL_SPRAY_CAN = null;
         public static final ItemRepairKit IRON_REPAIR_KIT = null;
         public static final ItemRepairKit GOLD_REPAIR_KIT = null;
         public static final ItemRepairKit DIAMOND_REPAIR_KIT = null;
@@ -98,6 +96,14 @@ public class Registries {
         public static final SoundEvent SPUTNIK_BRAKE = null;
         public static final SoundEvent SPUTNIK_GAS = null;
         public static final SoundEvent SPUTNIK_START = null;
+        public static final SoundEvent BEAMERB1_ACC = null;
+        public static final SoundEvent BEAMERB1_BRAKE = null;
+        public static final SoundEvent BEAMERB1_GAS = null;
+        public static final SoundEvent BEAMERB1_START = null;
+        public static final SoundEvent MCGMV_ACC = null;
+        public static final SoundEvent MCGMV_BRAKE = null;
+        public static final SoundEvent MCGMV_GAS = null;
+        public static final SoundEvent MCGMV_START = null;
         public static final SoundEvent SECRET = null;
 
         // music entries
@@ -157,11 +163,24 @@ public class Registries {
                     new ItemVehicleSpawner("spawn_fedorattivulcan", (w, p) -> w.spawnEntity(new VehicleFedorattiVulcan(w, p))),
                     new ItemVehicleSpawner("spawn_tracert1", (w, p) -> w.spawnEntity(new VehicleTracerT1(w, p))),
                     new ItemVehicleSpawner("spawn_sputnik2000l", (w, p) -> w.spawnEntity(new VehicleSputnik2000L(w, p))),
+                    new ItemVehicleSpawner("spawn_beamers320rs", (w, p) -> w.spawnEntity(new VehicleBeamerS320RS(w, p))),
+                    new ItemVehicleSpawner("spawn_mcgmultivan", (w, p) -> w.spawnEntity(new VehicleMCGMultiVan(w, p))),
                     new VMItem("empty_spray_can"),
                     new VMItem("bucket_of_liquid_coal"),
                     new VMItem("bucket_of_activated_fuel_substance"),
                     new VMItem("bucket_of_fuel"),
-                    new VMItem("fuel_filter")
+                    new VMItem("fuel_filter"),
+                    new ItemSpecialSprayCan("birch"),
+                    new ItemSpecialSprayCan("brick"),
+                    new ItemSpecialSprayCan("diorite"),
+                    new ItemSpecialSprayCan("hell"),
+                    new ItemSpecialSprayCan("iron"),
+                    new ItemSpecialSprayCan("lapis"),
+                    new ItemSpecialSprayCan("prismarine"),
+                    new ItemSpecialSprayCan("rust"),
+                    new ItemSpecialSprayCan("wood_dark"),
+                    new ItemSpecialSprayCan("wood_light"),
+                    new ItemSpecialSprayCan("wood"),
             };
             for (int i = 0; i < EnumDyeColor.values().length; i++) {
                 EnumDyeColor color = EnumDyeColor.values()[i];
@@ -180,7 +199,9 @@ public class Registries {
                     registerVehicle("beamer_s120", VehicleBeamerS120.class),
                     registerVehicle("fedoratti_vulcan", VehicleFedorattiVulcan.class),
                     registerVehicle("tracer_t1", VehicleTracerT1.class),
-                    registerVehicle("sputnik_2000l", VehicleSputnik2000L.class)
+                    registerVehicle("sputnik_2000l", VehicleSputnik2000L.class),
+                    registerVehicle("beamer_s320rs", VehicleBeamerS320RS.class),
+                    registerVehicle("mcg_multivan", VehicleMCGMultiVan.class)
             };
             e.getRegistry().registerAll(entries);
         }
@@ -206,6 +227,14 @@ public class Registries {
                     registerSound("sputnik_brake"),
                     registerSound("sputnik_gas"),
                     registerSound("sputnik_start"),
+                    registerSound("beamerb1_acc"),
+                    registerSound("beamerb1_brake"),
+                    registerSound("beamerb1_gas"),
+                    registerSound("beamerb1_start"),
+                    registerSound("mcgmv_acc"),
+                    registerSound("mcgmv_brake"),
+                    registerSound("mcgmv_gas"),
+                    registerSound("mcgmv_start"),
                     registerSound("danger1"),
                     registerSound("danger2"),
                     registerSound("danger3"),
@@ -243,7 +272,7 @@ public class Registries {
             return sound;
         }
 
-        private static EntityEntry registerVehicle(String name, Class<? extends Entity> cls) {
+        private static EntityEntry registerVehicle(String name, Class<? extends EntityVehicle> cls) {
             return createBuilder(name).entity(cls).tracker(256, 1, true).build();
         }
 

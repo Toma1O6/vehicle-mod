@@ -27,6 +27,7 @@ public class VMNetworkManager {
 		registerServerPacket(SPacketInput.Handler.class, SPacketInput.class);
 		registerServerPacket(PacketUpdateMusicEntry.Handler.class, PacketUpdateMusicEntry.class);
 		registerServerPacket(SPacketUpdateTileEntity.Handler.class, SPacketUpdateTileEntity.class);
+		registerServerPacket(SPacketSetNBT.Handler.class, SPacketSetNBT.class);
 	}
 	
 	/** ================================================================================================ **/
