@@ -10,34 +10,34 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleMCGMultiVan extends EntityVehicle {
+public class VehicleBeamerPickup extends EntityVehicle {
 
-    static final Vector3f[] PARTS = {new Vector3f(2.2F, 0.2f, 0), new Vector3f(-3, 0.3f, 0)};
+    static final Vector3f[] PARTS = {new Vector3f(1.8f, 0.3f, 0), new Vector3f(-1.8f, 0f, 0f)};
     VehicleSounds sounds;
 
-    public VehicleMCGMultiVan(World world) {
+    public VehicleBeamerPickup(World world) {
         super(world);
         setSize(1.5f, 2.0f);
     }
 
-    public VehicleMCGMultiVan(World world, BlockPos pos) {
+    public VehicleBeamerPickup(World world, BlockPos pos) {
         super(world, pos);
         setSize(1.5f, 2.0f);
     }
 
     @Override
     public VehicleContainer createInvetory() {
-        return new VehicleContainer(this, 18);
+        return new VehicleContainer(this, 27);
     }
 
     @Override
     public double getMountedYOffset() {
-        return 0.15;
+        return 0.3;
     }
 
     @Override
     public VehicleStats getStats() {
-        return VMConfig.mcgMultiVan;
+        return VMConfig.beamerPickup;
     }
 
     @Override
@@ -63,24 +63,24 @@ public class VehicleMCGMultiVan extends EntityVehicle {
     @Override
     public void initSounds() {
         sounds = VehicleSounds.Builder.create()
-                .withAccelerateSound(Registries.VMSounds.MCGMV_ACC)
-                .withBrakeSound(Registries.VMSounds.MCGMV_BRAKE)
-                .withGasReleaseSound(Registries.VMSounds.MCGMV_GAS)
+                .withAccelerateSound(Registries.VMSounds.BEAMERPICKUP_ACC)
+                .withBrakeSound(Registries.VMSounds.BEAMERPICKUP_BRAKE)
+                .withGasReleaseSound(Registries.VMSounds.BEAMERPICKUP_GAS)
                 .build(this);
     }
 
     @Override
     public SoundEvent getStartSound() {
-        return Registries.VMSounds.MCGMV_START;
+        return Registries.VMSounds.BEAMERPICKUP_START;
     }
 
     @Override
     protected double getPassengerOffsetX(int id) {
-        return 1.2;
+        return 1.4;
     }
 
     @Override
     protected double getPassengerOffsetZ(int id) {
-        return id == 0 ? -0.3 : 0.3;
+        return id == 0 ? -0.35 : 0.35;
     }
 }

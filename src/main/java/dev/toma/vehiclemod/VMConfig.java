@@ -23,22 +23,31 @@ public class VMConfig {
 	public static int cellTimerModifier = 20;
 	
 	@Name("Beamer S120")
-	public static VehicleStats beamer_s120 = new VehicleStats(150F, 1.3F, 0.005400000104308128F, 0.019999999552965164F, 0.3F, 3.0F, 0.005f, 100);
+	public static VehicleStats beamer_s120 = new VehicleStats(250F, 1.23F, 0.0045F, 0.024F, 0.3F, 3.0F, 0.004f, 50);
 
 	@Name("Federati Vulcan")
-	public static VehicleStats fedoratti_vulcan = new VehicleStats(150F, 2.25F, 0.00900000000104308128F, 0.028999999552965164F, 0.3F, 3.0F, 0.005F, 100);
+	public static VehicleStats fedoratti_vulcan = new VehicleStats(220F, 2.26F, 0.0091F, 0.033F, 0.3F, 3.0F, 0.007F, 70);
 
 	@Name("Tracer T1")
-	public static VehicleStats tracer_t1 = new VehicleStats(150F, 1.62F, 0.007000000104308128F, 0.023999999552965164F, 0.3F, 3.0F, 0.005F, 100);
+	public static VehicleStats tracer_t1 = new VehicleStats(250F, 1.62F, 0.0067F, 0.028F, 0.3F, 3.0F, 0.006F, 50);
 
 	@Name("Sputnik 2000L")
-	public static VehicleStats sputnik2000L = new VehicleStats(150F, 1.12F, 0.004600000104308128F, 0.019999999552965164F, 0.3F, 3.0F, 0.005F, 100);
+	public static VehicleStats sputnik2000L = new VehicleStats(200F, 1.12F, 0.0035F, 0.019F, 0.3F, 3.0F, 0.0066F, 30);
 
 	@Name("Beamer S320 RS")
-	public static VehicleStats beamers320rs = new VehicleStats(150F, 1.3F, 0.005F, 0.02F, 0.3F, 3.0F, 0.005f, 100);
+	public static VehicleStats beamers320rs = new VehicleStats(250F, 1.73F, 0.0059F, 0.031F, 0.3F, 3.0F, 0.006f, 50);
 
 	@Name("MCG MultiVan")
-	public static VehicleStats mcgMultiVan = new VehicleStats(300F, 0.8F, 0.0015F, 0.005F, 0.25F, 2.5F, 0.02f, 150, new VehicleStats.Vector3i(0, 0, -3));
+	public static VehicleStats mcgMultiVan = new VehicleStats(400F, 0.96F, 0.0028F, 0.014F, 0.25F, 2.5F, 0.01f, 120, new VehicleStats.Vector3i(0, 0, -3));
+
+	@Name("Beamer Pickup")
+	public static VehicleStats beamerPickup = new VehicleStats(280F, 1.12F, 0.0035F, 0.023F, 0.3F, 3.0F, 0.008F, 90, new VehicleStats.Vector3i(0, 0, -2));
+
+	@Name("Sputnik 3000L")
+	public static VehicleStats sputnik3000L = new VehicleStats(200F, 1.12F, 0.0035F, 0.019F, 0.3F, 3.0F, 0.0066F, 40);
+
+	@Name("Sputnik 3000L Enforcer")
+	public static VehicleStats sputnik3000LEnf = new VehicleStats(200F, 1.12F, 0.0035F, 0.019F, 0.3F, 3.0F, 0.0066F, 40);
 
 	@Mod.EventBusSubscriber(modid = VehicleMod.Constants.ID)
 	public static class Event {

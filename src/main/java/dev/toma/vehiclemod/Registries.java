@@ -104,6 +104,14 @@ public class Registries {
         public static final SoundEvent MCGMV_BRAKE = null;
         public static final SoundEvent MCGMV_GAS = null;
         public static final SoundEvent MCGMV_START = null;
+        public static final SoundEvent BEAMERPICKUP_ACC = null;
+        public static final SoundEvent BEAMERPICKUP_BRAKE = null;
+        public static final SoundEvent BEAMERPICKUP_GAS = null;
+        public static final SoundEvent BEAMERPICKUP_START = null;
+        public static final SoundEvent SPUTNIK3_ACC = null;
+        public static final SoundEvent SPUTNIK3_BRAKE = null;
+        public static final SoundEvent SPUTNIK3_GAS = null;
+        public static final SoundEvent SPUTNIK3_START = null;
         public static final SoundEvent SECRET = null;
 
         // music entries
@@ -165,6 +173,9 @@ public class Registries {
                     new ItemVehicleSpawner("spawn_sputnik2000l", (w, p) -> w.spawnEntity(new VehicleSputnik2000L(w, p))),
                     new ItemVehicleSpawner("spawn_beamers320rs", (w, p) -> w.spawnEntity(new VehicleBeamerS320RS(w, p))),
                     new ItemVehicleSpawner("spawn_mcgmultivan", (w, p) -> w.spawnEntity(new VehicleMCGMultiVan(w, p))),
+                    new ItemVehicleSpawner("spawn_beamerpickup", (w, p) -> w.spawnEntity(new VehicleBeamerPickup(w, p))),
+                    new ItemVehicleSpawner("spawn_sputnik3000l", (world, pos) -> world.spawnEntity(new VehicleSputnik3000L(world, pos))),
+                    new ItemVehicleSpawner("spawn_sputnik3000lenf", (world, pos) -> world.spawnEntity(new VehicleSputnik3000LEnforcer(world, pos))),
                     new VMItem("empty_spray_can"),
                     new VMItem("bucket_of_liquid_coal"),
                     new VMItem("bucket_of_activated_fuel_substance"),
@@ -201,7 +212,10 @@ public class Registries {
                     registerVehicle("tracer_t1", VehicleTracerT1.class),
                     registerVehicle("sputnik_2000l", VehicleSputnik2000L.class),
                     registerVehicle("beamer_s320rs", VehicleBeamerS320RS.class),
-                    registerVehicle("mcg_multivan", VehicleMCGMultiVan.class)
+                    registerVehicle("mcg_multivan", VehicleMCGMultiVan.class),
+                    registerVehicle("beamer_pickup", VehicleBeamerPickup.class),
+                    registerVehicle("sputnik_3000l", VehicleSputnik3000L.class),
+                    registerVehicle("sputnik_3000lenf", VehicleSputnik3000LEnforcer.class)
             };
             e.getRegistry().registerAll(entries);
         }
@@ -235,6 +249,14 @@ public class Registries {
                     registerSound("mcgmv_brake"),
                     registerSound("mcgmv_gas"),
                     registerSound("mcgmv_start"),
+                    registerSound("beamerpickup_acc"),
+                    registerSound("beamerpickup_brake"),
+                    registerSound("beamerpickup_gas"),
+                    registerSound("beamerpickup_start"),
+                    registerSound("sputnik3_acc"),
+                    registerSound("sputnik3_brake"),
+                    registerSound("sputnik3_gas"),
+                    registerSound("sputnik3_start"),
                     registerSound("danger1"),
                     registerSound("danger2"),
                     registerSound("danger3"),

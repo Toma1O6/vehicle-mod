@@ -29,6 +29,11 @@ public class VehicleBeamerS320RS extends EntityVehicle {
     }
 
     @Override
+    public VehicleContainer createInvetory() {
+        return new VehicleContainer(this, 9);
+    }
+
+    @Override
     public String[] getVariants() {
         return DEF_COLORS;
     }

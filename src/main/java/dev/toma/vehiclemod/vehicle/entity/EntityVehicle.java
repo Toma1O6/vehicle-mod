@@ -5,6 +5,8 @@ import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.items.ItemSprayCan;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
+import dev.toma.vehiclemod.util.GuiHandler;
+import dev.toma.vehiclemod.util.VMHelper;
 import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.VehicleSounds;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
@@ -12,13 +14,19 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -40,6 +48,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public float fuel;
     public EnumVehicleState prevState, currentState;
     public List<ResourceLocation> locations = new ArrayList<>();
+
+    protected VehicleContainer inventory = this.createInvetory();
+
     private String specialVariant = "";
     private int variantType;
     private double distanceTraveled = 0;
@@ -95,6 +106,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public abstract void initSounds();
 
+    public VehicleContainer createInvetory() {
+        return null;
+    }
+
     public boolean hasSpecialVariant() {
         return specialVariant != null && !specialVariant.isEmpty();
     }
@@ -105,6 +120,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public String getSpecialVariant() {
         return specialVariant;
+    }
+
+    public boolean hasInventory() {
+        return inventory != null;
     }
 
     public void setVariant(int color) {
@@ -282,7 +301,15 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                 return true;
             }
         } else if (player.getHeldItemMainhand().getItem() instanceof ItemSprayCan) {
-            ((ItemSprayCan)player.getHeldItemMainhand().getItem()).applyOnVehicle(this, world, player);
+            if(canRepaint()) {
+                ((ItemSprayCan)player.getHeldItemMainhand().getItem()).applyOnVehicle(this, world, player);
+            } else {
+                if(!player.world.isRemote) {
+                    player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "You cannot repaint this vehicle"), true);
+                }
+            }
+        } else if(hasInventory() && !world.isRemote) {
+            player.openGui(VehicleMod.instance, GuiHandler.VEHICLE, world, getEntityId(), 0, 0);
         }
         return false;
     }
@@ -420,6 +447,21 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         compound.setInteger("textureid", this.variantType);
         compound.setDouble("traveledDist", this.distanceTraveled);
         if(specialVariant != null) compound.setString("specialTxt", specialVariant);
+        if(hasInventory()) {
+            NBTTagList invNBT = new NBTTagList();
+            for(int i = 0; i < inventory.getSizeInventory(); i++) {
+                ItemStack stack = inventory.getStackInSlot(i);
+                if(!stack.isEmpty()) {
+                    NBTTagCompound dataNBT = new NBTTagCompound();
+                    NBTTagCompound itemStackNBT = new NBTTagCompound();
+                    stack.writeToNBT(itemStackNBT);
+                    dataNBT.setInteger("position", i);
+                    dataNBT.setTag("stack", itemStackNBT);
+                    invNBT.appendTag(dataNBT);
+                }
+            }
+            compound.setTag("inventory", invNBT);
+        }
     }
 
     @Override
@@ -436,6 +478,15 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         variantType = compound.getInteger("textureid");
         distanceTraveled = compound.getDouble("traveledDist");
         if(compound.hasKey("specialTxt")) specialVariant = compound.getString("specialTxt");
+        if(compound.hasKey("inventory")) {
+            NBTTagList list = compound.getTagList("inventory", Constants.NBT.TAG_COMPOUND);
+            for(int i = 0; i < list.tagCount(); i++) {
+                NBTTagCompound itemStackNBT = list.getCompoundTagAt(i);
+                int index = itemStackNBT.getInteger("position");
+                ItemStack stack = new ItemStack(itemStackNBT.getCompoundTag("stack"));
+                inventory.setInventorySlotContents(index, stack);
+            }
+        }
     }
 
     @Override
@@ -525,5 +576,25 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     private boolean hasReleasedGas() {
         return noAccelerationInput() && currentSpeed > 0;
+    }
+
+    public VehicleContainer getInventory() {
+        return inventory;
+    }
+
+    public boolean canRepaint() {
+        return true;
+    }
+
+    public static class VehicleContainer extends InventoryBasic {
+
+        public VehicleContainer(EntityVehicle vehicle, int slots) {
+            super(vehicle.getDisplayName() + " container", false, slots);
+        }
+
+        @SideOnly(Side.CLIENT)
+        public void draw() {
+
+        }
     }
 }

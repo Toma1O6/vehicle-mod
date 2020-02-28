@@ -30,6 +30,11 @@ public class VehicleBeamerS120 extends EntityVehicle {
 	}
 
 	@Override
+	public VehicleContainer createInvetory() {
+		return new VehicleContainer(this, 9);
+	}
+
+	@Override
 	public double getMountedYOffset() {
 		return -0.15;
 	}

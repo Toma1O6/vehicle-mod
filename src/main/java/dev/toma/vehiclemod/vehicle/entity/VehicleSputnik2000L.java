@@ -24,6 +24,11 @@ public class VehicleSputnik2000L extends EntityVehicle {
     }
 
     @Override
+    public VehicleContainer createInvetory() {
+        return new VehicleContainer(this, 9);
+    }
+
+    @Override
     public int maximumAmountOfPassengers() {
         return 2;
     }
