@@ -186,12 +186,12 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             turnModifier = turnModifier > -stats.maxTurningAngle ? turnModifier - stats.turnSpeed : -stats.maxTurningAngle;
         }
 
-        if (noAccelerationInput() || health < 0 || !hasFuel()) {
+        if (noAccelerationInput() || !hasFuel()) {
             if (Math.abs(currentSpeed) < 0.01)
                 currentSpeed = 0f;
 
             if (currentSpeed != 0) {
-                currentSpeed = currentSpeed > 0 ? currentSpeed - 0.008f : currentSpeed + 0.008f;
+                currentSpeed = currentSpeed > 0 ? currentSpeed - stats.brakeSpeed * 0.1F : currentSpeed + stats.brakeSpeed * 0.1F;
             }
         }
 
