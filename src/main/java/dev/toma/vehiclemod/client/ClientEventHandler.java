@@ -1,12 +1,15 @@
 package dev.toma.vehiclemod.client;
 
+import dev.toma.vehiclemod.VMConfig;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.util.DevUtil;
+import dev.toma.vehiclemod.vehicle.SpeedDisplayUnit;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -30,7 +33,6 @@ import java.text.DecimalFormat;
 public class ClientEventHandler {
 
 	private static final ResourceLocation VEHICLE_HUD = new ResourceLocation(VehicleMod.Constants.ID + ":textures/vehicle/vehicle_hud.png");
-	private static final DecimalFormat format = new DecimalFormat("###0.0");
 
 	@SubscribeEvent
 	public static void setupCamera(EntityViewRenderEvent.CameraSetup event) {
@@ -55,7 +57,8 @@ public class ClientEventHandler {
 				float health = car.health / car.getStats().maxHealth;
 				boolean lowHealth = health <= 0.5;
 				double speed = Math.sqrt(car.motionX*car.motionX + car.motionZ*car.motionZ) * 40;
-				mc.fontRenderer.drawStringWithShadow(format.format(speed*3.6F) + " km/h", 16, resolution.getScaledHeight() - 35, 0xFFFFFF);
+				SpeedDisplayUnit unit = VMConfig.speedUnit;
+				mc.fontRenderer.drawStringWithShadow(unit.getDisplayString(speed), 16, resolution.getScaledHeight() - 35, 0xFFFFFF);
 				VehicleHUDType type = VehicleHUDType.FUEL_STATE;
 				int x = (int)((33 * 120) / 256F);
 				int y = resolution.getScaledHeight() - 15;

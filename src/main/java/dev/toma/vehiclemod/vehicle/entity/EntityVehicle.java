@@ -6,7 +6,6 @@ import dev.toma.vehiclemod.common.items.ItemSprayCan;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
 import dev.toma.vehiclemod.util.GuiHandler;
-import dev.toma.vehiclemod.util.VMHelper;
 import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.VehicleSounds;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
@@ -19,10 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -78,11 +74,13 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                 locations.add(location);
             }
         }
+        ignoreFrustumCheck = true;
     }
 
     public EntityVehicle(World world, BlockPos pos) {
         this(world);
         setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
+        ignoreFrustumCheck = true;
     }
 
     public static double getMovementSpeed(EntityVehicle vehicle) {
@@ -268,6 +266,16 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             this.inputRight = right;
             this.inputLeft = left;
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void applyOrientationToEntity(Entity entityToUpdate) {
+        entityToUpdate.setRenderYawOffset(rotationYaw);
+        float rotationP = MathHelper.wrapDegrees(entityToUpdate.rotationPitch - rotationPitch);
+        float modifiedP = MathHelper.clamp(rotationP, -10.0F, 90.0F);
+        entityToUpdate.prevRotationPitch += modifiedP - rotationP;
+        entityToUpdate.rotationPitch += modifiedP - rotationP;
     }
 
     @Override

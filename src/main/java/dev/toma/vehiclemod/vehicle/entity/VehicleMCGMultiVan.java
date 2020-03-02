@@ -27,12 +27,12 @@ public class VehicleMCGMultiVan extends EntityVehicle {
 
     @Override
     public VehicleContainer createInvetory() {
-        return new VehicleContainer(this, 18);
+        return new VehicleContainer(this, 54);
     }
 
     @Override
     public double getMountedYOffset() {
-        return 0.15;
+        return 0.22;
     }
 
     @Override

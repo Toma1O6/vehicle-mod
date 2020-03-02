@@ -30,7 +30,7 @@ public class VehicleTracerT1 extends EntityVehicle {
 
     @Override
     public double getMountedYOffset() {
-        return -0.15;
+        return -0.18;
     }
 
     @Override

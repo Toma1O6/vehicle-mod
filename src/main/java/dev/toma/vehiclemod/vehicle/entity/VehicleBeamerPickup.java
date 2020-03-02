@@ -27,7 +27,7 @@ public class VehicleBeamerPickup extends EntityVehicle {
 
     @Override
     public VehicleContainer createInvetory() {
-        return new VehicleContainer(this, 27);
+        return new VehicleContainer(this, 36);
     }
 
     @Override
