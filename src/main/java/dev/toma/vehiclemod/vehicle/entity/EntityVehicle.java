@@ -245,7 +245,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                 initSounds();
             }
         }
-        if(world.isRemote && prevState != currentState && isStarted) {
+        if(world.isRemote && prevState != currentState) {
             this.vehicleStateChanged();
         }
         prevSpeed = currentSpeed;
@@ -507,6 +507,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     private EnumVehicleState getVehicleState() {
+        if(!hasFuel()) {
+            return EnumVehicleState.IDLE;
+        }
         if (this.isAccelerating()) {
             return EnumVehicleState.ACCELERATING;
         } else if (this.isBraking()) {
