@@ -64,13 +64,13 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         setSize(2f, 1.5f);
         stepHeight = 1f;
         preventEntitySpawning = true;
-        variantType = VehicleMod.getRNG().nextInt(this.getVariants().length);
+        variantType = world.rand.nextInt(this.getVariants().length);
         this.health = this.getStats().maxHealth;
         this.setFuel();
         if (locations.isEmpty()) {
             for (int i = 0; i < this.getVariants().length; i++) {
                 String s = this.getVariants()[i];
-                ResourceLocation location = new ResourceLocation(VehicleMod.Constants.ID + ":textures/vehicle/" + s + ".png");
+                ResourceLocation location = new ResourceLocation(VehicleMod.MODID + ":textures/vehicle/" + s + ".png");
                 locations.add(location);
             }
         }

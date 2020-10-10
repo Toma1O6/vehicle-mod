@@ -1,8 +1,4 @@
-tile.secret.name=Secret
 tile.fuel_tank.name=Fuel Tank
-tile.state_cell.name=State Cell
-tile.spikes.name=Spikes
-tile.music_player.name=Music Box
 tile.fuel_maker.name=Fuel Maker
 tile.petrol_pump.name=Petrol Pump
 

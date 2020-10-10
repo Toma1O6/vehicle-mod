@@ -9,16 +9,11 @@ import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -27,12 +22,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.GL11;
 
-import java.text.DecimalFormat;
-
 @EventBusSubscriber(Side.CLIENT)
 public class ClientEventHandler {
 
-	private static final ResourceLocation VEHICLE_HUD = new ResourceLocation(VehicleMod.Constants.ID + ":textures/vehicle/vehicle_hud.png");
+	private static final ResourceLocation VEHICLE_HUD = new ResourceLocation(VehicleMod.MODID + ":textures/vehicle/vehicle_hud.png");
 
 	@SubscribeEvent
 	public static void setupCamera(EntityViewRenderEvent.CameraSetup event) {

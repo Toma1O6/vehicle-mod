@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
-@Config(modid = VehicleMod.Constants.ID, name = "Toma's Vehicle Mod Config")
+@Config(modid = VehicleMod.MODID, name = "Toma's Vehicle Mod Config")
 public class VMConfig {
 
 	@Name("State cell modifier")
@@ -53,13 +53,13 @@ public class VMConfig {
 	@Name("Sputnik 3000L Enforcer")
 	public static VehicleStats sputnik3000LEnf = new VehicleStats(200F, 1.58F, 0.0057F, 0.024F, 0.3F, 3.0F, 0.0046F, 50);
 
-	@Mod.EventBusSubscriber(modid = VehicleMod.Constants.ID)
+	@Mod.EventBusSubscriber(modid = VehicleMod.MODID)
 	public static class Event {
 		
 		@SubscribeEvent
 		public static void configChanged(ConfigChangedEvent e) {
-			if(e.getModID().equals(VehicleMod.Constants.ID)) {
-				ConfigManager.sync(VehicleMod.Constants.ID, Type.INSTANCE);
+			if(e.getModID().equals(VehicleMod.MODID)) {
+				ConfigManager.sync(VehicleMod.MODID, Type.INSTANCE);
 			}
 		}
 		

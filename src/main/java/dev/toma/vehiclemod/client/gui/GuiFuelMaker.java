@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiFuelMaker extends GuiContainer {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(VehicleMod.Constants.ID, "textures/gui/fuel_maker.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(VehicleMod.MODID, "textures/gui/fuel_maker.png");
     private final TileEntityFuelMaker tileEntityFuelMaker;
 
     public GuiFuelMaker(InventoryPlayer player, TileEntityFuelMaker tileEntityFuelMaker) {

@@ -35,7 +35,7 @@ public abstract class RenderVehicle<E extends EntityVehicle> extends Render<E> {
 			if(rl != null && rl.getResourcePath().equals(path)) {
 				return rl;
 			}
-			rl = new ResourceLocation(VehicleMod.Constants.ID, path);
+			rl = new ResourceLocation(VehicleMod.MODID, path);
 			entity.cachedLocation = rl;
 			return rl;
 		}
@@ -73,10 +73,10 @@ public abstract class RenderVehicle<E extends EntityVehicle> extends Render<E> {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
-		bufferbuilder.pos((double)(-i - 1), of, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-		bufferbuilder.pos((double)(-i - 1), of + 53, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-		bufferbuilder.pos((double)(i + 10), of + 53, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-		bufferbuilder.pos((double)(i + 10), of, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		bufferbuilder.pos((-i - 1), of, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		bufferbuilder.pos((-i - 1), of + 53, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		bufferbuilder.pos((i + 10), of + 53, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		bufferbuilder.pos((i + 10), of, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
 		tessellator.draw();
 		GlStateManager.enableTexture2D();
 		GlStateManager.depthMask(true);

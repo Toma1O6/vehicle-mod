@@ -93,13 +93,13 @@ private static final ModelCreator CREATOR = new ModelCreator();
 
 		public void createBlockFiles() {
 			ForgeRegistries.BLOCKS.getValuesCollection().stream()
-					.filter(b -> b.getRegistryName().getResourceDomain().equals(VehicleMod.Constants.ID))
+					.filter(b -> b.getRegistryName().getResourceDomain().equals(VehicleMod.MODID))
 					.forEach(this::createBlockFiles);
 		}
 
 		public void createItemFiles() {
 			ForgeRegistries.ITEMS.getValuesCollection().stream()
-					.filter(i -> i.getRegistryName().getResourceDomain().equals(VehicleMod.Constants.ID))
+					.filter(i -> i.getRegistryName().getResourceDomain().equals(VehicleMod.MODID))
 					.forEach(this::createItemModelFile);
 		}
 		
@@ -155,7 +155,7 @@ private static final ModelCreator CREATOR = new ModelCreator();
 						EnumFacing facing = null;
 						String[] names = new String[properties.size()];
 						String[] values = new String[properties.size()];
-						IProperty[] propArray = properties.toArray(new IProperty[0]);
+						IProperty<?>[] propArray = properties.toArray(new IProperty[0]);
 						for(int i = 0; i < properties.size(); i++) {
 							IProperty<?> p = propArray[i];
 							names[i] = p.getName();
@@ -246,8 +246,8 @@ private static final ModelCreator CREATOR = new ModelCreator();
 						StringBuilder tagBuilder = new StringBuilder();
 						for (int i = 0; i < properties.size(); i++) {
 							if (i == properties.size() - 1) {
-								tagBuilder.append(names[i] + "=" + values[i]);
-							} else tagBuilder.append(names[i] + "=" + values[i] + ",");
+								tagBuilder.append(names[i]).append("=").append(values[i]);
+							} else tagBuilder.append(names[i]).append("=").append(values[i]).append(",");
 						}
 
 						element.add(tagBuilder.toString(), new JsonObject());
@@ -257,7 +257,7 @@ private static final ModelCreator CREATOR = new ModelCreator();
 					for (int i = 0; i < jsonText.length; i++) {
 						if (!jsonText[i].endsWith("}")) jsonText[i] = jsonText[i] += "{";
 					}
-					List<String[]> linesList = new ArrayList<String[]>();
+					List<String[]> linesList = new ArrayList<>();
 					for (String line : jsonText) {
 						String[] array = line.split("},");
 						for (int i = 0; i < array.length; i++) {
@@ -292,7 +292,7 @@ private static final ModelCreator CREATOR = new ModelCreator();
 					FileWriter writer = new FileWriter(file);
 					String json =
 					"{\n"+
-					"\t\"parent\": \""+VehicleMod.Constants.ID+":block/"+name+"\"\n"+
+					"\t\"parent\": \""+VehicleMod.MODID+":block/"+name+"\"\n"+
 					"}";
 					writer.write(json);
 					writer.close();
@@ -310,15 +310,14 @@ private static final ModelCreator CREATOR = new ModelCreator();
 			}
 			try {
 				file.createNewFile();
-				StringBuilder sb = new StringBuilder();
-				sb.append("{\n");
-				sb.append("\t\"parent\": \"item/generated\",\n");
-				sb.append("\t\"textures\": {\n");
-				sb.append("\t\t\"layer0\": \"vehiclemod:items/" + name + "\"\n");
-				sb.append("\t}\n");
-				sb.append("}");
 				FileWriter writer = new FileWriter(file);
-				writer.write(sb.toString());
+				String sb = "{\n" +
+						"\t\"parent\": \"item/generated\",\n" +
+						"\t\"textures\": {\n" +
+						"\t\t\"layer0\": \"vehiclemod:items/" + name + "\"\n" +
+						"\t}\n" +
+						"}";
+				writer.write(sb);
 				writer.close();
 			} catch (Exception e) {
 				e.printStackTrace();

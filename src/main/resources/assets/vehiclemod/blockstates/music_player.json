@@ -1,6 +1,0 @@
-{
-	"variants": {
-		"on=true": {"model": "vehiclemod:music_player"},
-		"on=false": {"model": "vehiclemod:music_player"}
-	}
-}

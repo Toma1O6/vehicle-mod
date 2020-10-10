@@ -17,11 +17,10 @@ public class CommonEventHandler {
     public static void onEntityJoin(EntityJoinWorldEvent e) {
         if(e.getEntity() instanceof EntityCreature) {
             EntityCreature livingEntity = (EntityCreature)e.getEntity();
-            EntityAINearestAttackableTarget ai = getTaskToBeRemoved(livingEntity);
+            EntityAINearestAttackableTarget<?> ai = getTaskToBeRemoved(livingEntity);
             EntityAITasks.EntityAITaskEntry[] entries = ((EntityCreature) e.getEntity()).targetTasks.taskEntries.toArray(new EntityAITasks.EntityAITaskEntry[0]);
-            for(int i = 0; i < entries.length; i++) {
-                EntityAITasks.EntityAITaskEntry entry = entries[i];
-                if(entry.action instanceof EntityAINearestAttackableTarget<?>) {
+            for (EntityAITasks.EntityAITaskEntry entry : entries) {
+                if (entry.action instanceof EntityAINearestAttackableTarget<?>) {
                     livingEntity.targetTasks.removeTask(entry.action);
                     livingEntity.targetTasks.addTask(3, entry.action);
                 }
@@ -31,10 +30,10 @@ public class CommonEventHandler {
         }
     }
 
-    public static EntityAINearestAttackableTarget getTaskToBeRemoved(EntityCreature e) {
+    public static EntityAINearestAttackableTarget<?> getTaskToBeRemoved(EntityCreature e) {
         for(EntityAITasks.EntityAITaskEntry ai : e.targetTasks.taskEntries) {
             if(ai.action.getClass() == EntityAINearestAttackableTarget.class) {
-                return (EntityAINearestAttackableTarget) ai.action;
+                return (EntityAINearestAttackableTarget<?>) ai.action;
             }
         }
         return null;

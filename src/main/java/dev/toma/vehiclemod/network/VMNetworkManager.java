@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class VMNetworkManager {
 
-	private static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(VehicleMod.Constants.ID);
+	private static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(VehicleMod.MODID);
 	
 	private static int id = -1;
 	
@@ -25,14 +25,9 @@ public class VMNetworkManager {
 	
 	private static void registerServerPackets() {
 		registerServerPacket(SPacketInput.Handler.class, SPacketInput.class);
-		registerServerPacket(PacketUpdateMusicEntry.Handler.class, PacketUpdateMusicEntry.class);
 		registerServerPacket(SPacketUpdateTileEntity.Handler.class, SPacketUpdateTileEntity.class);
 		registerServerPacket(SPacketSetNBT.Handler.class, SPacketSetNBT.class);
 	}
-	
-	/** ================================================================================================ **/
-	/** ================================================================================================ **/
-	
 	
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerClientPacket(Class<? extends IMessageHandler<REQ, REPLY>> handler, Class<REQ> packet) {
 		instance().registerMessage(handler, packet, id++, Side.CLIENT);

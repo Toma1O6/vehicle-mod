@@ -6,7 +6,6 @@ import dev.toma.vehiclemod.common.container.ContainerPetrolPump;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.SPacketUpdateTileEntity;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -23,7 +22,7 @@ import java.io.IOException;
 public class GuiPetrolPump extends GuiContainer {
 
     private static final ResourceLocation TEXTURE = VehicleMod.getResource("textures/gui/petrol_pump.png");
-    private TileEntityPetrolPump petrolPump;
+    private final TileEntityPetrolPump petrolPump;
 
     public GuiPetrolPump(InventoryPlayer inv, TileEntityPetrolPump petrolPump) {
         super(new ContainerPetrolPump(inv, petrolPump));
