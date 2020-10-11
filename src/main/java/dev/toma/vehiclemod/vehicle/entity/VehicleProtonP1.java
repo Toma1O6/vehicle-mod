@@ -12,6 +12,7 @@ import javax.vecmath.Vector3f;
 
 public class VehicleProtonP1 extends EntityVehicle {
 
+    static final Vector3f[] PARTS = {new Vector3f(1.5f, 0.2f, 0.0f), new Vector3f(-2.3f, 0.2f, 0.6f)};
     VehicleSounds sounds;
 
     public VehicleProtonP1(World world) {
@@ -30,7 +31,7 @@ public class VehicleProtonP1 extends EntityVehicle {
 
     @Override
     public double getMountedYOffset() {
-        return 0.05;
+        return -0.2;
     }
 
     @Override
@@ -64,7 +65,7 @@ public class VehicleProtonP1 extends EntityVehicle {
 
     @Override
     public Vector3f[] getPartVecs() {
-        return new Vector3f[] {new Vector3f(), new Vector3f()};
+        return PARTS;
     }
 
     @Override
@@ -74,6 +75,6 @@ public class VehicleProtonP1 extends EntityVehicle {
 
     @Override
     protected double getPassengerOffsetZ(int id) {
-        return id % 2 == 0 ? -0.45: 0.45;
+        return id % 2 == 0 ? -0.4: 0.4;
     }
 }

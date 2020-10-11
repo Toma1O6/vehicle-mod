@@ -12,6 +12,7 @@ import javax.vecmath.Vector3f;
 
 public class VehicleSputnikDuster extends EntityVehicle {
 
+    static final Vector3f[] PARTS = {new Vector3f(2.0F, 0.4F, 0.0F), new Vector3f(-2.0F, 0.1F, 0.4F)};
     VehicleSounds sounds;
 
     public VehicleSputnikDuster(World world) {
@@ -64,7 +65,7 @@ public class VehicleSputnikDuster extends EntityVehicle {
 
     @Override
     public Vector3f[] getPartVecs() {
-        return new Vector3f[] {new Vector3f(), new Vector3f()};
+        return PARTS;
     }
 
     @Override

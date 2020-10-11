@@ -24,7 +24,7 @@ public class RenderProtonP1<V extends VehicleProtonP1, M extends ModelVehicle> e
         GlStateManager.pushMatrix();
         bindEntityTexture(entity);
         GlStateManager.translate(x, y, z);
-        GlStateManager.scale(0.07, 0.07, 0.07);
+        GlStateManager.scale(0.06, 0.06, 0.06);
         GlStateManager.rotate(180f, 1f, 0f, 0f);
         GlStateManager.translate(0, -24, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
