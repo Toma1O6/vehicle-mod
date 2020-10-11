@@ -31,5 +31,21 @@
     "sputnik3_start": {"category": "master", "sounds": [{"name": "vehiclemod:sputnik_3000l_str", "stream": "true"}]},
     "sputnik3_acc": {"category": "master", "sounds": [{"name": "vehiclemod:sputnik_3000l_acc", "stream": "true"}]},
     "sputnik3_brake": {"category": "master", "sounds": [{"name": "vehiclemod:sputnik_3000l_brk", "stream": "true"}]},
-    "sputnik3_gas": {"category": "master", "sounds": [{"name": "vehiclemod:sputnik_3000l_rls", "stream": "true"}]}
+    "sputnik3_gas": {"category": "master", "sounds": [{"name": "vehiclemod:sputnik_3000l_rls", "stream": "true"}]},
+    "sputnik_duster_start": {"category": "master", "sounds": [{"name": "vehiclemod:sputnik_duster_str", "stream": "true"}]},
+    "sputnik_duster_acc": {"category": "master", "sounds": [{"name": "vehiclemod:sputnik_duster_acc", "stream": "true"}]},
+    "sputnik_duster_brake": {"category": "master", "sounds": [{"name": "vehiclemod:sputnik_duster_brk", "stream": "true"}]},
+    "sputnik_duster_gas": {"category": "master", "sounds": [{"name": "vehiclemod:sputnik_duster_rls", "stream": "true"}]},
+    "fedoratti_nightstalker_start": {"category": "master", "sounds": [{"name": "vehiclemod:fedoratti_nightstalker_str", "stream": "true"}]},
+    "fedoratti_nightstalker_acc": {"category": "master", "sounds": [{"name": "vehiclemod:fedoratti_nightstalker_acc", "stream": "true"}]},
+    "fedoratti_nightstalker_brake": {"category": "master", "sounds": [{"name": "vehiclemod:fedoratti_nightstalker_brk", "stream": "true"}]},
+    "fedoratti_nightstalker_gas": {"category": "master", "sounds": [{"name": "vehiclemod:fedoratti_nightstalker_rls", "stream": "true"}]},
+    "proton_p1_start": {"category": "master", "sounds": [{"name": "vehiclemod:proton_p1_str", "stream": "true"}]},
+    "proton_p1_acc": {"category": "master", "sounds": [{"name": "vehiclemod:proton_p1_acc", "stream": "true"}]},
+    "proton_p1_brake": {"category": "master", "sounds": [{"name": "vehiclemod:proton_p1_brk", "stream": "true"}]},
+    "proton_p1_gas": {"category": "master", "sounds": [{"name": "vehiclemod:proton_p1_rls", "stream": "true"}]},
+    "proton_p1_tunned_start": {"category": "master", "sounds": [{"name": "vehiclemod:proton_p1_tunned_str", "stream": "true"}]},
+    "proton_p1_tunned_acc": {"category": "master", "sounds": [{"name": "vehiclemod:proton_p1_tunned_acc", "stream": "true"}]},
+    "proton_p1_tunned_brake": {"category": "master", "sounds": [{"name": "vehiclemod:proton_p1_tunned_brk", "stream": "true"}]},
+    "proton_p1_tunned_gas": {"category": "master", "sounds": [{"name": "vehiclemod:proton_p1_tunned_rls", "stream": "true"}]}
 }

@@ -6,6 +6,7 @@ import dev.toma.vehiclemod.common.items.ItemSprayCan;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
 import dev.toma.vehiclemod.util.GuiHandler;
+import dev.toma.vehiclemod.util.VehicleTexture;
 import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.VehicleSounds;
 import dev.toma.vehiclemod.vehicle.VehicleStats;
@@ -23,19 +24,16 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.vecmath.Vector3f;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class EntityVehicle extends Entity implements IEntityAdditionalSpawnData {
 
-    public static final String[] DEF_COLORS = {"white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "silver", "cyan", "purple", "blue", "brown", "green", "red", "black"};
     private static final Predicate<Entity> TARGET = entity -> EntitySelectors.NOT_SPECTATING.apply(entity) && EntitySelectors.IS_ALIVE.apply(entity) && entity.canBeCollidedWith();
 
     public float health;
@@ -43,12 +41,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public float turnModifier;
     public float fuel;
     public EnumVehicleState prevState, currentState;
-    public List<ResourceLocation> locations = new ArrayList<>();
 
     protected VehicleContainer inventory = this.createInvetory();
 
-    private String specialVariant = "";
-    private int variantType;
+    private VehicleTexture texture;
     private double distanceTraveled = 0;
     private boolean isStarted = false;
 
@@ -64,16 +60,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         setSize(2f, 1.5f);
         stepHeight = 1f;
         preventEntitySpawning = true;
-        variantType = world.rand.nextInt(this.getVariants().length);
+        texture = VehicleTexture.values()[world.rand.nextInt(16)];
         this.health = this.getStats().maxHealth;
         this.setFuel();
-        if (locations.isEmpty()) {
-            for (int i = 0; i < this.getVariants().length; i++) {
-                String s = this.getVariants()[i];
-                ResourceLocation location = new ResourceLocation(VehicleMod.MODID + ":textures/vehicle/" + s + ".png");
-                locations.add(location);
-            }
-        }
         ignoreFrustumCheck = true;
     }
 
@@ -86,8 +75,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public static double getMovementSpeed(EntityVehicle vehicle) {
         return Math.sqrt(vehicle.motionX * vehicle.motionX + vehicle.motionZ * vehicle.motionZ);
     }
-
-    public abstract String[] getVariants();
 
     /**
      * 0 = engine, 1 = exhaust
@@ -108,28 +95,20 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         return null;
     }
 
-    public boolean hasSpecialVariant() {
-        return specialVariant != null && !specialVariant.isEmpty();
+    public VehicleTexture getTexture() {
+        return texture;
     }
 
-    public void setSpecialVariant(String variant) {
-        this.specialVariant = variant;
-    }
-
-    public String getSpecialVariant() {
-        return specialVariant;
+    public void setTexture(VehicleTexture texture) {
+        this.texture = texture;
     }
 
     public boolean hasInventory() {
         return inventory != null;
     }
 
-    public void setVariant(int color) {
-        specialVariant = null;
-        this.variantType = color;
-    }
-
     public void updateVehicle() {
+        updateMotion();
         if (!this.isBeingRidden() && (!noAccelerationInput() || !noTurningInput() || !hasFuel())) {
             inputForward = false;
             inputBack = false;
@@ -137,7 +116,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             inputLeft = false;
         }
 
-        updateMotion();
         handleEntityCollisions();
         checkState();
 
@@ -167,16 +145,14 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         Vec3d lookVec = this.getLookVec();
         VehicleStats stats = this.getStats();
         float accModifier = this.health / stats.maxHealth < 0.33F ? this.health / stats.maxHealth : 1.0F;
-        if (hasFuel()) {
-            if (inputForward && !inputBack) {
-                float acceleration = stats.acceleration * accModifier;
-                burnFuel();
-                currentSpeed = currentSpeed < stats.maxSpeed ? currentSpeed + acceleration : stats.maxSpeed;
-            }
-            if (!inputForward && inputBack) {
-                burnFuel();
-                currentSpeed = currentSpeed > 0 ? currentSpeed - stats.brakeSpeed : currentSpeed > (-stats.maxSpeed * 0.3f) ? currentSpeed - (stats.acceleration * accModifier) : -stats.maxSpeed * 0.3f;
-            }
+        if (inputForward && !inputBack && (hasFuel() || currentSpeed < 0)) {
+            float acceleration = stats.acceleration * accModifier;
+            burnFuel();
+            currentSpeed = currentSpeed < stats.maxSpeed ? currentSpeed + acceleration : stats.maxSpeed;
+        }
+        if (!inputForward && inputBack && (hasFuel() || currentSpeed > 0)) {
+            burnFuel();
+            currentSpeed = currentSpeed > 0 ? currentSpeed - stats.brakeSpeed : currentSpeed > (-stats.maxSpeed * 0.3f) ? currentSpeed - (stats.acceleration * accModifier) : -stats.maxSpeed * 0.3f;
         }
 
         if (inputRight && !inputLeft) {
@@ -259,10 +235,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public void updateInput(boolean forward, boolean back, boolean right, boolean left, EntityPlayer player) {
         if (this.getControllingPassenger() == player) {
             this.rotationYaw = rotationYaw < 0f ? rotationYaw + 360f : rotationYaw > 360f ? rotationYaw - 360f : rotationYaw;
-            if (hasFuel()) {
-                this.inputForward = forward;
-                this.inputBack = back;
-            }
+            this.inputForward = forward;
+            this.inputBack = back;
             this.inputRight = right;
             this.inputLeft = left;
         }
@@ -331,18 +305,16 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public void writeSpawnData(ByteBuf buf) {
         buf.writeFloat(health);
         buf.writeFloat(fuel);
-        buf.writeInt(variantType);
         buf.writeDouble(distanceTraveled);
-        ByteBufUtils.writeUTF8String(buf, specialVariant);
+        buf.writeInt(texture.ordinal());
     }
 
     @Override
     public void readSpawnData(ByteBuf buf) {
         health = buf.readFloat();
         fuel = buf.readFloat();
-        variantType = buf.readInt();
         distanceTraveled = buf.readDouble();
-        specialVariant = ByteBufUtils.readUTF8String(buf);
+        texture = VehicleTexture.values()[buf.readInt()];
     }
 
     public VMTickableSound getVehicleSound() {
@@ -369,7 +341,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     @Override
     protected void addPassenger(Entity passenger) {
-        if(this.getPassengers().isEmpty() && !isStarted) {
+        if(this.getPassengers().isEmpty() && !isStarted && hasFuel()) {
             world.playSound(null, posX, posY, posZ, this.getStartSound(), SoundCategory.MASTER, 1.0F, 1.0F);
             isStarted = true;
         }
@@ -393,14 +365,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             Vec3d vec = (new Vec3d(x, 0, z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2f));
             passenger.setPosition(posX + vec.x, posY + getMountedYOffset() + passenger.getYOffset(), posZ + vec.z);
         }
-    }
-
-    public int getVariantType() {
-        return variantType;
-    }
-
-    public List<ResourceLocation> getTextures() {
-        return locations;
     }
 
     public void setFuel() {
@@ -452,9 +416,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         compound.setFloat("health", this.health);
         compound.setFloat("fuel", this.fuel);
         compound.setFloat("speed", this.currentSpeed);
-        compound.setInteger("textureid", this.variantType);
+        compound.setInteger("textureid", this.texture.ordinal());
         compound.setDouble("traveledDist", this.distanceTraveled);
-        if(specialVariant != null) compound.setString("specialTxt", specialVariant);
         if(hasInventory()) {
             NBTTagList invNBT = new NBTTagList();
             for(int i = 0; i < inventory.getSizeInventory(); i++) {
@@ -483,9 +446,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         health = compound.getFloat("health");
         fuel = compound.getFloat("fuel");
         currentSpeed = compound.getFloat("speed");
-        variantType = compound.getInteger("textureid");
+        texture = VehicleTexture.values()[compound.getInteger("textureid")];
         distanceTraveled = compound.getDouble("traveledDist");
-        if(compound.hasKey("specialTxt")) specialVariant = compound.getString("specialTxt");
         if(compound.hasKey("inventory")) {
             NBTTagList list = compound.getTagList("inventory", Constants.NBT.TAG_COMPOUND);
             for(int i = 0; i < list.tagCount(); i++) {
@@ -563,7 +525,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     private void burnFuel() {
-        this.fuel -= this.getStats().fuelConsumption;
+        this.fuel = Math.max(0.0F, this.fuel - this.getStats().fuelConsumption);
     }
 
     private void explode() {

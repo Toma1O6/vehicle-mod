@@ -10,44 +10,42 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleBeamerPickup extends EntityVehicle {
+public class VehicleFedorattiNightStalker extends EntityVehicle {
 
-    static final Vector3f[] PARTS = {new Vector3f(1.8f, 0.3f, 0), new Vector3f(-1.8f, 0f, 0f)};
     VehicleSounds sounds;
 
-    public VehicleBeamerPickup(World world) {
+    public VehicleFedorattiNightStalker(World world) {
         super(world);
-        setSize(1.5f, 2.0f);
     }
 
-    public VehicleBeamerPickup(World world, BlockPos pos) {
+    public VehicleFedorattiNightStalker(World world, BlockPos pos) {
         super(world, pos);
-        setSize(1.5f, 2.0f);
+        setSize(2.0f, 1.5f);
     }
 
     @Override
     public VehicleContainer createInvetory() {
-        return new VehicleContainer(this, 36);
+        return new VehicleContainer(this, 5);
     }
 
     @Override
     public double getMountedYOffset() {
-        return 0.3;
+        return -0.2;
     }
 
     @Override
     public VehicleStats getStats() {
-        return VMConfig.beamerPickup;
-    }
-
-    @Override
-    public Vector3f[] getPartVecs() {
-        return PARTS;
+        return VMConfig.fedorattiNightStalker;
     }
 
     @Override
     public int maximumAmountOfPassengers() {
         return 2;
+    }
+
+    @Override
+    public SoundEvent getStartSound() {
+        return Registries.VMSounds.FEDORATTI_NIGHTSTALKER_START;
     }
 
     @Override
@@ -57,25 +55,25 @@ public class VehicleBeamerPickup extends EntityVehicle {
 
     @Override
     public void initSounds() {
-        sounds = VehicleSounds.Builder.create()
-                .withAccelerateSound(Registries.VMSounds.BEAMERPICKUP_ACC)
-                .withBrakeSound(Registries.VMSounds.BEAMERPICKUP_BRAKE)
-                .withGasReleaseSound(Registries.VMSounds.BEAMERPICKUP_GAS)
+        this.sounds = VehicleSounds.Builder.create()
+                .withAccelerateSound(Registries.VMSounds.FEDORATTI_NIGHTSTALKER_ACC)
+                .withBrakeSound(Registries.VMSounds.FEDORATTI_NIGHTSTALKER_BRAKE)
+                .withGasReleaseSound(Registries.VMSounds.FEDORATTI_NIGHTSTALKER_GAS)
                 .build(this);
     }
 
     @Override
-    public SoundEvent getStartSound() {
-        return Registries.VMSounds.BEAMERPICKUP_START;
+    public Vector3f[] getPartVecs() {
+        return new Vector3f[] {new Vector3f(), new Vector3f()};
     }
 
     @Override
     protected double getPassengerOffsetX(int id) {
-        return 1.4;
+        return 0.2;
     }
 
     @Override
     protected double getPassengerOffsetZ(int id) {
-        return id == 0 ? -0.35 : 0.35;
+        return id % 2 == 0 ? -0.4 : 0.4;
     }
 }

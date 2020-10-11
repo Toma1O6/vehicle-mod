@@ -34,11 +34,6 @@ public class VehicleTracerT1 extends EntityVehicle {
     }
 
     @Override
-    public String[] getVariants() {
-        return DEF_COLORS;
-    }
-
-    @Override
     public SoundEvent getStartSound() {
         return Registries.VMSounds.TRACER_START;
     }

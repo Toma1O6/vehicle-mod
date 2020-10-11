@@ -10,17 +10,17 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleSputnik2000L extends EntityVehicle {
+public class VehicleSputnikDuster extends EntityVehicle {
 
-    private VehicleSounds sounds;
-    private static final Vector3f[] PARTS = {new Vector3f(1.7F, 0.5F, 0.0F), new Vector3f(-1.95F, 0.15F, 0.3F)};
+    VehicleSounds sounds;
 
-    public VehicleSputnik2000L(World world) {
+    public VehicleSputnikDuster(World world) {
         super(world);
     }
 
-    public VehicleSputnik2000L(World world, BlockPos pos) {
+    public VehicleSputnikDuster(World world, BlockPos pos) {
         super(world, pos);
+        setSize(2.0f, 2.0f);
     }
 
     @Override
@@ -29,52 +29,51 @@ public class VehicleSputnik2000L extends EntityVehicle {
     }
 
     @Override
-    public int maximumAmountOfPassengers() {
-        return 2;
-    }
-
-    @Override
     public double getMountedYOffset() {
-        return -0.05;
-    }
-
-    @Override
-    public SoundEvent getStartSound() {
-        return Registries.VMSounds.SPUTNIK_START;
+        return 0.2;
     }
 
     @Override
     public VehicleStats getStats() {
-        return VMConfig.sputnik2000L;
+        return VMConfig.sputnikDuster;
     }
 
     @Override
-    public Vector3f[] getPartVecs() {
-        return PARTS;
+    public int maximumAmountOfPassengers() {
+        return 4;
+    }
+
+    @Override
+    public SoundEvent getStartSound() {
+        return Registries.VMSounds.SPUTNIK_DUSTER_START;
     }
 
     @Override
     public VehicleSounds getSounds() {
-        if(this.sounds == null) this.initSounds();
         return sounds;
     }
 
     @Override
     public void initSounds() {
         this.sounds = VehicleSounds.Builder.create()
-                .withAccelerateSound(Registries.VMSounds.SPUTNIK_ACC)
-                .withBrakeSound(Registries.VMSounds.SPUTNIK_BRAKE)
-                .withGasReleaseSound(Registries.VMSounds.SPUTNIK_GAS)
+                .withAccelerateSound(Registries.VMSounds.SPUTNIK_DUSTER_ACC)
+                .withBrakeSound(Registries.VMSounds.SPUTNIK_DUSTER_BRAKE)
+                .withGasReleaseSound(Registries.VMSounds.SPUTNIK_DUSTER_GAS)
                 .build(this);
     }
 
     @Override
+    public Vector3f[] getPartVecs() {
+        return new Vector3f[] {new Vector3f(), new Vector3f()};
+    }
+
+    @Override
     protected double getPassengerOffsetX(int id) {
-        return 0.1;
+        return id < 2 ? 0.4 : -0.4;
     }
 
     @Override
     protected double getPassengerOffsetZ(int id) {
-        return id == 0 ? -0.4 : 0.4;
+        return id % 2 == 0 ? -0.5 : 0.5;
     }
 }

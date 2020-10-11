@@ -1,35 +1,42 @@
 package dev.toma.vehiclemod.common.items;
 
-import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.function.BiConsumer;
+public class ItemVehicleSpawner extends VMItem {
 
-public class ItemVehicleSpawner extends Item {
+    final IFactory<?> vehicleFactory;
+    final Class<? extends EntityVehicle> vClass;
 
-	private final BiConsumer<World, BlockPos> action;
+    public <V extends EntityVehicle> ItemVehicleSpawner(String name, Class<V> vClass, IFactory<V> factory) {
+        super(name);
+        this.vClass = vClass;
+        this.vehicleFactory = factory;
+    }
 
-	public ItemVehicleSpawner(String name, BiConsumer<World, BlockPos> action) {
-		setUnlocalizedName(name);
-		setRegistryName(name);
-		setCreativeTab(VehicleMod.TAB);
-		this.action = action;
-	}
-	
-	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(!worldIn.isRemote) {
-			if(!player.capabilities.isCreativeMode) {
-				player.getHeldItem(hand).shrink(1);
-			}
-			action.accept(worldIn, pos);
-		}
-		return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-	}
+    public Class<? extends EntityVehicle> getVehicleClass() {
+        return vClass;
+    }
+
+    @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
+        if(!worldIn.isRemote) {
+            worldIn.spawnEntity(vehicleFactory.createVehicle(worldIn, pos));
+        }
+        if(!player.isCreative()) {
+            stack.shrink(1);
+        }
+        return EnumActionResult.PASS;
+    }
+
+    public interface IFactory<V extends EntityVehicle> {
+        V createVehicle(World world, BlockPos pos);
+    }
 }

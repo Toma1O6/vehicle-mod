@@ -4,6 +4,8 @@ import dev.toma.vehiclemod.VehicleInputHandler;
 import dev.toma.vehiclemod.vehicle.VMTickableSound;
 import dev.toma.vehiclemod.vehicle.VehicleSounds;
 import dev.toma.vehiclemod.vehicle.entity.*;
+import dev.toma.vehiclemod.vehicle.model.ModelProtonP1;
+import dev.toma.vehiclemod.vehicle.model.ModelProtonP1Tunned;
 import dev.toma.vehiclemod.vehicle.render.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
@@ -54,5 +56,9 @@ public class ClientProxy implements IProxy {
 		RenderingRegistry.registerEntityRenderingHandler(VehicleBeamerPickup.class, RenderBeamerPickup::new);
 		RenderingRegistry.registerEntityRenderingHandler(VehicleSputnik3000L.class, RenderSputnik3000L::new);
 		RenderingRegistry.registerEntityRenderingHandler(VehicleSputnik3000LEnforcer.class, RenderSputnik3000LEnforcer::new);
+		RenderingRegistry.registerEntityRenderingHandler(VehicleSputnikDuster.class, RenderSputnikDuster::new);
+		RenderingRegistry.registerEntityRenderingHandler(VehicleFedorattiNightStalker.class, RenderFedorattiNightStalker::new);
+		RenderingRegistry.registerEntityRenderingHandler(VehicleProtonP1.class, manager -> new RenderProtonP1<>(manager, new ModelProtonP1()));
+		RenderingRegistry.registerEntityRenderingHandler(VehicleProtonP1Tunned.class, manager -> new RenderProtonP1<>(manager, new ModelProtonP1Tunned()));
 	}
 }

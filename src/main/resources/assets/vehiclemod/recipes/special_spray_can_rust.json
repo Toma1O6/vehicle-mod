@@ -6,7 +6,7 @@
         {"item": "minecraft:dirt", "data": 0}
     ],
     "result": {
-        "item": "vehiclemod:special_spray_can_rust",
+        "item": "vehiclemod:rust_spray_can",
         "count": 1
     }
 }

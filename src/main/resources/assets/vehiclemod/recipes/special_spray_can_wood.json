@@ -6,7 +6,7 @@
         {"item": "minecraft:planks", "data": 0}
     ],
     "result": {
-        "item": "vehiclemod:special_spray_can_wood",
+        "item": "vehiclemod:wood_spray_can",
         "count": 1
     }
 }

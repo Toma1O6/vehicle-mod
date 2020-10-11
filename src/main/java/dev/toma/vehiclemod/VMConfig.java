@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
-@Config(modid = VehicleMod.MODID, name = "Toma's Vehicle Mod Config")
+@Config(modid = VehicleMod.MODID, name = "Vehicle Mod Config")
 public class VMConfig {
 
 	@Name("State cell modifier")
@@ -52,6 +52,18 @@ public class VMConfig {
 
 	@Name("Sputnik 3000L Enforcer")
 	public static VehicleStats sputnik3000LEnf = new VehicleStats(200F, 1.58F, 0.0057F, 0.024F, 0.3F, 3.0F, 0.0046F, 50);
+
+	@Name("Sputnik Duster")
+	public static VehicleStats sputnikDuster = new VehicleStats(400F, 1.18F, 0.0028F, 0.014F, 0.25F, 2.5F, 0.01f, 120);
+
+	@Name("Fedoratti NightStalker")
+	public static VehicleStats fedorattiNightStalker = new VehicleStats(150F, 1.89F, 0.0091F, 0.033F, 0.3F, 3.0F, 0.0076F, 70);
+
+	@Name("Proton P1")
+	public static VehicleStats protonP1 = new VehicleStats(150F, 1.89F, 0.0091F, 0.033F, 0.3F, 3.0F, 0.0076F, 70);
+
+	@Name("Proton P1 Tunned")
+	public static VehicleStats protonP1_tunned = new VehicleStats(150F, 1.89F, 0.0091F, 0.033F, 0.3F, 3.0F, 0.0076F, 70);
 
 	@Mod.EventBusSubscriber(modid = VehicleMod.MODID)
 	public static class Event {

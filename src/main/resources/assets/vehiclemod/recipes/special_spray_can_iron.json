@@ -6,7 +6,7 @@
         {"item": "minecraft:iron_block"}
     ],
     "result": {
-        "item": "vehiclemod:special_spray_can_iron",
+        "item": "vehiclemod:iron_spray_can",
         "count": 1
     }
 }

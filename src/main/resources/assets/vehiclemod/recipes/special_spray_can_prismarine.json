@@ -6,7 +6,7 @@
         {"item": "minecraft:prismarine", "data": 0}
     ],
     "result": {
-        "item": "vehiclemod:special_spray_can_prismarine",
+        "item": "vehiclemod:prismarine_spray_can",
         "count": 1
     }
 }

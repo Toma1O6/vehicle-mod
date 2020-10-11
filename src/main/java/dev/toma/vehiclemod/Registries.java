@@ -1,17 +1,22 @@
 package dev.toma.vehiclemod;
 
+import dev.toma.vehiclemod.client.model.DummyBakedModel;
+import dev.toma.vehiclemod.client.render.item.RenderItemSpawner;
 import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
 import dev.toma.vehiclemod.common.items.*;
+import dev.toma.vehiclemod.util.VehicleTexture;
 import dev.toma.vehiclemod.vehicle.entity.*;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.registry.IRegistry;
+import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -33,27 +38,7 @@ public class Registries {
     @ObjectHolder(VehicleMod.MODID)
     public static final class VMItems {
         public static final Item FUEL_CAN = null;
-        public static final ItemVehicleSpawner SPAWN_BEAMERS120 = null;
-        public static final ItemVehicleSpawner SPAWN_FEDORATTIVULCAN = null;
-        public static final ItemVehicleSpawner SPAWN_TRACERT1 = null;
         public static final VMItem EMPTY_SPRAY_CAN = null;
-        public static final ItemSprayCan WHITE_SPRAY_CAN = null;
-        public static final ItemSprayCan ORANGE_SPRAY_CAN = null;
-        public static final ItemSprayCan MAGENTA_SPRAY_CAN = null;
-        public static final ItemSprayCan LIGHT_BLUE_SPRAY_CAN = null;
-        public static final ItemSprayCan YELLOW_SPRAY_CAN = null;
-        public static final ItemSprayCan LIME_SPRAY_CAN = null;
-        public static final ItemSprayCan PINK_SPRAY_CAN = null;
-        public static final ItemSprayCan GRAY_SPRAY_CAN = null;
-        public static final ItemSprayCan SILVER_SPRAY_CAN = null;
-        public static final ItemSprayCan CYAN_SPRAY_CAN = null;
-        public static final ItemSprayCan PURPLE_SPRAY_CAN = null;
-        public static final ItemSprayCan BLUE_SPRAY_CAN = null;
-        public static final ItemSprayCan BROWN_SPRAY_CAN = null;
-        public static final ItemSprayCan GREEN_SPRAY_CAN = null;
-        public static final ItemSprayCan RED_SPRAY_CAN = null;
-        public static final ItemSprayCan BLACK_SPRAY_CAN = null;
-        public static final ItemSpecialSprayCan SPECIAL_SPRAY_CAN = null;
         public static final ItemRepairKit IRON_REPAIR_KIT = null;
         public static final ItemRepairKit GOLD_REPAIR_KIT = null;
         public static final ItemRepairKit DIAMOND_REPAIR_KIT = null;
@@ -107,6 +92,22 @@ public class Registries {
         public static final SoundEvent SPUTNIK3_BRAKE = null;
         public static final SoundEvent SPUTNIK3_GAS = null;
         public static final SoundEvent SPUTNIK3_START = null;
+        public static final SoundEvent SPUTNIK_DUSTER_ACC = null;
+        public static final SoundEvent SPUTNIK_DUSTER_BRAKE = null;
+        public static final SoundEvent SPUTNIK_DUSTER_GAS = null;
+        public static final SoundEvent SPUTNIK_DUSTER_START = null;
+        public static final SoundEvent FEDORATTI_NIGHTSTALKER_ACC = null;
+        public static final SoundEvent FEDORATTI_NIGHTSTALKER_BRAKE = null;
+        public static final SoundEvent FEDORATTI_NIGHTSTALKER_GAS = null;
+        public static final SoundEvent FEDORATTI_NIGHTSTALKER_START = null;
+        public static final SoundEvent PROTON_P1_ACC = null;
+        public static final SoundEvent PROTON_P1_BRAKE = null;
+        public static final SoundEvent PROTON_P1_GAS = null;
+        public static final SoundEvent PROTON_P1_START = null;
+        public static final SoundEvent PROTON_P1_TUNNED_ACC = null;
+        public static final SoundEvent PROTON_P1_TUNNED_BRAKE = null;
+        public static final SoundEvent PROTON_P1_TUNNED_GAS = null;
+        public static final SoundEvent PROTON_P1_TUNNED_START = null;
     }
 
     @EventBusSubscriber
@@ -128,35 +129,28 @@ public class Registries {
             IForgeRegistry<Item> registry = e.getRegistry();
             registry.registerAll(
                     new ItemFuelCan("fuel_can"),
-                    new ItemVehicleSpawner("spawn_beamers120", (w, p) -> w.spawnEntity(new VehicleBeamerS120(w, p))),
-                    new ItemVehicleSpawner("spawn_fedorattivulcan", (w, p) -> w.spawnEntity(new VehicleFedorattiVulcan(w, p))),
-                    new ItemVehicleSpawner("spawn_tracert1", (w, p) -> w.spawnEntity(new VehicleTracerT1(w, p))),
-                    new ItemVehicleSpawner("spawn_sputnik2000l", (w, p) -> w.spawnEntity(new VehicleSputnik2000L(w, p))),
-                    new ItemVehicleSpawner("spawn_beamers320rs", (w, p) -> w.spawnEntity(new VehicleBeamerS320RS(w, p))),
-                    new ItemVehicleSpawner("spawn_mcgmultivan", (w, p) -> w.spawnEntity(new VehicleMCGMultiVan(w, p))),
-                    new ItemVehicleSpawner("spawn_beamerpickup", (w, p) -> w.spawnEntity(new VehicleBeamerPickup(w, p))),
-                    new ItemVehicleSpawner("spawn_sputnik3000l", (world, pos) -> world.spawnEntity(new VehicleSputnik3000L(world, pos))),
-                    new ItemVehicleSpawner("spawn_sputnik3000lenf", (world, pos) -> world.spawnEntity(new VehicleSputnik3000LEnforcer(world, pos))),
+                    new ItemVehicleSpawner("spawn_beamers120", VehicleBeamerS120.class, VehicleBeamerS120::new),
+                    new ItemVehicleSpawner("spawn_fedorattivulcan", VehicleFedorattiVulcan.class, VehicleFedorattiVulcan::new),
+                    new ItemVehicleSpawner("spawn_tracert1", VehicleTracerT1.class, VehicleTracerT1::new),
+                    new ItemVehicleSpawner("spawn_sputnik2000l", VehicleSputnik2000L.class, VehicleSputnik2000L::new),
+                    new ItemVehicleSpawner("spawn_beamers320rs", VehicleBeamerS320RS.class, VehicleBeamerS320RS::new),
+                    new ItemVehicleSpawner("spawn_mcgmultivan", VehicleMCGMultiVan.class, VehicleMCGMultiVan::new),
+                    new ItemVehicleSpawner("spawn_beamerpickup", VehicleBeamerPickup.class, VehicleBeamerPickup::new),
+                    new ItemVehicleSpawner("spawn_sputnik3000l", VehicleSputnik3000L.class, VehicleSputnik3000L::new),
+                    new ItemVehicleSpawner("spawn_sputnik3000lenf", VehicleSputnik3000LEnforcer.class, VehicleSputnik3000LEnforcer::new),
+                    new ItemVehicleSpawner("spawn_sputnikduster", VehicleSputnikDuster.class, VehicleSputnikDuster::new),
+                    new ItemVehicleSpawner("spawn_fedorattinightstalker", VehicleFedorattiNightStalker.class, VehicleFedorattiNightStalker::new),
+                    new ItemVehicleSpawner("spawn_protonp1", VehicleProtonP1.class, VehicleProtonP1::new),
+                    new ItemVehicleSpawner("spawn_protonp1tunned", VehicleProtonP1.class, VehicleProtonP1Tunned::new),
                     new VMItem("empty_spray_can"),
                     new VMItem("bucket_of_liquid_coal"),
                     new VMItem("bucket_of_activated_fuel_substance"),
                     new VMItem("bucket_of_fuel"),
-                    new VMItem("fuel_filter"),
-                    new ItemSpecialSprayCan("birch"),
-                    new ItemSpecialSprayCan("brick"),
-                    new ItemSpecialSprayCan("diorite"),
-                    new ItemSpecialSprayCan("hell"),
-                    new ItemSpecialSprayCan("iron"),
-                    new ItemSpecialSprayCan("lapis"),
-                    new ItemSpecialSprayCan("prismarine"),
-                    new ItemSpecialSprayCan("rust"),
-                    new ItemSpecialSprayCan("wood_dark"),
-                    new ItemSpecialSprayCan("wood_light"),
-                    new ItemSpecialSprayCan("wood")
+                    new VMItem("fuel_filter")
             );
-            for (int i = 0; i < EnumDyeColor.values().length; i++) {
-                EnumDyeColor color = EnumDyeColor.values()[i];
-                registry.register(new ItemSprayCan(color.getName() + "_spray_can", color));
+            for (int i = 0; i < VehicleTexture.values().length; i++) {
+                VehicleTexture texture = VehicleTexture.values()[i];
+                registry.register(new ItemSprayCan(texture.name().toLowerCase() + "_spray_can", texture));
             }
             for (ItemRepairKit.Tier tier : ItemRepairKit.Tier.values()) {
                 registry.register(new ItemRepairKit("repair_kit", tier));
@@ -176,7 +170,11 @@ public class Registries {
                     registerVehicle("mcg_multivan", VehicleMCGMultiVan.class),
                     registerVehicle("beamer_pickup", VehicleBeamerPickup.class),
                     registerVehicle("sputnik_3000l", VehicleSputnik3000L.class),
-                    registerVehicle("sputnik_3000lenf", VehicleSputnik3000LEnforcer.class)
+                    registerVehicle("sputnik_3000lenf", VehicleSputnik3000LEnforcer.class),
+                    registerVehicle("sputnik_duster", VehicleSputnikDuster.class),
+                    registerVehicle("fedoratti_nighstalker", VehicleFedorattiNightStalker.class),
+                    registerVehicle("proton_p1", VehicleProtonP1.class),
+                    registerVehicle("proton_p1_tunned", VehicleProtonP1Tunned.class)
             );
         }
 
@@ -215,7 +213,23 @@ public class Registries {
                     registerSound("sputnik3_acc"),
                     registerSound("sputnik3_brake"),
                     registerSound("sputnik3_gas"),
-                    registerSound("sputnik3_start")
+                    registerSound("sputnik3_start"),
+                    registerSound("sputnik_duster_acc"),
+                    registerSound("sputnik_duster_brake"),
+                    registerSound("sputnik_duster_gas"),
+                    registerSound("sputnik_duster_start"),
+                    registerSound("fedoratti_nightstalker_acc"),
+                    registerSound("fedoratti_nightstalker_brake"),
+                    registerSound("fedoratti_nightstalker_gas"),
+                    registerSound("fedoratti_nightstalker_start"),
+                    registerSound("proton_p1_acc"),
+                    registerSound("proton_p1_brake"),
+                    registerSound("proton_p1_gas"),
+                    registerSound("proton_p1_start"),
+                    registerSound("proton_p1_tunned_acc"),
+                    registerSound("proton_p1_tunned_brake"),
+                    registerSound("proton_p1_tunned_gas"),
+                    registerSound("proton_p1_tunned_start")
             );
         }
 
@@ -249,18 +263,34 @@ public class Registries {
         public static void onModelRegister(ModelRegistryEvent e) {
             final IForgeRegistry<Item> ITEMS = ForgeRegistries.ITEMS;
             final IForgeRegistry<Block> BLOCKS = ForgeRegistries.BLOCKS;
-
+            RenderItemSpawner renderItemSpawner = new RenderItemSpawner();
             for (ResourceLocation rl : ITEMS.getKeys()) {
                 if (rl.getResourceDomain().equalsIgnoreCase(VehicleMod.MODID)) {
-                    registerModel(ITEMS.getValue(rl));
+                    Item item = ITEMS.getValue(rl);
+                    if(item instanceof ItemVehicleSpawner) {
+                        item.setTileEntityItemStackRenderer(renderItemSpawner);
+                    }
+                    registerModel(item);
                 }
             }
-
             for (ResourceLocation rl : BLOCKS.getKeys()) {
                 if (rl.getResourceDomain().equalsIgnoreCase(VehicleMod.MODID)) {
                     registerModel(Item.getItemFromBlock(BLOCKS.getValue(rl)));
                 }
             }
+        }
+
+        @SubscribeEvent
+        public static void bakeModels(ModelBakeEvent event) {
+            IRegistry<ModelResourceLocation, IBakedModel> modelRegistry = event.getModelRegistry();
+            DummyBakedModel bakedModelInstance = new DummyBakedModel();
+            ForgeRegistries.ITEMS.getValuesCollection().stream()
+                    .filter(it -> it.getRegistryName().getResourceDomain().equals(VehicleMod.MODID) && it instanceof ItemVehicleSpawner)
+                    .forEach(it -> modelRegistry.putObject(getModelResourceLocation(it), bakedModelInstance));
+        }
+
+        private static ModelResourceLocation getModelResourceLocation(Item item) {
+            return new ModelResourceLocation(item.getRegistryName(), "inventory");
         }
 
         private static void registerModel(Item item) {

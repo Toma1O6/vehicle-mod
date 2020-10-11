@@ -1,23 +1,21 @@
 package dev.toma.vehiclemod.common.items;
 
 import dev.toma.vehiclemod.Registries;
+import dev.toma.vehiclemod.util.VehicleTexture;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class ItemSprayCan extends VMItem {
 
-    private EnumDyeColor colorVar;
+    private final VehicleTexture texture;
 
-    public ItemSprayCan(String name, EnumDyeColor color) {
+    public ItemSprayCan(String name, VehicleTexture texture) {
         super(name);
         this.setMaxStackSize(1);
         setMaxDamage(3);
-        this.colorVar = color;
+        this.texture = texture;
     }
 
     public final void applyOnVehicle(EntityVehicle vehicle, World world, EntityPlayer player) {
@@ -33,6 +31,6 @@ public class ItemSprayCan extends VMItem {
     }
 
     public void applyColor(EntityVehicle vehicle, ItemStack stack, EntityPlayer player) {
-        vehicle.setVariant(this.colorVar.ordinal());
+        vehicle.setTexture(this.texture);
     }
 }

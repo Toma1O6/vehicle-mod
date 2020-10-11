@@ -34,11 +34,6 @@ public class VehicleBeamerS320RS extends EntityVehicle {
     }
 
     @Override
-    public String[] getVariants() {
-        return DEF_COLORS;
-    }
-
-    @Override
     public Vector3f[] getPartVecs() {
         return PARTS;
     }

@@ -56,11 +56,6 @@ public class VehicleBeamerS120 extends EntityVehicle {
 	}
 	
 	@Override
-	public String[] getVariants() {
-		return VARIANTS;
-	}
-	
-	@Override
 	public Vector3f[] getPartVecs() {
 		return PARTS;
 	}

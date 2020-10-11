@@ -35,11 +35,6 @@ public class VehicleFedorattiVulcan extends EntityVehicle {
     }
 
     @Override
-    public String[] getVariants() {
-        return DEF_COLORS;
-    }
-
-    @Override
     public Vector3f[] getPartVecs() {
         return VECTOR_3_FS;
     }
