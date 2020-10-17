@@ -4,7 +4,7 @@ import dev.toma.vehiclemod.common.VMTab;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import dev.toma.vehiclemod.network.VMNetworkManager;
-import dev.toma.vehiclemod.proxy.IProxy;
+import dev.toma.vehiclemod.proxy.CommonProxy;
 import dev.toma.vehiclemod.util.GuiHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -28,7 +28,7 @@ public class VehicleMod {
 	@Instance
 	public static VehicleMod instance;
 	@SidedProxy(clientSide = "dev.toma.vehiclemod.proxy.ClientProxy", serverSide = "dev.toma.vehiclemod.proxy.ServerProxy")
-	public static IProxy proxy;
+	public static CommonProxy proxy;
 	public static Logger logger;
 	
 	public static final VMTab TAB = new VMTab();

@@ -1,12 +1,12 @@
 package dev.toma.vehiclemod.proxy;
 
-import dev.toma.vehiclemod.VehicleInputHandler;
-import dev.toma.vehiclemod.vehicle.VMTickableSound;
-import dev.toma.vehiclemod.vehicle.VehicleSounds;
-import dev.toma.vehiclemod.vehicle.entity.*;
-import dev.toma.vehiclemod.vehicle.model.ModelProtonP1;
-import dev.toma.vehiclemod.vehicle.model.ModelProtonP1Tunned;
-import dev.toma.vehiclemod.vehicle.render.*;
+import dev.toma.vehiclemod.client.VehicleInputHandler;
+import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.client.render.entity.*;
+import dev.toma.vehiclemod.common.entity.vehicle.*;
+import dev.toma.vehiclemod.client.VMTickableSound;
+import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1;
+import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1Tunned;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.util.SoundEvent;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-public class ClientProxy implements IProxy {
+public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preInit(FMLPreInitializationEvent e) {
@@ -36,8 +36,8 @@ public class ClientProxy implements IProxy {
 	@Override
 	public void playSoundAt(EntityVehicle v) {
 		SoundHandler handler = Minecraft.getMinecraft().getSoundHandler();
-		VehicleSounds sounds = v.getSounds();
-		SoundEvent event = v.getVehicleSound().event;
+		VehicleSoundPack sounds = v.getSoundPack();
+		SoundEvent event = v.getVehicleSound();
 		if(v.currentSound != null && handler.isSoundPlaying(v.currentSound)) {
 			handler.stopSound(v.currentSound);
 		}

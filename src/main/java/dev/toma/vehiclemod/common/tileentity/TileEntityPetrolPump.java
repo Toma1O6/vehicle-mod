@@ -1,7 +1,7 @@
 package dev.toma.vehiclemod.common.tileentity;
 
 import dev.toma.vehiclemod.Registries;
-import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;

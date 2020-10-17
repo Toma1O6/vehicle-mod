@@ -66,7 +66,7 @@ public class TileEntityFuelMaker extends TileEntity implements IInventory, ITick
                     getStackInSlot(i).shrink(1);
                 }
                 world.playEvent(1035, pos, 0);
-                int amount = ingredient > 1000 ? 1000 : ingredient;
+                int amount = Math.min(ingredient, 1000);
                 ingredient -= amount;
                 product += amount / 2;
             }
