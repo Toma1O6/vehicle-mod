@@ -4,66 +4,43 @@ import dev.toma.vehiclemod.common.VMTab;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import dev.toma.vehiclemod.network.VMNetworkManager;
-import dev.toma.vehiclemod.proxy.IProxy;
-import dev.toma.vehiclemod.util.GuiHandler;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.launchwrapper.Launch;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = VehicleMod.MODID, name = "Vehicle mod", version = "1.0.1")
+@Mod(VehicleMod.MODID)
 public class VehicleMod {
 
 	public static final String MODID = "vehiclemod";
-	@Instance
-	public static VehicleMod instance;
-	@SidedProxy(clientSide = "dev.toma.vehiclemod.proxy.ClientProxy", serverSide = "dev.toma.vehiclemod.proxy.ServerProxy")
-	public static IProxy proxy;
-	public static Logger logger;
-	
+	public static Logger logger = LogManager.getLogger(MODID);
 	public static final VMTab TAB = new VMTab();
-	
-	@EventHandler
-	public static void preInit(FMLPreInitializationEvent e) {
-		logger = e.getModLog();
-		VMNetworkManager.init();
-		proxy.preInit(e);
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+
+	public VehicleMod() {
+
 	}
-	
-	@EventHandler
-	public static void init(FMLInitializationEvent e) {
+
+	void setupClient() {
+		//NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+	}
+
+	void setupCommon() {
+		VMNetworkManager.init();
 		GameRegistry.registerTileEntity(TileEntityPetrolPump.class, getResource("petrol_pump"));
 		GameRegistry.registerTileEntity(TileEntityFuelMaker.class, getResource("fuel_maker"));
-		proxy.init(e);
 	}
 	
-	@EventHandler
-	public static void postInit(FMLPostInitializationEvent e) {
-		proxy.postInit(e);
-	}
-	
-	public static void registerItemBlock(Block block) {
-		ItemBlock ib = new ItemBlock(block);
+	public static void registerBlockItem(Block block) {
+		BlockItem ib = new BlockItem(block, new Item.Properties().group(TAB));
 		ib.setRegistryName(block.getRegistryName());
 		Registries.Registry.ITEM_BLOCKS.add(ib);
 	}
 
 	public static ResourceLocation getResource(String path) {
 		return new ResourceLocation(MODID, path);
-	}
-	
-	public static boolean isDevEnvironment() {
-		return (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
 	}
 }

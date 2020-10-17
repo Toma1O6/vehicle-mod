@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
@@ -113,7 +114,7 @@ public class Registries {
     @EventBusSubscriber
     public static class Registry {
 
-        public static ArrayList<ItemBlock> ITEM_BLOCKS = new ArrayList<>();
+        public static ArrayList<BlockItem> ITEM_BLOCKS = new ArrayList<>();
         static int id = -1;
 
         @SubscribeEvent

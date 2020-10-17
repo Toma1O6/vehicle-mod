@@ -11,6 +11,6 @@ public class BlockBasic extends Block {
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		setCreativeTab(VehicleMod.TAB);
-		VehicleMod.registerItemBlock(this);
+		VehicleMod.registerBlockItem(this);
 	}
 }
