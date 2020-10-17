@@ -3,25 +3,24 @@ package dev.toma.vehiclemod;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.SPacketInput;
 import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
+import net.minecraft.client.GameSettings;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.GameSettings;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
-@SideOnly(Side.CLIENT)
+@Mod.EventBusSubscriber(modid = VehicleMod.MODID, value = Dist.CLIENT)
 public class VehicleInputHandler {
 	
 	@SubscribeEvent
-	public void onClientTick(TickEvent.ClientTickEvent e) {
-		EntityPlayer player = Minecraft.getMinecraft().player;
+	public static void onClientTick(TickEvent.ClientTickEvent e) {
+		PlayerEntity player = Minecraft.getInstance().player;
 		if(player != null) {
-			GameSettings gs = Minecraft.getMinecraft().gameSettings;
-			if(e.phase == Phase.END) {
-				if(player.isRiding() && player.getRidingEntity() instanceof EntityVehicle) {
+			GameSettings gs = Minecraft.getInstance().gameSettings;
+			if(e.phase == TickEvent.Phase.END) {
+				if(player.getRidingEntity() instanceof EntityVehicle) {
 
 					((EntityVehicle)player.getRidingEntity()).updateInput(gs.keyBindForward.isKeyDown(), gs.keyBindBack.isKeyDown(),
 							gs.keyBindRight.isKeyDown(), gs.keyBindLeft.isKeyDown(), player);
