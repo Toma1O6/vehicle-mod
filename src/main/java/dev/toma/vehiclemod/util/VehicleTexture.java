@@ -36,7 +36,7 @@ public enum VehicleTexture {
     final ResourceLocation location;
 
     VehicleTexture() {
-        this.location = new ResourceLocation(VehicleMod.MODID, "textures/vehicle/" + name().toLowerCase() + ".png");
+        this.location = new ResourceLocation(VehicleMod.MODID, "textures/entity/" + name().toLowerCase() + ".png");
     }
 
     public ResourceLocation getResource() {

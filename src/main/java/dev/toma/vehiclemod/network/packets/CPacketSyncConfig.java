@@ -1,8 +1,8 @@
 package dev.toma.vehiclemod.network.packets;
 
-import dev.toma.vehiclemod.VMConfig;
+import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.VehicleMod;
-import dev.toma.vehiclemod.vehicle.VehicleStats;
+import dev.toma.vehiclemod.config.VehicleStats;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

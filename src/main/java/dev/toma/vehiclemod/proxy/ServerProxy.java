@@ -1,11 +1,11 @@
 package dev.toma.vehiclemod.proxy;
 
-import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-public class ServerProxy implements IProxy {
+public class ServerProxy extends CommonProxy {
 	
 	@Override
 	public void preInit(FMLPreInitializationEvent e) {}

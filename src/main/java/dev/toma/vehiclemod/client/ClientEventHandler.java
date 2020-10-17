@@ -1,11 +1,10 @@
 package dev.toma.vehiclemod.client;
 
-import dev.toma.vehiclemod.VMConfig;
+import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.util.DevUtil;
-import dev.toma.vehiclemod.vehicle.SpeedDisplayUnit;
-import dev.toma.vehiclemod.vehicle.VehicleStats;
-import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
+import dev.toma.vehiclemod.config.VehicleStats;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -25,7 +24,7 @@ import org.lwjgl.opengl.GL11;
 @EventBusSubscriber(Side.CLIENT)
 public class ClientEventHandler {
 
-	private static final ResourceLocation VEHICLE_HUD = new ResourceLocation(VehicleMod.MODID + ":textures/vehicle/vehicle_hud.png");
+	private static final ResourceLocation VEHICLE_HUD = new ResourceLocation(VehicleMod.MODID + ":textures/entity/vehicle_hud.png");
 
 	@SubscribeEvent
 	public static void setupCamera(EntityViewRenderEvent.CameraSetup event) {

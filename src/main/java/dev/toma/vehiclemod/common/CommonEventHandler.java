@@ -1,6 +1,6 @@
 package dev.toma.vehiclemod.common;
 
-import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;

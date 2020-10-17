@@ -4,9 +4,9 @@ import dev.toma.vehiclemod.client.model.DummyBakedModel;
 import dev.toma.vehiclemod.client.render.item.RenderItemSpawner;
 import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
+import dev.toma.vehiclemod.common.entity.vehicle.*;
 import dev.toma.vehiclemod.common.items.*;
 import dev.toma.vehiclemod.util.VehicleTexture;
-import dev.toma.vehiclemod.vehicle.entity.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -56,59 +56,6 @@ public class Registries {
     public static final class VMBlocks {
         public static final BlockPetrolPump PETROL_PUMP = null;
         public static final BlockFuelMaker FUEL_MAKER = null;
-    }
-
-    @ObjectHolder(VehicleMod.MODID)
-    public static final class VMSounds {
-        public static final SoundEvent VEHICLE_IDLE = null;
-        public static final SoundEvent BEAMER_ACC = null;
-        public static final SoundEvent BEAMER_BRAKE = null;
-        public static final SoundEvent BEAMER_GAS = null;
-        public static final SoundEvent BEAMER_START = null;
-        public static final SoundEvent TRACER_ACC = null;
-        public static final SoundEvent TRACER_BRAKE = null;
-        public static final SoundEvent TRACER_GAS = null;
-        public static final SoundEvent TRACER_START = null;
-        public static final SoundEvent FEDORATTI_ACC = null;
-        public static final SoundEvent FEDORATTI_BRAKE = null;
-        public static final SoundEvent FEDORATTI_GAS = null;
-        public static final SoundEvent FEDORATTI_START = null;
-        public static final SoundEvent SPUTNIK_ACC = null;
-        public static final SoundEvent SPUTNIK_BRAKE = null;
-        public static final SoundEvent SPUTNIK_GAS = null;
-        public static final SoundEvent SPUTNIK_START = null;
-        public static final SoundEvent BEAMERB1_ACC = null;
-        public static final SoundEvent BEAMERB1_BRAKE = null;
-        public static final SoundEvent BEAMERB1_GAS = null;
-        public static final SoundEvent BEAMERB1_START = null;
-        public static final SoundEvent MCGMV_ACC = null;
-        public static final SoundEvent MCGMV_BRAKE = null;
-        public static final SoundEvent MCGMV_GAS = null;
-        public static final SoundEvent MCGMV_START = null;
-        public static final SoundEvent BEAMERPICKUP_ACC = null;
-        public static final SoundEvent BEAMERPICKUP_BRAKE = null;
-        public static final SoundEvent BEAMERPICKUP_GAS = null;
-        public static final SoundEvent BEAMERPICKUP_START = null;
-        public static final SoundEvent SPUTNIK3_ACC = null;
-        public static final SoundEvent SPUTNIK3_BRAKE = null;
-        public static final SoundEvent SPUTNIK3_GAS = null;
-        public static final SoundEvent SPUTNIK3_START = null;
-        public static final SoundEvent SPUTNIK_DUSTER_ACC = null;
-        public static final SoundEvent SPUTNIK_DUSTER_BRAKE = null;
-        public static final SoundEvent SPUTNIK_DUSTER_GAS = null;
-        public static final SoundEvent SPUTNIK_DUSTER_START = null;
-        public static final SoundEvent FEDORATTI_NIGHTSTALKER_ACC = null;
-        public static final SoundEvent FEDORATTI_NIGHTSTALKER_BRAKE = null;
-        public static final SoundEvent FEDORATTI_NIGHTSTALKER_GAS = null;
-        public static final SoundEvent FEDORATTI_NIGHTSTALKER_START = null;
-        public static final SoundEvent PROTON_P1_ACC = null;
-        public static final SoundEvent PROTON_P1_BRAKE = null;
-        public static final SoundEvent PROTON_P1_GAS = null;
-        public static final SoundEvent PROTON_P1_START = null;
-        public static final SoundEvent PROTON_P1_TUNNED_ACC = null;
-        public static final SoundEvent PROTON_P1_TUNNED_BRAKE = null;
-        public static final SoundEvent PROTON_P1_TUNNED_GAS = null;
-        public static final SoundEvent PROTON_P1_TUNNED_START = null;
     }
 
     @EventBusSubscriber

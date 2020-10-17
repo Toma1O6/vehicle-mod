@@ -1,6 +1,6 @@
 package dev.toma.vehiclemod.common.items;
 
-import dev.toma.vehiclemod.vehicle.entity.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
