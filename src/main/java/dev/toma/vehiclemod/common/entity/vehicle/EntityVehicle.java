@@ -187,9 +187,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         if (currentSpeed != 0) {
             rotationYaw += currentSpeed > 0 ? turnModifier : -turnModifier;
         }
-        if (!onGround) {
-            motionY -= 0.1d;
-        }
     }
 
     public void checkState() {
@@ -211,6 +208,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     @Override
     public void onUpdate() {
         updateVehicle();
+        if (!onGround) {
+            motionY -= 0.1d;
+        }
         super.onUpdate();
         distanceTraveled += Math.sqrt(motionX * motionX + motionZ * motionZ) / 1000.0D;
         if(world.isRemote && prevState != currentState) {
@@ -334,7 +334,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     @Override
     protected void addPassenger(Entity passenger) {
-        if(this.getPassengers().isEmpty() && !isStarted && hasFuel()) {
+        if(this.getPassengers().isEmpty() && !isStarted && hasFuel() && isFunctional()) {
             world.playSound(null, posX, posY, posZ, this.soundPack.start(), SoundCategory.MASTER, 1.0F, 1.0F);
             isStarted = true;
         }
@@ -348,6 +348,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             this.isStarted = false;
         }
     }
+
+    @Override
+    protected void entityInit() {}
 
     @Override
     public void updatePassenger(Entity passenger) {

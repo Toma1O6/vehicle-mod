@@ -2,14 +2,18 @@ package dev.toma.vehiclemod;
 
 import dev.toma.vehiclemod.common.VMTab;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
+import dev.toma.vehiclemod.common.capability.chunks.ChunkData;
+import dev.toma.vehiclemod.common.capability.chunks.ChunkDataFactory;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.proxy.CommonProxy;
+import dev.toma.vehiclemod.util.DummyStorage;
 import dev.toma.vehiclemod.util.GuiHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -39,6 +43,7 @@ public class VehicleMod {
 		VMNetworkManager.init();
 		proxy.preInit(e);
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+		CapabilityManager.INSTANCE.register(ChunkData.class, new DummyStorage<>(), ChunkDataFactory::new);
 	}
 	
 	@EventHandler

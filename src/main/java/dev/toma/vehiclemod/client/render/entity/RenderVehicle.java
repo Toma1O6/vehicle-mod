@@ -9,7 +9,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -17,10 +17,10 @@ import net.minecraft.util.math.RayTraceResult;
 
 import java.text.DecimalFormat;
 
-public abstract class RenderVehicle<E extends EntityVehicle> extends RenderLivingBase<E> {
+public abstract class RenderVehicle<E extends EntityVehicle> extends Render<E> {
 	
 	public RenderVehicle(RenderManager manager) {
-		super(manager, null, 0.0F);
+		super(manager);
 	}
 	
 	public abstract ModelVehicle getVehicleModel();
