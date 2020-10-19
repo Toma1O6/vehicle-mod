@@ -13,10 +13,8 @@ import dev.toma.vehiclemod.util.GuiHandler;
 import dev.toma.vehiclemod.util.VehicleTexture;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -33,11 +31,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.vecmath.Vector3f;
-import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("Guava")
-public abstract class EntityVehicle extends EntityLivingBase implements IEntityAdditionalSpawnData {
+public abstract class EntityVehicle extends Entity implements IEntityAdditionalSpawnData {
 
     private static final Predicate<Entity> TARGET = entity -> EntitySelectors.NOT_SPECTATING.apply(entity) && EntitySelectors.IS_ALIVE.apply(entity) && entity.canBeCollidedWith();
 
@@ -76,16 +73,10 @@ public abstract class EntityVehicle extends EntityLivingBase implements IEntityA
     public EntityVehicle(World world, BlockPos pos) {
         this(world);
         setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
-        ignoreFrustumCheck = true;
     }
 
     public static double getMovementSpeed(EntityVehicle vehicle) {
         return Math.sqrt(vehicle.motionX * vehicle.motionX + vehicle.motionZ * vehicle.motionZ);
-    }
-
-    @Override
-    protected void applyEntityAttributes() {
-        super.applyEntityAttributes();
     }
 
     /**
@@ -116,8 +107,10 @@ public abstract class EntityVehicle extends EntityLivingBase implements IEntityA
     }
 
     public void updateVehicle() {
-        updateMotion();
-        if (!this.isBeingRidden() && (!noAccelerationInput() || !noTurningInput() || !hasFuel())) {
+        if(isFunctional()) {
+            updateMotion();
+        }
+        if (!this.isBeingRidden() && (!noAccelerationInput() || !noTurningInput() || !hasFuel() || !isFunctional())) {
             inputForward = false;
             inputBack = false;
             inputRight = false;
@@ -209,12 +202,8 @@ public abstract class EntityVehicle extends EntityLivingBase implements IEntityA
             motionY = -0.15d;
         }
 
-        if (health <= 0) {
-            explode();
-        }
-
-        if (isInLava()) {
-            explode();
+        if (isInLava() && isFunctional()) {
+            health -= 10;
         }
         currentState = this.getVehicleState();
     }
@@ -339,6 +328,10 @@ public abstract class EntityVehicle extends EntityLivingBase implements IEntityA
         this.health = this.health + amount > this.getStats().maxHealth ? this.getStats().maxHealth : this.health + amount;
     }
 
+    public boolean isFunctional() {
+        return health > 0;
+    }
+
     @Override
     protected void addPassenger(Entity passenger) {
         if(this.getPassengers().isEmpty() && !isStarted && hasFuel()) {
@@ -406,8 +399,7 @@ public abstract class EntityVehicle extends EntityLivingBase implements IEntityA
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
+    protected void writeEntityToNBT(NBTTagCompound compound) {
         compound.setFloat("health", this.health);
         compound.setFloat("fuel", this.fuel);
         compound.setFloat("speed", this.currentSpeed);
@@ -428,12 +420,10 @@ public abstract class EntityVehicle extends EntityLivingBase implements IEntityA
             }
             compound.setTag("inventory", invNBT);
         }
-        return compound;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
+    protected void readEntityFromNBT(NBTTagCompound compound) {
         health = compound.getFloat("health");
         fuel = compound.getFloat("fuel");
         currentSpeed = compound.getFloat("speed");
@@ -515,13 +505,6 @@ public abstract class EntityVehicle extends EntityLivingBase implements IEntityA
         this.fuel = Math.max(0.0F, this.fuel - this.getStats().fuelConsumption);
     }
 
-    private void explode() {
-        if (!world.isRemote) {
-            world.createExplosion(this, posX, posY, posZ, 3.0F, false);
-            setDead();
-        }
-    }
-
     private boolean isStandingStill() {
         return noAccelerationInput() && currentSpeed == prevSpeed;
     }
@@ -544,31 +527,6 @@ public abstract class EntityVehicle extends EntityLivingBase implements IEntityA
 
     public boolean canRepaint() {
         return true;
-    }
-
-    @Override
-    public void onKillCommand() {
-        super.onKillCommand();
-    }
-
-    @Override
-    public Iterable<ItemStack> getArmorInventoryList() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public ItemStack getItemStackFromSlot(EntityEquipmentSlot slotIn) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public void setItemStackToSlot(EntityEquipmentSlot slotIn, ItemStack stack) {
-
-    }
-
-    @Override
-    public EnumHandSide getPrimaryHand() {
-        return EnumHandSide.RIGHT;
     }
 
     public static class VehicleContainer extends InventoryBasic {
