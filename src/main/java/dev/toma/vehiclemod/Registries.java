@@ -2,6 +2,7 @@ package dev.toma.vehiclemod;
 
 import dev.toma.vehiclemod.client.model.DummyBakedModel;
 import dev.toma.vehiclemod.client.render.item.RenderItemSpawner;
+import dev.toma.vehiclemod.common.blocks.BlockMechanicPackage;
 import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
 import dev.toma.vehiclemod.common.entity.vehicle.*;
@@ -55,20 +56,28 @@ public class Registries {
     public static final class VMBlocks {
         public static final BlockPetrolPump PETROL_PUMP = null;
         public static final BlockFuelMaker FUEL_MAKER = null;
+        public static final BlockMechanicPackage MECHANIC_PACKAGE_BRONZE = null;
+        public static final BlockMechanicPackage MECHANIC_PACKAGE_SILVER = null;
+        public static final BlockMechanicPackage MECHANIC_PACKAGE_GOLDEN = null;
+        public static final BlockMechanicPackage MECHANIC_PACKAGE_PLATINUM = null;
     }
 
     @EventBusSubscriber
     public static class Registry {
 
         public static ArrayList<ItemBlock> ITEM_BLOCKS = new ArrayList<>();
-        static int id = -1;
+        static int id = 0;
 
         @SubscribeEvent
         public static void onBlockRegister(RegistryEvent.Register<Block> e) {
-            e.getRegistry().registerAll(
+            IForgeRegistry<Block> registry = e.getRegistry();
+            registry.registerAll(
                     new BlockPetrolPump("petrol_pump"),
                     new BlockFuelMaker("fuel_maker")
             );
+            for (BlockMechanicPackage.Variant variant : BlockMechanicPackage.Variant.values()) {
+                registry.register(new BlockMechanicPackage(variant));
+            }
         }
 
         @SubscribeEvent
