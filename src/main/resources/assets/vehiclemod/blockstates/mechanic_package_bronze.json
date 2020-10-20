@@ -1,0 +1,7 @@
+{
+  "variants": {
+	"normal": {
+	  "model": "vehiclemod:mechanic_package_bronze"
+	}
+  }
+}

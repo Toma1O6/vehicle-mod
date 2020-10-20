@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.util.function.ComparableFunction;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
@@ -31,11 +32,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class DevUtil {
 	
 private static final ModelCreator CREATOR = new ModelCreator();
-	
+
+	public static final Predicate<Material> MATERIAL_VALIDATOR = mat -> mat == Material.GROUND || mat == Material.GRASS || mat == Material.SAND || mat == Material.ROCK;
 	public static ModelCreator creator() {
 		return CREATOR;
 	}

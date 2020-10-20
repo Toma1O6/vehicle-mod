@@ -4,7 +4,9 @@ import dev.toma.vehiclemod.common.VMTab;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.capability.chunks.ChunkData;
 import dev.toma.vehiclemod.common.capability.chunks.ChunkDataFactory;
+import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
+import dev.toma.vehiclemod.common.world.GeneratorMechanicPackage;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.proxy.CommonProxy;
 import dev.toma.vehiclemod.util.DummyStorage;
@@ -25,7 +27,9 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = VehicleMod.MODID, name = "Vehicle mod", version = "1.0.1")
+import java.util.Random;
+
+@Mod(modid = VehicleMod.MODID, name = "Vehicle mod", version = "1.0.2")
 public class VehicleMod {
 
 	public static final String MODID = "vehiclemod";
@@ -34,6 +38,7 @@ public class VehicleMod {
 	@SidedProxy(clientSide = "dev.toma.vehiclemod.proxy.ClientProxy", serverSide = "dev.toma.vehiclemod.proxy.ServerProxy")
 	public static CommonProxy proxy;
 	public static Logger logger;
+	public static final Random random = new Random();
 	
 	public static final VMTab TAB = new VMTab();
 	
@@ -50,6 +55,8 @@ public class VehicleMod {
 	public static void init(FMLInitializationEvent e) {
 		GameRegistry.registerTileEntity(TileEntityPetrolPump.class, getResource("petrol_pump"));
 		GameRegistry.registerTileEntity(TileEntityFuelMaker.class, getResource("fuel_maker"));
+		GameRegistry.registerTileEntity(TileEntityMechanicPackage.class, getResource("mechanic_package"));
+		GameRegistry.registerWorldGenerator(new GeneratorMechanicPackage(), 0);
 		proxy.init(e);
 	}
 	

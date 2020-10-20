@@ -111,6 +111,11 @@ public class Registries {
             for (ItemRepairKit.Tier tier : ItemRepairKit.Tier.values()) {
                 registry.register(new ItemRepairKit("repair_kit", tier));
             }
+            for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
+                for (int i = 1; i < 8; i++) {
+                    registry.register(new ItemVehicleUpgrade(type, i));
+                }
+            }
             ITEM_BLOCKS.forEach(registry::register);
             ITEM_BLOCKS = null;
         }

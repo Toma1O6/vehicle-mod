@@ -2,9 +2,11 @@ package dev.toma.vehiclemod.common.capability.chunks;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.util.VehicleTexture;
 import dev.toma.vehiclemod.util.function.LazyLoad;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
@@ -75,11 +77,13 @@ public class ChunkDataFactory implements ChunkData {
                     chunk.markDirty();
                     if(random.nextFloat() <= 0.005F) {
                         ChunkPos pos = chunk.getPos();
-                        int chunkX = pos.x << 4;
-                        int chunkZ = pos.z << 4;
-                        int x = chunkX + random.nextInt(16);
-                        int z = chunkZ + random.nextInt(16);
+                        int x = (pos.x << 4) + random.nextInt(16);
+                        int z = (pos.z << 4) + random.nextInt(16);
                         int y = world.getHeight(x, z);
+                        BlockPos pos1 = new BlockPos(x, y, z);
+                        if(!DevUtil.MATERIAL_VALIDATOR.test(world.getBlockState(pos1.down()).getMaterial())) {
+                            return;
+                        }
                         List<EntityEntry> list = vehicleList.get();
                         EntityEntry entry = list.get(random.nextInt(list.size()));
                         EntityVehicle vehicle = (EntityVehicle) entry.newInstance(world);
