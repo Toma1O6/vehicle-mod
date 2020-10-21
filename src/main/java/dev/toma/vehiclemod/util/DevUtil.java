@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.util.function.ComparableFunction;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -35,296 +36,89 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class DevUtil {
-	
-private static final ModelCreator CREATOR = new ModelCreator();
 
-	public static final Predicate<Material> MATERIAL_VALIDATOR = mat -> mat == Material.GROUND || mat == Material.GRASS || mat == Material.SAND || mat == Material.ROCK;
-	public static ModelCreator creator() {
-		return CREATOR;
-	}
+    private static final ModelCreator CREATOR = new ModelCreator();
+    public static final Predicate<Material> MATERIAL_VALIDATOR = mat -> mat == Material.GROUND || mat == Material.GRASS || mat == Material.SAND || mat == Material.ROCK;
 
-	public static <T> boolean contains(T t, T[] array, ComparableFunction<T> function) {
-		for(T entry : array) {
-			if(function.compare(t, entry)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public static ModelCreator creator() {
+        return CREATOR;
+    }
 
-	public static <T> boolean contains(T t, Collection<T> collection, ComparableFunction<T> function) {
-		for(T entry : collection) {
-			if(function.compare(t, entry)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static boolean isDev() {
-		return (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
-	}
+    public static <T> boolean contains(T t, T[] array, ComparableFunction<T> function) {
+        for (T entry : array) {
+            if (function.compare(t, entry)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public static void drawImage2D(Minecraft mc, ResourceLocation location, int x, int y, int width, int height, double uStart, double vStart, double uEnd, double vEnd) {
-		mc.getTextureManager().bindTexture(location);
-		GlStateManager.color(1f, 1f, 1f);
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuffer();
-		bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-		bufferBuilder.pos(x, y + height, 0).tex(uStart, vEnd).endVertex();
-		bufferBuilder.pos(x + width, y + height, 0).tex(uEnd, vEnd).endVertex();
-		bufferBuilder.pos(x + width, y, 0).tex(uEnd, vStart).endVertex();
-		bufferBuilder.pos(x, y, 0).tex(uStart, vStart).endVertex();
-		tessellator.draw();
-	}
+    public static <T> boolean contains(T t, Collection<T> collection, ComparableFunction<T> function) {
+        for (T entry : collection) {
+            if (function.compare(t, entry)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public static void drawImage2D(Minecraft mc, ResourceLocation location, int x, int y, int width, int height) {
-		drawImage2D(mc, location, x, y, width, height, 0, 0, 1, 1);
-	}
+    public static boolean isDev() {
+        return (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+    }
 
-	public static void drawImage2D(Minecraft mc, ResourceLocation location) {
-		ScaledResolution resolution = new ScaledResolution(mc);
-		drawImage2D(mc, location, 0, 0, resolution.getScaledWidth(), resolution.getScaledHeight());
-	}
-	
-	public static final class ModelCreator {
-		
-		public void createAllFiles() {
-			this.createBlockFiles();
-			this.createItemFiles();
-		}
+    public static void drawImage2D(Minecraft mc, ResourceLocation location, int x, int y, int width, int height, double uStart, double vStart, double uEnd, double vEnd) {
+        mc.getTextureManager().bindTexture(location);
+        GlStateManager.color(1f, 1f, 1f);
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferBuilder = tessellator.getBuffer();
+        bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+        bufferBuilder.pos(x, y + height, 0).tex(uStart, vEnd).endVertex();
+        bufferBuilder.pos(x + width, y + height, 0).tex(uEnd, vEnd).endVertex();
+        bufferBuilder.pos(x + width, y, 0).tex(uEnd, vStart).endVertex();
+        bufferBuilder.pos(x, y, 0).tex(uStart, vStart).endVertex();
+        tessellator.draw();
+    }
 
-		public void createBlockFiles() {
-			ForgeRegistries.BLOCKS.getValuesCollection().stream()
-					.filter(b -> b.getRegistryName().getResourceDomain().equals(VehicleMod.MODID))
-					.forEach(this::createBlockFiles);
-		}
+    public static void drawImage2D(Minecraft mc, ResourceLocation location, int x, int y, int width, int height) {
+        drawImage2D(mc, location, x, y, width, height, 0, 0, 1, 1);
+    }
 
-		public void createItemFiles() {
-			ForgeRegistries.ITEMS.getValuesCollection().stream()
-					.filter(i -> i.getRegistryName().getResourceDomain().equals(VehicleMod.MODID))
-					.forEach(this::createItemModelFile);
-		}
-		
-		public void createBlockFiles(Block block) {
-			if(!block.getBlockState().getProperties().isEmpty()) {
-				createPropertyBlockStateFile(block);
-			}
-			createBlockstateFileNormal(block);
-		}
-		
-		public void createBlockstateFileNormal(Block block) {
-			String name = block.getRegistryName().getResourcePath();
-			File file = new File("D:/mcmods/1.12.2/vehicle-mod/src/main/resources/assets/vehiclemod/blockstates/" + name + ".json");
-			if(!file.exists()) {
-				try {
-					file.createNewFile();
-					FileWriter writer = new FileWriter(file);
-					String json = 
-					"{\n"+
-					"\t\"variants\": {\n"+
-					"\t\t\"normal\": {\n"+
-					"\t\t\t\"model\": \""+block.getRegistryName().toString()+"\"\n"+
-					"\t\t}\n"+
-					"\t}\n"+
-					"}";
-					writer.write(json);
-					writer.close();
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		public void createPropertyBlockStateFile(Block block) {
-			String name = block.getRegistryName().getResourcePath();
-			File file = new File("D:/mcmods/1.12.2/vehicle-mod/src/main/resources/assets/vehiclemod/blockstates/" + name + ".json");
-			if(!file.exists()) {
-				try {
-					file.createNewFile();
-					StringBuilder sb = new StringBuilder();
-					FileWriter writer = new FileWriter(file);
-					sb.append("{\n");
-					sb.append("\t\"variants\": {\n");
-					Iterator<IBlockState> stateIterator = block.getBlockState().getValidStates().iterator();
-					while(stateIterator.hasNext()) {
-						IBlockState state = stateIterator.next();
-						boolean flag0 = stateIterator.hasNext();
-						sb.append("\t\t\"");
-						Collection<IProperty<?>> properties = state.getPropertyKeys();
-						boolean hasDirectionProp = contains(PropertyDirection.class, properties);
-						boolean hasIntegerProp = contains(PropertyInteger.class, properties);
-						int value = 0;
-						EnumFacing facing = null;
-						String[] names = new String[properties.size()];
-						String[] values = new String[properties.size()];
-						IProperty<?>[] propArray = properties.toArray(new IProperty[0]);
-						for(int i = 0; i < properties.size(); i++) {
-							IProperty<?> p = propArray[i];
-							names[i] = p.getName();
-							values[i] = state.getProperties().get(p).toString();
-							if(hasDirectionProp && p instanceof PropertyDirection) {
-								facing = EnumFacing.valueOf(state.getProperties().get(p).toString().toUpperCase());
-							}
-							if(hasIntegerProp && p instanceof PropertyInteger) {
-								value = (Integer)state.getProperties().get(p);
-							}
-						}
-						for(int i = 0; i < properties.size(); i++) {
-							boolean flag1 = i == properties.size()-1;
-							sb.append(names[i]).append("=").append(values[i]).append(flag1 ? ("\": {" + getModel(block, values[i], hasIntegerProp, value) +
-									(hasDirectionProp && facing != null ? ",\"y\": " + facing.getOpposite().getHorizontalAngle() + "}" + (flag0 ? "," : "") + "\n" : "}" + (flag0 ? "," : "") + "\n")) : ",");
-						}
-					}
-					sb.append("\t}\n");
-					sb.append("}");
-					writer.write(sb.toString());
-					writer.close();
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		private String getModel(Block block, String additional, boolean integerProperty, int value) {
-			String integerName = "_stage_";
-			String boolName = "_on";
-			if(block.getClass().isAnnotationPresent(JsonGenerator.class)) {
-				JsonGenerator json = block.getClass().getAnnotation(JsonGenerator.class);
-				integerName = json.intName();
-				boolName = json.boolName();
-			}
-			Collection<IProperty<?>> props = block.getBlockState().getProperties();
-			boolean bool = contains(PropertyBool.class, props);
-			StringBuilder sb = new StringBuilder();
-			sb.append("\"model\": \"").append(block.getRegistryName().toString());
-			if(integerProperty) {
-				sb.append(integerName).append(value);
-			}
-			if(bool) {
-				boolean flag = additional != null && additional.contains("true");
-				sb.append(flag?boolName:"");
-			}
-			sb.append("\"");
-			return sb.toString();
-		}
-		
-		private static boolean contains(Class<? extends IProperty<?>> cls, Collection<IProperty<?>> collection) {
-			for(IProperty<?> prop : collection) {
-				if(prop.getClass().equals(cls)) {
-					return true;
-				}
-			}
-			return false;
-		}
-		
-		private static <E extends IProperty<?>> E getProperty(Class<E> target, Collection<IProperty<?>> collection) {
-			for(IProperty<?> p : collection) {
-				if(p.getClass().equals(target)) {
-					return (E)p;
-				}
-			}
-			return null;
-		}
-		
-		@Deprecated
-		public static void createJson(Block block) {
-			File json = new File("D:/mcmods/1.12.2/vehicle-mod/src/main/resources/assets/vehiclemod/blockstates/"+block.getRegistryName().getResourcePath()+".json");
-			if (json.exists()) return;
-				try {
-					json.createNewFile();
-					if (!json.canWrite()) json.setWritable(true);
-					Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-					JsonObject obj = new JsonObject();
-					JsonObject element = new JsonObject();
-					Collection<IBlockState> collec = block.getBlockState().getValidStates();
-					for (IBlockState state : collec) {
-						Collection<IProperty<?>> properties = state.getPropertyKeys();
-						String[] names = new String[properties.size()], values = new String[properties.size()];
-						for (int i = 0; i < names.length; i++) {
-							IProperty<?> prop = (IProperty<?>) properties.toArray()[i];
-							names[i] = prop.getName();
-							values[i] = state.getProperties().get(prop).toString();
-						}
-						StringBuilder tagBuilder = new StringBuilder();
-						for (int i = 0; i < properties.size(); i++) {
-							if (i == properties.size() - 1) {
-								tagBuilder.append(names[i]).append("=").append(values[i]);
-							} else tagBuilder.append(names[i]).append("=").append(values[i]).append(",");
-						}
+    public static void drawImage2D(Minecraft mc, ResourceLocation location) {
+        ScaledResolution resolution = new ScaledResolution(mc);
+        drawImage2D(mc, location, 0, 0, resolution.getScaledWidth(), resolution.getScaledHeight());
+    }
 
-						element.add(tagBuilder.toString(), new JsonObject());
-					}
-					obj.add("variants", element);
-					String[] jsonText = gson.toJson(obj).split("[{]");
-					for (int i = 0; i < jsonText.length; i++) {
-						if (!jsonText[i].endsWith("}")) jsonText[i] = jsonText[i] += "{";
-					}
-					List<String[]> linesList = new ArrayList<>();
-					for (String line : jsonText) {
-						String[] array = line.split("},");
-						for (int i = 0; i < array.length; i++) {
-							if (i != array.length - 1) array[i] = array[i] += "},";
-						}
-						linesList.add(array);
-					}
-					BufferedWriter writer = new BufferedWriter(new FileWriter(json));
-					for (String[] lines : linesList) {
-						for (String line : lines) {
-							if (line.startsWith("}")) writer.newLine();
-							writer.write(line);
-							writer.newLine();
-						}
-					}
-					writer.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		private void addPropertyOption(StringBuilder sb) {
-			
-		}
-		
-		public void createItemBlockFile(Block block) {
-			String name = block.getRegistryName().getResourcePath();
-			File file = new File("D:/mcmods/1.12.2/vehicle-mod/src/main/resources/assets/vehiclemod/models/item/" + name + ".json");
-			if(!file.exists()) {
-				try {
-					file.createNewFile();
-					FileWriter writer = new FileWriter(file);
-					String json =
-					"{\n"+
-					"\t\"parent\": \""+VehicleMod.MODID+":block/"+name+"\"\n"+
-					"}";
-					writer.write(json);
-					writer.close();
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+    public static final class ModelCreator {
 
-		public void createItemModelFile(Item item) {
-			String name = item.getRegistryName().getResourcePath();
-			File file = new File("D:/mcmods/1.12.2/vehicle-mod/src/main/resources/assets/vehiclemod/models/item/" + name + ".json");
-			if(file.exists()) {
-				return;
-			}
-			try {
-				file.createNewFile();
-				FileWriter writer = new FileWriter(file);
-				String sb = "{\n" +
-						"\t\"parent\": \"item/generated\",\n" +
-						"\t\"textures\": {\n" +
-						"\t\t\"layer0\": \"vehiclemod:items/" + name + "\"\n" +
-						"\t}\n" +
-						"}";
-				writer.write(sb);
-				writer.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
+    	final File itemModelFolder = new File("D:/mcmods/1.12.2/vehicle-mod/src/main/resources/assets/vehiclemod/models/item");
+        final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        public void createPartFiles() {
+            ForgeRegistries.ITEMS.getValuesCollection()
+                    .stream()
+                    .filter(i -> i instanceof ItemVehicleUpgrade)
+                    .map(i -> (ItemVehicleUpgrade) i)
+                    .forEach(this::create);
+        }
+
+        void create(ItemVehicleUpgrade upgrade) {
+            try {
+                ResourceLocation name = upgrade.getRegistryName();
+                File file = new File(itemModelFolder, name.getResourcePath() + ".json");
+                if (!file.exists() && file.createNewFile()) {
+                    JsonObject main = new JsonObject();
+                    main.addProperty("parent", "item/generated");
+                    JsonObject texture = new JsonObject();
+                    texture.addProperty("layer0", "vehiclemod:items/" + name.getResourcePath());
+                    main.add("textures", texture);
+                    FileWriter writer = new FileWriter(file);
+                    writer.write(gson.toJson(main));
+                    writer.close();
+                    VehicleMod.logger.info("Created item model file for {}", name);
+                }
+            } catch (Exception e) {
+                VehicleMod.logger.fatal("Error creating item model file for {}", upgrade.getRegistryName());
+            }
+        }
+    }
 }
