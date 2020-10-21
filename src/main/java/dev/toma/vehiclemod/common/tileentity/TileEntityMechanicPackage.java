@@ -48,10 +48,8 @@ public class TileEntityMechanicPackage extends TileEntityInventory {
                         setInventorySlotContents(i, new ItemStack(upgrade));
                         break;
                     }
+                    f -= f1;
                 }
-            }
-            if(isEmpty()) {
-                VehicleMod.logger.fatal("Failed to fill inventory");
             }
         }
     }
