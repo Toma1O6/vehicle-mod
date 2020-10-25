@@ -42,7 +42,7 @@ public class VehicleBeamerS320RS extends EntityVehicle {
     }
 
     @Override
-    public VehicleStats getStats() {
+    public VehicleStats getConfigStats() {
         return VMConfig.beamers320rs;
     }
 

@@ -47,7 +47,7 @@ public class VehicleSputnik2000L extends EntityVehicle {
     }
 
     @Override
-    public VehicleStats getStats() {
+    public VehicleStats getConfigStats() {
         return VMConfig.sputnik2000L;
     }
 

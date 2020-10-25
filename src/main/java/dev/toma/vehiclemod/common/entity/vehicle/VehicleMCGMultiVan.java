@@ -43,7 +43,7 @@ public class VehicleMCGMultiVan extends EntityVehicle {
     }
 
     @Override
-    public VehicleStats getStats() {
+    public VehicleStats getConfigStats() {
         return VMConfig.mcgMultiVan;
     }
 

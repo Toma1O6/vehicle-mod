@@ -43,7 +43,7 @@ public class VehicleSputnikDuster extends EntityVehicle {
     }
 
     @Override
-    public VehicleStats getStats() {
+    public VehicleStats getConfigStats() {
         return VMConfig.sputnikDuster;
     }
 

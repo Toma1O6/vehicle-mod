@@ -75,7 +75,7 @@ public class ChunkDataFactory implements ChunkData {
                 if (!data.isMarked() && !world.isRemote) {
                     data.mark();
                     chunk.markDirty();
-                    if(random.nextFloat() <= 0.005F) {
+                    if(random.nextFloat() <= 0.003F) {
                         ChunkPos pos = chunk.getPos();
                         int x = (pos.x << 4) + random.nextInt(16);
                         int z = (pos.z << 4) + random.nextInt(16);
@@ -89,7 +89,7 @@ public class ChunkDataFactory implements ChunkData {
                         EntityVehicle vehicle = (EntityVehicle) entry.newInstance(world);
                         vehicle.setPosition(x + 0.5, y + 1.0, z + 0.5);
                         vehicle.fuel = 0.0F;
-                        vehicle.health = 0.0F;
+                        vehicle.health = vehicle.getActualStats().maxHealth * 0.03F;
                         vehicle.setTexture(VehicleTexture.RUST);
                         vehicle.rotationYaw = random.nextInt(180) - random.nextInt(180);
                         world.spawnEntity(vehicle);

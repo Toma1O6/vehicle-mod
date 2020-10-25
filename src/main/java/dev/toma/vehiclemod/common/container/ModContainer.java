@@ -9,12 +9,16 @@ import net.minecraft.item.ItemStack;
 
 import java.util.function.Predicate;
 
-public class ModContainer extends Container {
+public class ModContainer<I extends IInventory> extends Container {
 
-    public IInventory inventory;
+    public I inventory;
 
-    public ModContainer(IInventory inventory) {
+    public ModContainer(I inventory) {
         this.inventory = inventory;
+    }
+
+    public I getIInventory() {
+        return inventory;
     }
 
     public void addDefaultInventory(InventoryPlayer inv, int ys) {

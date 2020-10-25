@@ -6,6 +6,7 @@ import dev.toma.vehiclemod.common.capability.chunks.ChunkData;
 import dev.toma.vehiclemod.common.capability.chunks.ChunkDataFactory;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
+import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
 import dev.toma.vehiclemod.common.world.GeneratorMechanicPackage;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.proxy.CommonProxy;
@@ -56,6 +57,7 @@ public class VehicleMod {
 		GameRegistry.registerTileEntity(TileEntityPetrolPump.class, getResource("petrol_pump"));
 		GameRegistry.registerTileEntity(TileEntityFuelMaker.class, getResource("fuel_maker"));
 		GameRegistry.registerTileEntity(TileEntityMechanicPackage.class, getResource("mechanic_package"));
+		GameRegistry.registerTileEntity(TileEntitySecret.class, getResource("secret"));
 		GameRegistry.registerWorldGenerator(new GeneratorMechanicPackage(), 0);
 		proxy.init(e);
 	}

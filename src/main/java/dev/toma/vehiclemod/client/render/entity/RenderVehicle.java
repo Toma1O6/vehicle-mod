@@ -75,8 +75,8 @@ public abstract class RenderVehicle<E extends EntityVehicle> extends Render<E> {
 		GlStateManager.enableTexture2D();
 		GlStateManager.depthMask(true);
 		renderer.drawString(e.getName(), -i + 5, -38, -1);
-		renderer.drawString("Health: " + (int)((e.health/e.getStats().maxHealth)*100) + " %", -i + 5, -25, -1);
-		renderer.drawString("Fuel: " + (int)(100 * (e.fuel / e.getStats().fuelCapacity)) + " %", -i + 5, -12, -1);
+		renderer.drawString("Health: " + (int)((e.health/e.getActualStats().maxHealth)*100) + " %", -i + 5, -25, -1);
+		renderer.drawString("Fuel: " + (int)(100 * (e.fuel / e.getActualStats().fuelCapacity)) + " %", -i + 5, -12, -1);
 		renderer.drawString("Distance: " + new DecimalFormat("#.#").format(e.getTravelledDistance()) + " km", -i + 5, 1, -1);
 		GlStateManager.enableLighting();
 		GlStateManager.disableBlend();

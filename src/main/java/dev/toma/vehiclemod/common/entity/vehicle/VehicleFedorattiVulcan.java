@@ -48,7 +48,7 @@ public class VehicleFedorattiVulcan extends EntityVehicle {
     }
 
     @Override
-    public VehicleStats getStats() {
+    public VehicleStats getConfigStats() {
         return VMConfig.fedoratti_vulcan;
     }
 

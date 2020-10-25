@@ -29,10 +29,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class DevUtil {
@@ -42,6 +40,31 @@ public class DevUtil {
 
     public static ModelCreator creator() {
         return CREATOR;
+    }
+
+    public static float[] getRGB(int color) {
+        float r = ((color >> 16) & 255) / 255.0F;
+        float g = ((color >>  8) & 255) / 255.0F;
+        float b =  (color        & 255) / 255.0F;
+        return new float[] {r, g, b};
+    }
+
+    public static float[] getRGBA(int color) {
+        float a = ((color >> 24) & 255) / 255.0F;
+        float r = ((color >> 16) & 255) / 255.0F;
+        float g = ((color >>  8) & 255) / 255.0F;
+        float b =  (color        & 255) / 255.0F;
+        return new float[] { r, g, b, a };
+    }
+
+    public static <K, V> V getSafe(Map<K, V> map, K key, V fallback) {
+        V v = map.get(key);
+        return v != null ? v : fallback;
+    }
+
+    public static <T> T make(T t, Consumer<T> consumer) {
+        consumer.accept(t);
+        return t;
     }
 
     public static <T> boolean contains(T t, T[] array, ComparableFunction<T> function) {

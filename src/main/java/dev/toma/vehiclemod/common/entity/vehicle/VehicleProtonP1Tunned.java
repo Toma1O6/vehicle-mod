@@ -33,7 +33,7 @@ public class VehicleProtonP1Tunned extends VehicleProtonP1 {
     }
 
     @Override
-    public VehicleStats getStats() {
+    public VehicleStats getConfigStats() {
         return VMConfig.protonP1_tunned;
     }
 

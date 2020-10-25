@@ -5,7 +5,7 @@ import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 
-public class ContainerPetrolPump extends ModContainer {
+public class ContainerPetrolPump extends ModContainer<TileEntityPetrolPump> {
 
     public ContainerPetrolPump(InventoryPlayer player, TileEntityPetrolPump tileEntityPetrolPump) {
         super(tileEntityPetrolPump);

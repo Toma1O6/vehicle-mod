@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 
-public class ContainerVehicle extends ModContainer {
+public class ContainerVehicle extends ModContainer<EntityVehicle.VehicleContainer> {
 
     private final EntityVehicle vehicle;
 

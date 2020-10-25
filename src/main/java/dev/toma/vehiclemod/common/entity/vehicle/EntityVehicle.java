@@ -25,6 +25,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
@@ -46,6 +47,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     protected VehicleContainer inventory = this.createInvetory();
     protected VehicleSoundPack soundPack;
+    protected VehicleUpgrades upgrades;
 
     private VehicleTexture texture;
     private double distanceTraveled = 0;
@@ -63,8 +65,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         setSize(2f, 1.5f);
         stepHeight = 1f;
         preventEntitySpawning = true;
+        this.upgrades = this.createVehicleUpgrades();
         texture = VehicleTexture.values()[world.rand.nextInt(16)];
-        this.health = this.getStats().maxHealth;
+        this.health = this.upgrades.getActualStats().maxHealth;
         this.setFuel();
         ignoreFrustumCheck = true;
         this.soundPack = createSoundPack();
@@ -79,12 +82,13 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         return Math.sqrt(vehicle.motionX * vehicle.motionX + vehicle.motionZ * vehicle.motionZ);
     }
 
-    /**
-     * 0 = engine, 1 = exhaust
-     **/
+    public VehicleUpgrades createVehicleUpgrades() {
+        return new VehicleUpgrades(this.getConfigStats());
+    }
+
     public abstract Vector3f[] getPartVecs();
 
-    public abstract VehicleStats getStats();
+    public abstract VehicleStats getConfigStats();
 
     public abstract int maximumAmountOfPassengers();
 
@@ -104,6 +108,14 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public boolean hasInventory() {
         return inventory != null;
+    }
+
+    public VehicleUpgrades getUpgrades() {
+        return upgrades;
+    }
+
+    public VehicleStats getActualStats() {
+        return upgrades.getActualStats();
     }
 
     public void updateVehicle() {
@@ -144,7 +156,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public void updateMotion() {
         Vec3d lookVec = this.getLookVec();
-        VehicleStats stats = this.getStats();
+        VehicleStats stats = this.getActualStats();
         float accModifier = this.health / stats.maxHealth < 0.33F ? this.health / stats.maxHealth : 1.0F;
         if (inputForward && !inputBack && (hasFuel() || currentSpeed < 0)) {
             float acceleration = stats.acceleration * accModifier;
@@ -201,6 +213,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
         if (isInLava() && isFunctional()) {
             health -= 10;
+        }
+        if(!world.isRemote && health < 0) {
+            world.createExplosion(null, posX, posY, posZ, 4.0F, false);
+            setDead();
         }
         currentState = this.getVehicleState();
     }
@@ -299,6 +315,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         buf.writeFloat(fuel);
         buf.writeDouble(distanceTraveled);
         buf.writeInt(texture.ordinal());
+        NBTTagCompound data = new NBTTagCompound();
+        this.upgrades.writeToNBT(data);
+        ByteBufUtils.writeTag(buf, data);
     }
 
     @Override
@@ -307,6 +326,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         fuel = buf.readFloat();
         distanceTraveled = buf.readDouble();
         texture = VehicleTexture.values()[buf.readInt()];
+        upgrades.readFromNBT(ByteBufUtils.readTag(buf));
     }
 
     public VehicleSoundPack getSoundPack() {
@@ -319,13 +339,13 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public void refillFuel() {
         fuel += 25f;
-        if (fuel > getStats().fuelCapacity) {
-            fuel = getStats().fuelCapacity;
+        if (fuel > getActualStats().fuelCapacity) {
+            fuel = getActualStats().fuelCapacity;
         }
     }
 
     public void repair(int amount) {
-        this.health = this.health + amount > this.getStats().maxHealth ? this.getStats().maxHealth : this.health + amount;
+        this.health = this.health + amount > this.getActualStats().maxHealth ? this.getActualStats().maxHealth : this.health + amount;
     }
 
     public boolean isFunctional() {
@@ -381,7 +401,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     protected void spawnParticles() {
         if (world.isRemote) {
-            if (health / getStats().maxHealth <= 0.5f) {
+            if (health / getActualStats().maxHealth <= 0.5f) {
                 Vec3d engineVec = (new Vec3d(getPartVecs()[0].x, getPartVecs()[0].y + 0.25d, getPartVecs()[0].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
                 world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, true, posX + engineVec.x, posY + engineVec.y, posZ + engineVec.z, 0d, 0.1d, 0d);
             }
@@ -423,6 +443,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             }
             compound.setTag("inventory", invNBT);
         }
+        upgrades.writeToNBT(compound);
     }
 
     @Override
@@ -441,6 +462,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                 inventory.setInventorySlotContents(index, stack);
             }
         }
+        upgrades.readFromNBT(compound);
     }
 
     @Override
@@ -505,7 +527,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     private void burnFuel() {
-        this.fuel = Math.max(0.0F, this.fuel - this.getStats().fuelConsumption);
+        this.fuel = Math.max(0.0F, this.fuel - this.getActualStats().fuelConsumption);
     }
 
     private boolean isStandingStill() {

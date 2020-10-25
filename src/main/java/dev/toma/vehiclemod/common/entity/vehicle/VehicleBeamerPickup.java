@@ -43,7 +43,7 @@ public class VehicleBeamerPickup extends EntityVehicle {
     }
 
     @Override
-    public VehicleStats getStats() {
+    public VehicleStats getConfigStats() {
         return VMConfig.beamerPickup;
     }
 

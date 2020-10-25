@@ -5,6 +5,7 @@ tile.mechanic_package_bronze.name=Bronze Mechanic Package
 tile.mechanic_package_silver.name=Silver Mechanic Package
 tile.mechanic_package_golden.name=Golden Mechanic Package
 tile.mechanic_package_platinum.name=Platinum Mechanic Package
+tile.secret.name=Secret
 
 item.fuel_can.name=Fuel Can
 item.empty_spray_can.name=Empty Spray Can

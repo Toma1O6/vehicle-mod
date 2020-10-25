@@ -4,6 +4,7 @@ import dev.toma.vehiclemod.client.model.DummyBakedModel;
 import dev.toma.vehiclemod.client.render.item.RenderItemSpawner;
 import dev.toma.vehiclemod.common.blocks.BlockMechanicPackage;
 import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
+import dev.toma.vehiclemod.common.blocks.BlockSecret;
 import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
 import dev.toma.vehiclemod.common.entity.vehicle.*;
 import dev.toma.vehiclemod.common.items.*;
@@ -60,6 +61,7 @@ public class Registries {
         public static final BlockMechanicPackage MECHANIC_PACKAGE_SILVER = null;
         public static final BlockMechanicPackage MECHANIC_PACKAGE_GOLDEN = null;
         public static final BlockMechanicPackage MECHANIC_PACKAGE_PLATINUM = null;
+        public static final BlockSecret SECRET = null;
     }
 
     @EventBusSubscriber
@@ -73,7 +75,8 @@ public class Registries {
             IForgeRegistry<Block> registry = e.getRegistry();
             registry.registerAll(
                     new BlockPetrolPump("petrol_pump"),
-                    new BlockFuelMaker("fuel_maker")
+                    new BlockFuelMaker("fuel_maker"),
+                    new BlockSecret("secret")
             );
             for (BlockMechanicPackage.Variant variant : BlockMechanicPackage.Variant.values()) {
                 registry.register(new BlockMechanicPackage(variant));
@@ -190,7 +193,8 @@ public class Registries {
                     registerSound("proton_p1_tunned_acc"),
                     registerSound("proton_p1_tunned_brake"),
                     registerSound("proton_p1_tunned_gas"),
-                    registerSound("proton_p1_tunned_start")
+                    registerSound("proton_p1_tunned_start"),
+                    registerSound("secret")
             );
         }
 

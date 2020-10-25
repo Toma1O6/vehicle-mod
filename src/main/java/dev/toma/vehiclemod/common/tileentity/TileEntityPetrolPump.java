@@ -88,7 +88,7 @@ public class TileEntityPetrolPump extends TileEntityInventory implements ITickab
         }
         if(this.pairedVehicle != null) {
             if(canReach()) {
-                if(transfer && pairedVehicle.fuel < pairedVehicle.getStats().fuelCapacity && storedAmount > 0.0F) {
+                if(transfer && pairedVehicle.fuel < pairedVehicle.getActualStats().fuelCapacity && storedAmount > 0.0F) {
                     pairedVehicle.fuel += 0.1F;
                     storedAmount -= 0.1F;
                 } else transfer = false;

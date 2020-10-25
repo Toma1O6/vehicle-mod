@@ -1,4 +1,5 @@
 {
+    "secret": {"category": "master", "sounds": [{"name": "vehiclemod:secret", "stream": "true"}]},
     "vehicle_idle": {"category": "master", "sounds": [{"name": "vehiclemod:vehicle_idle", "stream": "true"}]},
     "beamer_acc": {"category":  "master", "sounds": [{"name": "vehiclemod:beamer_s120_acc", "stream": "true"}]},
     "beamer_brake": {"category":  "master", "sounds": [{"name": "vehiclemod:beamer_s120_brk", "stream": "true"}]},

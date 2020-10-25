@@ -18,7 +18,7 @@ public class VehicleSputnik3000LEnforcer extends VehicleSputnik3000L {
     }
 
     @Override
-    public VehicleStats getStats() {
+    public VehicleStats getConfigStats() {
         return VMConfig.sputnik3000LEnf;
     }
 

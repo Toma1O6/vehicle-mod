@@ -1,21 +1,25 @@
 package dev.toma.vehiclemod.client;
 
-import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.VehicleMod;
-import dev.toma.vehiclemod.util.DevUtil;
-import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
+import dev.toma.vehiclemod.config.VMConfig;
+import dev.toma.vehiclemod.config.VehicleStats;
+import dev.toma.vehiclemod.network.VMNetworkManager;
+import dev.toma.vehiclemod.network.packets.SPacketOpenVehicleComponentGUI;
+import dev.toma.vehiclemod.util.DevUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -27,11 +31,28 @@ public class ClientEventHandler {
 	private static final ResourceLocation VEHICLE_HUD = new ResourceLocation(VehicleMod.MODID + ":textures/entity/vehicle_hud.png");
 
 	@SubscribeEvent
+	public static void openGUI(GuiOpenEvent event) {
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		if(event.getGui() instanceof GuiInventory && player.getRidingEntity() instanceof EntityVehicle) {
+			event.setCanceled(true);
+			VMNetworkManager.instance().sendToServer(new SPacketOpenVehicleComponentGUI());
+		}
+	}
+
+	@SubscribeEvent
+	public static void stitchTextures(TextureStitchEvent.Pre event) {
+		TextureMap map = event.getMap();
+		for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
+			map.registerSprite(VehicleMod.getResource("items/" + type.name().toLowerCase()));
+		}
+	}
+
+	@SubscribeEvent
 	public static void setupCamera(EntityViewRenderEvent.CameraSetup event) {
 		if(Minecraft.getMinecraft().gameSettings.thirdPersonView != 1) return;
 		if(event.getEntity().isRiding() && event.getEntity().getRidingEntity() instanceof EntityVehicle) {
 			EntityVehicle vehicle = (EntityVehicle) event.getEntity().getRidingEntity();
-			VehicleStats.Vector3i vector3i = vehicle.getStats().cameraOff;
+			VehicleStats.Vector3i vector3i = vehicle.getConfigStats().cameraOff;
 			GlStateManager.translate(vector3i.getX(), vector3i.getY(), vector3i.getZ());
 		}
 	}
@@ -44,9 +65,9 @@ public class ClientEventHandler {
 			EntityPlayer player = mc.player;
 			if(player.isRiding() && player.getRidingEntity() instanceof EntityVehicle) {
 				EntityVehicle car = (EntityVehicle)player.getRidingEntity();
-				float fuel = car.fuel / (float)car.getStats().fuelCapacity;
+				float fuel = car.fuel / (float)car.getActualStats().fuelCapacity;
 				boolean lowFuel = fuel <= 0.17F;
-				float health = car.health / car.getStats().maxHealth;
+				float health = car.health / car.getActualStats().maxHealth;
 				boolean lowHealth = health <= 0.5;
 				double speed = Math.sqrt(car.motionX*car.motionX + car.motionZ*car.motionZ) * 40;
 				SpeedDisplayUnit unit = VMConfig.speedUnit;
