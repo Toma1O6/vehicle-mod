@@ -100,7 +100,7 @@ public class Registries {
                     new ItemVehicleSpawner("spawn_sputnikduster", VehicleSputnikDuster.class, VehicleSputnikDuster::new),
                     new ItemVehicleSpawner("spawn_fedorattinightstalker", VehicleFedorattiNightStalker.class, VehicleFedorattiNightStalker::new),
                     new ItemVehicleSpawner("spawn_protonp1", VehicleProtonP1.class, VehicleProtonP1::new),
-                    new ItemVehicleSpawner("spawn_protonp1tunned", VehicleProtonP1.class, VehicleProtonP1Tunned::new),
+                    new ItemVehicleSpawner("spawn_protonp1tunned", VehicleProtonP1Tunned.class, VehicleProtonP1Tunned::new),
                     new VMItem("empty_spray_can"),
                     new VMItem("bucket_of_liquid_coal"),
                     new VMItem("bucket_of_activated_fuel_substance"),

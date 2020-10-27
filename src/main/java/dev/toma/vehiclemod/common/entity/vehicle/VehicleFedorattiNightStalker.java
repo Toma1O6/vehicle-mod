@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleFedorattiNightStalker extends EntityVehicle {
+public class VehicleFedorattiNightStalker extends EntityVehicleSport {
 
     static final Vector3f[] PARTS = {new Vector3f(-1.5F, 0.4F, 0.0F), new Vector3f(-2.25F, 0.2F, 0.0F)};
 
@@ -65,5 +65,10 @@ public class VehicleFedorattiNightStalker extends EntityVehicle {
     @Override
     protected double getPassengerOffsetZ(int id) {
         return id % 2 == 0 ? -0.4 : 0.4;
+    }
+
+    @Override
+    public VehicleUpgrades createVehicleUpgrades() {
+        return new VehicleUpgrades(getConfigStats(), fill(9, 4));
     }
 }

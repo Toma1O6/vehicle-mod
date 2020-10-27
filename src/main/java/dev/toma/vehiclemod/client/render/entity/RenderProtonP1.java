@@ -1,11 +1,11 @@
 package dev.toma.vehiclemod.client.render.entity;
 
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleProtonP1;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 
-public class RenderProtonP1<V extends VehicleProtonP1, M extends ModelVehicle> extends RenderVehicle<V> {
+public class RenderProtonP1<V extends EntityVehicle, M extends ModelVehicle> extends RenderVehicle<V> {
 
     final M model;
 

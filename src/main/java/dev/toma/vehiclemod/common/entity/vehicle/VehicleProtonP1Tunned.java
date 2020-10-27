@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleProtonP1Tunned extends VehicleProtonP1 {
+public class VehicleProtonP1Tunned extends EntityVehicleSport {
 
     static final Vector3f[] PARTS = {new Vector3f(1.5f, 0.2f, 0.0f), new Vector3f(-2.3f, 0.2f, 0.75f), new Vector3f(-2.3f, 0.2f, -0.75f)};
 
@@ -20,6 +20,11 @@ public class VehicleProtonP1Tunned extends VehicleProtonP1 {
     public VehicleProtonP1Tunned(World world, BlockPos pos) {
         super(world, pos);
         setSize(2.0f, 1.5f);
+    }
+
+    @Override
+    public VehicleContainer createInvetory() {
+        return new VehicleContainer(this, 9);
     }
 
     @Override
@@ -40,5 +45,30 @@ public class VehicleProtonP1Tunned extends VehicleProtonP1 {
     @Override
     public Vector3f[] getPartVecs() {
         return PARTS;
+    }
+
+    @Override
+    public double getMountedYOffset() {
+        return -0.2;
+    }
+
+    @Override
+    public int maximumAmountOfPassengers() {
+        return 2;
+    }
+
+    @Override
+    protected double getPassengerOffsetX(int id) {
+        return -0.2;
+    }
+
+    @Override
+    protected double getPassengerOffsetZ(int id) {
+        return id % 2 == 0 ? -0.4: 0.4;
+    }
+
+    @Override
+    public VehicleUpgrades createVehicleUpgrades() {
+        return new VehicleUpgrades(getConfigStats(), fill(9, 3));
     }
 }

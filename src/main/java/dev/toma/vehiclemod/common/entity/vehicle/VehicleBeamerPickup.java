@@ -1,15 +1,15 @@
 package dev.toma.vehiclemod.common.entity.vehicle;
 
-import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
-import dev.toma.vehiclemod.init.VMSounds;
+import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
+import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleBeamerPickup extends EntityVehicle {
+public class VehicleBeamerPickup extends EntityVehicleSpecial {
 
     static final Vector3f[] PARTS = {new Vector3f(1.8f, 0.3f, 0), new Vector3f(-1.8f, 0f, 0f)};
 

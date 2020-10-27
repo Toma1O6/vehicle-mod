@@ -40,7 +40,7 @@ public class GuiVehicleComponents extends GuiContainer {
         int j = 0;
         for (Map.Entry<ItemVehicleUpgrade.Type, Integer> entry : map.entrySet()) {
             String text = String.format("[%d]", entry.getValue());
-            fontRenderer.drawString(text, 26 + j * 18 + (18 - fontRenderer.getStringWidth(text)) / 2, 28, ItemVehicleUpgrade.Type.getColor(entry.getValue()).getColorValue());
+            fontRenderer.drawString(text, 8 + j * 18 + (18 - fontRenderer.getStringWidth(text)) / 2, 28, ItemVehicleUpgrade.Type.getColor(entry.getValue()).getColorValue());
             ++j;
         }
     }

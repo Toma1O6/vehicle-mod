@@ -5,6 +5,7 @@ import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.VMTickableSound;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.EnumVehicleState;
+import dev.toma.vehiclemod.common.EnumVehicleType;
 import dev.toma.vehiclemod.common.items.ItemSprayCan;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
@@ -82,9 +83,18 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         return Math.sqrt(vehicle.motionX * vehicle.motionX + vehicle.motionZ * vehicle.motionZ);
     }
 
+    public static int[] fill(int l, int v) {
+        int[] arr = new int[l];
+        for (int i = 0; i < l; i++)
+            arr[i] = v;
+        return arr;
+    }
+
     public VehicleUpgrades createVehicleUpgrades() {
         return new VehicleUpgrades(this.getConfigStats());
     }
+
+    public abstract EnumVehicleType getVehicleType();
 
     public abstract Vector3f[] getPartVecs();
 
@@ -132,10 +142,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         handleEntityCollisions();
         checkState();
 
-        if (collidedHorizontally) {
-            currentSpeed *= 0.6;
-        }
-
         if (!world.isRemote) {
             VMNetworkManager.instance().sendToAllAround(new CPacketVehicleData(this), new TargetPoint(dimension, posX, posY, posZ, 256));
         }
@@ -143,12 +149,13 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         spawnParticles();
         move(MoverType.SELF, motionX, motionY, motionZ);
 
-        if (collidedHorizontally && getMovementSpeed(this) > 0.2) {
+        double d0;
+        if (collidedHorizontally && (d0 = getMovementSpeed(this)) > 0.2) {
             currentSpeed = 0f;
-            health -= getMovementSpeed(this) * 50f;
+            health -= d0 * 200f;
             for (Entity e : this.getPassengers()) {
                 if (!e.getIsInvulnerable()) {
-                    e.attackEntityFrom(DamageSource.FALL, (float) getMovementSpeed(this) * 3f);
+                    e.attackEntityFrom(DamageSource.FALL, (float) d0 * 50f);
                 }
             }
         }

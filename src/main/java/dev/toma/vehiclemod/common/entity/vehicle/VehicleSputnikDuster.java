@@ -9,17 +9,18 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleSputnikDuster extends EntityVehicle {
+public class VehicleSputnikDuster extends EntityVehicleSUV {
 
     static final Vector3f[] PARTS = {new Vector3f(2.0F, 0.4F, 0.0F), new Vector3f(-2.0F, 0.1F, 0.4F)};
 
     public VehicleSputnikDuster(World world) {
         super(world);
+        setSize(2.0f, 1.75F);
     }
 
     public VehicleSputnikDuster(World world, BlockPos pos) {
         super(world, pos);
-        setSize(2.0f, 2.0f);
+        setSize(2.0f, 1.75F);
     }
 
     @Override

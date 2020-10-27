@@ -9,12 +9,13 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleMCGMultiVan extends EntityVehicle {
+public class VehicleMCGMultiVan extends EntityVehicleSpecial {
 
     static final Vector3f[] PARTS = {new Vector3f(2.2F, 0.2f, 0), new Vector3f(-3, 0.3f, 0)};
 
     public VehicleMCGMultiVan(World world) {
         super(world);
+        setSize(1.5f, 2.0f);
     }
 
     public VehicleMCGMultiVan(World world, BlockPos pos) {

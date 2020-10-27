@@ -5,7 +5,24 @@ import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.RequiresWorldRestart;
 
 public final class VehicleStats {
-	
+
+	@Config.Ignore
+	public static float topSpeedMin = 500.0F;
+	@Config.Ignore
+	public static float topSpeedMax;
+	@Config.Ignore
+	public static float accelerationMin = 500.0F;
+	@Config.Ignore
+	public static float accelerationMax;
+	@Config.Ignore
+	public static float handlingMin = 500.0F;
+	@Config.Ignore
+	public static float handlingMax;
+	@Config.Ignore
+	public static float brakingMin = 500.0F;
+	@Config.Ignore
+	public static float brakingMax;
+
 	@Config.Name("Max Health")
 	@RequiresWorldRestart
 	public float maxHealth;
@@ -57,6 +74,30 @@ public final class VehicleStats {
 
 	public VehicleStats(float maxHP, float maxSpeed, float acceleration, float brakeSpeed, float turningSpeed, float maxAngle, float fuelConsumption, int capacity) {
 		this(maxHP, maxSpeed, acceleration, brakeSpeed, turningSpeed, maxAngle, fuelConsumption, capacity, new Vector3i(0, 0, 0));
+	}
+
+	public VehicleStats calculateRanges() {
+		if(maxSpeed < topSpeedMin) {
+			topSpeedMin = maxSpeed;
+		} else if(maxSpeed * 1.6F > topSpeedMax) {
+			topSpeedMax = maxSpeed * 1.6F;
+		}
+		if(acceleration < accelerationMin) {
+			accelerationMin = acceleration;
+		} else if(acceleration * 1.55F > accelerationMax) {
+			accelerationMax = acceleration * 1.55F;
+		}
+		if(turnSpeed < handlingMin) {
+			handlingMin = turnSpeed;
+		} else if(turnSpeed * 1.5F > handlingMax) {
+			handlingMax = turnSpeed * 1.5F;
+		}
+		if(brakeSpeed < brakingMin) {
+			brakingMin = brakeSpeed;
+		} else if(brakeSpeed * 1.65F > brakingMax) {
+			brakingMax = brakeSpeed * 1.65F;
+		}
+		return this;
 	}
 	
 	public static void writeStatsToBuf(ByteBuf buf, VehicleStats stats) {

@@ -1,15 +1,15 @@
 package dev.toma.vehiclemod.common.entity.vehicle;
 
-import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
-import dev.toma.vehiclemod.init.VMSounds;
+import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
+import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleFedorattiVulcan extends EntityVehicle {
+public class VehicleFedorattiVulcan extends EntityVehicleSport {
 
     private static final Vector3f[] VECTOR_3_FS = {new Vector3f(-1.3F, 0.7F, 0), new Vector3f(-2.1F, 0.15F, -0.55F), new Vector3f(-2.1F, 0.15F, 0.55F)};
 
@@ -65,5 +65,10 @@ public class VehicleFedorattiVulcan extends EntityVehicle {
     @Override
     protected double getPassengerOffsetZ(int id) {
         return id % 2 == 0 ? -0.4 : 0.4;
+    }
+
+    @Override
+    public VehicleUpgrades createVehicleUpgrades() {
+        return new VehicleUpgrades(getConfigStats(), fill(9, 4));
     }
 }

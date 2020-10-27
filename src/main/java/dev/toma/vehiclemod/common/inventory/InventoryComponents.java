@@ -14,7 +14,7 @@ public class InventoryComponents extends InventoryBasic {
     final EntityPlayer player;
 
     public InventoryComponents(EntityPlayer player) {
-        super(new TextComponentString("ComponentInventory"), 8);
+        super(new TextComponentString("ComponentInventory"), 9);
         if(player.getRidingEntity() instanceof EntityVehicle) {
             this.upgrades = ((EntityVehicle) player.getRidingEntity()).getUpgrades();
         }
@@ -38,5 +38,10 @@ public class InventoryComponents extends InventoryBasic {
             }
         }
         super.markDirty();
+    }
+
+    @Override
+    public int getInventoryStackLimit() {
+        return 1;
     }
 }

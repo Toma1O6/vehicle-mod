@@ -16,11 +16,7 @@ import java.util.TreeMap;
 
 public class VehicleUpgrades {
 
-    private final SortedMap<ItemVehicleUpgrade.Type, Integer> upgradeMap = DevUtil.make(new TreeMap<>(Comparator.comparingInt(Enum::ordinal)), map -> {
-        for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
-            map.put(type, 0);
-        }
-    });
+    private final SortedMap<ItemVehicleUpgrade.Type, Integer> upgradeMap;
     private final VehicleStats configStats;
     private VehicleStats modifiedStats;
 
@@ -33,8 +29,19 @@ public class VehicleUpgrades {
     float fuelCap;
 
     public VehicleUpgrades(VehicleStats stats) {
+        this(stats, new int[9]);
+    }
+
+    public VehicleUpgrades(VehicleStats stats, int[] defaults) {
         this.configStats = stats;
         this.setDefaults();
+        this.upgradeMap = DevUtil.make(new TreeMap<>(Comparator.comparingInt(Enum::ordinal)), map -> {
+            for (int i = 0; i < ItemVehicleUpgrade.Type.values().length; i++) {
+                ItemVehicleUpgrade.Type type = ItemVehicleUpgrade.Type.values()[i];
+                map.put(type, defaults[i]);
+            }
+        });
+        recalculate();
     }
 
     public boolean canUpgradeWith(ItemVehicleUpgrade upgrade) {

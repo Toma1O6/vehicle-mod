@@ -111,6 +111,25 @@ public class DevUtil {
         drawImage2D(mc, location, 0, 0, resolution.getScaledWidth(), resolution.getScaledHeight());
     }
 
+    public static void drawColor(int x1, int y1, int x2, int y2, float r, float g, float b, float a) {
+        drawColor(x1, y1, x2, y2, 0.0D, r, g, b, a);
+    }
+
+    public static void drawColor(int x1, int y1, int x2, int y2, double z, float r, float g, float b, float a) {
+        GlStateManager.disableTexture2D();
+        GlStateManager.enableBlend();
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder builder = tessellator.getBuffer();
+        builder.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        builder.pos(x1, y2, z).color(r, g, b, a).endVertex();
+        builder.pos(x2, y2, z).color(r, g, b, a).endVertex();
+        builder.pos(x2, y1, z).color(r, g, b, a).endVertex();
+        builder.pos(x1, y1, z).color(r, g, b, a).endVertex();
+        tessellator.draw();
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+    }
+
     public static final class ModelCreator {
 
     	final File itemModelFolder = new File("D:/mcmods/1.12.2/vehicle-mod/src/main/resources/assets/vehiclemod/models/item");

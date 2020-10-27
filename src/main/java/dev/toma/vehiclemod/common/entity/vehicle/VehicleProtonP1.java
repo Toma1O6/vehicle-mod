@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleProtonP1 extends EntityVehicle {
+public class VehicleProtonP1 extends EntityVehicleStandart {
 
     static final Vector3f[] PARTS = {new Vector3f(1.5f, 0.2f, 0.0f), new Vector3f(-2.3f, 0.2f, 0.6f)};
 

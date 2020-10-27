@@ -50,11 +50,9 @@ public class ModContainer<I extends IInventory> extends Container {
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
-
         if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
-
             if (index < this.inventory.getSizeInventory()) {
                 if (!this.mergeItemStack(itemstack1, this.inventory.getSizeInventory(), this.inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
@@ -62,7 +60,6 @@ public class ModContainer<I extends IInventory> extends Container {
             } else if (!this.mergeItemStack(itemstack1, 0, this.inventory.getSizeInventory(), false)) {
                 return ItemStack.EMPTY;
             }
-
             if (itemstack1.isEmpty()) {
                 slot.putStack(ItemStack.EMPTY);
             } else {

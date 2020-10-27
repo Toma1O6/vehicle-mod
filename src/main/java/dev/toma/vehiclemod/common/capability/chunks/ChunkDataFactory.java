@@ -1,10 +1,11 @@
 package dev.toma.vehiclemod.common.capability.chunks;
 
 import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.common.EnumVehicleType;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.util.VehicleTexture;
-import dev.toma.vehiclemod.util.function.LazyLoad;
+import dev.toma.vehiclemod.util.WeightedRandom;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -17,9 +18,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ChunkDataFactory implements ChunkData {
 
@@ -51,15 +51,8 @@ public class ChunkDataFactory implements ChunkData {
     public static class EventHandler {
 
         static final Random random = new Random();
-        static final LazyLoad<List<EntityEntry>> vehicleList = new LazyLoad<>(() -> {
-            List<EntityEntry> list = new ArrayList<>();
-            for (EntityEntry entry : ForgeRegistries.ENTITIES) {
-                if(EntityVehicle.class.isAssignableFrom(entry.getEntityClass())) {
-                    list.add(entry);
-                }
-            }
-            return list;
-        });
+        static final WeightedRandom<EnumVehicleType> TYPES = new WeightedRandom<>(EnumVehicleType::getSpawnChance, EnumVehicleType.values());
+        static final Map<EnumVehicleType, List<EntityEntry>> TYPE_ENTRY_MAP = new HashMap<>();
 
         @SubscribeEvent
         public static void onCapabilityAttach(AttachCapabilitiesEvent<Chunk> event) {
@@ -84,7 +77,17 @@ public class ChunkDataFactory implements ChunkData {
                         if(!DevUtil.MATERIAL_VALIDATOR.test(world.getBlockState(pos1.down()).getMaterial())) {
                             return;
                         }
-                        List<EntityEntry> list = vehicleList.get();
+                        if(TYPE_ENTRY_MAP.isEmpty()) {
+                            for (EntityEntry entry : ForgeRegistries.ENTITIES.getValuesCollection()
+                                    .stream()
+                                    .filter(en -> EntityVehicle.class.isAssignableFrom(en.getEntityClass()))
+                                    .collect(Collectors.toList())
+                            ) {
+                                EntityVehicle vehicle = (EntityVehicle) entry.newInstance(world);
+                                TYPE_ENTRY_MAP.computeIfAbsent(vehicle.getVehicleType(), type -> new ArrayList<>()).add(entry);
+                            }
+                        }
+                        List<EntityEntry> list = TYPE_ENTRY_MAP.get(TYPES.getRandom());
                         EntityEntry entry = list.get(random.nextInt(list.size()));
                         EntityVehicle vehicle = (EntityVehicle) entry.newInstance(world);
                         vehicle.setPosition(x + 0.5, y + 1.0, z + 0.5);

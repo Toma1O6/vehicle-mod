@@ -75,7 +75,7 @@ public class ItemVehicleUpgrade extends VMItem {
                 {0.10F, 0.20F, 0.35F, 0.50F, 0.65F, 0.80F, 1.00F}
         }, (strings, floats) -> insertWithNames(strings, floats, "Fuel capacity")),
         SUSPENSION((up, floats, level) -> up.addHandling(floats[0][level]), new float[][]{
-                {0.05F, 0.10F, 0.15F, 0.20F, 0.25F, 0.30F, 0.35F}
+                {0.02F, 0.04F, 0.06F, 0.09F, 0.13F, 0.17F, 0.20F}
         }, (strings, floats) -> insertWithNames(strings, floats, "Handling")),
         TRANSMISSION((up, floats, level) -> {
             up.addTopSpeed     (floats[0][level]);
@@ -90,7 +90,14 @@ public class ItemVehicleUpgrade extends VMItem {
         }, new float[][]{
                 { 0.04F,  0.07F,  0.09F,  0.12F,  0.16F,  0.21F,  0.25F},
                 {-0.02F, -0.04F, -0.06F, -0.10F, -0.15F, -0.20F, -0.25F}
-        }, (strings, floats) -> insertWithNames(strings, floats, 1, "Acceleration", "Fuel consumption"));
+        }, (strings, floats) -> insertWithNames(strings, floats, 1, "Acceleration", "Fuel consumption")),
+        TIRES((up, floats, level) -> {
+            up.addHandling     (floats[0][level]);
+            up.addBraking      (floats[1][level]);
+        }, new float[][]{
+                {0.03F, 0.06F, 0.10F, 0.14F, 0.19F, 0.24F, 0.30F},
+                {0.01F, 0.03F, 0.05F, 0.07F, 0.09F, 0.12F, 0.15F}
+        }, (strings, floats) -> insertWithNames(strings, floats, "Handling", "Braking"));
 
         static final Map<Integer, EnumDyeColor> LEVEL_TO_COLOR_MAP = DevUtil.make(new HashMap<>(), map -> {
             map.put(1, EnumDyeColor.GRAY);

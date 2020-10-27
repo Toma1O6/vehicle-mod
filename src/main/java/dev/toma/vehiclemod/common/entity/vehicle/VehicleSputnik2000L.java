@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleSputnik2000L extends EntityVehicle {
+public class VehicleSputnik2000L extends EntityVehicleStandart {
 
     private static final Vector3f[] PARTS = {new Vector3f(1.7F, 0.5F, 0.0F), new Vector3f(-1.95F, 0.15F, 0.3F)};
 

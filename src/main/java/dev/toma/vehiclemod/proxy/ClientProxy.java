@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.proxy;
 
 import dev.toma.vehiclemod.client.VehicleInputHandler;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.client.model.vehicle.ModelSputnik3000L;
 import dev.toma.vehiclemod.client.render.entity.*;
 import dev.toma.vehiclemod.common.entity.vehicle.*;
 import dev.toma.vehiclemod.client.VMTickableSound;
@@ -54,7 +55,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(VehicleBeamerS320RS.class, RenderBeamerS320RS::new);
 		RenderingRegistry.registerEntityRenderingHandler(VehicleMCGMultiVan.class, RenderMCGMultiVan::new);
 		RenderingRegistry.registerEntityRenderingHandler(VehicleBeamerPickup.class, RenderBeamerPickup::new);
-		RenderingRegistry.registerEntityRenderingHandler(VehicleSputnik3000L.class, RenderSputnik3000L::new);
+		RenderingRegistry.registerEntityRenderingHandler(VehicleSputnik3000L.class, manager -> new RenderSputnik3000L<>(manager, new ModelSputnik3000L()));
 		RenderingRegistry.registerEntityRenderingHandler(VehicleSputnik3000LEnforcer.class, RenderSputnik3000LEnforcer::new);
 		RenderingRegistry.registerEntityRenderingHandler(VehicleSputnikDuster.class, RenderSputnikDuster::new);
 		RenderingRegistry.registerEntityRenderingHandler(VehicleFedorattiNightStalker.class, RenderFedorattiNightStalker::new);

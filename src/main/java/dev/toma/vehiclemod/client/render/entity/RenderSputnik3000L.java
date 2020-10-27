@@ -1,17 +1,19 @@
 package dev.toma.vehiclemod.client.render.entity;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleSputnik3000L;
 import dev.toma.vehiclemod.client.model.vehicle.ModelSputnik3000L;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 
-public class RenderSputnik3000L<T extends VehicleSputnik3000L> extends RenderVehicle<T> {
+public class RenderSputnik3000L<T extends EntityVehicle, M extends ModelVehicle> extends RenderVehicle<T> {
 
-    private final ModelSputnik3000L model = new ModelSputnik3000L();
+    private final M model;
 
-    public RenderSputnik3000L(RenderManager manager) {
+    public RenderSputnik3000L(RenderManager manager, M model) {
         super(manager);
+        this.model = model;
     }
 
     @Override
