@@ -43,7 +43,9 @@ public class ClientEventHandler {
 	public static void stitchTextures(TextureStitchEvent.Pre event) {
 		TextureMap map = event.getMap();
 		for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
-			map.registerSprite(VehicleMod.getResource("items/" + type.name().toLowerCase()));
+			for (int i = 0; i < 8; i++) {
+				map.registerSprite(VehicleMod.getResource("items/" + type.name().toLowerCase() + "_" + i));
+			}
 		}
 	}
 
