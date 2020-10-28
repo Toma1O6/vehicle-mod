@@ -40,12 +40,10 @@ public class ContainerVehicleComponents extends ModContainer<InventoryComponents
     static class SlotInput extends Slot {
 
         private final ItemVehicleUpgrade.Type type;
-        final String texture;
 
         public SlotInput(InventoryComponents components, int i, int x, int y) {
             super(components, i, x, y);
             this.type = ItemVehicleUpgrade.Type.values()[i];
-            this.texture = "vehiclemod:items/" + type.name().toLowerCase();
         }
 
         @Override
@@ -59,7 +57,7 @@ public class ContainerVehicleComponents extends ModContainer<InventoryComponents
 
         @Override
         public String getSlotTexture() {
-            return texture;
+            return "vehiclemod:items/" + type.name().toLowerCase() + "_" + ((InventoryComponents) inventory).getUpgrades().getUpgradeMap().get(type);
         }
     }
 }
