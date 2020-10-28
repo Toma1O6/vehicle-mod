@@ -1,9 +1,9 @@
 package dev.toma.vehiclemod.config;
 
 import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.client.SpeedDisplayUnit;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketSyncConfig;
-import dev.toma.vehiclemod.client.SpeedDisplayUnit;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Comment;
@@ -17,6 +17,9 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 @Config(modid = VehicleMod.MODID, name = "Vehicle Mod Config")
 public class VMConfig {
+
+	@Name("Client config")
+	public static ClientConfig clientConfig = new ClientConfig();
 
 	@Name("State cell modifier")
 	@Comment("Amount of ticks added or substracted/click")

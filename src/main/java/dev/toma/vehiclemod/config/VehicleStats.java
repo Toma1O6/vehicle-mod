@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.config;
 
+import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.RequiresWorldRestart;
@@ -77,27 +78,39 @@ public final class VehicleStats {
 	}
 
 	public VehicleStats calculateRanges() {
+		float f0 = getTotalFrom(ItemVehicleUpgrade.Type.ECU.getModifiers()[0], ItemVehicleUpgrade.Type.ENGINE.getModifiers()[0], ItemVehicleUpgrade.Type.TRANSMISSION.getModifiers()[0]);
 		if(maxSpeed < topSpeedMin) {
 			topSpeedMin = maxSpeed;
-		} else if(maxSpeed * 1.6F > topSpeedMax) {
-			topSpeedMax = maxSpeed * 1.6F;
+		} else if(maxSpeed * f0 > topSpeedMax) {
+			topSpeedMax = maxSpeed * f0;
 		}
+		float f1 = getTotalFrom(ItemVehicleUpgrade.Type.ECU.getModifiers()[1], ItemVehicleUpgrade.Type.TRANSMISSION.getModifiers()[1], ItemVehicleUpgrade.Type.TURBO.getModifiers()[0]);
 		if(acceleration < accelerationMin) {
 			accelerationMin = acceleration;
-		} else if(acceleration * 1.55F > accelerationMax) {
-			accelerationMax = acceleration * 1.55F;
+		} else if(acceleration * f1 > accelerationMax) {
+			accelerationMax = acceleration * f1;
 		}
+		float f2 = getTotalFrom(ItemVehicleUpgrade.Type.SUSPENSION.getModifiers()[0], ItemVehicleUpgrade.Type.TIRES.getModifiers()[0]);
 		if(turnSpeed < handlingMin) {
 			handlingMin = turnSpeed;
-		} else if(turnSpeed * 1.5F > handlingMax) {
-			handlingMax = turnSpeed * 1.5F;
+		} else if(turnSpeed * f2 > handlingMax) {
+			handlingMax = turnSpeed * f2;
 		}
+		float f3 = getTotalFrom(ItemVehicleUpgrade.Type.BRAKES.getModifiers()[0], ItemVehicleUpgrade.Type.TIRES.getModifiers()[1]);
 		if(brakeSpeed < brakingMin) {
 			brakingMin = brakeSpeed;
-		} else if(brakeSpeed * 1.65F > brakingMax) {
-			brakingMax = brakeSpeed * 1.65F;
+		} else if(brakeSpeed * f3 > brakingMax) {
+			brakingMax = brakeSpeed * f3;
 		}
 		return this;
+	}
+
+	private static float getTotalFrom(float[]... floats) {
+		float f0 = 1.0F;
+		for (float[] f1 : floats) {
+			f0 += f1[6];
+		}
+		return f0;
 	}
 	
 	public static void writeStatsToBuf(ByteBuf buf, VehicleStats stats) {

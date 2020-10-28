@@ -2,8 +2,8 @@ package dev.toma.vehiclemod.client.render.entity;
 
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
-import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.util.VehicleTexture;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -65,16 +65,32 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		int i = renderer.getStringWidth(vehicle.getName()) / 2;
 		if(i < 50) i = 50;
 		GlStateManager.disableTexture2D();
+		float aBG = VMConfig.clientConfig.opaqueColors ? 1.0F : 0.25F;
 		double of = -vehicle.height - 70;
 		int left = -i - 1;
 		int right = i + 10;
+		VehicleStats stats = vehicle.getActualStats();
+		float speedStat = (stats.maxSpeed - VehicleStats.topSpeedMin) / (VehicleStats.topSpeedMax - VehicleStats.topSpeedMin);
+		float accelerationStat = (stats.acceleration - VehicleStats.accelerationMin) / (VehicleStats.accelerationMax - VehicleStats.accelerationMin);
+		float handlingStat = (stats.turnSpeed - VehicleStats.handlingMin) / (VehicleStats.handlingMax - VehicleStats.handlingMin);
+		float brakingStat = (stats.brakeSpeed - VehicleStats.brakingMin) / (VehicleStats.brakingMax - VehicleStats.brakingMin);
+		int px = left + 19;
+		int width = right - px - 2;
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
-		bufferbuilder.pos(left, of, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-		bufferbuilder.pos(left, of + 88, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-		bufferbuilder.pos(right, of + 88, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-		bufferbuilder.pos(right, of, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		bufferbuilder.pos(left, of, 0.0D).color(0.0F, 0.0F, 0.0F, aBG).endVertex();
+		bufferbuilder.pos(left, of + 88, 0.0D).color(0.0F, 0.0F, 0.0F, aBG).endVertex();
+		bufferbuilder.pos(right, of + 88, 0.0D).color(0.0F, 0.0F, 0.0F, aBG).endVertex();
+		bufferbuilder.pos(right, of, 0.0D).color(0.0F, 0.0F, 0.0F, aBG).endVertex();
+		addColorShapeToBuffer(bufferbuilder, px, -22, px + width, -18,-0.01, 0.0F, 0.5F, 0.0F, 1.0F);
+		addColorShapeToBuffer(bufferbuilder, px, -22, (int)(px + width * speedStat), -18, -0.02, 0.0F, 1.0F, 0.0F, 1.0F);
+		addColorShapeToBuffer(bufferbuilder, px, -13, px + width, -8, -0.01, 0.5F, 0.0F, 0.0F, 1.0F);
+		addColorShapeToBuffer(bufferbuilder, px, -13, (int)(px + width * accelerationStat), -8, -0.02, 1.0F, 0.0F, 0.0F, 1.0F);
+		addColorShapeToBuffer(bufferbuilder, px, -4, px + width, 1, -0.01, 0.0F, 0.0F, 0.5F, 1.0F);
+		addColorShapeToBuffer(bufferbuilder, px, -4, (int)(px + width * handlingStat), 1, -0.02, 0.0F, 0.0F, 1.0F, 1.0F);
+		addColorShapeToBuffer(bufferbuilder, px, 5, px + width, 10, -0.01, 0.5F, 0.5F, 0.0F, 1.0F);
+		addColorShapeToBuffer(bufferbuilder, px, 5, (int)(px + width * brakingStat), 10, -0.02, 1.0F, 1.0F, 0.0F, 1.0F);
 		tessellator.draw();
 		GlStateManager.enableTexture2D();
 		GlStateManager.depthMask(true);
@@ -82,21 +98,6 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		renderer.drawString("Health: " + (int)((vehicle.health/vehicle.getActualStats().maxHealth)*100) + " %", -i + 5, -57, -1);
 		renderer.drawString("Fuel: " + (int)(100 * (vehicle.fuel / vehicle.getActualStats().fuelCapacity)) + " %", -i + 5, -44, -1);
 		renderer.drawString("Distance: " + new DecimalFormat("#.#").format(vehicle.getTravelledDistance()) + " km", -i + 5, -33, -1);
-		VehicleStats stats = vehicle.getActualStats();
-		float speedStat = (stats.maxSpeed - VehicleStats.topSpeedMin) / (VehicleStats.topSpeedMax - VehicleStats.topSpeedMin);
-		float accelerationStat = (stats.acceleration - VehicleStats.accelerationMin) / (VehicleStats.accelerationMax - VehicleStats.accelerationMin);
-		float handlingStat = (stats.turnSpeed - VehicleStats.handlingMin) / (VehicleStats.handlingMax - VehicleStats.handlingMin);
-		float brakingStat = (stats.brakeSpeed - VehicleStats.brakingMin) / (VehicleStats.brakingMax - VehicleStats.brakingMin);
-		int px = left + 20;
-		int width = right - px - 3;
-		DevUtil.drawColor(px - 1, -22, px + width + 1, -17, 0.0F, 0.0F, 0.0F, 1.0F);
-		DevUtil.drawColor(px, -21, (int)(px + width * speedStat), -18, -0.01, 0.0F, 1.0F, 0.0F, 1.0F);
-		DevUtil.drawColor(px - 1, -13, px + width + 1, -8, 0.0F, 0.0F, 0.0F, 1.0F);
-		DevUtil.drawColor(px, -12, (int)(px + width * accelerationStat), -9, -0.01, 1.0F, 0.0F, 0.0F, 1.0F);
-		DevUtil.drawColor(px - 1, -4, px + width + 1, 1, 0.0F, 0.0F, 0.0F, 1.0F);
-		DevUtil.drawColor(px, -3, (int)(px + width * handlingStat), 0, -0.01, 0.0F, 0.0F, 1.0F, 1.0F);
-		DevUtil.drawColor(px - 1, 5, px + width + 1, 10, 0.0F, 0.0F, 0.0F, 1.0F);
-		DevUtil.drawColor(px, 6, (int)(px + width * brakingStat), 9, -0.01, 1.0F, 1.0F, 0.0F, 1.0F);
 		renderer.drawString("SPD", left + 1, -23, 0x00ff00);
 		renderer.drawString("ACC", left + 1, -14, 0xff0000);
 		renderer.drawString("HDL", left + 1, -5, 0xff);
@@ -105,5 +106,12 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		GlStateManager.disableBlend();
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.popMatrix();
+	}
+
+	static void addColorShapeToBuffer(BufferBuilder buffer, int x1, int y1, int x2, int y2, double z, float r, float g, float b, float a) {
+		buffer.pos(x1, y2, z).color(r, g, b, a).endVertex();
+		buffer.pos(x2, y2, z).color(r, g, b, a).endVertex();
+		buffer.pos(x2, y1, z).color(r, g, b, a).endVertex();
+		buffer.pos(x1, y1, z).color(r, g, b, a).endVertex();
 	}
 }
