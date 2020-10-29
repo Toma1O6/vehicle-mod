@@ -23,4 +23,8 @@ public enum SpeedDisplayUnit {
     public String getDisplayString(double speed) {
         return Math.round(convertFunction.apply(speed)) + " " + unitName;
     }
+
+    public String getUnitName() {
+        return unitName;
+    }
 }

@@ -10,19 +10,25 @@ import net.minecraft.util.text.TextComponentString;
 
 public class InventoryComponents extends InventoryBasic {
 
+    private EntityVehicle vehicle;
     private VehicleUpgrades upgrades;
     final EntityPlayer player;
 
     public InventoryComponents(EntityPlayer player) {
         super(new TextComponentString("ComponentInventory"), 9);
         if(player.getRidingEntity() instanceof EntityVehicle) {
-            this.upgrades = ((EntityVehicle) player.getRidingEntity()).getUpgrades();
+            this.vehicle = (EntityVehicle) player.getRidingEntity();
+            this.upgrades = vehicle.getUpgrades();
         }
         this.player = player;
     }
 
     public VehicleUpgrades getUpgrades() {
         return upgrades;
+    }
+
+    public EntityVehicle getVehicle() {
+        return vehicle;
     }
 
     @Override

@@ -14,7 +14,7 @@ public class ContainerVehicleComponents extends ModContainer<InventoryComponents
         for (int x = 0; x < 9; x++) {
             addSlotToContainer(new SlotInput(components, x, 8 + x * 18, 8));
         }
-        addDefaultInventory(player, 56);
+        addDefaultInventory(player, 94);
     }
 
     @Override
