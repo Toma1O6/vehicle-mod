@@ -49,9 +49,13 @@ public class ItemVehicleUpgrade extends VMItem {
     }
 
     public enum Type {
-        BODY((up, floats, level) -> up.addHealth(floats[0][level]), new float[][]{
-                {0.15F, 0.25F, 0.40F, 0.50F, 0.65F, 0.80F, 1.00F}
-        }, (strings, floats) -> insertWithNames(strings, floats, "Durability")),
+        BODY((up, floats, level) -> {
+            up.addHealth        (floats[0][level]);
+            up.addHandling      (floats[1][level]);
+        }, new float[][]{
+                {0.15F, 0.25F, 0.40F, 0.50F, 0.65F, 0.80F, 1.00F},
+                {0.03F, 0.05F, 0.07F, 0.10F, 0.13F, 0.16F, 0.20F}
+        }, (strings, floats) -> insertWithNames(strings, floats, "Durability", "Handling")),
         BRAKES((up, floats, level) -> up.addBraking(floats[0][level]), new float[][]{
                 {0.08F, 0.15F, 0.22F, 0.30F, 0.39F, 0.49F, 0.60F}
         }, (strings, floats) -> insertWithNames(strings, floats, "Braking")),
@@ -75,7 +79,7 @@ public class ItemVehicleUpgrade extends VMItem {
                 {0.10F, 0.20F, 0.35F, 0.50F, 0.65F, 0.80F, 1.00F}
         }, (strings, floats) -> insertWithNames(strings, floats, "Fuel capacity")),
         SUSPENSION((up, floats, level) -> up.addHandling(floats[0][level]), new float[][]{
-                {0.10F, 0.17F, 0.25F, 0.33F, 0.41F, 0.50F, 0.60F}
+                {0.05F, 0.10F, 0.15F, 0.21F, 0.27F, 0.33F, 0.40F}
         }, (strings, floats) -> insertWithNames(strings, floats, "Handling")),
         TRANSMISSION((up, floats, level) -> {
             up.addTopSpeed     (floats[0][level]);

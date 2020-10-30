@@ -51,6 +51,7 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 	}
 
 	private void drawInfo(V vehicle, Minecraft mc, float x, float y, float z) {
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		FontRenderer renderer = mc.fontRenderer;
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);

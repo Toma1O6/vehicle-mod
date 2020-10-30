@@ -8,6 +8,7 @@ import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
 import dev.toma.vehiclemod.common.world.GeneratorMechanicPackage;
+import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.proxy.CommonProxy;
 import dev.toma.vehiclemod.util.DummyStorage;
@@ -65,6 +66,7 @@ public class VehicleMod {
 	@EventHandler
 	public static void postInit(FMLPostInitializationEvent e) {
 		proxy.postInit(e);
+		VehicleStats.initiateValueRefresh();
 	}
 	
 	public static void registerItemBlock(Block block) {

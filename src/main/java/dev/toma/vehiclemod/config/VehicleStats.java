@@ -3,7 +3,9 @@ package dev.toma.vehiclemod.config;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.common.config.Config;
-import net.minecraftforge.common.config.Config.RequiresWorldRestart;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class VehicleStats {
 
@@ -23,42 +25,44 @@ public final class VehicleStats {
 	public static float brakingMin = 500.0F;
 	@Config.Ignore
 	public static float brakingMax;
+	@Config.Ignore
+	protected static List<VehicleStats> trackingList = new ArrayList<>();
 
 	@Config.Name("Max Health")
-	@RequiresWorldRestart
+	@Config.RequiresMcRestart
 	public float maxHealth;
 	
 	@Config.Name("Max Speed")
-	@RequiresWorldRestart
+	@Config.RequiresMcRestart
 	public float maxSpeed;
 	
 	@Config.Name("Acceleration")
-	@RequiresWorldRestart
+	@Config.RequiresMcRestart
 	public float acceleration;
 	
 	@Config.Name("Turning Speed")
-	@RequiresWorldRestart
+	@Config.RequiresMcRestart
 	public float turnSpeed;
 	
 	@Config.Name("Max Turning Angle")
-	@RequiresWorldRestart
+	@Config.RequiresMcRestart
 	public float maxTurningAngle;
 	
 	@Config.Name("Braking Speed")
-	@RequiresWorldRestart
+	@Config.RequiresMcRestart
 	public float brakeSpeed;
 	
 	@Config.Name("Fuel Consumption")
-	@RequiresWorldRestart
+	@Config.RequiresMcRestart
 	public float fuelConsumption;
 
 	@Config.Name("Fuel Capacity")
 	@Config.RangeInt(min = 10)
-	@RequiresWorldRestart
+	@Config.RequiresMcRestart
 	public int fuelCapacity;
 
 	@Config.Name("TPP Camera Offset")
-	@RequiresWorldRestart
+	@Config.RequiresMcRestart
 	public Vector3i cameraOff;
 	
 	public VehicleStats(float maxHP, float maxSpeed, float acceleration, float brakeSpeed, float turningSpeed, float maxAngle, float fuelConsumption, int capacity, Vector3i offset) {
@@ -77,7 +81,25 @@ public final class VehicleStats {
 		this(maxHP, maxSpeed, acceleration, brakeSpeed, turningSpeed, maxAngle, fuelConsumption, capacity, new Vector3i(0, 0, 0));
 	}
 
-	public VehicleStats calculateRanges() {
+	public VehicleStats track() {
+		trackingList.add(this);
+		calculateRanges();
+		return this;
+	}
+
+	public static void initiateValueRefresh() {
+		topSpeedMin = 500.0F;
+		accelerationMin = 500.0F;
+		handlingMin = 500.0F;
+		brakingMin = 500.0F;
+		topSpeedMax = 0.0F;
+		accelerationMax = 0.0F;
+		handlingMax = 0.0F;
+		brakingMax = 0.0F;
+		trackingList.forEach(VehicleStats::calculateRanges);
+	}
+
+	private void calculateRanges() {
 		float f0 = getTotalFrom(ItemVehicleUpgrade.Type.ECU.getModifiers()[0], ItemVehicleUpgrade.Type.ENGINE.getModifiers()[0], ItemVehicleUpgrade.Type.TRANSMISSION.getModifiers()[0]);
 		if(maxSpeed < topSpeedMin) {
 			topSpeedMin = maxSpeed;
@@ -90,7 +112,7 @@ public final class VehicleStats {
 		} else if(acceleration * f1 > accelerationMax) {
 			accelerationMax = acceleration * f1;
 		}
-		float f2 = getTotalFrom(ItemVehicleUpgrade.Type.SUSPENSION.getModifiers()[0], ItemVehicleUpgrade.Type.TIRES.getModifiers()[0]);
+		float f2 = getTotalFrom(ItemVehicleUpgrade.Type.SUSPENSION.getModifiers()[0], ItemVehicleUpgrade.Type.TIRES.getModifiers()[0], ItemVehicleUpgrade.Type.BODY.getModifiers()[1]);
 		if(turnSpeed < handlingMin) {
 			handlingMin = turnSpeed;
 		} else if(turnSpeed * f2 > handlingMax) {
@@ -102,7 +124,6 @@ public final class VehicleStats {
 		} else if(brakeSpeed * f3 > brakingMax) {
 			brakingMax = brakeSpeed * f3;
 		}
-		return this;
 	}
 
 	private static float getTotalFrom(float[]... floats) {
