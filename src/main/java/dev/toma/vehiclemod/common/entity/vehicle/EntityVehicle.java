@@ -13,6 +13,7 @@ import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
 import dev.toma.vehiclemod.util.GuiHandler;
 import dev.toma.vehiclemod.util.VehicleTexture;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -559,6 +560,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public boolean canRepaint() {
         return true;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, Block blockIn) {
     }
 
     public static class VehicleContainer extends InventoryBasic {
