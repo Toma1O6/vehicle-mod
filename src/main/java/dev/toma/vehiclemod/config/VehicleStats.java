@@ -1,6 +1,9 @@
 package dev.toma.vehiclemod.config;
 
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
+import dev.toma.vehiclemod.common.tunning.StatModifier;
+import dev.toma.vehiclemod.common.tunning.StatModifierType;
+import dev.toma.vehiclemod.common.tunning.StatPackage;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.common.config.Config;
 
@@ -100,25 +103,25 @@ public final class VehicleStats {
 	}
 
 	private void calculateRanges() {
-		float f0 = getTotalFrom(ItemVehicleUpgrade.Type.ECU.getModifiers()[0], ItemVehicleUpgrade.Type.ENGINE.getModifiers()[0], ItemVehicleUpgrade.Type.TRANSMISSION.getModifiers()[0]);
+		float f0 = getTotalModifierWith(StatModifierType.TOP_SPEED);
 		if(maxSpeed < topSpeedMin) {
 			topSpeedMin = maxSpeed;
 		} else if(maxSpeed * f0 > topSpeedMax) {
 			topSpeedMax = maxSpeed * f0;
 		}
-		float f1 = getTotalFrom(ItemVehicleUpgrade.Type.ECU.getModifiers()[1], ItemVehicleUpgrade.Type.TRANSMISSION.getModifiers()[1], ItemVehicleUpgrade.Type.TURBO.getModifiers()[0]);
+		float f1 = getTotalModifierWith(StatModifierType.ACCELERATION);
 		if(acceleration < accelerationMin) {
 			accelerationMin = acceleration;
 		} else if(acceleration * f1 > accelerationMax) {
 			accelerationMax = acceleration * f1;
 		}
-		float f2 = getTotalFrom(ItemVehicleUpgrade.Type.SUSPENSION.getModifiers()[0], ItemVehicleUpgrade.Type.TIRES.getModifiers()[0], ItemVehicleUpgrade.Type.BODY.getModifiers()[1]);
+		float f2 = getTotalModifierWith(StatModifierType.HANDLING);
 		if(turnSpeed < handlingMin) {
 			handlingMin = turnSpeed;
 		} else if(turnSpeed * f2 > handlingMax) {
 			handlingMax = turnSpeed * f2;
 		}
-		float f3 = getTotalFrom(ItemVehicleUpgrade.Type.BRAKES.getModifiers()[0], ItemVehicleUpgrade.Type.TIRES.getModifiers()[1]);
+		float f3 = getTotalModifierWith(StatModifierType.BRAKING);
 		if(brakeSpeed < brakingMin) {
 			brakingMin = brakeSpeed;
 		} else if(brakeSpeed * f3 > brakingMax) {
@@ -126,12 +129,17 @@ public final class VehicleStats {
 		}
 	}
 
-	private static float getTotalFrom(float[]... floats) {
-		float f0 = 1.0F;
-		for (float[] f1 : floats) {
-			f0 += f1[6];
+	private static float getTotalModifierWith(StatModifierType modifierType) {
+		float f = 1.0F;
+		for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
+			StatPackage statPackage = type.getPackage();
+			for (StatModifier modifier : statPackage.getModifiers()) {
+				if(modifier.getType() == modifierType) {
+					f += modifier.getValue(6);
+				}
+			}
 		}
-		return f0;
+		return f;
 	}
 	
 	public static void writeStatsToBuf(ByteBuf buf, VehicleStats stats) {

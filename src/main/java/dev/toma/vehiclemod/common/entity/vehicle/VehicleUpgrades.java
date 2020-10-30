@@ -1,6 +1,8 @@
 package dev.toma.vehiclemod.common.entity.vehicle;
 
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
+import dev.toma.vehiclemod.common.tunning.IStatApplicator;
+import dev.toma.vehiclemod.common.tunning.StatPackage;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.util.DevUtil;
 import net.minecraft.entity.player.EntityPlayer;
@@ -74,14 +76,18 @@ public class VehicleUpgrades {
             int level = upgradeMap.get(type);
             if(level <= 0)
                 continue;
-            type.getHandler().applyUpgradeTo(this, type.getModifiers(), level - 1);
+            StatPackage statPackage = type.getPackage();
+            statPackage.forEachModifier(modifier -> {
+                IStatApplicator applicator = modifier.getType().getApplicator();
+                applicator.applyOnStat(this, modifier.getValues()[level - 1]);
+            });
         }
         float health = configStats.maxHealth * this.health;
         float acceleration = configStats.acceleration * this.acceleration;
         float topSpeed = configStats.maxSpeed * this.topSpeed;
         float braking = configStats.brakeSpeed * this.braking;
         float handling = configStats.turnSpeed * this.handling;
-        float fuelCons = configStats.fuelConsumption * this.fuelCons;
+        float fuelCons = configStats.fuelConsumption * (1.0F + (1.0F - this.fuelCons));
         float fuelCap = configStats.fuelCapacity * this.fuelCap;
         this.modifiedStats = new VehicleStats(health, topSpeed, acceleration, braking, handling, configStats.maxTurningAngle, fuelCons, (int) fuelCap);
     }
@@ -111,7 +117,7 @@ public class VehicleUpgrades {
     }
 
     public void addFuelCons(float toAdd) {
-        this.fuelCons -= toAdd;
+        this.fuelCons += toAdd;
     }
 
     public void addFuelCap(float toAdd) {
