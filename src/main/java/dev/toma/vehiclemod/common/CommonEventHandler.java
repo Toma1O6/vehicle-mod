@@ -6,9 +6,15 @@ import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.ClickEvent;
+import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 @Mod.EventBusSubscriber
 public class CommonEventHandler {
@@ -28,6 +34,26 @@ public class CommonEventHandler {
             livingEntity.tasks.addTask(0, new EntityAIAvoidEntity<>(livingEntity, EntityVehicle.class, 20.0F, 1.5D, 1.2D));
             livingEntity.tasks.addTask(0, new EntityAIAvoidEntity<>(livingEntity, EntityMinecart.class, 20.0F, 1.5D, 1.2D));
         }
+    }
+
+    @SubscribeEvent
+    public static void logIn(PlayerEvent.PlayerLoggedInEvent event) {
+        ForgeVersion.CheckResult result = ForgeVersion.getResult(Loader.instance().activeModContainer());
+        switch (result.status) {
+            case OUTDATED: case BETA_OUTDATED:
+                TextComponentString textComponent = new TextComponentString(getMessageLogo() + TextFormatting.RED + " Your mod is " + TextFormatting.UNDERLINE + "outdated" + TextFormatting.RED + ". Click " + TextFormatting.ITALIC + "HERE" + TextFormatting.RESET.toString() + TextFormatting.RED + " to get latest update");
+                String url = "https://www.curseforge.com/minecraft/mc-mods/tomanos-vehicle-mod";
+                textComponent.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url));
+                event.player.sendMessage(textComponent);
+                break;
+            case UP_TO_DATE:
+                event.player.sendMessage(new TextComponentString(getMessageLogo() + TextFormatting.GREEN + " Up to date"));
+                break;
+        }
+    }
+
+    private static String getMessageLogo() {
+        return TextFormatting.BLUE + "[" + TextFormatting.YELLOW + "VehicleMod" + TextFormatting.BLUE + "]" + TextFormatting.RESET;
     }
 
     public static EntityAINearestAttackableTarget<?> getTaskToBeRemoved(EntityCreature e) {

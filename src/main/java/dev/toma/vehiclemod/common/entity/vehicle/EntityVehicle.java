@@ -496,12 +496,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         Vec3d vec1 = new Vec3d(posX, posY, posZ);
         Vec3d vec2 = new Vec3d(vec1.x + motionX, vec1.y + motionY, vec1.z + motionZ);
         Entity e = findEntityInPath(vec1, vec2);
-
         if (e != null) {
             if(e instanceof EntityVehicle) {
-                e.posX += motionX;
-                e.posY += motionY;
-                e.posZ += motionZ;
                 double x = e.motionX - motionX;
                 double z = e.motionZ - motionZ;
                 double xz = Math.sqrt(x * x + z * z);
