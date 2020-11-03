@@ -165,7 +165,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public void updateMotion() {
         Vec3d lookVec = this.getLookVec();
         VehicleStats stats = this.getActualStats();
-        float accModifier = this.health / stats.maxHealth < 0.33F ? this.health / stats.maxHealth : 1.0F;
+        float accModifier = this.health / stats.maxHealth < 0.25F ? this.health / stats.maxHealth : 1.0F;
         if (inputForward && !inputBack && (hasFuel() || currentSpeed < 0)) {
             float acceleration = stats.acceleration * accModifier;
             burnFuel();
@@ -498,10 +498,37 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         Entity e = findEntityInPath(vec1, vec2);
 
         if (e != null) {
-            e.motionX += motionX * currentSpeed * 3;
-            e.motionY += currentSpeed;
-            e.motionZ += motionZ * currentSpeed * 3;
-            e.attackEntityFrom(DamageSource.FALL, Math.abs(currentSpeed) * 15f);
+            if(e instanceof EntityVehicle) {
+                e.posX += motionX;
+                e.posY += motionY;
+                e.posZ += motionZ;
+                double x = e.motionX - motionX;
+                double z = e.motionZ - motionZ;
+                double xz = Math.sqrt(x * x + z * z);
+                float vehicleDamage = (float)(xz * 75F);
+                float userDamage = (float)(xz * 35F);
+                e.attackEntityFrom(DamageSource.FALL, vehicleDamage);
+                for (Entity entity : e.getPassengers()) {
+                    if(entity.getIsInvulnerable())
+                        continue;
+                    entity.attackEntityFrom(DamageSource.FALL, userDamage);
+                }
+                attackEntityFrom(DamageSource.FALL, vehicleDamage);
+                for (Entity entity : getPassengers()) {
+                    if(entity.getIsInvulnerable())
+                        continue;
+                    entity.attackEntityFrom(DamageSource.FALL, userDamage);
+                }
+                motionX = 0;
+                motionY = 0;
+                motionZ = 0;
+                currentSpeed = -currentSpeed / 10;
+            } else {
+                e.motionX += motionX * currentSpeed * 3;
+                e.motionY += currentSpeed;
+                e.motionZ += motionZ * currentSpeed * 3;
+                e.attackEntityFrom(DamageSource.FALL, Math.abs(currentSpeed) * 15f);
+            }
         }
     }
 
@@ -543,11 +570,11 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     private boolean isAccelerating() {
-        return (currentState != EnumVehicleState.BRAKING && currentSpeed > prevSpeed) || inputForward;
+        return Math.abs(currentSpeed) > Math.abs(prevSpeed) || (currentSpeed > 0 ? inputForward : inputBack);
     }
 
     private boolean isBraking() {
-        return currentSpeed < prevSpeed && inputBack;
+        return Math.abs(currentSpeed) < Math.abs(prevSpeed) || (currentSpeed > 0 ? inputBack : inputForward);
     }
 
     private boolean hasReleasedGas() {

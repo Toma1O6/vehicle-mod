@@ -101,7 +101,7 @@ public class ClientEventHandler {
 				if(!lowHealth) {
 					return;
 				}
-				type = health <= 0.15F ? VehicleHUDType.ENGINE_FATAL : VehicleHUDType.ENGINE_WARN;
+				type = health <= 0.25F ? VehicleHUDType.ENGINE_FATAL : VehicleHUDType.ENGINE_WARN;
 				DevUtil.drawImage2D(mc, VEHICLE_HUD, 128, resolution.getScaledHeight() - 25, 20, 20, type.uv.uStart, type.uv.vStart, type.uv.uEnd, type.uv.vEnd);
 			}
 		}

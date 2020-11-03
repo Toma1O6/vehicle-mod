@@ -42,6 +42,9 @@ public class ClientProxy extends CommonProxy {
 		if(v.currentSound != null && handler.isSoundPlaying(v.currentSound)) {
 			handler.stopSound(v.currentSound);
 		}
+		if(event == null) {
+			return;
+		}
 		VMTickableSound sound = new VMTickableSound(event, v);
 		v.currentSound = sound;
 		handler.playSound(sound);

@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 public enum EnumVehicleState {
 
-    IDLE(VehicleSoundPack::idle),
+    IDLE(vehicleSoundPack -> null),
     ACCELERATING(VehicleSoundPack::accelerate),
     BRAKING(VehicleSoundPack::brake),
     KEEPING_SPEED(VehicleSoundPack::release);
