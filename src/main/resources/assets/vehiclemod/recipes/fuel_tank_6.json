@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "vehiclemod:fuel_tank_5"
+    },
+    {
+      "item": "vehiclemod:fuel_tank_5"
+    },
+    {
+      "item": "vehiclemod:fuel_tank_5"
+    }
+  ],
+  "result": {
+    "item": "vehiclemod:fuel_tank_6",
+    "count": 1
+  }
+}

@@ -1,15 +1,12 @@
 package dev.toma.vehiclemod.client;
 
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
-import dev.toma.vehiclemod.init.VMSounds;
-import dev.toma.vehiclemod.util.function.LazyLoad;
 import net.minecraft.util.SoundEvent;
 
 import java.util.Objects;
 
 public class VehicleSoundPack {
 
-    static final LazyLoad<SoundEvent> idle = new LazyLoad<>(() -> VMSounds.VEHICLE_IDLE);
     final SoundEvent accelerate;
     final SoundEvent brake;
     final SoundEvent release;
@@ -32,10 +29,6 @@ public class VehicleSoundPack {
 
     public SoundEvent release() {
         return release;
-    }
-
-    public SoundEvent idle() {
-        return idle.get();
     }
 
     public SoundEvent start() {

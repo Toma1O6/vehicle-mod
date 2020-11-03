@@ -594,10 +594,5 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         public VehicleContainer(EntityVehicle vehicle, int slots) {
             super(vehicle.getDisplayName() + " container", false, slots);
         }
-
-        @SideOnly(Side.CLIENT)
-        public void draw() {
-
-        }
     }
 }

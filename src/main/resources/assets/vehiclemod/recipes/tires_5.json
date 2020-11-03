@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "vehiclemod:tires_4"
+    },
+    {
+      "item": "vehiclemod:tires_4"
+    },
+    {
+      "item": "vehiclemod:tires_4"
+    }
+  ],
+  "result": {
+    "item": "vehiclemod:tires_5",
+    "count": 1
+  }
+}

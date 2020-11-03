@@ -1,5 +1,9 @@
 package dev.toma.vehiclemod;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import dev.toma.vehiclemod.client.model.DummyBakedModel;
 import dev.toma.vehiclemod.client.render.item.RenderItemSpawner;
 import dev.toma.vehiclemod.common.blocks.BlockMechanicPackage;
@@ -32,6 +36,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -242,6 +248,40 @@ public class Registries {
                     registerModel(Item.getItemFromBlock(BLOCKS.getValue(rl)));
                 }
             }
+
+            /* GENERATES TUNNING RECIPES
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            File dir = new File("D:/mcmods/1.12.2/vehicle-mod/src/main/resources/assets/vehiclemod/recipes");
+            for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
+                for (int i = 2; i < 8; i++) {
+                    try {
+                        int n = i - 1;
+                        String outputName = type.name().toLowerCase() + "_" + i;
+                        String ingredientName = outputName.replaceAll("_[0-9]+", "_" + n);
+                        File file = new File(dir, outputName + ".json");
+                        JsonObject recipeObject = new JsonObject();
+                        recipeObject.addProperty("type", "minecraft:crafting_shapeless");
+                        JsonArray ingredients = new JsonArray();
+                        for (int j = 0; j < 3; j++) {
+                            JsonObject item = new JsonObject();
+                            item.addProperty("item", "vehiclemod:" + ingredientName);
+                            ingredients.add(item);
+                        }
+                        recipeObject.add("ingredients", ingredients);
+                        JsonObject result = new JsonObject();
+                        result.addProperty("item", "vehiclemod:" + outputName);
+                        result.addProperty("count", 1);
+                        recipeObject.add("result", result);
+                        FileWriter writer = new FileWriter(file);
+                        writer.write(gson.toJson(recipeObject));
+                        writer.close();
+                        System.out.println("Created recipe for " + outputName);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+            */
         }
 
         @SubscribeEvent

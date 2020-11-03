@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "vehiclemod:transmission_5"
+    },
+    {
+      "item": "vehiclemod:transmission_5"
+    },
+    {
+      "item": "vehiclemod:transmission_5"
+    }
+  ],
+  "result": {
+    "item": "vehiclemod:transmission_6",
+    "count": 1
+  }
+}

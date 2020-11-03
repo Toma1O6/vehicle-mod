@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "vehiclemod:brakes_3"
+    },
+    {
+      "item": "vehiclemod:brakes_3"
+    },
+    {
+      "item": "vehiclemod:brakes_3"
+    }
+  ],
+  "result": {
+    "item": "vehiclemod:brakes_4",
+    "count": 1
+  }
+}

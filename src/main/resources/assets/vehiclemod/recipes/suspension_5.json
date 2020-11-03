@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "vehiclemod:suspension_4"
+    },
+    {
+      "item": "vehiclemod:suspension_4"
+    },
+    {
+      "item": "vehiclemod:suspension_4"
+    }
+  ],
+  "result": {
+    "item": "vehiclemod:suspension_5",
+    "count": 1
+  }
+}

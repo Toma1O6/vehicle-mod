@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "vehiclemod:ecu_6"
+    },
+    {
+      "item": "vehiclemod:ecu_6"
+    },
+    {
+      "item": "vehiclemod:ecu_6"
+    }
+  ],
+  "result": {
+    "item": "vehiclemod:ecu_7",
+    "count": 1
+  }
+}

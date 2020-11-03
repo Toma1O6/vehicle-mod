@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "vehiclemod:turbo_6"
+    },
+    {
+      "item": "vehiclemod:turbo_6"
+    },
+    {
+      "item": "vehiclemod:turbo_6"
+    }
+  ],
+  "result": {
+    "item": "vehiclemod:turbo_7",
+    "count": 1
+  }
+}

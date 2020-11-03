@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	" I ",
+	"IFI",
+	" I "
+  ],
+  "key": {
+	"I": {
+	  "item": "minecraft:iron_ingot"
+	},
+	"F": {
+	  "item": "vehiclemod:bucket_of_fuel"
+	}
+  },
+  "result": {
+	"item": "vehiclemod:fuel_can",
+	"count": 1
+  }
+}

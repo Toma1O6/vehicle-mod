@@ -25,7 +25,7 @@ public class VehicleSputnikDuster extends EntityVehicleSUV {
 
     @Override
     public VehicleContainer createInvetory() {
-        return new VehicleContainer(this, 9);
+        return new VehicleContainer(this, 18);
     }
 
     @Override
