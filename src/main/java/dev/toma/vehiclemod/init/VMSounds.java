@@ -6,7 +6,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @GameRegistry.ObjectHolder(VehicleMod.MODID)
 public class VMSounds {
-    public static final SoundEvent VEHICLE_IDLE = null;
     public static final SoundEvent BEAMER_ACC = null;
     public static final SoundEvent BEAMER_BRAKE = null;
     public static final SoundEvent BEAMER_GAS = null;

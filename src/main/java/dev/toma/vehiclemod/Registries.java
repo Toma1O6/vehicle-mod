@@ -145,7 +145,6 @@ public class Registries {
         @SubscribeEvent
         public static void onSoundRegister(RegistryEvent.Register<SoundEvent> e) {
             e.getRegistry().registerAll(
-                    registerSound("vehicle_idle"),
                     registerSound("beamer_acc"),
                     registerSound("beamer_brake"),
                     registerSound("beamer_gas"),

@@ -65,7 +65,6 @@ public final class VehicleStats {
 	public int fuelCapacity;
 
 	@Config.Name("TPP Camera Offset")
-	@Config.RequiresMcRestart
 	public Vector3i cameraOff;
 	
 	public VehicleStats(float maxHP, float maxSpeed, float acceleration, float brakeSpeed, float turningSpeed, float maxAngle, float fuelConsumption, int capacity, Vector3i offset) {
@@ -170,7 +169,12 @@ public final class VehicleStats {
 
 	public static class Vector3i {
 
-		private int x, y, z;
+		@Config.Name("X")
+		public int x;
+		@Config.Name("Y")
+		public int y;
+		@Config.Name("Z")
+		public int z;
 
 		public Vector3i(int x, int y, int z) {
 			this.x = x;
