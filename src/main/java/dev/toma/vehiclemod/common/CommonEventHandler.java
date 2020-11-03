@@ -47,7 +47,7 @@ public class CommonEventHandler {
                 event.player.sendMessage(textComponent);
                 break;
             case UP_TO_DATE:
-                event.player.sendMessage(new TextComponentString(getMessageLogo() + TextFormatting.GREEN + " Up to date"));
+                event.player.sendMessage(new TextComponentString(getMessageLogo() + TextFormatting.GREEN + " No updates available"));
                 break;
         }
     }
