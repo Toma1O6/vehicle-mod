@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.common.blocks;
 
 import com.google.common.base.Preconditions;
 import dev.toma.vehiclemod.Registries;
+import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.gui.GuiLockpicking;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import net.minecraft.block.material.Material;
@@ -85,7 +86,7 @@ public class BlockMechanicPackage extends BlockBasic {
             return true;
         }
         if(worldIn.isRemote) {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiLockpicking((TileEntityMechanicPackage) worldIn.getTileEntity(pos)));
+            VehicleMod.proxy.openLockpickUI((TileEntityMechanicPackage) worldIn.getTileEntity(pos));
         }
         return true;
     }

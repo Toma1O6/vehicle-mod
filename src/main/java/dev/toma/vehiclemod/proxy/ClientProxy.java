@@ -3,12 +3,14 @@ package dev.toma.vehiclemod.proxy;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.VehicleInputHandler;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.client.gui.GuiLockpicking;
 import dev.toma.vehiclemod.client.model.vehicle.ModelSputnik3000L;
 import dev.toma.vehiclemod.client.render.entity.*;
 import dev.toma.vehiclemod.common.entity.vehicle.*;
 import dev.toma.vehiclemod.client.VMTickableSound;
 import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1;
 import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1Tunned;
+import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.GuiScreen;
@@ -53,6 +55,11 @@ public class ClientProxy extends CommonProxy {
 		VMTickableSound sound = new VMTickableSound(event, v);
 		v.currentSound = sound;
 		handler.playSound(sound);
+	}
+
+	@Override
+	public void openLockpickUI(TileEntityMechanicPackage mechanicPackage) {
+		Minecraft.getMinecraft().displayGuiScreen(new GuiLockpicking(mechanicPackage));
 	}
 
 	private static void registerEntityRenderers() {
