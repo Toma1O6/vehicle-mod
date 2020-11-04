@@ -28,6 +28,7 @@ public class VMNetworkManager {
 		registerServerPacket(SPacketUpdateTileEntity.Handler.class, SPacketUpdateTileEntity.class);
 		registerServerPacket(SPacketSetNBT.Handler.class, SPacketSetNBT.class);
 		registerServerPacket(SPacketOpenVehicleComponentGUI.Handler.class, SPacketOpenVehicleComponentGUI.class);
+		registerServerPacket(SPacketLockpickAttempt.Handler.class, SPacketLockpickAttempt.class);
 	}
 	
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerClientPacket(Class<? extends IMessageHandler<REQ, REPLY>> handler, Class<REQ> packet) {

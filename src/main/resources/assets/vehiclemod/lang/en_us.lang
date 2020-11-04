@@ -123,6 +123,7 @@ item.tires_4.name=Tires [4]
 item.tires_5.name=Tires [5]
 item.tires_6.name=Tires [6]
 item.tires_7.name=Tires [7]
+item.lockpick.name=Lockpick
 
 entity.vehiclemod:beamer_s120.name=Beamer S120
 entity.vehiclemod:fedoratti_vulcan.name=Fedoratti Vulcan

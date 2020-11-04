@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"I ",
+	"G ",
+	"II"
+  ],
+  "key": {
+	"I": {
+	  "item": "minecraft:iron_ingot"
+	},
+	"G": {
+	  "item": "minecraft:gold_ingot"
+	}
+  },
+  "result": {
+	"item": "vehiclemod:lockpick",
+	"count": 5
+  }
+}

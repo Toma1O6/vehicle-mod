@@ -1,16 +1,13 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "vehiclemod:ecu_5"
-    },
-    {
-      "item": "vehiclemod:ecu_5"
-    },
-    {
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP"
+  ],
+  "key": {
+    "P": {
       "item": "vehiclemod:ecu_5"
     }
-  ],
+  },
   "result": {
     "item": "vehiclemod:ecu_6",
     "count": 1

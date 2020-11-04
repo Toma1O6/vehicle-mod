@@ -1,16 +1,13 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "vehiclemod:engine_2"
-    },
-    {
-      "item": "vehiclemod:engine_2"
-    },
-    {
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP"
+  ],
+  "key": {
+    "P": {
       "item": "vehiclemod:engine_2"
     }
-  ],
+  },
   "result": {
     "item": "vehiclemod:engine_3",
     "count": 1

@@ -1,16 +1,13 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "vehiclemod:body_5"
-    },
-    {
-      "item": "vehiclemod:body_5"
-    },
-    {
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP"
+  ],
+  "key": {
+    "P": {
       "item": "vehiclemod:body_5"
     }
-  ],
+  },
   "result": {
     "item": "vehiclemod:body_6",
     "count": 1

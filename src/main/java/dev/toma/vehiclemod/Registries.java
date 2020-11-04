@@ -1,9 +1,5 @@
 package dev.toma.vehiclemod;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import dev.toma.vehiclemod.client.model.DummyBakedModel;
 import dev.toma.vehiclemod.client.render.item.RenderItemSpawner;
 import dev.toma.vehiclemod.common.blocks.BlockMechanicPackage;
@@ -36,8 +32,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -57,6 +51,7 @@ public class Registries {
         public static final VMItem BUCKET_OF_ACTIVATED_FUEL_SUBSTANCE = null;
         public static final VMItem BUCKET_OF_FUEL = null;
         public static final VMItem FUEL_FILTER = null;
+        public static final VMItem LOCKPICK = null;
     }
 
     @ObjectHolder(VehicleMod.MODID)
@@ -111,7 +106,8 @@ public class Registries {
                     new VMItem("bucket_of_liquid_coal"),
                     new VMItem("bucket_of_activated_fuel_substance"),
                     new VMItem("bucket_of_fuel"),
-                    new VMItem("fuel_filter")
+                    new VMItem("fuel_filter"),
+                    new VMItem("lockpick")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {
                 VehicleTexture texture = VehicleTexture.values()[i];
@@ -249,8 +245,8 @@ public class Registries {
                 }
             }
 
-            /* GENERATES TUNNING RECIPES
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            //GENERATES TUNNING RECIPES
+            /*Gson gson = new GsonBuilder().setPrettyPrinting().create();
             File dir = new File("D:/mcmods/1.12.2/vehicle-mod/src/main/resources/assets/vehiclemod/recipes");
             for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
                 for (int i = 2; i < 8; i++) {
@@ -260,14 +256,15 @@ public class Registries {
                         String ingredientName = outputName.replaceAll("_[0-9]+", "_" + n);
                         File file = new File(dir, outputName + ".json");
                         JsonObject recipeObject = new JsonObject();
-                        recipeObject.addProperty("type", "minecraft:crafting_shapeless");
-                        JsonArray ingredients = new JsonArray();
-                        for (int j = 0; j < 3; j++) {
-                            JsonObject item = new JsonObject();
-                            item.addProperty("item", "vehiclemod:" + ingredientName);
-                            ingredients.add(item);
-                        }
-                        recipeObject.add("ingredients", ingredients);
+                        recipeObject.addProperty("type", "minecraft:crafting_shaped");
+                        JsonArray pattern = new JsonArray();
+                        pattern.add("PPP");
+                        recipeObject.add("pattern", pattern);
+                        JsonObject key = new JsonObject();
+                        JsonObject p = new JsonObject();
+                        p.addProperty("item", "vehiclemod:" + ingredientName);
+                        key.add("P", p);
+                        recipeObject.add("key", key);
                         JsonObject result = new JsonObject();
                         result.addProperty("item", "vehiclemod:" + outputName);
                         result.addProperty("count", 1);
@@ -280,8 +277,7 @@ public class Registries {
                         ex.printStackTrace();
                     }
                 }
-            }
-            */
+            }*/
         }
 
         @SubscribeEvent

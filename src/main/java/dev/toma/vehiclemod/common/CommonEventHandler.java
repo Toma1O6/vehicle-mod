@@ -46,7 +46,7 @@ public class CommonEventHandler {
                 textComponent.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url));
                 event.player.sendMessage(textComponent);
                 break;
-            case UP_TO_DATE:
+            default:
                 event.player.sendMessage(new TextComponentString(getMessageLogo() + TextFormatting.GREEN + " No updates available"));
                 break;
         }

@@ -1,16 +1,13 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "vehiclemod:tires_5"
-    },
-    {
-      "item": "vehiclemod:tires_5"
-    },
-    {
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP"
+  ],
+  "key": {
+    "P": {
       "item": "vehiclemod:tires_5"
     }
-  ],
+  },
   "result": {
     "item": "vehiclemod:tires_6",
     "count": 1

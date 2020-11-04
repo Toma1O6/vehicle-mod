@@ -1,16 +1,13 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "vehiclemod:brakes_5"
-    },
-    {
-      "item": "vehiclemod:brakes_5"
-    },
-    {
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP"
+  ],
+  "key": {
+    "P": {
       "item": "vehiclemod:brakes_5"
     }
-  ],
+  },
   "result": {
     "item": "vehiclemod:brakes_6",
     "count": 1

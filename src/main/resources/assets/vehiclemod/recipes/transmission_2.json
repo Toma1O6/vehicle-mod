@@ -1,16 +1,13 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "vehiclemod:transmission_1"
-    },
-    {
-      "item": "vehiclemod:transmission_1"
-    },
-    {
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP"
+  ],
+  "key": {
+    "P": {
       "item": "vehiclemod:transmission_1"
     }
-  ],
+  },
   "result": {
     "item": "vehiclemod:transmission_2",
     "count": 1

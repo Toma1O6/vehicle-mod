@@ -1,16 +1,13 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "vehiclemod:fuel_tank_6"
-    },
-    {
-      "item": "vehiclemod:fuel_tank_6"
-    },
-    {
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP"
+  ],
+  "key": {
+    "P": {
       "item": "vehiclemod:fuel_tank_6"
     }
-  ],
+  },
   "result": {
     "item": "vehiclemod:fuel_tank_7",
     "count": 1

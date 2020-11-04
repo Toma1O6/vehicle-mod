@@ -10,7 +10,6 @@ public class ItemFuelCan extends ItemVehicleAccessory {
 	
 	public ItemFuelCan(String name) {
 		super(name, 15);
-		setMaxDamage(4);
 		setMaxStackSize(1);
 	}
 
@@ -26,7 +25,7 @@ public class ItemFuelCan extends ItemVehicleAccessory {
 			if(stack.getItemDamage() < stack.getMaxDamage()) {
 				vehicle.refillFuel();
 				if(!((EntityPlayer)entityLiving).isCreative()) {
-					stack.damageItem(1, entityLiving);
+					stack.shrink(1);
 				}
 			}
 		}

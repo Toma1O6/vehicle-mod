@@ -1,13 +1,15 @@
 package dev.toma.vehiclemod.common.blocks;
 
 import com.google.common.base.Preconditions;
+import dev.toma.vehiclemod.Registries;
+import dev.toma.vehiclemod.client.gui.GuiLockpicking;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -15,6 +17,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -67,15 +70,6 @@ public class BlockMechanicPackage extends BlockBasic {
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if(tileEntity instanceof TileEntityMechanicPackage) {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityMechanicPackage) tileEntity);
-        }
-        super.breakBlock(worldIn, pos, state);
-    }
-
-    @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if(tileEntity instanceof TileEntityMechanicPackage) {
@@ -85,8 +79,13 @@ public class BlockMechanicPackage extends BlockBasic {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if(!worldIn.isRemote) {
-            worldIn.destroyBlock(pos, false);
+        if(playerIn.getHeldItemMainhand().getItem() != Registries.VMItems.LOCKPICK) {
+            if(!worldIn.isRemote)
+                playerIn.sendStatusMessage(new TextComponentString("You must use lockpick to unlock this"), true);
+            return true;
+        }
+        if(worldIn.isRemote) {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiLockpicking((TileEntityMechanicPackage) worldIn.getTileEntity(pos)));
         }
         return true;
     }
@@ -98,19 +97,21 @@ public class BlockMechanicPackage extends BlockBasic {
 
     public enum Variant {
 
-        BRONZE   (55, 1, 0.60F, 0.25F, 0.08F, 0.05F, 0.02F, 0.00F, 0.00F),
-        SILVER   (30, 1, 0.30F, 0.40F, 0.15F, 0.08F, 0.05F, 0.02F, 0.00F),
-        GOLDEN   (10, 2, 0.15F, 0.35F, 0.20F, 0.15F, 0.08F, 0.05F, 0.02F),
-        PLATINUM ( 5, 2, 0.00F, 0.15F, 0.33F, 0.27F, 0.13F, 0.08F, 0.04F);
+        BRONZE   (55, 1, 3, 0.60F, 0.25F, 0.08F, 0.05F, 0.02F, 0.00F, 0.00F),
+        SILVER   (30, 1, 4, 0.30F, 0.40F, 0.15F, 0.08F, 0.05F, 0.02F, 0.00F),
+        GOLDEN   (10, 2, 5, 0.15F, 0.35F, 0.20F, 0.15F, 0.08F, 0.05F, 0.02F),
+        PLATINUM ( 5, 2, 6, 0.00F, 0.15F, 0.33F, 0.27F, 0.13F, 0.08F, 0.04F);
 
         final int spawnChance;
         final int partCount;
+        final int buttons;
         final float[] levelChances;
         BlockMechanicPackage aPackage;
 
-        Variant(int spawnChance, int parts, float... chances) {
+        Variant(int spawnChance, int parts, int buttons, float... chances) {
             this.spawnChance = spawnChance;
             this.partCount = parts;
+            this.buttons = buttons;
             this.levelChances = chances;
             Preconditions.checkState(levelChances != null && levelChances.length == 7, "Invalid array size");
         }
@@ -125,6 +126,10 @@ public class BlockMechanicPackage extends BlockBasic {
 
         public int getPartCount() {
             return partCount;
+        }
+
+        public int getButtons() {
+            return buttons;
         }
 
         public float[] getLevelChances() {
