@@ -195,7 +195,10 @@ public class Registries {
                     registerSound("proton_p1_tunned_brake"),
                     registerSound("proton_p1_tunned_gas"),
                     registerSound("proton_p1_tunned_start"),
-                    registerSound("secret")
+                    registerSound("secret"),
+                    registerSound("lock_unlocked"),
+                    registerSound("lockpick_success"),
+                    registerSound("lockpick_failed")
             );
         }
 

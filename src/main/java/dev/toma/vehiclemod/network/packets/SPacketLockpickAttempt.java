@@ -1,7 +1,9 @@
 package dev.toma.vehiclemod.network.packets;
 
 import dev.toma.vehiclemod.Registries;
+import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
+import dev.toma.vehiclemod.init.VMSounds;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
@@ -68,10 +70,14 @@ public class SPacketLockpickAttempt implements IMessage {
                     int pressed = message.index;
                     if(correct != pressed) {
                         player.closeScreen();
-                        world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.MASTER, 1.0F, 1.0F);
-                        player.getHeldItemMainhand().shrink(1);
+                        world.playSound(null, player.posX, player.posY, player.posZ, VMSounds.LOCKPICK_FAILED, SoundCategory.MASTER, 1.0F, 1.0F);
+                        if(VehicleMod.random.nextBoolean()) {
+                            world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.MASTER, 1.0F, 1.0F);
+                            player.getHeldItemMainhand().shrink(1);
+                        }
                     } else if(message.offset == combinations.length - 1) {
                         player.closeScreen();
+                        world.playSound(null, player.posX, player.posY, player.posZ, VMSounds.LOCK_UNLOCKED, SoundCategory.MASTER, 1.0F, 1.0F);
                         for (int i = 0; i < mechanicPackage.getSizeInventory(); i++) {
                             ItemStack stack = mechanicPackage.getStackInSlot(i);
                             if(!stack.isEmpty()) {
@@ -79,6 +85,8 @@ public class SPacketLockpickAttempt implements IMessage {
                             }
                         }
                         world.destroyBlock(pos, false);
+                    } else {
+                        world.playSound(null, player.posX, player.posY, player.posZ, VMSounds.LOCKPICK_SUCCESS, SoundCategory.MASTER, 1.0F, 1.0F);
                     }
                 }
             });

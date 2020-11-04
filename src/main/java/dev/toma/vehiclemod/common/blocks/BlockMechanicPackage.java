@@ -97,10 +97,10 @@ public class BlockMechanicPackage extends BlockBasic {
 
     public enum Variant {
 
-        BRONZE   (55, 1, 3, 0.60F, 0.25F, 0.08F, 0.05F, 0.02F, 0.00F, 0.00F),
-        SILVER   (30, 1, 4, 0.30F, 0.40F, 0.15F, 0.08F, 0.05F, 0.02F, 0.00F),
-        GOLDEN   (10, 2, 5, 0.15F, 0.35F, 0.20F, 0.15F, 0.08F, 0.05F, 0.02F),
-        PLATINUM ( 5, 2, 6, 0.00F, 0.15F, 0.33F, 0.27F, 0.13F, 0.08F, 0.04F);
+        BRONZE   (55, 1, 4, 0.60F, 0.25F, 0.08F, 0.05F, 0.02F, 0.00F, 0.00F),
+        SILVER   (30, 1, 5, 0.30F, 0.40F, 0.15F, 0.08F, 0.05F, 0.02F, 0.00F),
+        GOLDEN   (10, 2, 6, 0.15F, 0.35F, 0.20F, 0.15F, 0.08F, 0.05F, 0.02F),
+        PLATINUM ( 5, 2, 7, 0.00F, 0.15F, 0.33F, 0.27F, 0.13F, 0.08F, 0.04F);
 
         final int spawnChance;
         final int partCount;

@@ -47,5 +47,8 @@
     "proton_p1_tunned_start": {"category": "master", "sounds": [{"name": "vehiclemod:proton_p1_tunned_str", "stream": "true"}]},
     "proton_p1_tunned_acc": {"category": "master", "sounds": [{"name": "vehiclemod:proton_p1_tunned_acc", "stream": "true"}]},
     "proton_p1_tunned_brake": {"category": "master", "sounds": [{"name": "vehiclemod:proton_p1_tunned_brk", "stream": "true"}]},
-    "proton_p1_tunned_gas": {"category": "master", "sounds": [{"name": "vehiclemod:proton_p1_tunned_rls", "stream": "true"}]}
+    "proton_p1_tunned_gas": {"category": "master", "sounds": [{"name": "vehiclemod:proton_p1_tunned_rls", "stream": "true"}]},
+    "lock_unlocked": {"category": "master", "sounds": [{"name": "vehiclemod:lock_unlocked", "stream": "true"}]},
+    "lockpick_success": {"category": "master", "sounds": [{"name": "vehiclemod:lockpick_success", "stream": "true"}]},
+    "lockpick_failed": {"category": "master", "sounds": [{"name": "vehiclemod:lockpick_failed", "stream": "true"}]}
 }

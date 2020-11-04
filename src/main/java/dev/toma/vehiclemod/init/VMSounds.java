@@ -55,4 +55,7 @@ public class VMSounds {
     public static final SoundEvent PROTON_P1_TUNNED_GAS = null;
     public static final SoundEvent PROTON_P1_TUNNED_START = null;
     public static final SoundEvent SECRET = null;
+    public static final SoundEvent LOCK_UNLOCKED = null;
+    public static final SoundEvent LOCKPICK_SUCCESS = null;
+    public static final SoundEvent LOCKPICK_FAILED = null;
 }
