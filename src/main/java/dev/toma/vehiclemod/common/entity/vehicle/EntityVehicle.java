@@ -571,7 +571,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     private boolean isBraking() {
-        return Math.abs(currentSpeed) < Math.abs(prevSpeed) || (currentSpeed > 0 ? inputBack : inputForward);
+        return Math.abs(currentSpeed) < Math.abs(prevSpeed) && (currentSpeed > 0 ? inputBack : inputForward);
     }
 
     private boolean hasReleasedGas() {
