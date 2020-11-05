@@ -167,7 +167,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         VehicleStats stats = this.getActualStats();
         float accModifier = this.health / stats.maxHealth < 0.25F ? this.health / stats.maxHealth : 1.0F;
         if (inputForward && !inputBack && (hasFuel() || currentSpeed < 0)) {
-            float mod = 1.0F - currentSpeed / stats.maxSpeed;
+            float mod = Math.abs(1.0F - currentSpeed / stats.maxSpeed);
             float acceleration = mod * stats.acceleration * accModifier;
             burnFuel();
             currentSpeed = currentSpeed < stats.maxSpeed ? currentSpeed + acceleration : stats.maxSpeed;
