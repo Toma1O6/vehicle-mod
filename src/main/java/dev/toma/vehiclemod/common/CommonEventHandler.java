@@ -46,6 +46,9 @@ public class CommonEventHandler {
                 textComponent.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url));
                 event.player.sendMessage(textComponent);
                 break;
+            case AHEAD:
+                event.player.sendMessage(new TextComponentString(getMessageLogo() + TextFormatting.GREEN + " You are using unofficial version. Expect bugs"));
+                break;
             default:
                 event.player.sendMessage(new TextComponentString(getMessageLogo() + TextFormatting.GREEN + " No updates available"));
                 break;
