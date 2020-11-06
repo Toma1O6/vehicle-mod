@@ -22,11 +22,9 @@ public class ItemFuelCan extends ItemVehicleAccessory {
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
 		if(entityLiving instanceof EntityPlayer && entityLiving.isRiding() && entityLiving.getRidingEntity() instanceof EntityVehicle) {
 			EntityVehicle vehicle = (EntityVehicle) entityLiving.getRidingEntity();
-			if(stack.getItemDamage() < stack.getMaxDamage()) {
-				vehicle.refillFuel();
-				if(!((EntityPlayer)entityLiving).isCreative()) {
-					stack.shrink(1);
-				}
+			vehicle.refillFuel();
+			if(!((EntityPlayer)entityLiving).isCreative()) {
+				stack.shrink(1);
 			}
 		}
 		return stack;
