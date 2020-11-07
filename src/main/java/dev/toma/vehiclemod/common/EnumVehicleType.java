@@ -2,11 +2,11 @@ package dev.toma.vehiclemod.common;
 
 public enum EnumVehicleType {
 
-    STANDART(40),
-    SUV(15),
-    MUSCLE(20),
-    SPORT(10),
-    SPECIAL(15);
+    STANDART(40), // 10
+    SUV(15), // 15
+    MUSCLE(20), // 20
+    SPORT(10), // 20
+    SPECIAL(15); // 10
 
     private final int spawnChance;
 
