@@ -349,7 +349,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     public void refillFuel() {
-        fuel += 25f;
+        fuel += 10.0F;
         if (fuel > getActualStats().fuelCapacity) {
             fuel = getActualStats().fuelCapacity;
         }
