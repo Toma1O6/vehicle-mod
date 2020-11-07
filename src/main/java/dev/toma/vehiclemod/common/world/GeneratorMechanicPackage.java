@@ -20,7 +20,7 @@ public class GeneratorMechanicPackage implements IWorldGenerator {
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-        if(random.nextFloat() > 0.06F)
+        if(random.nextFloat() > 0.1F)
             return;
         BlockMechanicPackage.Variant variant = VARIANT.getRandom();
         int x = (chunkX << 4) + random.nextInt(16);

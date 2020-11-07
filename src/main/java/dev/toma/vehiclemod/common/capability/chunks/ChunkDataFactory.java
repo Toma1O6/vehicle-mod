@@ -68,7 +68,7 @@ public class ChunkDataFactory implements ChunkData {
                 if (!data.isMarked() && !world.isRemote) {
                     data.mark();
                     chunk.markDirty();
-                    if(random.nextFloat() <= 0.003F) {
+                    if(random.nextFloat() <= 0.005F) {
                         ChunkPos pos = chunk.getPos();
                         int x = (pos.x << 4) + random.nextInt(16);
                         int z = (pos.z << 4) + random.nextInt(16);
