@@ -1,16 +1,17 @@
-package dev.toma.vehiclemod.common.entity.vehicle;
+package dev.toma.vehiclemod.common.entity.vehicle.suv;
 
-import dev.toma.vehiclemod.common.EnumVehicleType;
+import dev.toma.vehiclemod.common.entity.vehicle.EnumVehicleType;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class EntityVehicleSUV extends EntityVehicle {
 
-    public EntityVehicleSUV(World world) {
+    EntityVehicleSUV(World world) {
         super(world);
     }
 
-    public EntityVehicleSUV(World world, BlockPos pos) {
+    EntityVehicleSUV(World world, BlockPos pos) {
         super(world, pos);
     }
 

@@ -1,5 +1,7 @@
-package dev.toma.vehiclemod.common.entity.vehicle;
+package dev.toma.vehiclemod.common.entity.vehicle.sport;
 
+import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
+import dev.toma.vehiclemod.common.entity.vehicle.sport.EntityVehicleSport;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.init.VMSounds;

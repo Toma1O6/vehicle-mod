@@ -1,6 +1,6 @@
 package dev.toma.vehiclemod.client.render.entity;
 
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleBeamerPickup;
+import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleBeamerPickup;
 import dev.toma.vehiclemod.client.model.vehicle.ModelBeamerPickup;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
 import net.minecraft.client.renderer.GlStateManager;

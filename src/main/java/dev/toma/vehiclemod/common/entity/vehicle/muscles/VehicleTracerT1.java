@@ -1,6 +1,8 @@
-package dev.toma.vehiclemod.common.entity.vehicle;
+package dev.toma.vehiclemod.common.entity.vehicle.muscles;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
+import dev.toma.vehiclemod.common.entity.vehicle.muscles.EntityVehicleMuscles;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -9,15 +11,15 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleBeamerS320RS extends EntityVehicleSport {
+public class VehicleTracerT1 extends EntityVehicleMuscles {
 
-    static final Vector3f[] PARTS = {new Vector3f(1.5F, 0.4F, 0.0F), new Vector3f(-2.2F, 0.3F, 0.7F), new Vector3f(-2.2f, 0.3F, -0.8F)};
+    private static final Vector3f[] VECTOR_3_FS = {new Vector3f(1.5F, 0.25F, 0), new Vector3f(-2.2F, 0.05F, 0.3F)};
 
-    public VehicleBeamerS320RS(World world) {
+    public VehicleTracerT1(World world) {
         super(world);
     }
 
-    public VehicleBeamerS320RS(World world, BlockPos pos) {
+    public VehicleTracerT1(World world, BlockPos pos) {
         super(world, pos);
     }
 
@@ -29,46 +31,45 @@ public class VehicleBeamerS320RS extends EntityVehicleSport {
     @Override
     public VehicleSoundPack createSoundPack() {
         return VehicleSoundPack.Builder.create(this)
-                .acc(VMSounds.BEAMERB1_ACC)
-                .brk(VMSounds.BEAMERB1_BRAKE)
-                .rls(VMSounds.BEAMERB1_GAS)
-                .str(VMSounds.BEAMERB1_START)
+                .acc(VMSounds.TRACER_ACC)
+                .brk(VMSounds.TRACER_BRAKE)
+                .rls(VMSounds.TRACER_GAS)
+                .str(VMSounds.TRACER_START)
                 .build();
     }
 
     @Override
-    public Vector3f[] getPartVecs() {
-        return PARTS;
+    public double getMountedYOffset() {
+        return -0.18;
     }
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.beamers320rs;
+        return VMConfig.tracer_t1;
     }
 
     @Override
-    public double getMountedYOffset() {
-        return -0.1;
+    public Vector3f[] getPartVecs() {
+        return VECTOR_3_FS;
     }
 
     @Override
     public int maximumAmountOfPassengers() {
-        return 4;
+        return 2;
     }
 
     @Override
     protected double getPassengerOffsetX(int id) {
-        return id < 2 ? 0.15 : -0.65;
+        return -0.2;
     }
 
     @Override
     protected double getPassengerOffsetZ(int id) {
-        double d = 0.4;
-        return id % 2 == 0 ? -d : d;
+        return id == 0 ? -0.4 : 0.4;
     }
 
     @Override
     public VehicleUpgrades createVehicleUpgrades() {
-        return new VehicleUpgrades(getConfigStats(), fill(9, 2));
+        return new VehicleUpgrades(getConfigStats(), fill(9, 1));
     }
 }

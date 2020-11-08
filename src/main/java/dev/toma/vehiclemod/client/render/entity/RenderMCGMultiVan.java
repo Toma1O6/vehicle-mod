@@ -1,6 +1,6 @@
 package dev.toma.vehiclemod.client.render.entity;
 
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleMCGMultiVan;
+import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleMCGMultiVan;
 import dev.toma.vehiclemod.client.model.vehicle.ModelMCGMultiVan;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
 import net.minecraft.client.renderer.GlStateManager;

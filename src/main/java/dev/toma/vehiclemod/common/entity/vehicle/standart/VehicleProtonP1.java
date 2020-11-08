@@ -1,6 +1,7 @@
-package dev.toma.vehiclemod.common.entity.vehicle;
+package dev.toma.vehiclemod.common.entity.vehicle.standart;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.standart.EntityVehicleStandart;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -9,16 +10,17 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleSputnik3000L extends EntityVehicleStandart {
+public class VehicleProtonP1 extends EntityVehicleStandart {
 
-    protected static Vector3f[] PARTS = {new Vector3f(1.75F, 0.4F, 0), new Vector3f(-1.9F, 0, 0.5F)};
+    static final Vector3f[] PARTS = {new Vector3f(1.5f, 0.2f, 0.0f), new Vector3f(-2.3f, 0.2f, 0.6f)};
 
-    public VehicleSputnik3000L(World world) {
+    public VehicleProtonP1(World world) {
         super(world);
     }
 
-    public VehicleSputnik3000L(World world, BlockPos pos) {
+    public VehicleProtonP1(World world, BlockPos pos) {
         super(world, pos);
+        setSize(2.0f, 1.5f);
     }
 
     @Override
@@ -29,21 +31,26 @@ public class VehicleSputnik3000L extends EntityVehicleStandart {
     @Override
     public VehicleSoundPack createSoundPack() {
         return VehicleSoundPack.Builder.create(this)
-                .acc(VMSounds.SPUTNIK3_ACC)
-                .brk(VMSounds.SPUTNIK3_BRAKE)
-                .rls(VMSounds.SPUTNIK3_GAS)
-                .str(VMSounds.SPUTNIK3_START)
+                .acc(VMSounds.PROTON_P1_ACC)
+                .brk(VMSounds.PROTON_P1_BRAKE)
+                .rls(VMSounds.PROTON_P1_GAS)
+                .str(VMSounds.PROTON_P1_START)
                 .build();
     }
 
     @Override
     public double getMountedYOffset() {
-        return -0.1;
+        return -0.2;
     }
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.sputnik3000L;
+        return VMConfig.protonP1;
+    }
+
+    @Override
+    public int maximumAmountOfPassengers() {
+        return 2;
     }
 
     @Override
@@ -52,17 +59,12 @@ public class VehicleSputnik3000L extends EntityVehicleStandart {
     }
 
     @Override
-    public int maximumAmountOfPassengers() {
-        return 4;
-    }
-
-    @Override
     protected double getPassengerOffsetX(int id) {
-        return id < 2 ? 0.4 : -0.4;
+        return -0.2;
     }
 
     @Override
     protected double getPassengerOffsetZ(int id) {
-        return id % 2 == 0 ? -0.4 : 0.4;
+        return id % 2 == 0 ? -0.4: 0.4;
     }
 }

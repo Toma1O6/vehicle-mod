@@ -1,7 +1,7 @@
 package dev.toma.vehiclemod.common.capability.chunks;
 
 import dev.toma.vehiclemod.VehicleMod;
-import dev.toma.vehiclemod.common.EnumVehicleType;
+import dev.toma.vehiclemod.common.entity.vehicle.EnumVehicleType;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.util.VehicleTexture;

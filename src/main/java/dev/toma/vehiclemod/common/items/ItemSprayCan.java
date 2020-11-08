@@ -33,4 +33,8 @@ public class ItemSprayCan extends VMItem {
     public void applyColor(EntityVehicle vehicle, ItemStack stack, EntityPlayer player) {
         vehicle.setTexture(this.texture);
     }
+
+    public VehicleTexture getTexture() {
+        return texture;
+    }
 }

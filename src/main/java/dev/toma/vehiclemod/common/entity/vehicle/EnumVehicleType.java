@@ -1,4 +1,4 @@
-package dev.toma.vehiclemod.common;
+package dev.toma.vehiclemod.common.entity.vehicle;
 
 public enum EnumVehicleType {
 

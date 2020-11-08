@@ -1,4 +1,4 @@
-package dev.toma.vehiclemod.common;
+package dev.toma.vehiclemod.common.entity.vehicle;
 
 import dev.toma.vehiclemod.client.VMTickableSound;
 import net.minecraft.util.SoundEvent;

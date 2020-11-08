@@ -1,16 +1,17 @@
-package dev.toma.vehiclemod.common.entity.vehicle;
+package dev.toma.vehiclemod.common.entity.vehicle.muscles;
 
-import dev.toma.vehiclemod.common.EnumVehicleType;
+import dev.toma.vehiclemod.common.entity.vehicle.EnumVehicleType;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class EntityVehicleMuscles extends EntityVehicle {
 
-    public EntityVehicleMuscles(World world) {
+    EntityVehicleMuscles(World world) {
         super(world);
     }
 
-    public EntityVehicleMuscles(World world, BlockPos pos) {
+    EntityVehicleMuscles(World world, BlockPos pos) {
         super(world, pos);
     }
 

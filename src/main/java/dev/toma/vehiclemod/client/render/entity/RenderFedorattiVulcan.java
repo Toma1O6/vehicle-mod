@@ -1,6 +1,6 @@
 package dev.toma.vehiclemod.client.render.entity;
 
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleFedorattiVulcan;
+import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleFedorattiVulcan;
 import dev.toma.vehiclemod.client.model.vehicle.ModelFedorattiVulcan;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
 import net.minecraft.client.renderer.GlStateManager;

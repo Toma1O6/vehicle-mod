@@ -61,7 +61,7 @@ public class GuiPetrolPump extends GuiContainer {
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         mc.getTextureManager().bindTexture(TEXTURE);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
-        drawFuelBar(11, petrolPump.storedAmount / 2500F);
+        drawFuelBar(11, petrolPump.storedAmount / TileEntityPetrolPump.CAPACITY);
         if(petrolPump.pairedVehicle != null) {
             drawFuelBar(50, petrolPump.pairedVehicle.fuel / (float)petrolPump.pairedVehicle.getActualStats().fuelCapacity);
         }

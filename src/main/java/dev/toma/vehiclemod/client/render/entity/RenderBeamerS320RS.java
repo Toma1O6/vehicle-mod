@@ -1,6 +1,6 @@
 package dev.toma.vehiclemod.client.render.entity;
 
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleBeamerS320RS;
+import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleBeamerS320RS;
 import dev.toma.vehiclemod.client.model.vehicle.ModelBeamerS320RS;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
 import net.minecraft.client.renderer.GlStateManager;

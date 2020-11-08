@@ -21,6 +21,7 @@ public class ItemVehicleUpgrade extends VMItem {
         super(type.name().toLowerCase() + "_" + level);
         this.type = type;
         this.level = level;
+        setMaxStackSize(1);
     }
 
     public Type getType() {

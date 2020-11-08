@@ -1,6 +1,7 @@
-package dev.toma.vehiclemod.common.entity.vehicle;
+package dev.toma.vehiclemod.common.entity.vehicle.standart;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.standart.EntityVehicleStandart;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -9,42 +10,41 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleBeamerPickup extends EntityVehicleSpecial {
+public class VehicleSputnik3000L extends EntityVehicleStandart {
 
-    static final Vector3f[] PARTS = {new Vector3f(1.8f, 0.3f, 0), new Vector3f(-1.8f, 0f, 0f)};
+    public static Vector3f[] PARTS = {new Vector3f(1.75F, 0.4F, 0), new Vector3f(-1.9F, 0, 0.5F)};
 
-    public VehicleBeamerPickup(World world) {
+    public VehicleSputnik3000L(World world) {
         super(world);
     }
 
-    public VehicleBeamerPickup(World world, BlockPos pos) {
+    public VehicleSputnik3000L(World world, BlockPos pos) {
         super(world, pos);
-        setSize(1.5f, 2.0f);
     }
 
     @Override
     public VehicleContainer createInvetory() {
-        return new VehicleContainer(this, 36);
+        return new VehicleContainer(this, 9);
     }
 
     @Override
     public VehicleSoundPack createSoundPack() {
         return VehicleSoundPack.Builder.create(this)
-                .acc(VMSounds.BEAMERPICKUP_ACC)
-                .brk(VMSounds.BEAMERPICKUP_BRAKE)
-                .rls(VMSounds.BEAMERPICKUP_GAS)
-                .str(VMSounds.BEAMERPICKUP_START)
+                .acc(VMSounds.SPUTNIK3_ACC)
+                .brk(VMSounds.SPUTNIK3_BRAKE)
+                .rls(VMSounds.SPUTNIK3_GAS)
+                .str(VMSounds.SPUTNIK3_START)
                 .build();
     }
 
     @Override
     public double getMountedYOffset() {
-        return 0.3;
+        return -0.1;
     }
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.beamerPickup;
+        return VMConfig.sputnik3000L;
     }
 
     @Override
@@ -54,16 +54,16 @@ public class VehicleBeamerPickup extends EntityVehicleSpecial {
 
     @Override
     public int maximumAmountOfPassengers() {
-        return 2;
+        return 4;
     }
 
     @Override
     protected double getPassengerOffsetX(int id) {
-        return 1.4;
+        return id < 2 ? 0.4 : -0.4;
     }
 
     @Override
     protected double getPassengerOffsetZ(int id) {
-        return id == 0 ? -0.35 : 0.35;
+        return id % 2 == 0 ? -0.4 : 0.4;
     }
 }

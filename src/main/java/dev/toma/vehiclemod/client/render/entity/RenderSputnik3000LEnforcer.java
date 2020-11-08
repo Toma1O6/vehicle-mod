@@ -2,7 +2,7 @@ package dev.toma.vehiclemod.client.render.entity;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.model.vehicle.ModelSputnik3000LEnforcer;
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleSputnik3000LEnforcer;
+import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleSputnik3000LEnforcer;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 

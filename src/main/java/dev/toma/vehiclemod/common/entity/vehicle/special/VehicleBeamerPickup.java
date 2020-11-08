@@ -1,6 +1,7 @@
-package dev.toma.vehiclemod.common.entity.vehicle;
+package dev.toma.vehiclemod.common.entity.vehicle.special;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.special.EntityVehicleSpecial;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -9,46 +10,47 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleTracerT1 extends EntityVehicleMuscles {
+public class VehicleBeamerPickup extends EntityVehicleSpecial {
 
-    private static final Vector3f[] VECTOR_3_FS = {new Vector3f(1.5F, 0.25F, 0), new Vector3f(-2.2F, 0.05F, 0.3F)};
+    static final Vector3f[] PARTS = {new Vector3f(1.8f, 0.3f, 0), new Vector3f(-1.8f, 0f, 0f)};
 
-    public VehicleTracerT1(World world) {
+    public VehicleBeamerPickup(World world) {
         super(world);
     }
 
-    public VehicleTracerT1(World world, BlockPos pos) {
+    public VehicleBeamerPickup(World world, BlockPos pos) {
         super(world, pos);
+        setSize(1.5f, 2.0f);
     }
 
     @Override
     public VehicleContainer createInvetory() {
-        return new VehicleContainer(this, 9);
+        return new VehicleContainer(this, 36);
     }
 
     @Override
     public VehicleSoundPack createSoundPack() {
         return VehicleSoundPack.Builder.create(this)
-                .acc(VMSounds.TRACER_ACC)
-                .brk(VMSounds.TRACER_BRAKE)
-                .rls(VMSounds.TRACER_GAS)
-                .str(VMSounds.TRACER_START)
+                .acc(VMSounds.BEAMERPICKUP_ACC)
+                .brk(VMSounds.BEAMERPICKUP_BRAKE)
+                .rls(VMSounds.BEAMERPICKUP_GAS)
+                .str(VMSounds.BEAMERPICKUP_START)
                 .build();
     }
 
     @Override
     public double getMountedYOffset() {
-        return -0.18;
+        return 0.3;
     }
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.tracer_t1;
+        return VMConfig.beamerPickup;
     }
 
     @Override
     public Vector3f[] getPartVecs() {
-        return VECTOR_3_FS;
+        return PARTS;
     }
 
     @Override
@@ -58,16 +60,11 @@ public class VehicleTracerT1 extends EntityVehicleMuscles {
 
     @Override
     protected double getPassengerOffsetX(int id) {
-        return -0.2;
+        return 1.4;
     }
 
     @Override
     protected double getPassengerOffsetZ(int id) {
-        return id == 0 ? -0.4 : 0.4;
-    }
-
-    @Override
-    public VehicleUpgrades createVehicleUpgrades() {
-        return new VehicleUpgrades(getConfigStats(), fill(9, 1));
+        return id == 0 ? -0.35 : 0.35;
     }
 }

@@ -4,6 +4,7 @@ import dev.toma.vehiclemod.common.blocks.BlockMechanicPackage;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.util.WeightedRandom;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -28,6 +29,10 @@ public class GeneratorMechanicPackage implements IWorldGenerator {
         int y = world.getHeight(x, z);
         BlockPos pos = new BlockPos(x, y, z);
         Material material = world.getBlockState(pos.down()).getMaterial();
+        if(material == Material.LEAVES) {
+            pos = findGround(world, pos);
+            material = world.getBlockState(pos.down()).getMaterial();
+        }
         if(!DevUtil.MATERIAL_VALIDATOR.test(material))
             return;
         world.setBlockState(pos, variant.getPackage().getDefaultState());
@@ -35,5 +40,17 @@ public class GeneratorMechanicPackage implements IWorldGenerator {
         if(tileEntity instanceof TileEntityMechanicPackage) {
             ((TileEntityMechanicPackage) tileEntity).fill(variant);
         }
+    }
+
+    static BlockPos findGround(World world, BlockPos pos) {
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(pos);
+        while (mutableBlockPos.getY() > 1) {
+            mutableBlockPos.setY(mutableBlockPos.getY() - 1);
+            BlockPos down = mutableBlockPos.down();
+            if(!world.isAirBlock(down) && world.getBlockState(down).getMaterial() != Material.LEAVES) {
+                break;
+            }
+        }
+        return mutableBlockPos.toImmutable();
     }
 }

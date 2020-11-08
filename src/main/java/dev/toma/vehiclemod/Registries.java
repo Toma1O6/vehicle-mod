@@ -7,6 +7,19 @@ import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.blocks.BlockSecret;
 import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
 import dev.toma.vehiclemod.common.entity.vehicle.*;
+import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
+import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
+import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleBeamerPickup;
+import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleMCGMultiVan;
+import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleSputnik3000LEnforcer;
+import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleBeamerS320RS;
+import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleFedorattiNightStalker;
+import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleFedorattiVulcan;
+import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleProtonP1Tunned;
+import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleProtonP1;
+import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik2000L;
+import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
+import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleSputnikDuster;
 import dev.toma.vehiclemod.common.items.*;
 import dev.toma.vehiclemod.util.VehicleTexture;
 import net.minecraft.block.Block;
@@ -111,6 +124,8 @@ public class Registries {
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {
                 VehicleTexture texture = VehicleTexture.values()[i];
+                if(texture.isIgnored())
+                    continue;
                 registry.register(new ItemSprayCan(texture.name().toLowerCase() + "_spray_can", texture));
             }
             for (ItemRepairKit.Tier tier : ItemRepairKit.Tier.values()) {
@@ -198,7 +213,8 @@ public class Registries {
                     registerSound("secret"),
                     registerSound("lock_unlocked"),
                     registerSound("lockpick_success"),
-                    registerSound("lockpick_failed")
+                    registerSound("lockpick_failed"),
+                    registerSound("lockpick_failed_af")
             );
         }
 

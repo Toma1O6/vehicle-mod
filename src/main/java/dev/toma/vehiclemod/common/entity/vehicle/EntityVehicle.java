@@ -4,8 +4,6 @@ import com.google.common.base.Predicate;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.VMTickableSound;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
-import dev.toma.vehiclemod.common.EnumVehicleState;
-import dev.toma.vehiclemod.common.EnumVehicleType;
 import dev.toma.vehiclemod.common.items.ItemSprayCan;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
@@ -68,7 +66,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         stepHeight = 1f;
         preventEntitySpawning = true;
         this.upgrades = this.createVehicleUpgrades();
-        texture = VehicleTexture.values()[world.rand.nextInt(16)];
+        texture = getBaseTexture();
         this.health = this.upgrades.getActualStats().maxHealth;
         this.setFuel();
         ignoreFrustumCheck = true;
@@ -89,6 +87,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         for (int i = 0; i < l; i++)
             arr[i] = v;
         return arr;
+    }
+
+    public VehicleTexture getBaseTexture() {
+        return VehicleTexture.values()[world.rand.nextInt(16)];
     }
 
     public VehicleUpgrades createVehicleUpgrades() {
@@ -302,8 +304,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                 return true;
             }
         } else if (player.getHeldItemMainhand().getItem() instanceof ItemSprayCan) {
-            if(canRepaint()) {
-                ((ItemSprayCan)player.getHeldItemMainhand().getItem()).applyOnVehicle(this, world, player);
+            ItemSprayCan can = (ItemSprayCan) player.getHeldItemMainhand().getItem();
+            if(canRepaint(can.getTexture())) {
+                can.applyOnVehicle(this, world, player);
             } else {
                 if(!player.world.isRemote) {
                     player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "You cannot repaint this vehicle"), true);
@@ -584,7 +587,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         return inventory;
     }
 
-    public boolean canRepaint() {
+    public boolean canRepaint(VehicleTexture texture) {
         return true;
     }
 

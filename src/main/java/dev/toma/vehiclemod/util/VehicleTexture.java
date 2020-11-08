@@ -31,15 +31,28 @@ public enum VehicleTexture {
     RUST(),
     WOOD_DARK(),
     WOOD_LIGHT(),
-    WOOD();
+    WOOD(),
+    SANDSTONE(),
+    RED_SANDSTONE(),
+    UTILITY_YELLOW(true);
 
     final ResourceLocation location;
+    final boolean ignored;
 
     VehicleTexture() {
+        this(false);
+    }
+
+    VehicleTexture(boolean ignored) {
         this.location = new ResourceLocation(VehicleMod.MODID, "textures/entity/" + name().toLowerCase() + ".png");
+        this.ignored = ignored;
     }
 
     public ResourceLocation getResource() {
         return location;
+    }
+
+    public boolean isIgnored() {
+        return ignored;
     }
 }

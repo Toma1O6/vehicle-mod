@@ -4,6 +4,7 @@ import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import dev.toma.vehiclemod.init.VMSounds;
+import dev.toma.vehiclemod.util.DateTimeHelper;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
@@ -70,7 +71,7 @@ public class SPacketLockpickAttempt implements IMessage {
                     int pressed = message.index;
                     if(correct != pressed) {
                         player.closeScreen();
-                        world.playSound(null, player.posX, player.posY, player.posZ, VMSounds.LOCKPICK_FAILED, SoundCategory.MASTER, 1.0F, 1.0F);
+                        world.playSound(null, player.posX, player.posY, player.posZ, DateTimeHelper.isAprilFools() ? VMSounds.LOCKPICK_FAILED_AF : VMSounds.LOCKPICK_FAILED, SoundCategory.MASTER, 1.0F, 1.0F);
                         if(VehicleMod.random.nextBoolean()) {
                             world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.MASTER, 1.0F, 1.0F);
                             player.getHeldItemMainhand().shrink(1);
