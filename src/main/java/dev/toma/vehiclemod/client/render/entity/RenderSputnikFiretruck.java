@@ -19,7 +19,7 @@ public class RenderSputnikFiretruck extends RenderVehicle<VehicleSputnikFiretruc
 
     @Override
     protected ResourceLocation getDefaultResource() {
-        return VehicleTexture.UTILITY_YELLOW.getResource();
+        return VehicleTexture.RED.getResource();
     }
 
     @Override

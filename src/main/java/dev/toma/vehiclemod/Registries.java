@@ -115,12 +115,12 @@ public class Registries {
                     new ItemVehicleSpawner<>("spawn_protonp1tunned", VehicleProtonP1Tunned.class, VehicleProtonP1Tunned::new),
                     new ItemVehicleSpawner<>("spawn_sputnikambulance", VehicleSputnikAmbulance.class, VehicleSputnikAmbulance::new),
                     new ItemVehicleSpawner<>("spawn_sputnikfiretruck", VehicleSputnikFiretruck.class, VehicleSputnikFiretruck::new),
-                    new VMItem("empty_spray_can"),
                     new VMItem("bucket_of_liquid_coal"),
                     new VMItem("bucket_of_activated_fuel_substance"),
                     new VMItem("bucket_of_fuel"),
                     new VMItem("fuel_filter"),
-                    new VMItem("lockpick")
+                    new VMItem("lockpick"),
+                    new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {
                 VehicleTexture texture = VehicleTexture.values()[i];
