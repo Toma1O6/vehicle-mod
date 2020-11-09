@@ -2,9 +2,9 @@ package dev.toma.vehiclemod.client.render.entity;
 
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -32,6 +32,10 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		if(entity != null) {
 			return entity.getTexture().getResource();
 		}
+		return this.getDefaultResource();
+	}
+
+	protected ResourceLocation getDefaultResource() {
 		return VehicleTexture.WHITE.getResource();
 	}
 

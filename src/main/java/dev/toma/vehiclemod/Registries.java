@@ -6,7 +6,8 @@ import dev.toma.vehiclemod.common.blocks.BlockMechanicPackage;
 import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.blocks.BlockSecret;
 import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
-import dev.toma.vehiclemod.common.entity.vehicle.*;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
 import dev.toma.vehiclemod.common.entity.vehicle.special.*;
@@ -19,7 +20,6 @@ import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik2000L;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
 import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleSputnikDuster;
 import dev.toma.vehiclemod.common.items.*;
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -100,21 +100,21 @@ public class Registries {
             IForgeRegistry<Item> registry = e.getRegistry();
             registry.registerAll(
                     new ItemFuelCan("fuel_can"),
-                    new ItemVehicleSpawner("spawn_beamers120", VehicleBeamerS120.class, VehicleBeamerS120::new),
-                    new ItemVehicleSpawner("spawn_fedorattivulcan", VehicleFedorattiVulcan.class, VehicleFedorattiVulcan::new),
-                    new ItemVehicleSpawner("spawn_tracert1", VehicleTracerT1.class, VehicleTracerT1::new),
-                    new ItemVehicleSpawner("spawn_sputnik2000l", VehicleSputnik2000L.class, VehicleSputnik2000L::new),
-                    new ItemVehicleSpawner("spawn_beamers320rs", VehicleBeamerS320RS.class, VehicleBeamerS320RS::new),
-                    new ItemVehicleSpawner("spawn_mcgmultivan", VehicleMCGMultiVan.class, VehicleMCGMultiVan::new),
-                    new ItemVehicleSpawner("spawn_beamerpickup", VehicleBeamerPickup.class, VehicleBeamerPickup::new),
-                    new ItemVehicleSpawner("spawn_sputnik3000l", VehicleSputnik3000L.class, VehicleSputnik3000L::new),
-                    new ItemVehicleSpawner("spawn_sputnik3000lenf", VehicleSputnik3000LEnforcer.class, VehicleSputnik3000LEnforcer::new),
-                    new ItemVehicleSpawner("spawn_sputnikduster", VehicleSputnikDuster.class, VehicleSputnikDuster::new),
-                    new ItemVehicleSpawner("spawn_fedorattinightstalker", VehicleFedorattiNightStalker.class, VehicleFedorattiNightStalker::new),
-                    new ItemVehicleSpawner("spawn_protonp1", VehicleProtonP1.class, VehicleProtonP1::new),
-                    new ItemVehicleSpawner("spawn_protonp1tunned", VehicleProtonP1Tunned.class, VehicleProtonP1Tunned::new),
-                    new ItemVehicleSpawner("spawn_sputnikambulance", VehicleSputnikAmbulance.class, VehicleSputnikAmbulance::new),
-                    new ItemVehicleSpawner("spawn_sputnikfiretruck", VehicleSputnikFiretruck.class, VehicleSputnikFiretruck::new),
+                    new ItemVehicleSpawner<>("spawn_beamers120", VehicleBeamerS120.class, VehicleBeamerS120::new),
+                    new ItemVehicleSpawner<>("spawn_fedorattivulcan", VehicleFedorattiVulcan.class, VehicleFedorattiVulcan::new),
+                    new ItemVehicleSpawner<>("spawn_tracert1", VehicleTracerT1.class, VehicleTracerT1::new),
+                    new ItemVehicleSpawner<>("spawn_sputnik2000l", VehicleSputnik2000L.class, VehicleSputnik2000L::new),
+                    new ItemVehicleSpawner<>("spawn_beamers320rs", VehicleBeamerS320RS.class, VehicleBeamerS320RS::new),
+                    new ItemVehicleSpawner<>("spawn_mcgmultivan", VehicleMCGMultiVan.class, VehicleMCGMultiVan::new),
+                    new ItemVehicleSpawner<>("spawn_beamerpickup", VehicleBeamerPickup.class, VehicleBeamerPickup::new),
+                    new ItemVehicleSpawner<>("spawn_sputnik3000l", VehicleSputnik3000L.class, VehicleSputnik3000L::new),
+                    new ItemVehicleSpawner<>("spawn_sputnik3000lenf", VehicleSputnik3000LEnforcer.class, VehicleSputnik3000LEnforcer::new),
+                    new ItemVehicleSpawner<>("spawn_sputnikduster", VehicleSputnikDuster.class, VehicleSputnikDuster::new),
+                    new ItemVehicleSpawner<>("spawn_fedorattinightstalker", VehicleFedorattiNightStalker.class, VehicleFedorattiNightStalker::new),
+                    new ItemVehicleSpawner<>("spawn_protonp1", VehicleProtonP1.class, VehicleProtonP1::new),
+                    new ItemVehicleSpawner<>("spawn_protonp1tunned", VehicleProtonP1Tunned.class, VehicleProtonP1Tunned::new),
+                    new ItemVehicleSpawner<>("spawn_sputnikambulance", VehicleSputnikAmbulance.class, VehicleSputnikAmbulance::new),
+                    new ItemVehicleSpawner<>("spawn_sputnikfiretruck", VehicleSputnikFiretruck.class, VehicleSputnikFiretruck::new),
                     new VMItem("empty_spray_can"),
                     new VMItem("bucket_of_liquid_coal"),
                     new VMItem("bucket_of_activated_fuel_substance"),

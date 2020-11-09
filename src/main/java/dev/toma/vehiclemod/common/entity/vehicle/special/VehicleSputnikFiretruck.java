@@ -18,10 +18,12 @@ public class VehicleSputnikFiretruck extends EntityVehicleSpecial {
 
     public VehicleSputnikFiretruck(World world) {
         super(world);
+        setSize(2.0F, 2.4F);
     }
 
     public VehicleSputnikFiretruck(World world, BlockPos pos) {
         super(world, pos);
+        setSize(2.0F, 2.4F);
     }
 
     @Override
@@ -48,7 +50,7 @@ public class VehicleSputnikFiretruck extends EntityVehicleSpecial {
 
     @Override
     public Vector3f[] getPartVecs() {
-        return new Vector3f[] {new Vector3f(), new Vector3f()};
+        return new Vector3f[] {new Vector3f(3.4F, 0.4F, 0.0F), new Vector3f(-3.4F, 0.0F, 0.0F)};
     }
 
     @Override
@@ -58,7 +60,7 @@ public class VehicleSputnikFiretruck extends EntityVehicleSpecial {
 
     @Override
     public int maximumAmountOfPassengers() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -69,5 +71,20 @@ public class VehicleSputnikFiretruck extends EntityVehicleSpecial {
                 .rls(VMSounds.SPUTNIK_FIRETRUCK_GAS)
                 .str(VMSounds.SPUTNIK_FIRETRUCK_START)
                 .build();
+    }
+
+    @Override
+    public double getMountedYOffset() {
+        return 0.55;
+    }
+
+    @Override
+    protected double getPassengerOffsetX(int id) {
+        return 2.75;
+    }
+
+    @Override
+    protected double getPassengerOffsetZ(int id) {
+        return -0.65 + id * 0.65;
     }
 }

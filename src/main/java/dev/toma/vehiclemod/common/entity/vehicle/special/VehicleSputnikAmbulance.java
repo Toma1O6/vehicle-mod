@@ -18,10 +18,12 @@ public class VehicleSputnikAmbulance extends EntityVehicleSpecial {
 
     public VehicleSputnikAmbulance(World world) {
         super(world);
+        setSize(2.25F, 1.8F);
     }
 
     public VehicleSputnikAmbulance(World world, BlockPos pos) {
         super(world, pos);
+        setSize(2.25F, 1.8F);
     }
 
     @Override
@@ -69,5 +71,20 @@ public class VehicleSputnikAmbulance extends EntityVehicleSpecial {
                 .rls(VMSounds.SPUTNIK_AMBULANCE_GAS)
                 .str(VMSounds.SPUTNIK_AMBULANCE_START)
                 .build();
+    }
+
+    @Override
+    public double getMountedYOffset() {
+        return super.getMountedYOffset();
+    }
+
+    @Override
+    protected double getPassengerOffsetX(int id) {
+        return super.getPassengerOffsetX(id);
+    }
+
+    @Override
+    protected double getPassengerOffsetZ(int id) {
+        return super.getPassengerOffsetZ(id);
     }
 }

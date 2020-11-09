@@ -9,18 +9,18 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemVehicleSpawner extends VMItem {
+public class ItemVehicleSpawner<V extends EntityVehicle> extends VMItem {
 
-    final IFactory<?> vehicleFactory;
-    final Class<? extends EntityVehicle> vClass;
+    final IFactory<V> vehicleFactory;
+    final Class<V> vClass;
 
-    public <V extends EntityVehicle> ItemVehicleSpawner(String name, Class<V> vClass, IFactory<V> factory) {
+    public ItemVehicleSpawner(String name, Class<V> vClass, IFactory<V> factory) {
         super(name);
         this.vClass = vClass;
         this.vehicleFactory = factory;
     }
 
-    public Class<? extends EntityVehicle> getVehicleClass() {
+    public Class<V> getVehicleClass() {
         return vClass;
     }
 

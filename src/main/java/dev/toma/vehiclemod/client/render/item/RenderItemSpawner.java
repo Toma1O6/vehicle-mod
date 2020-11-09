@@ -13,7 +13,7 @@ public class RenderItemSpawner extends TileEntityItemStackRenderer {
 
     @Override
     public void renderByItem(ItemStack itemStackIn) {
-        Class<? extends EntityVehicle> vClass = ((ItemVehicleSpawner) itemStackIn.getItem()).getVehicleClass();
+        Class<? extends EntityVehicle> vClass = ((ItemVehicleSpawner<?>) itemStackIn.getItem()).getVehicleClass();
         Minecraft mc = Minecraft.getMinecraft();
         RenderManager manager = mc.getRenderManager();
         Render<? extends EntityVehicle> render = manager.getEntityClassRenderObject(vClass);
