@@ -1,18 +1,19 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
-import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
+import dev.toma.vehiclemod.common.entity.vehicle.ISpecialVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
+import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleSputnik3000LEnforcer extends EntityVehicleSpecial {
+public class VehicleSputnik3000LEnforcer extends EntityVehicleSpecial implements ISpecialVehicle {
 
     public VehicleSputnik3000LEnforcer(World world) {
         super(world);

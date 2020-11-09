@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.ISpecialVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
@@ -11,7 +12,7 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleSputnikFiretruck extends EntityVehicleSpecial {
+public class VehicleSputnikFiretruck extends EntityVehicleSpecial implements ISpecialVehicle {
 
     static final VehicleTexture[] VALID_COLORS = {VehicleTexture.GRAY, VehicleTexture.RED, VehicleTexture.UTILITY_YELLOW, VehicleTexture.HELL};
     static final Vector3f[] PARTS = {new Vector3f(3.4F, 0.4F, 0.0F), new Vector3f(-3.2F, 0.2F, 0.9F), new Vector3f(-3.2F, 0.2F, -0.9F)};

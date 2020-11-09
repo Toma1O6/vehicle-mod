@@ -1,12 +1,12 @@
 package dev.toma.vehiclemod.common.entity.vehicle;
-
+/*
 import dev.toma.vehiclemod.client.VMTickableSound;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
+*/
 public interface ISpecialVehicle {
-
+/*
     SoundEvent getSoundEvent();
 
     @SideOnly(Side.CLIENT)
@@ -18,4 +18,5 @@ public interface ISpecialVehicle {
     boolean isEffectActive();
 
     void setEffectActive(boolean active);
+*/
 }
