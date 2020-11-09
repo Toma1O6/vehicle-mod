@@ -14,7 +14,7 @@ import javax.vecmath.Vector3f;
 public class VehicleSputnikAmbulance extends EntityVehicleSpecial {
 
     private static final VehicleTexture[] VALID_TEXTURES = {VehicleTexture.BLUE, VehicleTexture.RED, VehicleTexture.UTILITY_YELLOW, VehicleTexture.BRICK};
-    private static final Vector3f[] PARTS = {};
+    private static final Vector3f[] PARTS = {new Vector3f(2.5F, 0.4F, 0.0F), new Vector3f(-2.8F, -0.1F, 0.7F)};
 
     public VehicleSputnikAmbulance(World world) {
         super(world);
@@ -50,7 +50,7 @@ public class VehicleSputnikAmbulance extends EntityVehicleSpecial {
 
     @Override
     public Vector3f[] getPartVecs() {
-        return new Vector3f[] {new Vector3f(), new Vector3f()};
+        return PARTS;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class VehicleSputnikAmbulance extends EntityVehicleSpecial {
 
     @Override
     public int maximumAmountOfPassengers() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -75,16 +75,16 @@ public class VehicleSputnikAmbulance extends EntityVehicleSpecial {
 
     @Override
     public double getMountedYOffset() {
-        return super.getMountedYOffset();
+        return 0.2;
     }
 
     @Override
     protected double getPassengerOffsetX(int id) {
-        return super.getPassengerOffsetX(id);
+        return id < 2 ? 1.2 : -1.0;
     }
 
     @Override
     protected double getPassengerOffsetZ(int id) {
-        return super.getPassengerOffsetZ(id);
+        return id % 2 == 0 ? -0.55 : 0.55;
     }
 }

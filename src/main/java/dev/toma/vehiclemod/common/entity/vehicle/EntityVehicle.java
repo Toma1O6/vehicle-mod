@@ -49,13 +49,23 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     protected VehicleTexture texture;
     private double distanceTraveled = 0;
     private boolean isStarted = false;
-
     @SideOnly(Side.CLIENT)
     public VMTickableSound currentSound;
-    @SideOnly(Side.CLIENT)
-    public ResourceLocation cachedLocation;
+    private boolean inputForward;
+    private boolean inputBack;
+    private boolean inputRight;
+    private boolean inputLeft;
 
-    private boolean inputForward, inputBack, inputRight, inputLeft;
+    public static double getMovementSpeed(EntityVehicle vehicle) {
+        return Math.sqrt(vehicle.motionX * vehicle.motionX + vehicle.motionZ * vehicle.motionZ);
+    }
+
+    public static int[] fill(int l, int v) {
+        int[] arr = new int[l];
+        for (int i = 0; i < l; i++)
+            arr[i] = v;
+        return arr;
+    }
 
     public EntityVehicle(World world) {
         super(world);
@@ -75,25 +85,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
     }
 
-    public static double getMovementSpeed(EntityVehicle vehicle) {
-        return Math.sqrt(vehicle.motionX * vehicle.motionX + vehicle.motionZ * vehicle.motionZ);
-    }
-
-    public static int[] fill(int l, int v) {
-        int[] arr = new int[l];
-        for (int i = 0; i < l; i++)
-            arr[i] = v;
-        return arr;
-    }
-
-    public VehicleTexture getBaseTexture() {
-        return VehicleTexture.values()[world.rand.nextInt(16)];
-    }
-
-    public VehicleUpgrades createVehicleUpgrades() {
-        return new VehicleUpgrades(this.getConfigStats());
-    }
-
     public abstract EnumVehicleType getVehicleType();
 
     public abstract Vector3f[] getPartVecs();
@@ -104,32 +95,14 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public abstract VehicleSoundPack createSoundPack();
 
-    public VehicleContainer createInvetory() {
-        return null;
+    public abstract VehicleContainer createInvetory();
+
+    public VehicleUpgrades createVehicleUpgrades() {
+        return new VehicleUpgrades(this.getConfigStats());
     }
 
-    public VehicleTexture getTexture() {
-        return texture;
-    }
-
-    public void setTexture(VehicleTexture texture) {
-        this.texture = texture;
-    }
-
-    public boolean hasInventory() {
-        return inventory != null;
-    }
-
-    public VehicleUpgrades getUpgrades() {
-        return upgrades;
-    }
-
-    public VehicleStats getActualStats() {
-        return upgrades.getActualStats();
-    }
-
-    public void updateVehicle() {
-        if(isFunctional()) {
+    private void updateVehicle() {
+        if (isFunctional()) {
             updateMotion();
         }
         if (!this.isBeingRidden() && (!noAccelerationInput() || !noTurningInput() || !hasFuel() || !isFunctional())) {
@@ -161,7 +134,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
     }
 
-    public void updateMotion() {
+    private void updateMotion() {
         Vec3d lookVec = this.getLookVec();
         VehicleStats stats = this.getActualStats();
         float healthpct = health / stats.maxHealth;
@@ -211,9 +184,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
     }
 
-    public void checkState() {
+    private void checkState() {
         if (this.isInWater() || world.getBlockState(getPosition().up()).getMaterial().isLiquid()) {
-            if(this.health > 0) {
+            if (this.health > 0) {
                 this.health -= 0.25;
             }
             motionX *= 0.4d;
@@ -224,29 +197,14 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         if (isInLava() && isFunctional()) {
             health -= 10;
         }
-        if(!world.isRemote && health < 0) {
+        if (!world.isRemote && health < 0) {
             world.createExplosion(null, posX, posY, posZ, 4.0F, false);
             setDead();
         }
         currentState = this.getVehicleState();
     }
 
-    @Override
-    public void onUpdate() {
-        updateVehicle();
-        if (!onGround) {
-            motionY -= 0.1d;
-        }
-        super.onUpdate();
-        distanceTraveled += Math.sqrt(motionX * motionX + motionZ * motionZ) / 1000.0D;
-        if(world.isRemote && prevState != currentState) {
-            this.vehicleStateChanged();
-        }
-        prevSpeed = currentSpeed;
-        prevState = currentState;
-    }
-
-    public void vehicleStateChanged() {
+    private void vehicleStateChanged() {
         VehicleMod.proxy.playSoundAt(this);
     }
 
@@ -260,84 +218,28 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
     }
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void applyOrientationToEntity(Entity entityToUpdate) {
-        entityToUpdate.setRenderYawOffset(rotationYaw);
-        float rotationP = MathHelper.wrapDegrees(entityToUpdate.rotationPitch - rotationPitch);
-        float modifiedP = MathHelper.clamp(rotationP, -10.0F, 90.0F);
-        entityToUpdate.prevRotationPitch += modifiedP - rotationP;
-        entityToUpdate.rotationPitch += modifiedP - rotationP;
+    public VehicleTexture getTexture() {
+        return texture;
     }
 
-    @Override
-    public Entity getControllingPassenger() {
-        if (this.getPassengers().size() > 0) {
-            if (this.getPassengers().get(0) instanceof EntityPlayer) {
-                return this.getPassengers().get(0);
-            }
-        }
-        return null;
+    public void setTexture(VehicleTexture texture) {
+        this.texture = texture;
     }
 
-    @Override
-    public boolean attackEntityFrom(DamageSource source, float amount) {
-        if (!this.getPassengers().contains(source.getTrueSource())) {
-            this.health -= amount;
-        }
-        return true;
+    public VehicleTexture getBaseTexture() {
+        return VehicleTexture.values()[world.rand.nextInt(16)];
     }
 
-    @Override
-    public boolean isInRangeToRenderDist(double distance) {
-        return true;
+    public boolean hasInventory() {
+        return inventory != null;
     }
 
-    @Override
-    public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
-        if (!player.isSneaking()) {
-            if (!world.isRemote && canBeRidden(player) && canFitPassenger(player) && player.getRidingEntity() == null) {
-                player.startRiding(this);
-                return true;
-            }
-        } else if (player.getHeldItemMainhand().getItem() instanceof ItemSprayCan) {
-            ItemSprayCan can = (ItemSprayCan) player.getHeldItemMainhand().getItem();
-            if(canRepaint(can.getTexture())) {
-                can.applyOnVehicle(this, world, player);
-            } else {
-                if(!player.world.isRemote) {
-                    player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "You cannot repaint this vehicle"), true);
-                }
-            }
-        } else if(hasInventory() && !world.isRemote) {
-            player.openGui(VehicleMod.instance, GuiHandler.VEHICLE, world, getEntityId(), 0, 0);
-        }
-        return false;
+    public VehicleUpgrades getUpgrades() {
+        return upgrades;
     }
 
-    @Override
-    public boolean canBeCollidedWith() {
-        return true;
-    }
-
-    @Override
-    public void writeSpawnData(ByteBuf buf) {
-        buf.writeFloat(health);
-        buf.writeFloat(fuel);
-        buf.writeDouble(distanceTraveled);
-        buf.writeInt(texture.ordinal());
-        NBTTagCompound data = new NBTTagCompound();
-        this.upgrades.writeToNBT(data);
-        ByteBufUtils.writeTag(buf, data);
-    }
-
-    @Override
-    public void readSpawnData(ByteBuf buf) {
-        health = buf.readFloat();
-        fuel = buf.readFloat();
-        distanceTraveled = buf.readDouble();
-        texture = VehicleTexture.values()[buf.readInt()];
-        upgrades.readFromNBT(ByteBufUtils.readTag(buf));
+    public VehicleStats getActualStats() {
+        return upgrades.getActualStats();
     }
 
     public VehicleSoundPack getSoundPack() {
@@ -349,10 +251,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     public void refillFuel() {
-        fuel += 10.0F;
-        if (fuel > getActualStats().fuelCapacity) {
-            fuel = getActualStats().fuelCapacity;
-        }
+        this.fuel = Math.min(this.getActualStats().fuelCapacity, fuel + 10);
     }
 
     public void repair(int amount) {
@@ -361,37 +260,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public boolean isFunctional() {
         return health > 0;
-    }
-
-    @Override
-    protected void addPassenger(Entity passenger) {
-        if(this.getPassengers().isEmpty() && !isStarted && hasFuel() && isFunctional()) {
-            world.playSound(null, posX, posY, posZ, this.soundPack.start(), SoundCategory.MASTER, 1.0F, 1.0F);
-            isStarted = true;
-        }
-        super.addPassenger(passenger);
-    }
-
-    @Override
-    protected void removePassenger(Entity passenger) {
-        super.removePassenger(passenger);
-        if(this.getPassengers().size() == 0) {
-            this.isStarted = false;
-        }
-    }
-
-    @Override
-    protected void entityInit() {}
-
-    @Override
-    public void updatePassenger(Entity passenger) {
-        if (this.isPassenger(passenger)) {
-            int id = this.getPassengers().indexOf(passenger);
-            double x = this.getPassengerOffsetX(id);
-            double z = this.getPassengerOffsetZ(id);
-            Vec3d vec = (new Vec3d(x, 0, z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2f));
-            passenger.setPosition(posX + vec.x, posY + getMountedYOffset() + passenger.getYOffset(), posZ + vec.z);
-        }
     }
 
     public void setFuel() {
@@ -410,7 +278,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         return 0;
     }
 
-    protected void spawnParticles() {
+    private void spawnParticles() {
         if (world.isRemote) {
             if (health / getActualStats().maxHealth <= 0.5f) {
                 Vec3d engineVec = (new Vec3d(getPartVecs()[0].x, getPartVecs()[0].y + 0.25d, getPartVecs()[0].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
@@ -432,57 +300,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
     }
 
-    @Override
-    protected void writeEntityToNBT(NBTTagCompound compound) {
-        compound.setFloat("health", this.health);
-        compound.setFloat("fuel", this.fuel);
-        compound.setFloat("speed", this.currentSpeed);
-        compound.setInteger("textureid", this.texture.ordinal());
-        compound.setDouble("traveledDist", this.distanceTraveled);
-        if(hasInventory()) {
-            NBTTagList invNBT = new NBTTagList();
-            for(int i = 0; i < inventory.getSizeInventory(); i++) {
-                ItemStack stack = inventory.getStackInSlot(i);
-                if(!stack.isEmpty()) {
-                    NBTTagCompound dataNBT = new NBTTagCompound();
-                    NBTTagCompound itemStackNBT = new NBTTagCompound();
-                    stack.writeToNBT(itemStackNBT);
-                    dataNBT.setInteger("position", i);
-                    dataNBT.setTag("stack", itemStackNBT);
-                    invNBT.appendTag(dataNBT);
-                }
-            }
-            compound.setTag("inventory", invNBT);
-        }
-        upgrades.writeToNBT(compound);
-    }
-
-    @Override
-    protected void readEntityFromNBT(NBTTagCompound compound) {
-        health = compound.getFloat("health");
-        fuel = compound.getFloat("fuel");
-        currentSpeed = compound.getFloat("speed");
-        texture = VehicleTexture.values()[compound.getInteger("textureid")];
-        distanceTraveled = compound.getDouble("traveledDist");
-        if(compound.hasKey("inventory")) {
-            NBTTagList list = compound.getTagList("inventory", Constants.NBT.TAG_COMPOUND);
-            for(int i = 0; i < list.tagCount(); i++) {
-                NBTTagCompound itemStackNBT = list.getCompoundTagAt(i);
-                int index = itemStackNBT.getInteger("position");
-                ItemStack stack = new ItemStack(itemStackNBT.getCompoundTag("stack"));
-                inventory.setInventorySlotContents(index, stack);
-            }
-        }
-        upgrades.readFromNBT(compound);
-    }
-
-    @Override
-    protected boolean canFitPassenger(Entity passenger) {
-        return this.getPassengers().size() < maximumAmountOfPassengers();
-    }
-
     private EnumVehicleState getVehicleState() {
-        if(!hasFuel()) {
+        if (!hasFuel()) {
             return EnumVehicleState.IDLE;
         }
         if (this.isAccelerating()) {
@@ -500,21 +319,21 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         Vec3d vec2 = new Vec3d(vec1.x + motionX, vec1.y + motionY, vec1.z + motionZ);
         Entity e = findEntityInPath(vec1, vec2);
         if (e != null) {
-            if(e instanceof EntityVehicle) {
+            if (e instanceof EntityVehicle) {
                 double x = e.motionX - motionX;
                 double z = e.motionZ - motionZ;
                 double xz = Math.sqrt(x * x + z * z);
-                float vehicleDamage = (float)(xz * 75F);
-                float userDamage = (float)(xz * 35F);
+                float vehicleDamage = (float) (xz * 75F);
+                float userDamage = (float) (xz * 35F);
                 e.attackEntityFrom(DamageSource.FALL, vehicleDamage);
                 for (Entity entity : e.getPassengers()) {
-                    if(entity.getIsInvulnerable())
+                    if (entity.getIsInvulnerable())
                         continue;
                     entity.attackEntityFrom(DamageSource.FALL, userDamage);
                 }
                 attackEntityFrom(DamageSource.FALL, vehicleDamage);
                 for (Entity entity : getPassengers()) {
-                    if(entity.getIsInvulnerable())
+                    if (entity.getIsInvulnerable())
                         continue;
                     entity.attackEntityFrom(DamageSource.FALL, userDamage);
                 }
@@ -586,6 +405,182 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public boolean canRepaint(VehicleTexture texture) {
         return true;
+    }
+
+    @Override
+    public void onUpdate() {
+        updateVehicle();
+        if (!onGround) {
+            motionY -= 0.1d;
+        }
+        super.onUpdate();
+        distanceTraveled += Math.sqrt(motionX * motionX + motionZ * motionZ) / 1000.0D;
+        if (world.isRemote && prevState != currentState) {
+            this.vehicleStateChanged();
+        }
+        prevSpeed = currentSpeed;
+        prevState = currentState;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void applyOrientationToEntity(Entity entityToUpdate) {
+        entityToUpdate.setRenderYawOffset(rotationYaw);
+        float rotationP = MathHelper.wrapDegrees(entityToUpdate.rotationPitch - rotationPitch);
+        float modifiedP = MathHelper.clamp(rotationP, -10.0F, 90.0F);
+        entityToUpdate.prevRotationPitch += modifiedP - rotationP;
+        entityToUpdate.rotationPitch += modifiedP - rotationP;
+    }
+
+    @Override
+    public Entity getControllingPassenger() {
+        if (this.getPassengers().size() > 0) {
+            if (this.getPassengers().get(0) instanceof EntityPlayer) {
+                return this.getPassengers().get(0);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        if (!this.getPassengers().contains(source.getTrueSource())) {
+            this.health -= amount;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isInRangeToRenderDist(double distance) {
+        return true;
+    }
+
+    @Override
+    public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
+        if (!player.isSneaking()) {
+            if (!world.isRemote && canBeRidden(player) && canFitPassenger(player) && player.getRidingEntity() == null) {
+                player.startRiding(this);
+                return true;
+            }
+        } else if (player.getHeldItemMainhand().getItem() instanceof ItemSprayCan) {
+            ItemSprayCan can = (ItemSprayCan) player.getHeldItemMainhand().getItem();
+            if (canRepaint(can.getTexture())) {
+                can.applyOnVehicle(this, world, player);
+            } else {
+                if (!player.world.isRemote) {
+                    player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "You cannot repaint this vehicle"), true);
+                }
+            }
+        } else if (hasInventory() && !world.isRemote) {
+            player.openGui(VehicleMod.instance, GuiHandler.VEHICLE, world, getEntityId(), 0, 0);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean canBeCollidedWith() {
+        return true;
+    }
+
+    @Override
+    public void writeSpawnData(ByteBuf buf) {
+        buf.writeFloat(health);
+        buf.writeFloat(fuel);
+        buf.writeDouble(distanceTraveled);
+        buf.writeInt(texture.ordinal());
+        NBTTagCompound data = new NBTTagCompound();
+        this.upgrades.writeToNBT(data);
+        ByteBufUtils.writeTag(buf, data);
+    }
+
+    @Override
+    public void readSpawnData(ByteBuf buf) {
+        health = buf.readFloat();
+        fuel = buf.readFloat();
+        distanceTraveled = buf.readDouble();
+        texture = VehicleTexture.values()[buf.readInt()];
+        upgrades.readFromNBT(ByteBufUtils.readTag(buf));
+    }
+
+    @Override
+    protected void addPassenger(Entity passenger) {
+        if (this.getPassengers().isEmpty() && !isStarted && hasFuel() && isFunctional()) {
+            world.playSound(null, posX, posY, posZ, this.soundPack.start(), SoundCategory.MASTER, 1.0F, 1.0F);
+            isStarted = true;
+        }
+        super.addPassenger(passenger);
+    }
+
+    @Override
+    protected void removePassenger(Entity passenger) {
+        super.removePassenger(passenger);
+        if (this.getPassengers().size() == 0) {
+            this.isStarted = false;
+        }
+    }
+
+    @Override
+    protected void entityInit() {
+    }
+
+    @Override
+    public void updatePassenger(Entity passenger) {
+        if (this.isPassenger(passenger)) {
+            int id = this.getPassengers().indexOf(passenger);
+            double x = this.getPassengerOffsetX(id);
+            double z = this.getPassengerOffsetZ(id);
+            Vec3d vec = (new Vec3d(x, 0, z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2f));
+            passenger.setPosition(posX + vec.x, posY + getMountedYOffset() + passenger.getYOffset(), posZ + vec.z);
+        }
+    }
+
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound compound) {
+        compound.setFloat("health", this.health);
+        compound.setFloat("fuel", this.fuel);
+        compound.setFloat("speed", this.currentSpeed);
+        compound.setInteger("textureid", this.texture.ordinal());
+        compound.setDouble("traveledDist", this.distanceTraveled);
+        if (hasInventory()) {
+            NBTTagList invNBT = new NBTTagList();
+            for (int i = 0; i < inventory.getSizeInventory(); i++) {
+                ItemStack stack = inventory.getStackInSlot(i);
+                if (!stack.isEmpty()) {
+                    NBTTagCompound dataNBT = new NBTTagCompound();
+                    NBTTagCompound itemStackNBT = new NBTTagCompound();
+                    stack.writeToNBT(itemStackNBT);
+                    dataNBT.setInteger("position", i);
+                    dataNBT.setTag("stack", itemStackNBT);
+                    invNBT.appendTag(dataNBT);
+                }
+            }
+            compound.setTag("inventory", invNBT);
+        }
+        upgrades.writeToNBT(compound);
+    }
+
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound compound) {
+        health = compound.getFloat("health");
+        fuel = compound.getFloat("fuel");
+        currentSpeed = compound.getFloat("speed");
+        texture = VehicleTexture.values()[compound.getInteger("textureid")];
+        distanceTraveled = compound.getDouble("traveledDist");
+        if (compound.hasKey("inventory")) {
+            NBTTagList list = compound.getTagList("inventory", Constants.NBT.TAG_COMPOUND);
+            for (int i = 0; i < list.tagCount(); i++) {
+                NBTTagCompound itemStackNBT = list.getCompoundTagAt(i);
+                int index = itemStackNBT.getInteger("position");
+                ItemStack stack = new ItemStack(itemStackNBT.getCompoundTag("stack"));
+                inventory.setInventorySlotContents(index, stack);
+            }
+        }
+        upgrades.readFromNBT(compound);
+    }
+
+    @Override
+    protected boolean canFitPassenger(Entity passenger) {
+        return this.getPassengers().size() < maximumAmountOfPassengers();
     }
 
     @Override
