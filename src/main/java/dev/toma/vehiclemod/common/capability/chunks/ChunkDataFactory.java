@@ -4,7 +4,7 @@ import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.entity.vehicle.EnumVehicleType;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.util.DevUtil;
-import dev.toma.vehiclemod.util.VehicleTexture;
+import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.util.WeightedRandom;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;

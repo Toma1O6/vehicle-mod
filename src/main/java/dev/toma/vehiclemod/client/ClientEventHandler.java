@@ -10,17 +10,17 @@ import dev.toma.vehiclemod.network.packets.SPacketOpenVehicleComponentGUI;
 import dev.toma.vehiclemod.util.DevUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.InventoryEffectRenderer;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.GL11;
@@ -30,10 +30,10 @@ public class ClientEventHandler {
 
 	private static final ResourceLocation VEHICLE_HUD = new ResourceLocation(VehicleMod.MODID + ":textures/entity/vehicle_hud.png");
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void openGUI(GuiOpenEvent event) {
 		EntityPlayer player = Minecraft.getMinecraft().player;
-		if(event.getGui() instanceof GuiInventory && player.getRidingEntity() instanceof EntityVehicle) {
+		if(event.getGui() instanceof InventoryEffectRenderer && player.getRidingEntity() instanceof EntityVehicle) {
 			event.setCanceled(true);
 			VMNetworkManager.instance().sendToServer(new SPacketOpenVehicleComponentGUI());
 		}

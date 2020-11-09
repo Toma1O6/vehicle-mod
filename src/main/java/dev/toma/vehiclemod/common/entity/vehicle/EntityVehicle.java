@@ -9,7 +9,6 @@ import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
 import dev.toma.vehiclemod.util.GuiHandler;
-import dev.toma.vehiclemod.util.VehicleTexture;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -44,12 +43,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public float turnModifier;
     public float fuel;
     public EnumVehicleState prevState, currentState;
-
     protected VehicleContainer inventory = this.createInvetory();
     protected VehicleSoundPack soundPack;
     protected VehicleUpgrades upgrades;
-
-    private VehicleTexture texture;
+    protected VehicleTexture texture;
     private double distanceTraveled = 0;
     private boolean isStarted = false;
 

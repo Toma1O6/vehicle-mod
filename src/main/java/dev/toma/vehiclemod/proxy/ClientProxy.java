@@ -11,9 +11,7 @@ import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1;
 import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1Tunned;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
-import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleBeamerPickup;
-import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleMCGMultiVan;
-import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleSputnik3000LEnforcer;
+import dev.toma.vehiclemod.common.entity.vehicle.special.*;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleBeamerS320RS;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleFedorattiNightStalker;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleFedorattiVulcan;
@@ -84,5 +82,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(VehicleFedorattiNightStalker.class, RenderFedorattiNightStalker::new);
 		RenderingRegistry.registerEntityRenderingHandler(VehicleProtonP1.class, manager -> new RenderProtonP1<>(manager, new ModelProtonP1()));
 		RenderingRegistry.registerEntityRenderingHandler(VehicleProtonP1Tunned.class, manager -> new RenderProtonP1<>(manager, new ModelProtonP1Tunned()));
+		RenderingRegistry.registerEntityRenderingHandler(VehicleSputnikAmbulance.class, RenderSputnikAmbulance::new);
+		RenderingRegistry.registerEntityRenderingHandler(VehicleSputnikFiretruck.class, RenderSputnikFiretruck::new);
 	}
 }

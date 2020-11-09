@@ -9,9 +9,7 @@ import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
 import dev.toma.vehiclemod.common.entity.vehicle.*;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
-import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleBeamerPickup;
-import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleMCGMultiVan;
-import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleSputnik3000LEnforcer;
+import dev.toma.vehiclemod.common.entity.vehicle.special.*;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleBeamerS320RS;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleFedorattiNightStalker;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleFedorattiVulcan;
@@ -21,7 +19,7 @@ import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik2000L;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
 import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleSputnikDuster;
 import dev.toma.vehiclemod.common.items.*;
-import dev.toma.vehiclemod.util.VehicleTexture;
+import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -115,6 +113,8 @@ public class Registries {
                     new ItemVehicleSpawner("spawn_fedorattinightstalker", VehicleFedorattiNightStalker.class, VehicleFedorattiNightStalker::new),
                     new ItemVehicleSpawner("spawn_protonp1", VehicleProtonP1.class, VehicleProtonP1::new),
                     new ItemVehicleSpawner("spawn_protonp1tunned", VehicleProtonP1Tunned.class, VehicleProtonP1Tunned::new),
+                    new ItemVehicleSpawner("spawn_sputnikambulance", VehicleSputnikAmbulance.class, VehicleSputnikAmbulance::new),
+                    new ItemVehicleSpawner("spawn_sputnikfiretruck", VehicleSputnikFiretruck.class, VehicleSputnikFiretruck::new),
                     new VMItem("empty_spray_can"),
                     new VMItem("bucket_of_liquid_coal"),
                     new VMItem("bucket_of_activated_fuel_substance"),
@@ -155,7 +155,9 @@ public class Registries {
                     registerVehicle("sputnik_duster", VehicleSputnikDuster.class),
                     registerVehicle("fedoratti_nighstalker", VehicleFedorattiNightStalker.class),
                     registerVehicle("proton_p1", VehicleProtonP1.class),
-                    registerVehicle("proton_p1_tunned", VehicleProtonP1Tunned.class)
+                    registerVehicle("proton_p1_tunned", VehicleProtonP1Tunned.class),
+                    registerVehicle("sputnik_ambulance", VehicleSputnikAmbulance.class),
+                    registerVehicle("sputnik_firetruck", VehicleSputnikFiretruck.class)
             );
         }
 
@@ -214,7 +216,15 @@ public class Registries {
                     registerSound("lock_unlocked"),
                     registerSound("lockpick_success"),
                     registerSound("lockpick_failed"),
-                    registerSound("lockpick_failed_af")
+                    registerSound("lockpick_failed_af"),
+                    registerSound("sputnik_ambulance_acc"),
+                    registerSound("sputnik_ambulance_brake"),
+                    registerSound("sputnik_ambulance_gas"),
+                    registerSound("sputnik_ambulance_start"),
+                    registerSound("sputnik_firetruck_acc"),
+                    registerSound("sputnik_firetruck_brake"),
+                    registerSound("sputnik_firetruck_gas"),
+                    registerSound("sputnik_firetruck_start")
             );
         }
 

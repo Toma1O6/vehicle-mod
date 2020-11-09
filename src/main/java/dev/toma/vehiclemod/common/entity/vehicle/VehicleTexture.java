@@ -1,4 +1,4 @@
-package dev.toma.vehiclemod.util;
+package dev.toma.vehiclemod.common.entity.vehicle;
 
 import dev.toma.vehiclemod.VehicleMod;
 import net.minecraft.util.ResourceLocation;

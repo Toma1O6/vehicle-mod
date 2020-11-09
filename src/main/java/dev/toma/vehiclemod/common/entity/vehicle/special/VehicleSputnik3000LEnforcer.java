@@ -6,7 +6,7 @@ import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
-import dev.toma.vehiclemod.util.VehicleTexture;
+import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
