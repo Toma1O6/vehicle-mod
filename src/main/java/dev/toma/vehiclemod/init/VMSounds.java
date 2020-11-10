@@ -67,4 +67,6 @@ public class VMSounds {
     public static final SoundEvent LOCKPICK_SUCCESS = null;
     public static final SoundEvent LOCKPICK_FAILED = null;
     public static final SoundEvent LOCKPICK_FAILED_AF = null;
+    public static final SoundEvent CAR_LOCKED = null;
+    public static final SoundEvent CAR_UNLOCKED = null;
 }

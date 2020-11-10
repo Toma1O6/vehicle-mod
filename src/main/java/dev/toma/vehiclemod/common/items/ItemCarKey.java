@@ -3,14 +3,14 @@ package dev.toma.vehiclemod.common.items;
 import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.LockManager;
+import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
@@ -41,7 +41,7 @@ public class ItemCarKey extends VMItem {
             LockManager manager = vehicle.lockManager;
             if(manager.test(uuid)) {
                 manager.setUnlocked(!manager.isUnlocked());
-                System.out.println(manager.isUnlocked());
+                worldIn.playSound(null, vehicle.posX, vehicle.posY, vehicle.posZ, manager.isUnlocked() ? VMSounds.CAR_UNLOCKED : VMSounds.CAR_LOCKED, SoundCategory.MASTER, 2.0F, 1.0F);
                 break;
             }
         }
