@@ -24,6 +24,7 @@ public class GuiVehicleComponents extends GuiContainer {
 
     public GuiVehicleComponents(InventoryPlayer player, InventoryComponents components) {
         super(new ContainerVehicleComponents(player, components));
+        xSize = 205;
         ySize = 176;
     }
 

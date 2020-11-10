@@ -33,7 +33,7 @@ public class InventoryComponents extends InventoryBasic {
 
     @Override
     public void markDirty() {
-        for (int i = 0; i < getSizeInventory(); i++) {
+        for (int i = 0; i < 9; i++) {
             ItemStack stack = getStackInSlot(i);
             if(!stack.isEmpty()) {
                 if(stack.getItem() instanceof ItemVehicleUpgrade) {
@@ -42,6 +42,9 @@ public class InventoryComponents extends InventoryBasic {
                     stack.setCount(0);
                 }
             }
+        }
+        for (int i = 9; i < getSizeInventory(); i++) {
+
         }
         super.markDirty();
     }
