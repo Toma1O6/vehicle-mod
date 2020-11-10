@@ -62,7 +62,8 @@ public class Registries {
         public static final VMItem BUCKET_OF_ACTIVATED_FUEL_SUBSTANCE = null;
         public static final VMItem BUCKET_OF_FUEL = null;
         public static final VMItem FUEL_FILTER = null;
-        public static final VMItem LOCKPICK = null;
+        public static final ItemLockpick LOCKPICK = null;
+        public static final ItemCarKey CAR_KEY = null;
     }
 
     @ObjectHolder(VehicleMod.MODID)
@@ -119,7 +120,8 @@ public class Registries {
                     new VMItem("bucket_of_activated_fuel_substance"),
                     new VMItem("bucket_of_fuel"),
                     new VMItem("fuel_filter"),
-                    new VMItem("lockpick"),
+                    new ItemLockpick("lockpick"),
+                    new ItemCarKey("car_key"),
                     new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {

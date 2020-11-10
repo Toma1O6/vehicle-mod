@@ -1,13 +1,15 @@
 package dev.toma.vehiclemod.common.items;
 
 import dev.toma.vehiclemod.Registries;
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
-public class ItemSprayCan extends VMItem {
+public class ItemSprayCan extends VMItem implements IVehicleAction {
 
     private final VehicleTexture texture;
 
@@ -18,23 +20,23 @@ public class ItemSprayCan extends VMItem {
         this.texture = texture;
     }
 
-    public final void applyOnVehicle(EntityVehicle vehicle, World world, EntityPlayer player) {
-        ItemStack stack = player.getHeldItemMainhand();
-        boolean flg = stack.getItemDamage() == stack.getMaxDamage();
-        applyColor(vehicle, stack, player);
-        if(!player.isCreative()) {
-            if(flg) {
-                stack.shrink(1);
-                player.addItemStackToInventory(new ItemStack(Registries.VMItems.EMPTY_SPRAY_CAN));
-            } else player.getHeldItemMainhand().damageItem(1, player);
+    @Override
+    public void apply(EntityPlayer player, World world, ItemStack stack, EntityVehicle vehicle) {
+        if(vehicle.canRepaint(texture)) {
+            vehicle.setTexture(texture);
+            boolean flag = stack.getItemDamage() == stack.getMaxDamage();
+            if(!player.isCreative()) {
+                if(flag) {
+                    stack.shrink(1);
+                    player.addItemStackToInventory(new ItemStack(Registries.VMItems.EMPTY_SPRAY_CAN));
+                } else {
+                    stack.damageItem(1, player);
+                }
+            }
+        } else {
+            if (!player.world.isRemote) {
+                player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "You cannot repaint this vehicle"), true);
+            }
         }
-    }
-
-    public void applyColor(EntityVehicle vehicle, ItemStack stack, EntityPlayer player) {
-        vehicle.setTexture(this.texture);
-    }
-
-    public VehicleTexture getTexture() {
-        return texture;
     }
 }

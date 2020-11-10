@@ -5,7 +5,7 @@ import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.VMTickableSound;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.ILockpickable;
-import dev.toma.vehiclemod.common.items.ItemSprayCan;
+import dev.toma.vehiclemod.common.items.IVehicleAction;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
@@ -22,8 +22,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -83,7 +81,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         this.setFuel();
         ignoreFrustumCheck = true;
         this.soundPack = createSoundPack();
-        this.lockManager = new LockManager(this.getVehicleType().getCarLockType(), this.getUniqueID());
+        this.lockManager = new LockManager(this.getVehicleType().getCarLockType());
     }
 
     public EntityVehicle(World world, BlockPos pos) {
@@ -483,24 +481,23 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     @Override
     public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
+        ItemStack stack = player.getHeldItem(hand);
         if (!player.isSneaking()) {
             if (!world.isRemote && canBeRidden(player) && canFitPassenger(player) && player.getRidingEntity() == null) {
                 player.startRiding(this);
                 return true;
             }
-        } else if (player.getHeldItemMainhand().getItem() instanceof ItemSprayCan) {
-            ItemSprayCan can = (ItemSprayCan) player.getHeldItemMainhand().getItem();
-            if (canRepaint(can.getTexture())) {
-                can.applyOnVehicle(this, world, player);
-            } else {
-                if (!player.world.isRemote) {
-                    player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "You cannot repaint this vehicle"), true);
-                }
-            }
-        } else if (hasInventory() && !world.isRemote) {
+        } else if (stack.getItem() instanceof IVehicleAction) {
+            ((IVehicleAction) stack.getItem()).apply(player, world, stack, this);
+        } else if (hasInventory() && !world.isRemote && lockManager.isUnlocked()) {
             player.openGui(VehicleMod.instance, GuiHandler.VEHICLE, world, getEntityId(), 0, 0);
         }
         return false;
+    }
+
+    @Override
+    protected boolean canBeRidden(Entity entityIn) {
+        return super.canBeRidden(entityIn) && lockManager.isUnlocked();
     }
 
     @Override

@@ -72,15 +72,11 @@ public class TileEntityMechanicPackage extends TileEntityInventory implements IL
                     f -= f1;
                 }
             }
-            List<Integer> list = fillList(variant.getButtons());
-            combinations = new int[list.size()];
-            int at = 0;
-            while (at < combinations.length) {
-                int id = VehicleMod.random.nextInt(list.size());
-                combinations[at] = list.get(id);
-                int n = list.remove(id);
-                ++at;
+            combinations = new int[variant.getButtons()];
+            for (int i = 0; i < combinations.length; i++) {
+                combinations[i] = i;
             }
+            ILockpickable.shuffle(combinations);
         }
     }
 
@@ -139,27 +135,15 @@ public class TileEntityMechanicPackage extends TileEntityInventory implements IL
         return map;
     }
 
-    static List<Integer> fillList(int buttons) {
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < buttons; i++) {
-            list.add(i);
-        }
-        return list;
-    }
-
     void generateCombinations() {
         IBlockState state = world.getBlockState(pos);
         if(state.getBlock() instanceof BlockMechanicPackage) {
             BlockMechanicPackage.Variant variant = ((BlockMechanicPackage) state.getBlock()).getVariant();
-            List<Integer> list = fillList(variant.getButtons());
-            combinations = new int[list.size()];
-            int at = 0;
-            while (at < combinations.length) {
-                int id = VehicleMod.random.nextInt(list.size());
-                combinations[at] = list.get(id);
-                int n = list.remove(id);
-                ++at;
+            combinations = new int[variant.getButtons()];
+            for (int i = 0; i < combinations.length; i++) {
+                combinations[i] = i;
             }
+            ILockpickable.shuffle(combinations);
         } else {
             combinations = new int[1];
         }

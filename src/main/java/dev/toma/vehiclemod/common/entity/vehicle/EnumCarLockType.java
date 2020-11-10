@@ -11,4 +11,8 @@ public enum EnumCarLockType {
     EnumCarLockType(int pinCount) {
         this.pinCount = pinCount;
     }
+
+    public int getPinCount() {
+        return pinCount;
+    }
 }
