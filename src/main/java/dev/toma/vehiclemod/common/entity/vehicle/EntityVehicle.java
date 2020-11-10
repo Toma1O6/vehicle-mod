@@ -514,6 +514,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         NBTTagCompound data = new NBTTagCompound();
         this.upgrades.writeToNBT(data);
         ByteBufUtils.writeTag(buf, data);
+        NBTTagCompound lock = lockManager.serializeNBT();
+        ByteBufUtils.writeTag(buf, lock);
     }
 
     @Override
@@ -523,6 +525,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         distanceTraveled = buf.readDouble();
         texture = VehicleTexture.values()[buf.readInt()];
         upgrades.readFromNBT(ByteBufUtils.readTag(buf));
+        lockManager.deserializeNBT(ByteBufUtils.readTag(buf));
     }
 
     @Override
@@ -579,6 +582,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             }
             compound.setTag("inventory", invNBT);
         }
+        compound.setTag("lock", lockManager.serializeNBT());
         upgrades.writeToNBT(compound);
     }
 
@@ -598,6 +602,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                 inventory.setInventorySlotContents(index, stack);
             }
         }
+        lockManager.deserializeNBT(compound.hasKey("lock", Constants.NBT.TAG_COMPOUND) ? compound.getCompoundTag("lock") : new NBTTagCompound());
         upgrades.readFromNBT(compound);
         lockManager.refresh(this);
     }

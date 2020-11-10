@@ -12,16 +12,11 @@ public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagComp
     protected EnumCarLockType carLockType;
     protected UUID linkedUUID;
     private boolean unlocked;
-    private final int[] combinations;
+    private int[] combinations;
 
     public LockManager(EnumCarLockType carLockType) {
-        this.carLockType = carLockType;
+        this.setCarLockType(carLockType);
         this.linkedUUID = UUID.randomUUID();
-        this.combinations = new int[carLockType.getPinCount()];
-        for (int i = 0; i < combinations.length; i++) {
-            combinations[i] = i;
-        }
-        ILockpickable.shuffle(combinations);
     }
 
     public void refresh(EntityVehicle vehicle) {
@@ -69,6 +64,11 @@ public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagComp
 
     public void setCarLockType(EnumCarLockType carLockType) {
         this.carLockType = carLockType;
+        this.combinations = new int[carLockType.getPinCount()];
+        for (int i = 0; i < combinations.length; i++) {
+            combinations[i] = i;
+        }
+        ILockpickable.shuffle(combinations);
     }
 
     public EnumCarLockType getCarLockType() {

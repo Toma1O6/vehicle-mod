@@ -2,7 +2,7 @@ package dev.toma.vehiclemod.common.entity.vehicle;
 
 public enum EnumCarLockType {
 
-    IRON(9),
+    IRON(2),
     GOLD(12),
     DIAMOND(15);
 

@@ -7,6 +7,7 @@ import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.blocks.BlockSecret;
 import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.EnumCarLockType;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
@@ -64,6 +65,9 @@ public class Registries {
         public static final VMItem FUEL_FILTER = null;
         public static final ItemLockpick LOCKPICK = null;
         public static final ItemCarKey CAR_KEY = null;
+        public static final ItemCarLock IRON_CAR_LOCK = null;
+        public static final ItemCarLock GOLD_CAR_LOCK = null;
+        public static final ItemCarLock DIAMOND_CAR_LOCK = null;
     }
 
     @ObjectHolder(VehicleMod.MODID)
@@ -122,6 +126,9 @@ public class Registries {
                     new VMItem("fuel_filter"),
                     new ItemLockpick("lockpick"),
                     new ItemCarKey("car_key"),
+                    new ItemCarLock("iron_car_lock", EnumCarLockType.IRON),
+                    new ItemCarLock("gold_car_lock", EnumCarLockType.GOLD),
+                    new ItemCarLock("diamond_car_lock", EnumCarLockType.DIAMOND),
                     new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {

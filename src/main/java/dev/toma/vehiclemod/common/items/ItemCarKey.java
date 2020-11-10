@@ -28,7 +28,7 @@ public class ItemCarKey extends VMItem {
         ItemStack stack = new ItemStack(Registries.VMItems.CAR_KEY);
         stack.setStackDisplayName(vehicle.getDisplayName().getFormattedText());
         setUUID(stack, vehicle.lockManager.getLinkedUUID());
-        return new ItemStack(Registries.VMItems.CAR_KEY);
+        return stack;
     }
 
     @Override
@@ -41,6 +41,7 @@ public class ItemCarKey extends VMItem {
             LockManager manager = vehicle.lockManager;
             if(manager.test(uuid)) {
                 manager.setUnlocked(!manager.isUnlocked());
+                System.out.println(manager.isUnlocked());
                 break;
             }
         }

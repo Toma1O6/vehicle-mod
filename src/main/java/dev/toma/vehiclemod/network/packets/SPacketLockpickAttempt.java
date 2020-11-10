@@ -122,7 +122,7 @@ public class SPacketLockpickAttempt implements IMessage {
                         world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.MASTER, 1.0F, 1.0F);
                         player.getHeldItemMainhand().shrink(1);
                     }
-                } else if(message.offset == combinations.length) {
+                } else if(message.offset == combinations.length - 1) {
                     player.closeScreen();
                     world.playSound(null, player.posX, player.posY, player.posZ, VMSounds.LOCK_UNLOCKED, SoundCategory.MASTER, 1.0F, 1.0F);
                     lockpickable.handleUnlock(player, world);
