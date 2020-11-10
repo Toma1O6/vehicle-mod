@@ -4,10 +4,12 @@ import com.google.common.base.Predicate;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.VMTickableSound;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.items.ItemSprayCan;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
+import dev.toma.vehiclemod.network.packets.SPacketLockpickAttempt;
 import dev.toma.vehiclemod.util.GuiHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
@@ -32,9 +34,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.vecmath.Vector3f;
 import java.util.List;
+import java.util.Random;
 
 @SuppressWarnings("Guava")
-public abstract class EntityVehicle extends Entity implements IEntityAdditionalSpawnData {
+public abstract class EntityVehicle extends Entity implements IEntityAdditionalSpawnData, ILockpickable {
 
     private static final Predicate<Entity> TARGET = entity -> EntitySelectors.NOT_SPECTATING.apply(entity) && EntitySelectors.IS_ALIVE.apply(entity) && entity.canBeCollidedWith();
 
@@ -42,7 +45,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public float currentSpeed, prevSpeed;
     public float turnModifier;
     public float fuel;
-    public EnumVehicleState prevState, currentState;
+    public EnumVehicleState currentState;
+    public EnumVehicleState prevState;
+    public final LockManager lockManager;
     protected VehicleContainer inventory = this.createInvetory();
     protected VehicleSoundPack soundPack;
     protected VehicleUpgrades upgrades;
@@ -78,6 +83,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         this.setFuel();
         ignoreFrustumCheck = true;
         this.soundPack = createSoundPack();
+        this.lockManager = new LockManager(this.getVehicleType().getCarLockType(), this.getUniqueID());
     }
 
     public EntityVehicle(World world, BlockPos pos) {
@@ -408,6 +414,26 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     @Override
+    public int[] getCombinations() {
+        return lockManager.getCombinations();
+    }
+
+    @Override
+    public boolean shouldBreakLockpick(Random random) {
+        return true;
+    }
+
+    @Override
+    public void handleUnlock(EntityPlayer player, World world) {
+        lockManager.handleUnlock();
+    }
+
+    @Override
+    public SPacketLockpickAttempt createLockpickPacket(int index, int offset) {
+        return SPacketLockpickAttempt.lockpickVehicle(index, offset, getEntityId());
+    }
+
+    @Override
     public void onUpdate() {
         updateVehicle();
         if (!onGround) {
@@ -576,6 +602,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             }
         }
         upgrades.readFromNBT(compound);
+        lockManager.refresh(this);
     }
 
     @Override

@@ -1,24 +1,25 @@
 package dev.toma.vehiclemod.common.tileentity;
 
 import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.blocks.BlockMechanicPackage;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
+import dev.toma.vehiclemod.network.packets.SPacketLockpickAttempt;
 import dev.toma.vehiclemod.util.function.LazyLoad;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class TileEntityMechanicPackage extends TileEntityInventory {
+public class TileEntityMechanicPackage extends TileEntityInventory implements ILockpickable {
 
     private static final LazyLoad<Map<Integer, List<ItemVehicleUpgrade>>> loot = new LazyLoad<>(TileEntityMechanicPackage::loadLoot);
     private NonNullList<ItemStack> inventory = NonNullList.withSize(2, ItemStack.EMPTY);
@@ -96,11 +97,33 @@ public class TileEntityMechanicPackage extends TileEntityInventory {
         combinations = compound.getIntArray("combinations");
     }
 
+    @Override
     public int[] getCombinations() {
         if(combinations.length == 0) {
             generateCombinations();
         }
         return combinations;
+    }
+
+    @Override
+    public boolean shouldBreakLockpick(Random random) {
+        return random.nextBoolean();
+    }
+
+    @Override
+    public void handleUnlock(EntityPlayer player, World world) {
+        for (int i = 0; i < getSizeInventory(); i++) {
+            ItemStack stack = getStackInSlot(i);
+            if(!stack.isEmpty()) {
+                player.addItemStackToInventory(stack.copy());
+            }
+        }
+        world.destroyBlock(pos, false);
+    }
+
+    @Override
+    public SPacketLockpickAttempt createLockpickPacket(int index, int offset) {
+        return SPacketLockpickAttempt.lockpickPackage(index, offset, getPos());
     }
 
     static Map<Integer, List<ItemVehicleUpgrade>> loadLoot() {

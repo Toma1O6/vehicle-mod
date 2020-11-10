@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.proxy;
 
+import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -16,5 +17,5 @@ public class CommonProxy {
 
     public void playSoundAt(EntityVehicle vehicle) {}
 
-    public void openLockpickUI(TileEntityMechanicPackage mechanicPackage) {}
+    public <L extends ILockpickable> void openLockpickUI(L lockpickable) {}
 }

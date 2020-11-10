@@ -1,14 +1,15 @@
 package dev.toma.vehiclemod.proxy;
 
+import dev.toma.vehiclemod.client.VMTickableSound;
 import dev.toma.vehiclemod.client.VehicleInputHandler;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.client.gui.GuiLockpicking;
-import dev.toma.vehiclemod.client.model.vehicle.ModelSputnik3000L;
-import dev.toma.vehiclemod.client.render.entity.*;
-import dev.toma.vehiclemod.common.entity.vehicle.*;
-import dev.toma.vehiclemod.client.VMTickableSound;
 import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1;
 import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1Tunned;
+import dev.toma.vehiclemod.client.model.vehicle.ModelSputnik3000L;
+import dev.toma.vehiclemod.client.render.entity.*;
+import dev.toma.vehiclemod.common.ILockpickable;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
 import dev.toma.vehiclemod.common.entity.vehicle.special.*;
@@ -20,7 +21,6 @@ import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleProtonP1;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik2000L;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
 import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleSputnikDuster;
-import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.util.SoundEvent;
@@ -64,8 +64,8 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public void openLockpickUI(TileEntityMechanicPackage mechanicPackage) {
-		Minecraft.getMinecraft().displayGuiScreen(new GuiLockpicking(mechanicPackage));
+	public <L extends ILockpickable> void openLockpickUI(L lockpickable) {
+		Minecraft.getMinecraft().displayGuiScreen(new GuiLockpicking<>(lockpickable));
 	}
 
 	private static void registerEntityRenderers() {

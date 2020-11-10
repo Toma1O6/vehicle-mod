@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.client.gui;
 
 import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.SPacketLockpickAttempt;
@@ -9,18 +10,18 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiLockpicking extends GuiScreen {
+public class GuiLockpicking<L extends ILockpickable> extends GuiScreen {
 
     static final ResourceLocation LOCK = VehicleMod.getResource("textures/gui/lock.png");
     private int guiLeft, guiTop;
     private final int xSize = 176, ySize = 166;
     private final int[] combinations;
     private int offset;
-    private final TileEntityMechanicPackage mechanicPackage;
+    private final L lockpickable;
 
-    public GuiLockpicking(TileEntityMechanicPackage mechanicPackage) {
-        this.mechanicPackage = mechanicPackage;
-        this.combinations = mechanicPackage.getCombinations();
+    public GuiLockpicking(L lockpickable) {
+        this.lockpickable = lockpickable;
+        this.combinations = lockpickable.getCombinations();
     }
 
     @Override
@@ -46,7 +47,7 @@ public class GuiLockpicking extends GuiScreen {
 
     @Override
     protected void actionPerformed(GuiButton button) {
-        VMNetworkManager.instance().sendToServer(new SPacketLockpickAttempt(button.id, offset++, mechanicPackage.getPos()));
+        VMNetworkManager.instance().sendToServer(lockpickable.createLockpickPacket(button.id, offset++));
         button.enabled = false;
     }
 }
