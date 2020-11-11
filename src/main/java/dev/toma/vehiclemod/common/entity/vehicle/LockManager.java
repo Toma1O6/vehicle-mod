@@ -19,17 +19,12 @@ public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagComp
         this.linkedUUID = UUID.randomUUID();
     }
 
-    public void refresh(EntityVehicle vehicle) {
-        this.linkedUUID = vehicle.getPersistentID();
-    }
-
     public int[] getCombinations() {
         return combinations;
     }
 
     public void handleUnlock() {
         setUnlocked(true);
-        this.linkedUUID = UUID.randomUUID();
     }
 
     @Override
@@ -37,7 +32,7 @@ public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagComp
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setByte("lockType", (byte) carLockType.ordinal());
         nbt.setBoolean("unlocked", unlocked);
-        nbt.setUniqueId("key", linkedUUID);
+        nbt.setString("key", linkedUUID.toString());
         return nbt;
     }
 
@@ -45,7 +40,7 @@ public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagComp
     public void deserializeNBT(NBTTagCompound nbt) {
         carLockType = EnumCarLockType.values()[nbt.getByte("lockType")];
         unlocked = nbt.getBoolean("unlocked");
-        linkedUUID = nbt.getUniqueId("key");
+        linkedUUID = UUID.fromString(nbt.getString("key"));
     }
 
     @Override
@@ -69,6 +64,7 @@ public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagComp
             combinations[i] = i;
         }
         ILockpickable.shuffle(combinations);
+        this.linkedUUID = UUID.randomUUID();
     }
 
     public EnumCarLockType getCarLockType() {

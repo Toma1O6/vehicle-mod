@@ -28,7 +28,9 @@ public class ItemVehicleSpawner<V extends EntityVehicle> extends VMItem {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         if(!worldIn.isRemote) {
-            worldIn.spawnEntity(vehicleFactory.createVehicle(worldIn, pos));
+            V v = vehicleFactory.createVehicle(worldIn, pos);
+            v.lockManager.setUnlocked(true);
+            worldIn.spawnEntity(v);
         }
         if(!player.isCreative()) {
             stack.shrink(1);

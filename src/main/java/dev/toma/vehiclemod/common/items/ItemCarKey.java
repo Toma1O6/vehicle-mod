@@ -11,6 +11,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
@@ -40,7 +42,15 @@ public class ItemCarKey extends VMItem {
         for (EntityVehicle vehicle : nearbyVehicles) {
             LockManager manager = vehicle.lockManager;
             if(manager.test(uuid)) {
+                NBTTagCompound nbt = stack.getTagCompound();
+                if(nbt.hasKey("state", Constants.NBT.TAG_BYTE)) {
+                    boolean state = nbt.getBoolean("state");
+                    if(state != manager.isUnlocked() && !worldIn.isRemote) {
+                        playerIn.sendStatusMessage(new TextComponentString(TextFormatting.RED.toString() + TextFormatting.BOLD + "[WARNING] Someone has broken into your car"), true);
+                    }
+                }
                 manager.setUnlocked(!manager.isUnlocked());
+                nbt.setBoolean("state", manager.isUnlocked());
                 worldIn.playSound(null, vehicle.posX, vehicle.posY, vehicle.posZ, manager.isUnlocked() ? VMSounds.CAR_UNLOCKED : VMSounds.CAR_LOCKED, SoundCategory.MASTER, 2.0F, 1.0F);
                 break;
             }
