@@ -3,6 +3,7 @@ package dev.toma.vehiclemod.common.tileentity;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.blocks.BlockMechanicPackage;
+import dev.toma.vehiclemod.common.items.ItemPerk;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.network.packets.SPacketLockpickAttempt;
 import dev.toma.vehiclemod.util.function.LazyLoad;
@@ -21,7 +22,8 @@ import java.util.stream.Collectors;
 
 public class TileEntityMechanicPackage extends TileEntityInventory implements ILockpickable {
 
-    private static final LazyLoad<Map<Integer, List<ItemVehicleUpgrade>>> loot = new LazyLoad<>(TileEntityMechanicPackage::loadLoot);
+    private static final LazyLoad<Map<Integer, List<ItemVehicleUpgrade>>> tunningLoot = new LazyLoad<>(TileEntityMechanicPackage::loadTunningLoot);
+    private static final LazyLoad<Map<Integer, List<ItemPerk>>> perkLoot = new LazyLoad<>(TileEntityMechanicPackage::loadPerkLoot);
     private NonNullList<ItemStack> inventory = NonNullList.withSize(3, ItemStack.EMPTY);
     private int[] combinations;
 
@@ -58,21 +60,33 @@ public class TileEntityMechanicPackage extends TileEntityInventory implements IL
     public void fill(BlockMechanicPackage.Variant variant) {
         if(!isInvalid() && !world.isRemote) {
             float[] levelChances = variant.getLevelChances();
+            Random random = VehicleMod.random;
             for (int i = 0; i < variant.getPartCount(); i++) {
-                float f = VehicleMod.random.nextFloat();
-                for (int j = levelChances.length - 1; j >= 0; j--) {
+                float f = random.nextFloat();
+                for (int j = 6; j >= 0; j--) {
                     float f1 = levelChances[j];
                     if(f <= f1) {
                         int level = j + 1;
-                        List<ItemVehicleUpgrade> list = loot.get().get(level);
-                        ItemVehicleUpgrade upgrade = list.get(VehicleMod.random.nextInt(list.size()));
+                        List<ItemVehicleUpgrade> list = tunningLoot.get().get(level);
+                        ItemVehicleUpgrade upgrade = list.get(random.nextInt(list.size()));
                         setInventorySlotContents(i, new ItemStack(upgrade));
                         break;
                     }
                     f -= f1;
                 }
             }
-            // insert perk
+            float f = random.nextFloat();
+            for (int i = 9; i > 6; i--) {
+                float f1 = levelChances[i];
+                if(f <= f1) {
+                    int level = i - 7;
+                    List<ItemPerk> list = perkLoot.get().get(level);
+                    ItemPerk perk = list.get(random.nextInt(list.size()));
+                    setInventorySlotContents(2, new ItemStack(perk));
+                    break;
+                }
+                f -= f1;
+            }
             combinations = new int[variant.getButtons()];
             for (int i = 0; i < combinations.length; i++) {
                 combinations[i] = i;
@@ -123,7 +137,7 @@ public class TileEntityMechanicPackage extends TileEntityInventory implements IL
         return SPacketLockpickAttempt.lockpickPackage(index, offset, getPos());
     }
 
-    static Map<Integer, List<ItemVehicleUpgrade>> loadLoot() {
+    static Map<Integer, List<ItemVehicleUpgrade>> loadTunningLoot() {
         List<ItemVehicleUpgrade> list = ForgeRegistries.ITEMS.getValuesCollection()
                 .stream()
                 .filter(i -> i instanceof ItemVehicleUpgrade)
@@ -134,6 +148,25 @@ public class TileEntityMechanicPackage extends TileEntityInventory implements IL
             map.computeIfAbsent(upgrade.getLevel(), i -> new ArrayList<>()).add(upgrade);
         }
         return map;
+    }
+
+    static Map<Integer, List<ItemPerk>> loadPerkLoot() {
+        List<ItemPerk> perks = ForgeRegistries.ITEMS.getValuesCollection().stream().filter(i -> i instanceof ItemPerk).map(i -> (ItemPerk) i).collect(Collectors.toList());
+        Map<Integer, List<ItemPerk>> map = new HashMap<>();
+        for (ItemPerk perk : perks) {
+            int index = getPerkCategory(perk);
+            map.computeIfAbsent(index, i -> new ArrayList<>()).add(perk);
+        }
+        return map;
+    }
+
+    static int getPerkCategory(ItemPerk perk) {
+        String name = perk.getRegistryName().getResourcePath();
+        if(name.contains("gold"))
+            return 2;
+        else if(name.contains("silver"))
+            return 1;
+        else return 0;
     }
 
     void generateCombinations() {
