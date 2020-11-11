@@ -63,10 +63,10 @@ public class VMConfig {
 	public static VehicleStats protonP1_tunned = new VehicleStats(220F, 1.4F, 0.007F, 0.022F, 0.23F, 3.3F, 0.0076F, 50).track();
 
 	@Name("Sputnik Ambulance")
-	public static VehicleStats sputnikAmbulance = new VehicleStats(200F, 1.3F, 0.005F, 0.017F, 0.23F, 3.0F, 0.008F, 70, new VehicleStats.Vector3i(0, 0, -2)).track();
+	public static VehicleStats sputnikAmbulance = new VehicleStats(250F, 1.14F, 0.0042F, 0.016F, 0.14F, 3.0F, 0.009F, 70, new VehicleStats.Vector3i(0, 0, -2)).track();
 
 	@Name("Sputnik Firetruck")
-	public static VehicleStats sputnikFiretruck = new VehicleStats(200F, 1.3F, 0.005F, 0.017F, 0.23F, 3.0F, 0.008F, 100, new VehicleStats.Vector3i(0, 0, -4)).track();
+	public static VehicleStats sputnikFiretruck = new VehicleStats(400F, 1.0F, 0.0038F, 0.011F, 0.09F, 2.3F, 0.013F, 100, new VehicleStats.Vector3i(0, 0, -4)).track();
 
 	@Mod.EventBusSubscriber(modid = VehicleMod.MODID)
 	public static class Event {

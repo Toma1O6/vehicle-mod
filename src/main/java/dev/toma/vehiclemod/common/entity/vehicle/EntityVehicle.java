@@ -23,6 +23,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -491,12 +492,17 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (!player.isSneaking()) {
-            if (!world.isRemote && canBeRidden(player) && canFitPassenger(player) && player.getRidingEntity() == null) {
-                player.startRiding(this);
-                return true;
+            if (!world.isRemote) {
+                if(canBeRidden(player) && canFitPassenger(player) && player.getRidingEntity() == null) {
+                    player.startRiding(this);
+                    return true;
+                } else {
+                    player.sendStatusMessage(new TextComponentString("This vehicle is locked"), true);
+                }
             }
         } else if (stack.getItem() instanceof IVehicleAction) {
             ((IVehicleAction) stack.getItem()).apply(player, world, stack, this);
+            return true;
         } else if (hasInventory() && !world.isRemote && lockManager.isUnlocked()) {
             player.openGui(VehicleMod.instance, GuiHandler.VEHICLE, world, getEntityId(), 0, 0);
         }

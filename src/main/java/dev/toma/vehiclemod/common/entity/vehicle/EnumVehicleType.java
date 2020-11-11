@@ -2,10 +2,10 @@ package dev.toma.vehiclemod.common.entity.vehicle;
 
 public enum EnumVehicleType {
 
-    STANDART(40, EnumCarLockType.IRON),
+    STANDART(35, EnumCarLockType.IRON),
     SUV(15, EnumCarLockType.GOLD),
     MUSCLE(20, EnumCarLockType.IRON),
-    SPORT(10, EnumCarLockType.DIAMOND),
+    SPORT(15, EnumCarLockType.DIAMOND),
     SPECIAL(15, EnumCarLockType.GOLD);
 
     private final int spawnChance;

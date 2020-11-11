@@ -25,6 +25,7 @@ public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagComp
 
     public void handleUnlock() {
         setUnlocked(true);
+        this.linkedUUID = UUID.randomUUID();
     }
 
     @Override

@@ -35,7 +35,7 @@ public class ItemSprayCan extends VMItem implements IVehicleAction {
             }
         } else {
             if (!player.world.isRemote) {
-                player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "You cannot repaint this vehicle"), true);
+                player.sendStatusMessage(new TextComponentString(TextFormatting.RED + "You cannot apply this color on vehicle"), true);
             }
         }
     }

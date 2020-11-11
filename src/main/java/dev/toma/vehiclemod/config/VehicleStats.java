@@ -144,7 +144,7 @@ public final class VehicleStats {
 		}
 		for (ItemPerk perk : perks) {
 			if(perk.getModifierType() == modifierType) {
-				f += perk.getValue();
+				f += (perk.getValue() * 3);
 			}
 		}
 		return f;

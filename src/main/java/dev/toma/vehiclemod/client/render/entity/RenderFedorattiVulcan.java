@@ -29,7 +29,7 @@ public class RenderFedorattiVulcan extends RenderVehicle<VehicleFedorattiVulcan>
         GlStateManager.scale(0.035, 0.035, 0.035);
         GlStateManager.rotate(180F, 1F, 0F, 0F);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
-        GlStateManager.translate(0, -20, 0);
+        GlStateManager.translate(0, -17, 0);
         GlStateManager.disableLighting();
         model.doVehicleRender();
         GlStateManager.enableLighting();
