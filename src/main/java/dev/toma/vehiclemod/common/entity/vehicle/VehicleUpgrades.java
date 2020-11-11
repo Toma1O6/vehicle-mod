@@ -88,7 +88,7 @@ public class VehicleUpgrades {
         for (int i = 0; i < perks.length; i++) {
             if(this.hasPerk(i)) {
                 ItemPerk perk = this.getPerk(i);
-                IStatApplicator applicator = perk.getApplicator();
+                IStatApplicator applicator = perk.getModifierType().getApplicator();
                 applicator.applyOnStat(this, perk.getValue());
             }
         }
