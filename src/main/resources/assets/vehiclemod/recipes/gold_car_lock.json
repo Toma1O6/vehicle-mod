@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IBI",
+    "ILI",
+    "IBI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:gold_ingot"
+    },
+    "B": {
+      "item": "minecraft:gold_block"
+    },
+    "L": {
+      "item": "vehiclemod:lockpick"
+    }
+  },
+  "result": {
+    "item": "vehiclemod:gold_car_lock",
+    "count": 1
+  }
+}
