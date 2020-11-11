@@ -46,7 +46,7 @@ public class ItemCarKey extends VMItem {
                 if(nbt.hasKey("state", Constants.NBT.TAG_BYTE)) {
                     boolean state = nbt.getBoolean("state");
                     if(state != manager.isUnlocked() && !worldIn.isRemote) {
-                        playerIn.sendStatusMessage(new TextComponentString(TextFormatting.RED.toString() + TextFormatting.BOLD + "[WARNING] Someone has broken into your car"), true);
+                        playerIn.sendStatusMessage(new TextComponentString(TextFormatting.DARK_RED.toString() + "[WARNING] Someone has broken into your car"), true);
                     }
                 }
                 manager.setUnlocked(!manager.isUnlocked());
