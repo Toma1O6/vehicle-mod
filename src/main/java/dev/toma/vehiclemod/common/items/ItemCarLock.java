@@ -22,6 +22,7 @@ public class ItemCarLock extends VMItem implements IVehicleAction {
         if(manager.isUnlocked()) {
             manager.setCarLockType(carLockType);
             manager.setUnlocked(false);
+            vehicle.sync();
             if(!world.isRemote) {
                 player.addItemStackToInventory(ItemCarKey.createKeysFor(vehicle, player));
                 if(!player.isCreative()) {

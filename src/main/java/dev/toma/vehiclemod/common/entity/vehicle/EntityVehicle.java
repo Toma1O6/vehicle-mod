@@ -8,6 +8,7 @@ import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.items.IVehicleAction;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
+import dev.toma.vehiclemod.network.packets.CPacketUpdateEntity;
 import dev.toma.vehiclemod.network.packets.CPacketVehicleData;
 import dev.toma.vehiclemod.network.packets.SPacketLockpickAttempt;
 import dev.toma.vehiclemod.util.GuiHandler;
@@ -411,6 +412,12 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         return true;
     }
 
+    public void sync() {
+        if(!world.isRemote) {
+            VMNetworkManager.instance().sendToDimension(new CPacketUpdateEntity(this), dimension);
+        }
+    }
+
     @Override
     public int[] getCombinations() {
         return lockManager.getCombinations();
@@ -424,6 +431,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     @Override
     public void handleUnlock(EntityPlayer player, World world) {
         lockManager.handleUnlock();
+        sync();
     }
 
     @Override
