@@ -16,7 +16,7 @@ public class InventoryComponents extends InventoryBasic {
     final EntityPlayer player;
 
     public InventoryComponents(EntityPlayer player) {
-        super(new TextComponentString("ComponentInventory"), 9);
+        super(new TextComponentString("ComponentInventory"), 12);
         if(player.getRidingEntity() instanceof EntityVehicle) {
             this.vehicle = (EntityVehicle) player.getRidingEntity();
             this.upgrades = vehicle.getUpgrades();

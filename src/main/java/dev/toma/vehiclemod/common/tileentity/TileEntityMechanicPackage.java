@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class TileEntityMechanicPackage extends TileEntityInventory implements ILockpickable {
 
     private static final LazyLoad<Map<Integer, List<ItemVehicleUpgrade>>> loot = new LazyLoad<>(TileEntityMechanicPackage::loadLoot);
-    private NonNullList<ItemStack> inventory = NonNullList.withSize(2, ItemStack.EMPTY);
+    private NonNullList<ItemStack> inventory = NonNullList.withSize(3, ItemStack.EMPTY);
     private int[] combinations;
 
     @Override
@@ -72,6 +72,7 @@ public class TileEntityMechanicPackage extends TileEntityInventory implements IL
                     f -= f1;
                 }
             }
+            // insert perk
             combinations = new int[variant.getButtons()];
             for (int i = 0; i < combinations.length; i++) {
                 combinations[i] = i;

@@ -81,7 +81,7 @@ public class ContainerVehicleComponents extends ModContainer<InventoryComponents
         @Override
         public String getSlotTexture() {
             VehicleUpgrades upgrades = ((InventoryComponents) inventory).getUpgrades();
-            int index = this.getSlotIndex();
+            int index = this.getSlotIndex() - 9;
             if(!upgrades.hasPerk(index)) {
                 return "vehiclemod:items/perk_empty";
             }

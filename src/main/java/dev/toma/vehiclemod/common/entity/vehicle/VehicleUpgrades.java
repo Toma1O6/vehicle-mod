@@ -8,10 +8,13 @@ import dev.toma.vehiclemod.common.tunning.StatPackage;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.util.DevUtil;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -140,6 +143,7 @@ public class VehicleUpgrades {
 
     public void setPerk(int id, ItemPerk perk) {
         perks[id] = perk;
+        recalculate();
     }
 
     public boolean hasPerk(int id) {
@@ -152,6 +156,17 @@ public class VehicleUpgrades {
             list.appendTag(new NBTTagInt(entry.getValue()));
         }
         nbt.setTag("upgrades", list);
+        NBTTagList perks = new NBTTagList();
+        for (int i = 0; i < this.perks.length; i++) {
+            ItemPerk perk = this.perks[i];
+            if(perk == null)
+                continue;
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setByte("key", (byte) i);
+            compound.setString("value", perk.getRegistryName().toString());
+            perks.appendTag(compound);
+        }
+        nbt.setTag("perks", perks);
     }
 
     public void readFromNBT(NBTTagCompound compound) {
@@ -160,6 +175,18 @@ public class VehicleUpgrades {
             for (int i = 0; i < list.tagCount(); i++) {
                 int v = list.getIntAt(i);
                 upgradeMap.put(ItemVehicleUpgrade.Type.values()[i], v);
+            }
+        }
+        if(compound.hasKey("perks", Constants.NBT.TAG_LIST)) {
+            NBTTagList list = compound.getTagList("perks", Constants.NBT.TAG_COMPOUND);
+            for (int i = 0; i < list.tagCount(); i++) {
+                NBTTagCompound nbt = list.getCompoundTagAt(i);
+                int index = nbt.getByte("key");
+                ResourceLocation location = new ResourceLocation(nbt.getString("value"));
+                Item item = ForgeRegistries.ITEMS.getValue(location);
+                if(!(item instanceof ItemPerk))
+                    continue;
+                perks[index] = (ItemPerk) item;
             }
         }
         recalculate();
