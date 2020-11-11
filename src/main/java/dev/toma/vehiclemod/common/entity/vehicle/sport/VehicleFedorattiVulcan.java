@@ -41,7 +41,7 @@ public class VehicleFedorattiVulcan extends EntityVehicleSport {
 
     @Override
     public double getMountedYOffset() {
-        return -0.1;
+        return -0.2;
     }
 
     @Override
