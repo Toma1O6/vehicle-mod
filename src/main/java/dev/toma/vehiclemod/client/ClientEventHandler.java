@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.client;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.items.ItemPerk;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
@@ -22,8 +23,12 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.GL11;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @EventBusSubscriber(Side.CLIENT)
 public class ClientEventHandler {
@@ -47,6 +52,12 @@ public class ClientEventHandler {
 				map.registerSprite(VehicleMod.getResource("items/" + type.name().toLowerCase() + "_" + i));
 			}
 		}
+		List<ItemPerk> perks = ForgeRegistries.ITEMS.getValuesCollection().stream().filter(i -> i instanceof ItemPerk).map(i -> (ItemPerk) i).collect(Collectors.toList());
+		for (ItemPerk perk : perks) {
+			ResourceLocation name = perk.getRegistryName();
+			map.registerSprite(new ResourceLocation(name.getResourceDomain(), "items/" + name.getResourcePath()));
+		}
+		map.registerSprite(VehicleMod.getResource("items/perk_empty"));
 	}
 
 	@SubscribeEvent

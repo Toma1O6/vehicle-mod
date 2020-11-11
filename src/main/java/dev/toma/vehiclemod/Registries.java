@@ -21,6 +21,7 @@ import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik2000L;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
 import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleSputnikDuster;
 import dev.toma.vehiclemod.common.items.*;
+import dev.toma.vehiclemod.common.tunning.StatModifierType;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -129,6 +130,24 @@ public class Registries {
                     new ItemCarLock("iron_car_lock", EnumCarLockType.IRON),
                     new ItemCarLock("gold_car_lock", EnumCarLockType.GOLD),
                     new ItemCarLock("diamond_car_lock", EnumCarLockType.DIAMOND),
+                    new ItemPerk("bronze_acceleration_perk", StatModifierType.ACCELERATION, 0.02F),
+                    new ItemPerk("silver_acceleration_perk", StatModifierType.ACCELERATION, 0.04F),
+                    new ItemPerk("gold_acceleration_perk", StatModifierType.ACCELERATION, 0.07F),
+                    new ItemPerk("bronze_brakes_perk", StatModifierType.BRAKING, 0.03F),
+                    new ItemPerk("silver_brakes_perk", StatModifierType.BRAKING, 0.06F),
+                    new ItemPerk("gold_brakes_perk", StatModifierType.BRAKING, 0.1F),
+                    new ItemPerk("bronze_durability_perk", StatModifierType.DURABILITY, 0.03F),
+                    new ItemPerk("silver_durability_perk", StatModifierType.DURABILITY, 0.06F),
+                    new ItemPerk("gold_durability_perk", StatModifierType.DURABILITY, 0.1F),
+                    new ItemPerk("bronze_handling_perk", StatModifierType.HANDLING, 0.02F),
+                    new ItemPerk("silver_handling_perk", StatModifierType.HANDLING, 0.04F),
+                    new ItemPerk("gold_handling_perk", StatModifierType.HANDLING, 0.07F),
+                    new ItemPerk("bronze_speed_perk", StatModifierType.TOP_SPEED, 0.02F),
+                    new ItemPerk("silver_speed_perk", StatModifierType.TOP_SPEED, 0.04F),
+                    new ItemPerk("gold_speed_perk", StatModifierType.TOP_SPEED, 0.07F),
+                    new ItemPerk("bronze_tank_perk", StatModifierType.FUEL_CAPACITY, 0.03F),
+                    new ItemPerk("silver_tank_perk", StatModifierType.FUEL_CAPACITY, 0.06F),
+                    new ItemPerk("gold_tank_perk", StatModifierType.FUEL_CAPACITY, 0.1F),
                     new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {

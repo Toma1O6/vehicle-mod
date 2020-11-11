@@ -1,14 +1,17 @@
 package dev.toma.vehiclemod.config;
 
+import dev.toma.vehiclemod.common.items.ItemPerk;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.common.tunning.StatModifier;
 import dev.toma.vehiclemod.common.tunning.StatModifierType;
 import dev.toma.vehiclemod.common.tunning.StatPackage;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.common.config.Config;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class VehicleStats {
 
@@ -102,25 +105,26 @@ public final class VehicleStats {
 	}
 
 	private void calculateRanges() {
-		float f0 = getTotalModifierWith(StatModifierType.TOP_SPEED);
+		List<ItemPerk> perks = ForgeRegistries.ITEMS.getValuesCollection().stream().filter(it -> it instanceof ItemPerk && it.getRegistryName().getResourcePath().contains("gold")).map(i -> (ItemPerk) i).collect(Collectors.toList());
+		float f0 = getTotalModifierWith(StatModifierType.TOP_SPEED, perks);
 		if(maxSpeed < topSpeedMin) {
 			topSpeedMin = maxSpeed;
 		} else if(maxSpeed * f0 > topSpeedMax) {
 			topSpeedMax = maxSpeed * f0;
 		}
-		float f1 = getTotalModifierWith(StatModifierType.ACCELERATION);
+		float f1 = getTotalModifierWith(StatModifierType.ACCELERATION, perks);
 		if(acceleration < accelerationMin) {
 			accelerationMin = acceleration;
 		} else if(acceleration * f1 > accelerationMax) {
 			accelerationMax = acceleration * f1;
 		}
-		float f2 = getTotalModifierWith(StatModifierType.HANDLING);
+		float f2 = getTotalModifierWith(StatModifierType.HANDLING, perks);
 		if(turnSpeed < handlingMin) {
 			handlingMin = turnSpeed;
 		} else if(turnSpeed * f2 > handlingMax) {
 			handlingMax = turnSpeed * f2;
 		}
-		float f3 = getTotalModifierWith(StatModifierType.BRAKING);
+		float f3 = getTotalModifierWith(StatModifierType.BRAKING, perks);
 		if(brakeSpeed < brakingMin) {
 			brakingMin = brakeSpeed;
 		} else if(brakeSpeed * f3 > brakingMax) {
@@ -128,7 +132,7 @@ public final class VehicleStats {
 		}
 	}
 
-	private static float getTotalModifierWith(StatModifierType modifierType) {
+	private static float getTotalModifierWith(StatModifierType modifierType, List<ItemPerk> perks) {
 		float f = 1.0F;
 		for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
 			StatPackage statPackage = type.getPackage();
@@ -136,6 +140,11 @@ public final class VehicleStats {
 				if(modifier.getType() == modifierType) {
 					f += modifier.getValue(6);
 				}
+			}
+		}
+		for (ItemPerk perk : perks) {
+			if(perk.getModifierType() == modifierType) {
+				f += perk.getValue();
 			}
 		}
 		return f;

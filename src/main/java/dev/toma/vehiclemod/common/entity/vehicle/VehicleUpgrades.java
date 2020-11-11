@@ -1,7 +1,9 @@
 package dev.toma.vehiclemod.common.entity.vehicle;
 
+import dev.toma.vehiclemod.common.items.ItemPerk;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.common.tunning.IStatApplicator;
+import dev.toma.vehiclemod.common.tunning.StatModifier;
 import dev.toma.vehiclemod.common.tunning.StatPackage;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.util.DevUtil;
@@ -19,6 +21,7 @@ import java.util.TreeMap;
 public class VehicleUpgrades {
 
     private final SortedMap<ItemVehicleUpgrade.Type, Integer> upgradeMap;
+    private final ItemPerk[] perks = new ItemPerk[3];
     private final VehicleStats configStats;
     private VehicleStats modifiedStats;
 
@@ -82,6 +85,13 @@ public class VehicleUpgrades {
                 applicator.applyOnStat(this, modifier.getValues()[level - 1]);
             });
         }
+        for (int i = 0; i < perks.length; i++) {
+            if(this.hasPerk(i)) {
+                ItemPerk perk = this.getPerk(i);
+                IStatApplicator applicator = perk.getApplicator();
+                applicator.applyOnStat(this, perk.getValue());
+            }
+        }
         float health = configStats.maxHealth * this.health;
         float acceleration = configStats.acceleration * this.acceleration;
         float topSpeed = configStats.maxSpeed * this.topSpeed;
@@ -122,6 +132,18 @@ public class VehicleUpgrades {
 
     public void addFuelCap(float toAdd) {
         this.fuelCap += toAdd;
+    }
+
+    public ItemPerk getPerk(int id) {
+        return perks[id];
+    }
+
+    public void setPerk(int id, ItemPerk perk) {
+        perks[id] = perk;
+    }
+
+    public boolean hasPerk(int id) {
+        return getPerk(id) != null;
     }
 
     public void writeToNBT(NBTTagCompound nbt) {

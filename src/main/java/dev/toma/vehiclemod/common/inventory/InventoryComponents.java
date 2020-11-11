@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.common.inventory;
 
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
+import dev.toma.vehiclemod.common.items.ItemPerk;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryBasic;
@@ -44,7 +45,12 @@ public class InventoryComponents extends InventoryBasic {
             }
         }
         for (int i = 9; i < getSizeInventory(); i++) {
-
+            ItemStack stack = getStackInSlot(i);
+            if(!stack.isEmpty() && stack.getItem() instanceof ItemPerk) {
+                int index = i - 9;
+                upgrades.setPerk(index, (ItemPerk) stack.getItem());
+                stack.setCount(0);
+            }
         }
         super.markDirty();
     }
