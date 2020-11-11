@@ -425,7 +425,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     @Override
     public boolean shouldBreakLockpick(Random random) {
-        return true;
+        return random.nextFloat() < 0.4F;
     }
 
     @Override
