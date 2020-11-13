@@ -20,7 +20,7 @@ public class ItemCarLock extends VMItem implements IVehicleAction {
     public void apply(EntityPlayer player, World world, ItemStack stack, EntityVehicle vehicle) {
         LockManager manager = vehicle.lockManager;
         if(manager.isUnlocked()) {
-            manager.setCarLockType(carLockType);
+            manager.setCarLockType(carLockType, false);
             manager.setUnlocked(false);
             vehicle.sync();
             if(!world.isRemote) {

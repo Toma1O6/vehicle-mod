@@ -95,6 +95,7 @@ public class ChunkDataFactory implements ChunkData {
                         vehicle.health = vehicle.getActualStats().maxHealth * 0.1F;
                         vehicle.setTexture(VehicleTexture.RUST);
                         vehicle.rotationYaw = random.nextInt(180) - random.nextInt(180);
+                        vehicle.lockManager.setCarLockType(vehicle.getVehicleType().getCarLockType(), true);
                         world.spawnEntity(vehicle);
                     }
                 }

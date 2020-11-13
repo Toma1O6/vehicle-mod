@@ -15,7 +15,7 @@ public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagComp
     private int[] combinations;
 
     public LockManager(EnumCarLockType carLockType) {
-        this.setCarLockType(carLockType);
+        this.setCarLockType(carLockType, false);
         this.linkedUUID = UUID.randomUUID();
     }
 
@@ -58,9 +58,9 @@ public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagComp
         return unlocked;
     }
 
-    public void setCarLockType(EnumCarLockType carLockType) {
+    public void setCarLockType(EnumCarLockType carLockType, boolean isNatural) {
         this.carLockType = carLockType;
-        this.combinations = new int[carLockType.getPinCount()];
+        this.combinations = new int[carLockType.getPinCount(isNatural)];
         for (int i = 0; i < combinations.length; i++) {
             combinations[i] = i;
         }

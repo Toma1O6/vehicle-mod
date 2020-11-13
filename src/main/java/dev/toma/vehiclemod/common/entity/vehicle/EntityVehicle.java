@@ -83,7 +83,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         this.setFuel();
         ignoreFrustumCheck = true;
         this.soundPack = createSoundPack();
-        this.lockManager = new LockManager(this.getVehicleType().getCarLockType());
+        this.lockManager = new LockManager(EnumCarLockType.IRON);
     }
 
     public EntityVehicle(World world, BlockPos pos) {
