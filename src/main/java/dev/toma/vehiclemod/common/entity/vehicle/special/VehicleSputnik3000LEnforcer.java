@@ -52,7 +52,7 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSpecial implements
 
     @Override
     public boolean canRepaint(VehicleTexture texture) {
-        return false;
+        return texture == VehicleTexture.WHITE;
     }
 
     @Override
