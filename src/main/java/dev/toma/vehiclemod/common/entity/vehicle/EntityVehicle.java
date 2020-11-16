@@ -493,11 +493,13 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         ItemStack stack = player.getHeldItem(hand);
         if (!player.isSneaking()) {
             if (!world.isRemote) {
-                if(canBeRidden(player) && canFitPassenger(player) && player.getRidingEntity() == null) {
-                    player.startRiding(this);
-                    return true;
-                } else {
-                    player.sendStatusMessage(new TextComponentString("This vehicle is locked"), true);
+                if(canFitPassenger(player) && player.getRidingEntity() == null) {
+                    if(canBeRidden(player)) {
+                        player.startRiding(this);
+                        return true;
+                    } else {
+                        player.sendStatusMessage(new TextComponentString("This vehicle is locked"), true);
+                    }
                 }
             }
         } else if (stack.getItem() instanceof IVehicleAction) {
