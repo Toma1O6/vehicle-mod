@@ -1,8 +1,7 @@
-package dev.toma.vehiclemod.common.entity.vehicle.sport;
+package dev.toma.vehiclemod.common.entity.vehicle.supersport;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
-import dev.toma.vehiclemod.common.entity.vehicle.sport.EntityVehicleSport;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -11,17 +10,17 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleFedorattiVulcan extends EntityVehicleSport {
+public class VehicleFedorattiNightStalker extends EntityVehicleSuperSport {
 
-    private static final Vector3f[] VECTOR_3_FS = {new Vector3f(-1.3F, 0.7F, 0), new Vector3f(-2.1F, 0.15F, -0.55F), new Vector3f(-2.1F, 0.15F, 0.55F)};
+    static final Vector3f[] PARTS = {new Vector3f(-1.5F, 0.4F, 0.0F), new Vector3f(-2.25F, 0.2F, 0.0F)};
 
-    public VehicleFedorattiVulcan(World world) {
+    public VehicleFedorattiNightStalker(World world) {
         super(world);
-        setSize(2, 1.5F);
     }
 
-    public VehicleFedorattiVulcan(World world, BlockPos pos) {
+    public VehicleFedorattiNightStalker(World world, BlockPos pos) {
         super(world, pos);
+        setSize(2.0f, 1.5f);
     }
 
     @Override
@@ -32,10 +31,10 @@ public class VehicleFedorattiVulcan extends EntityVehicleSport {
     @Override
     public VehicleSoundPack createSoundPack() {
         return VehicleSoundPack.Builder.create(this)
-                .acc(VMSounds.FEDORATTI_ACC)
-                .brk(VMSounds.FEDORATTI_BRAKE)
-                .rls(VMSounds.FEDORATTI_GAS)
-                .str(VMSounds.FEDORATTI_START)
+                .acc(VMSounds.FEDORATTI_NIGHTSTALKER_ACC)
+                .brk(VMSounds.FEDORATTI_NIGHTSTALKER_BRAKE)
+                .rls(VMSounds.FEDORATTI_NIGHTSTALKER_GAS)
+                .str(VMSounds.FEDORATTI_NIGHTSTALKER_START)
                 .build();
     }
 
@@ -45,23 +44,23 @@ public class VehicleFedorattiVulcan extends EntityVehicleSport {
     }
 
     @Override
-    public Vector3f[] getPartVecs() {
-        return VECTOR_3_FS;
-    }
-
-    @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.fedoratti_vulcan;
+        return VMConfig.fedorattiNightStalker;
     }
 
     @Override
     public int maximumAmountOfPassengers() {
-        return 4;
+        return 2;
+    }
+
+    @Override
+    public Vector3f[] getPartVecs() {
+        return PARTS;
     }
 
     @Override
     protected double getPassengerOffsetX(int id) {
-        return id < 2 ? 0.5 : -0.2;
+        return 0.2;
     }
 
     @Override
