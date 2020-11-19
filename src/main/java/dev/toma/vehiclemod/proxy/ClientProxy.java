@@ -1,8 +1,8 @@
 package dev.toma.vehiclemod.proxy;
 
+import dev.toma.vehiclemod.client.VMKeybinds;
 import dev.toma.vehiclemod.client.VMTickableSound;
 import dev.toma.vehiclemod.client.VehicleInputHandler;
-import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.client.gui.GuiLockpicking;
 import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1;
 import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1Tunned;
@@ -15,12 +15,12 @@ import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
 import dev.toma.vehiclemod.common.entity.vehicle.special.*;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleBeamerS320RS;
-import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiNightStalker;
-import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiVulcan;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleProtonP1Tunned;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleProtonP1;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik2000L;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
+import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiNightStalker;
+import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiVulcan;
 import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleSputnikDuster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
@@ -36,6 +36,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit(FMLPreInitializationEvent e) {
 		MinecraftForge.EVENT_BUS.register(new VehicleInputHandler());
+		VMKeybinds.init();
 		registerEntityRenderers();
 	}
 	
@@ -51,7 +52,6 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void playSoundAt(EntityVehicle v) {
 		SoundHandler handler = Minecraft.getMinecraft().getSoundHandler();
-		VehicleSoundPack sounds = v.getSoundPack();
 		SoundEvent event = v.getVehicleSound();
 		if(v.currentSound != null && handler.isSoundPlaying(v.currentSound)) {
 			handler.stopSound(v.currentSound);

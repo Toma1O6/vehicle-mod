@@ -254,7 +254,10 @@ public class Registries {
                     registerSound("sputnik_firetruck_gas"),
                     registerSound("sputnik_firetruck_start"),
                     registerSound("car_locked"),
-                    registerSound("car_unlocked")
+                    registerSound("car_unlocked"),
+                    registerSound("police_siren"),
+                    registerSound("ambulance_siren"),
+                    registerSound("firetruck_siren")
             );
         }
 

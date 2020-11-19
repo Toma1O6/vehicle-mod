@@ -1,11 +1,13 @@
 package dev.toma.vehiclemod.common;
 
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.ISpecialVehicle;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
@@ -52,6 +54,22 @@ public class CommonEventHandler {
             default:
                 event.player.sendMessage(new TextComponentString(getMessageLogo() + TextFormatting.GREEN + " No updates available"));
                 break;
+        }
+    }
+
+    @SubscribeEvent
+    public static void startTracking(net.minecraftforge.event.entity.player.PlayerEvent.StartTracking event) {
+        if(event.getTarget() instanceof ISpecialVehicle) {
+            ISpecialVehicle vehicle = (ISpecialVehicle) event.getTarget();
+            vehicle.startTracking((EntityVehicle & ISpecialVehicle) vehicle, (EntityPlayerMP) event.getEntityPlayer());
+        }
+    }
+
+    @SubscribeEvent
+    public static void stopTracking(net.minecraftforge.event.entity.player.PlayerEvent.StopTracking event) {
+        if(event.getTarget() instanceof ISpecialVehicle) {
+            ISpecialVehicle vehicle = (ISpecialVehicle) event.getTarget();
+            vehicle.stopTracking((EntityVehicle & ISpecialVehicle) vehicle, (EntityPlayerMP) event.getEntityPlayer());
         }
     }
 

@@ -61,5 +61,8 @@
     "lockpick_failed": {"category": "master", "sounds": [{"name": "vehiclemod:lockpick_failed", "stream": "true"}]},
     "lockpick_failed_af": {"category": "master", "sounds": [{"name": "vehiclemod:lockpick_failed_af", "stream": "true"}]},
     "car_locked": {"category": "master", "sounds": [{"name": "vehiclemod:car_locked", "stream": "true"}]},
-    "car_unlocked": {"category": "master", "sounds": [{"name": "vehiclemod:car_unlocked", "stream": "true"}]}
+    "car_unlocked": {"category": "master", "sounds": [{"name": "vehiclemod:car_unlocked", "stream": "true"}]},
+    "police_siren": {"category": "master", "sounds": [{"name": "vehiclemod:police_siren", "stream": "true"}]},
+    "ambulance_siren": {"category": "master", "sounds": [{"name": "vehiclemod:ambulance_siren", "stream": "true"}]},
+    "firetruck_siren": {"category": "master", "sounds": [{"name": "vehiclemod:firetruck_siren", "stream": "true"}]}
 }

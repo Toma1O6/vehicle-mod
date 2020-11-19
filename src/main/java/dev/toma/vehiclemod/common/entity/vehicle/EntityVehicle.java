@@ -600,6 +600,11 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
         compound.setTag("lock", lockManager.serializeNBT());
         upgrades.writeToNBT(compound);
+        this.writeExtraData(compound);
+    }
+
+    protected void writeExtraData(NBTTagCompound compound) {
+
     }
 
     @Override
@@ -620,6 +625,11 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
         lockManager.deserializeNBT(compound.hasKey("lock", Constants.NBT.TAG_COMPOUND) ? compound.getCompoundTag("lock") : new NBTTagCompound());
         upgrades.readFromNBT(compound);
+        this.readExtraData(compound);
+    }
+
+    protected void readExtraData(NBTTagCompound compound) {
+
     }
 
     @Override

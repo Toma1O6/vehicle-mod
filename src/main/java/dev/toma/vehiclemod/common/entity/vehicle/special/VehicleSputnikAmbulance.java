@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleSputnikAmbulance extends EntityVehicleSpecial implements ISpecialVehicle {
+public class VehicleSputnikAmbulance extends EntityVehicleSpecial {
 
     private static final VehicleTexture[] VALID_TEXTURES = {VehicleTexture.BLUE, VehicleTexture.RED, VehicleTexture.UTILITY_YELLOW, VehicleTexture.BRICK};
     private static final Vector3f[] PARTS = {new Vector3f(2.5F, 0.4F, 0.0F), new Vector3f(-2.8F, -0.1F, 0.7F)};

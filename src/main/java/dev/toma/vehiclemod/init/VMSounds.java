@@ -69,4 +69,7 @@ public class VMSounds {
     public static final SoundEvent LOCKPICK_FAILED_AF = null;
     public static final SoundEvent CAR_LOCKED = null;
     public static final SoundEvent CAR_UNLOCKED = null;
+    public static final SoundEvent POLICE_SIREN = null;
+    public static final SoundEvent AMBULANCE_SIREN = null;
+    public static final SoundEvent FIRETRUCK_SIREN = null;
 }

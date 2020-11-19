@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
+import dev.toma.vehiclemod.client.VMTickableSound;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.entity.vehicle.ISpecialVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
@@ -8,12 +9,20 @@ import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.vecmath.Vector3f;
 
 public class VehicleSputnik3000LEnforcer extends EntityVehicleSpecial implements ISpecialVehicle {
+
+    @SideOnly(Side.CLIENT)
+    private VMTickableSound siren;
+    private boolean effect;
 
     public VehicleSputnik3000LEnforcer(World world) {
         super(world);
@@ -38,6 +47,16 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSpecial implements
                 .rls(VMSounds.SPUTNIK3_GAS)
                 .str(VMSounds.SPUTNIK3_START)
                 .build();
+    }
+
+    @Override
+    protected void writeExtraData(NBTTagCompound compound) {
+        compound.setBoolean("effect", effect);
+    }
+
+    @Override
+    protected void readExtraData(NBTTagCompound compound) {
+        effect = compound.getBoolean("effect");
     }
 
     @Override
@@ -78,5 +97,32 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSpecial implements
     @Override
     public VehicleUpgrades createVehicleUpgrades() {
         return new VehicleUpgrades(getConfigStats(), fill(9, 2));
+    }
+
+    @Override
+    public SoundEvent getSoundEvent() {
+        return VMSounds.POLICE_SIREN;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public VMTickableSound getPlayingSound() {
+        return siren;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void setPlayingSound(VMTickableSound sound) {
+        siren = sound;
+    }
+
+    @Override
+    public boolean isEffectActive() {
+        return effect;
+    }
+
+    @Override
+    public void setEffectActive(boolean effect) {
+        this.effect = effect;
     }
 }
