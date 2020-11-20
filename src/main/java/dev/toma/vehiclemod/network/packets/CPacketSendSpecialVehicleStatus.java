@@ -56,9 +56,11 @@ public class CPacketSendSpecialVehicleStatus implements IMessage {
                             if(sound != null) {
                                 handler.stopSound(sound);
                             }
-                            CarSound sirenSound = new CarSound(vehicle.getSpecialEffectSound(), (EntityVehicle) vehicle);
-                            vehicle.setPlayingSound(sirenSound);
-                            handler.playSound(sirenSound);
+                            if(vehicle.isEffectActive()) {
+                                CarSound sirenSound = new CarSound(vehicle.getSpecialEffectSound(), (EntityVehicle) vehicle);
+                                vehicle.setPlayingSound(sirenSound);
+                                handler.playSound(sirenSound);
+                            }
                             break;
                         case STOP_TRACKING:
                             CarSound actualSound = vehicle.getPlayingSound();

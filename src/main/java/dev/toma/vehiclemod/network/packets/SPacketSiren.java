@@ -34,6 +34,7 @@ public class SPacketSiren implements IMessage {
                     ISpecialVehicle specialVehicle = (ISpecialVehicle) entity;
                     if(player == entity.getControllingPassenger()) {
                         specialVehicle.setEffectActive(!specialVehicle.isEffectActive());
+                        vehicle.sync();
                         if(specialVehicle.isEffectActive())
                             VMNetworkManager.instance().sendToAllTracking(new CPacketSendSpecialVehicleStatus(CPacketSendSpecialVehicleStatus.EnumState.START_TRACKING, (EntityVehicle & ISpecialVehicle) vehicle), vehicle);
                         else
