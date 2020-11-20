@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {"item": "vehiclemod:empty_spray_can"},
+        {"item": "minecraft:glowstone_dust"},
+        {"item": "minecraft:red_sandstone"}
+    ],
+    "result": {
+        "item": "vehiclemod:red_sandstone_spray_can",
+        "count": 1
+    }
+}
