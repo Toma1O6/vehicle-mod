@@ -1,7 +1,6 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
-import dev.toma.vehiclemod.common.entity.vehicle.special.EntityVehicleSpecial;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -36,6 +35,7 @@ public class VehicleMCGMultiVan extends EntityVehicleSpecial {
                 .brk(VMSounds.MCGMV_BRAKE)
                 .rls(VMSounds.MCGMV_GAS)
                 .str(VMSounds.MCGMV_START)
+                .honk(VMSounds.HORN_15)
                 .build();
     }
 

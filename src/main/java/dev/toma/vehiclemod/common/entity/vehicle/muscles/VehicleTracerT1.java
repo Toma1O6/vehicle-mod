@@ -2,7 +2,6 @@ package dev.toma.vehiclemod.common.entity.vehicle.muscles;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
-import dev.toma.vehiclemod.common.entity.vehicle.muscles.EntityVehicleMuscles;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -35,6 +34,7 @@ public class VehicleTracerT1 extends EntityVehicleMuscles {
                 .brk(VMSounds.TRACER_BRAKE)
                 .rls(VMSounds.TRACER_GAS)
                 .str(VMSounds.TRACER_START)
+                .honk(VMSounds.HORN_11)
                 .build();
     }
 

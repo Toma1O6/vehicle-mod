@@ -72,4 +72,16 @@ public class VMSounds {
     public static final SoundEvent POLICE_SIREN = null;
     public static final SoundEvent AMBULANCE_SIREN = null;
     public static final SoundEvent FIRETRUCK_SIREN = null;
+    public static final SoundEvent HORN_1 = null;
+    public static final SoundEvent HORN_2 = null;
+    public static final SoundEvent HORN_3 = null;
+    public static final SoundEvent HORN_5 = null;
+    public static final SoundEvent HORN_6 = null;
+    public static final SoundEvent HORN_8 = null;
+    public static final SoundEvent HORN_9 = null;
+    public static final SoundEvent HORN_11 = null;
+    public static final SoundEvent HORN_12 = null;
+    public static final SoundEvent HORN_13 = null;
+    public static final SoundEvent HORN_15 = null;
+    public static final SoundEvent HORN_29S = null;
 }

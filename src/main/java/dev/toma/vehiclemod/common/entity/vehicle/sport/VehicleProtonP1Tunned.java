@@ -2,7 +2,6 @@ package dev.toma.vehiclemod.common.entity.vehicle.sport;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
-import dev.toma.vehiclemod.common.entity.vehicle.sport.EntityVehicleSport;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -36,6 +35,7 @@ public class VehicleProtonP1Tunned extends EntityVehicleSport {
                 .brk(VMSounds.PROTON_P1_TUNNED_BRAKE)
                 .rls(VMSounds.PROTON_P1_TUNNED_GAS)
                 .str(VMSounds.PROTON_P1_TUNNED_START)
+                .honk(VMSounds.HORN_1)
                 .build();
     }
 

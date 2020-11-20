@@ -56,6 +56,7 @@ public class CPacketHonk implements IMessage {
                     if(honkSound != null && handler.isSoundPlaying(honkSound)) {
                         handler.stopSound(honkSound);
                     }
+                    vehicle.honkSound = null;
                     if(state) {
                         CarHonkSound carHonkSound = new CarHonkSound(vehicle);
                         vehicle.honkSound = carHonkSound;

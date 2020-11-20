@@ -35,6 +35,7 @@ public class VehicleFedorattiVulcan extends EntityVehicleSuperSport {
                 .brk(VMSounds.FEDORATTI_BRAKE)
                 .rls(VMSounds.FEDORATTI_GAS)
                 .str(VMSounds.FEDORATTI_START)
+                .honk(VMSounds.HORN_2)
                 .build();
     }
 

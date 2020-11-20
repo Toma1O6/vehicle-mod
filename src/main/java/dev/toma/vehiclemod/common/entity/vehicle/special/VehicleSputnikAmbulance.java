@@ -1,7 +1,6 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
-import dev.toma.vehiclemod.common.entity.vehicle.ISpecialVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
@@ -72,6 +71,7 @@ public class VehicleSputnikAmbulance extends EntityVehicleSirens {
                 .brk(VMSounds.SPUTNIK_AMBULANCE_BRAKE)
                 .rls(VMSounds.SPUTNIK_AMBULANCE_GAS)
                 .str(VMSounds.SPUTNIK_AMBULANCE_START)
+                .honk(VMSounds.HORN_2)
                 .build();
     }
 

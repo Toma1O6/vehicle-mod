@@ -1,7 +1,6 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
-import dev.toma.vehiclemod.common.entity.vehicle.special.EntityVehicleSpecial;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -35,6 +34,7 @@ public class VehicleBeamerPickup extends EntityVehicleSpecial {
                 .brk(VMSounds.BEAMERPICKUP_BRAKE)
                 .rls(VMSounds.BEAMERPICKUP_GAS)
                 .str(VMSounds.BEAMERPICKUP_START)
+                .honk(VMSounds.HORN_9)
                 .build();
     }
 

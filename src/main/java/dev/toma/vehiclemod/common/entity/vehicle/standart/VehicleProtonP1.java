@@ -1,7 +1,6 @@
 package dev.toma.vehiclemod.common.entity.vehicle.standart;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
-import dev.toma.vehiclemod.common.entity.vehicle.standart.EntityVehicleStandart;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -35,6 +34,7 @@ public class VehicleProtonP1 extends EntityVehicleStandart {
                 .brk(VMSounds.PROTON_P1_BRAKE)
                 .rls(VMSounds.PROTON_P1_GAS)
                 .str(VMSounds.PROTON_P1_START)
+                .honk(VMSounds.HORN_1)
                 .build();
     }
 

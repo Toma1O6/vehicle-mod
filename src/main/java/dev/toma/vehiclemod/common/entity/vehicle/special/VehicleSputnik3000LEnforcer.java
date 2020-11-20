@@ -42,6 +42,7 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSirens {
                 .brk(VMSounds.SPUTNIK3_BRAKE)
                 .rls(VMSounds.SPUTNIK3_GAS)
                 .str(VMSounds.SPUTNIK3_START)
+                .honk(VMSounds.HORN_29S)
                 .build();
     }
 

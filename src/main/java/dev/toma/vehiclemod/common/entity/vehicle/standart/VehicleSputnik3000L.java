@@ -1,7 +1,6 @@
 package dev.toma.vehiclemod.common.entity.vehicle.standart;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
-import dev.toma.vehiclemod.common.entity.vehicle.standart.EntityVehicleStandart;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -34,6 +33,7 @@ public class VehicleSputnik3000L extends EntityVehicleStandart {
                 .brk(VMSounds.SPUTNIK3_BRAKE)
                 .rls(VMSounds.SPUTNIK3_GAS)
                 .str(VMSounds.SPUTNIK3_START)
+                .honk(VMSounds.HORN_11)
                 .build();
     }
 

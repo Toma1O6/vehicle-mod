@@ -257,7 +257,19 @@ public class Registries {
                     registerSound("car_unlocked"),
                     registerSound("police_siren"),
                     registerSound("ambulance_siren"),
-                    registerSound("firetruck_siren")
+                    registerSound("firetruck_siren"),
+                    registerSound("horn_1"),
+                    registerSound("horn_2"),
+                    registerSound("horn_3"),
+                    registerSound("horn_5"),
+                    registerSound("horn_6"),
+                    registerSound("horn_8"),
+                    registerSound("horn_9"),
+                    registerSound("horn_11"),
+                    registerSound("horn_12"),
+                    registerSound("horn_13"),
+                    registerSound("horn_15"),
+                    registerSound("horn_29s")
             );
         }
 

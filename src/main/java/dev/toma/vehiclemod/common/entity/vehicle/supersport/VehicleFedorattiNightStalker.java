@@ -35,6 +35,7 @@ public class VehicleFedorattiNightStalker extends EntityVehicleSuperSport {
                 .brk(VMSounds.FEDORATTI_NIGHTSTALKER_BRAKE)
                 .rls(VMSounds.FEDORATTI_NIGHTSTALKER_GAS)
                 .str(VMSounds.FEDORATTI_NIGHTSTALKER_START)
+                .honk(VMSounds.HORN_5)
                 .build();
     }
 
