@@ -2,8 +2,8 @@ package dev.toma.vehiclemod.common.entity.vehicle;
 
 public enum EnumVehicleType {
 
-    STANDART(35, EnumCarLockType.IRON),
-    SUV(15, EnumCarLockType.GOLD),
+    STANDART(30, EnumCarLockType.IRON),
+    SUV(10, EnumCarLockType.GOLD),
     MUSCLE(20, EnumCarLockType.IRON),
     SPORT(15, EnumCarLockType.DIAMOND),
     SUPER(10, EnumCarLockType.DIAMOND),
