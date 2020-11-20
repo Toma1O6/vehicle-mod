@@ -7,12 +7,13 @@ import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
 import dev.toma.vehiclemod.util.DevUtil;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
-public class VehicleSputnikFiretruck extends EntityVehicleSpecial {
+public class VehicleSputnikFiretruck extends EntityVehicleSirens {
 
     static final VehicleTexture[] VALID_COLORS = {VehicleTexture.GRAY, VehicleTexture.RED, VehicleTexture.UTILITY_YELLOW, VehicleTexture.HELL};
     static final Vector3f[] PARTS = {new Vector3f(3.4F, 0.4F, 0.0F), new Vector3f(-3.2F, 0.2F, 0.9F), new Vector3f(-3.2F, 0.2F, -0.9F)};
@@ -87,5 +88,10 @@ public class VehicleSputnikFiretruck extends EntityVehicleSpecial {
     @Override
     protected double getPassengerOffsetZ(int id) {
         return -0.65 + id * 0.65;
+    }
+
+    @Override
+    public SoundEvent getSpecialEffectSound() {
+        return VMSounds.FIRETRUCK_SIREN;
     }
 }

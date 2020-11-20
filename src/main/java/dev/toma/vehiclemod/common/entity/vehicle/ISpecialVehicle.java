@@ -15,7 +15,7 @@ public interface ISpecialVehicle {
 
     void setEffectActive(boolean effect);
 
-    SoundEvent getSoundEvent();
+    SoundEvent getSpecialEffectSound();
 
     @SideOnly(Side.CLIENT)
     CarSound getPlayingSound();
