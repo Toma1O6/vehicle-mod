@@ -1,6 +1,6 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
-import dev.toma.vehiclemod.client.VMTickableSound;
+import dev.toma.vehiclemod.client.CarSound;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.entity.vehicle.ISpecialVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
@@ -21,7 +21,7 @@ import javax.vecmath.Vector3f;
 public class VehicleSputnik3000LEnforcer extends EntityVehicleSpecial implements ISpecialVehicle {
 
     @SideOnly(Side.CLIENT)
-    private VMTickableSound siren;
+    private CarSound siren;
     private boolean effect;
 
     public VehicleSputnik3000LEnforcer(World world) {
@@ -32,6 +32,11 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSpecial implements
     public VehicleSputnik3000LEnforcer(World world, BlockPos pos) {
         super(world, pos);
         setSize(2.0f, 1.5f);
+    }
+
+    @Override
+    public VehicleTexture getBaseTexture() {
+        return VehicleTexture.WHITE;
     }
 
     @Override
@@ -106,13 +111,13 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSpecial implements
 
     @SideOnly(Side.CLIENT)
     @Override
-    public VMTickableSound getPlayingSound() {
+    public CarSound getPlayingSound() {
         return siren;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void setPlayingSound(VMTickableSound sound) {
+    public void setPlayingSound(CarSound sound) {
         siren = sound;
     }
 

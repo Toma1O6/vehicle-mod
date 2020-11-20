@@ -1,6 +1,6 @@
 package dev.toma.vehiclemod.network.packets;
 
-import dev.toma.vehiclemod.client.VMTickableSound;
+import dev.toma.vehiclemod.client.CarSound;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.ISpecialVehicle;
 import io.netty.buffer.ByteBuf;
@@ -52,16 +52,16 @@ public class CPacketSendSpecialVehicleStatus implements IMessage {
                     SoundHandler handler = mc.getSoundHandler();
                     switch (message.state) {
                         case START_TRACKING:
-                            VMTickableSound sound = vehicle.getPlayingSound();
+                            CarSound sound = vehicle.getPlayingSound();
                             if(sound != null) {
                                 handler.stopSound(sound);
                             }
-                            VMTickableSound sirenSound = new VMTickableSound(vehicle.getSoundEvent(), (EntityVehicle) vehicle);
+                            CarSound sirenSound = new CarSound(vehicle.getSoundEvent(), (EntityVehicle) vehicle);
                             vehicle.setPlayingSound(sirenSound);
                             handler.playSound(sirenSound);
                             break;
                         case STOP_TRACKING:
-                            VMTickableSound actualSound = vehicle.getPlayingSound();
+                            CarSound actualSound = vehicle.getPlayingSound();
                             if(actualSound != null) {
                                 handler.stopSound(actualSound);
                             }

@@ -5,12 +5,12 @@ import net.minecraft.client.audio.MovingSound;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 
-public class VMTickableSound extends MovingSound {
+public class CarSound extends MovingSound {
 	
 	private final EntityVehicle vehicle;
 	public final SoundEvent event;
 	
-	public VMTickableSound(SoundEvent event, EntityVehicle parent) {
+	public CarSound(SoundEvent event, EntityVehicle parent) {
 		super(event, SoundCategory.MASTER);
 		this.event = event;
 		this.vehicle = parent;

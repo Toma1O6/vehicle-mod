@@ -2,7 +2,8 @@ package dev.toma.vehiclemod.common.entity.vehicle;
 
 import com.google.common.base.Predicate;
 import dev.toma.vehiclemod.VehicleMod;
-import dev.toma.vehiclemod.client.VMTickableSound;
+import dev.toma.vehiclemod.client.CarHonkSound;
+import dev.toma.vehiclemod.client.CarSound;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.items.IVehicleAction;
@@ -55,7 +56,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     private double distanceTraveled = 0;
     private boolean isStarted = false;
     @SideOnly(Side.CLIENT)
-    public VMTickableSound currentSound;
+    public CarSound currentSound;
+    @SideOnly(Side.CLIENT)
+    public CarHonkSound honkSound;
     private boolean inputForward;
     private boolean inputBack;
     private boolean inputRight;

@@ -1,7 +1,7 @@
 package dev.toma.vehiclemod.proxy;
 
 import dev.toma.vehiclemod.client.VMKeybinds;
-import dev.toma.vehiclemod.client.VMTickableSound;
+import dev.toma.vehiclemod.client.CarSound;
 import dev.toma.vehiclemod.client.VehicleInputHandler;
 import dev.toma.vehiclemod.client.gui.GuiLockpicking;
 import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1;
@@ -59,7 +59,7 @@ public class ClientProxy extends CommonProxy {
 		if(event == null) {
 			return;
 		}
-		VMTickableSound sound = new VMTickableSound(event, v);
+		CarSound sound = new CarSound(event, v);
 		v.currentSound = sound;
 		handler.playSound(sound);
 	}
