@@ -3,7 +3,7 @@
     "ingredients": [
         {"item": "vehiclemod:empty_spray_can"},
         {"item": "minecraft:glowstone_dust"},
-        {"item": "minecraft:red_sandstone"}
+        {"item": "minecraft:red_sandstone", "data": 0}
     ],
     "result": {
         "item": "vehiclemod:red_sandstone_spray_can",
