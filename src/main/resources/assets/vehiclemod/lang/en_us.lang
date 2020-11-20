@@ -168,3 +168,7 @@ entity.vehiclemod:sputnik_ambulance.name=Sputnik Ambulance
 entity.vehiclemod:sputnik_firetruck.name=Sputnik Firetruck
 
 itemGroup.vehicle_mod=Vehicle Mod
+
+category.vehiclemod=Vehicle Mod
+key.vehiclemod.car_siren=Car Siren
+key.vehiclemod.car_horn=Car Horn
