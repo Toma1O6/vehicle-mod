@@ -1,14 +1,15 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/tomanos-vehicle-mod",
   "promos": {
-	"1.12.2-latest": "1.0.4",
-	"1.12.2-recommended": "1.0.4"
+	"1.12.2-latest": "1.0.5",
+	"1.12.2-recommended": "1.0.5"
   },
   "1.12.2": {
 	"1.0.0": "First public release",
 	"1.0.1": "Added few vehicles",
 	"1.0.2": "Tunning, many bugfixes",
 	"1.0.3": "Bugfix update",
-	"1.0.4": "Car perks, new vehicles and more"
+	"1.0.4": "Car perks, new vehicles and more",
+	"1.0.5": "Car sirens, horns"
   }
 }
