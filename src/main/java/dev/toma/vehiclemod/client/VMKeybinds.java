@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -28,6 +28,8 @@ public class VMKeybinds {
     public static void init() {
         CAR_SIREN = new KeyBinding("key.vehiclemod.car_siren", Keyboard.KEY_G, CATEGORY);
         CAR_HORN = new KeyBinding("key.vehiclemod.car_horn", Keyboard.KEY_F, CATEGORY);
+        ClientRegistry.registerKeyBinding(CAR_SIREN);
+        ClientRegistry.registerKeyBinding(CAR_HORN);
     }
 
     @SubscribeEvent
