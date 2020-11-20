@@ -16,6 +16,7 @@ public class CarSound extends MovingSound {
 		this.vehicle = parent;
 		this.repeat = true;
 		this.attenuationType = AttenuationType.LINEAR;
+		this.volume = 6.0F;
 	}
 	
 	@Override

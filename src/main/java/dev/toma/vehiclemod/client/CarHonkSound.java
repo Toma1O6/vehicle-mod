@@ -13,6 +13,7 @@ public class CarHonkSound extends MovingSound {
         this.vehicle = vehicle;
         this.repeat = false;
         this.attenuationType = AttenuationType.LINEAR;
+        this.volume = 3.0F;
     }
 
     @Override
