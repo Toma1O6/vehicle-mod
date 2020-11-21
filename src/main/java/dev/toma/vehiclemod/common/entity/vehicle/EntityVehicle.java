@@ -150,7 +150,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         float quarterHealth = stats.maxHealth / 4f;
         float accModifier = healthpct < 0.25F ? this.health / quarterHealth : 1.0F;
         if (inputForward && !inputBack && (hasFuel() || currentSpeed < 0)) {
-            float mod = Math.max(0.1F, Math.abs(1.0F - currentSpeed / stats.maxSpeed));
+            float mod = Math.max(0.04F, Math.abs(1.0F - currentSpeed / stats.maxSpeed));
             float acceleration = mod * stats.acceleration * accModifier;
             burnFuel();
             currentSpeed = currentSpeed < stats.maxSpeed ? currentSpeed + acceleration : stats.maxSpeed;
