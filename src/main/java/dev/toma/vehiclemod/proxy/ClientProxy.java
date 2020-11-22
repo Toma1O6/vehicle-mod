@@ -1,15 +1,17 @@
 package dev.toma.vehiclemod.proxy;
 
-import dev.toma.vehiclemod.client.VMKeybinds;
 import dev.toma.vehiclemod.client.CarSound;
+import dev.toma.vehiclemod.client.VMKeybinds;
 import dev.toma.vehiclemod.client.VehicleInputHandler;
 import dev.toma.vehiclemod.client.gui.GuiLockpicking;
 import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1;
 import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1Tunned;
 import dev.toma.vehiclemod.client.model.vehicle.ModelSputnik3000L;
 import dev.toma.vehiclemod.client.model.vehicle.ModelSputnik3000LEnforcer;
+import dev.toma.vehiclemod.client.render.block.FuelMakerRenderer;
 import dev.toma.vehiclemod.client.render.entity.*;
 import dev.toma.vehiclemod.common.ILockpickable;
+import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
@@ -26,6 +28,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -35,6 +38,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preInit(FMLPreInitializationEvent e) {
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFuelMaker.class, new FuelMakerRenderer());
 		MinecraftForge.EVENT_BUS.register(new VehicleInputHandler());
 		VMKeybinds.init();
 		registerEntityRenderers();

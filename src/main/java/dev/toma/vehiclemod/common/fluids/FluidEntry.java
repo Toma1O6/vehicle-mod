@@ -22,6 +22,10 @@ public class FluidEntry implements INBTSerializable<NBTTagCompound> {
         deserializeNBT(nbt);
     }
 
+    public float getFilledPct() {
+        return amount / (float) limit;
+    }
+
     public boolean isEmpty() {
         return this == EMPTY || type == null;
     }
