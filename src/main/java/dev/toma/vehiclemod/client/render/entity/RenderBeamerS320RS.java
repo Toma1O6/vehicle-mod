@@ -24,7 +24,7 @@ public class RenderBeamerS320RS extends RenderVehicle<VehicleBeamerS320RS> {
         GlStateManager.pushMatrix();
         bindEntityTexture(entity);
         GlStateManager.translate(x, y, z);
-        GlStateManager.scale(0.043, 0.043, 0.043);
+        GlStateManager.scale(0.04, 0.043, 0.043);
         GlStateManager.rotate(180f, 1f, 0f, 0f);
         GlStateManager.rotate(180f, 0, 1, 0);
         GlStateManager.translate(0, -24, 0);

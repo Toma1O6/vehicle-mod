@@ -47,10 +47,10 @@ public class GuiVehicleComponents extends GuiContainer {
         VehicleUpgrades upgrades = components.getUpgrades();
         if(components.getVehicle() != null) {
             VehicleStats stats = components.getVehicle().getActualStats();
-            float speedStat = (stats.maxSpeed - VehicleStats.topSpeedMin) / (VehicleStats.topSpeedMax - VehicleStats.topSpeedMin);
-            float accelerationStat = (stats.acceleration - VehicleStats.accelerationMin) / (VehicleStats.accelerationMax - VehicleStats.accelerationMin);
-            float handlingStat = (stats.turnSpeed - VehicleStats.handlingMin) / (VehicleStats.handlingMax - VehicleStats.handlingMin);
-            float brakingStat = (stats.brakeSpeed - VehicleStats.brakingMin) / (VehicleStats.brakingMax - VehicleStats.brakingMin);
+            float speedStat = fixValue((stats.maxSpeed - VehicleStats.topSpeedMin) / (VehicleStats.topSpeedMax - VehicleStats.topSpeedMin));
+            float accelerationStat = fixValue((stats.acceleration - VehicleStats.accelerationMin) / (VehicleStats.accelerationMax - VehicleStats.accelerationMin));
+            float handlingStat = fixValue((stats.turnSpeed - VehicleStats.handlingMin) / (VehicleStats.handlingMax - VehicleStats.handlingMin));
+            float brakingStat = fixValue((stats.brakeSpeed - VehicleStats.brakingMin) / (VehicleStats.brakingMax - VehicleStats.brakingMin));
             fontRenderer.drawString("SPD", 8, 54, 0xaa00);
             fontRenderer.drawString("ACC", 8, 63, 0xaa0000);
             fontRenderer.drawString("HDL", 8, 72, 0xaa);
@@ -67,5 +67,9 @@ public class GuiVehicleComponents extends GuiContainer {
             fontRenderer.drawString(text, 8 + j * 18 + (18 - fontRenderer.getStringWidth(text)) / 2, 28, ItemVehicleUpgrade.Type.getColor(entry.getValue()).getColorValue());
             ++j;
         }
+    }
+
+    static float fixValue(float in) {
+        return in > 0.999F ? 1.0F : in;
     }
 }

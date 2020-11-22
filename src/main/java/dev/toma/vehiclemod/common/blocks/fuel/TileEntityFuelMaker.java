@@ -1,10 +1,12 @@
 package dev.toma.vehiclemod.common.blocks.fuel;
 
-import dev.toma.vehiclemod.Registries;
+import dev.toma.vehiclemod.common.fluids.*;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -17,20 +19,13 @@ import javax.annotation.Nullable;
 
 public class TileEntityFuelMaker extends TileEntity implements IInventory, ITickable {
 
-    public static final int MAX_STORED_AMOUNT = 25000;
+    public static final int MAX_STORED_AMOUNT = 250000;
 
-    private int ingredient = 0;
-    private int product = 0;
-    private NonNullList<ItemStack> inventory = NonNullList.withSize(7, ItemStack.EMPTY);
+    private FluidEntry inputFluid = FluidEntry.EMPTY;
+    private FluidEntry outputFluid = FluidEntry.EMPTY;
+    private NonNullList<ItemStack> inventory = NonNullList.withSize(9, ItemStack.EMPTY);
+    private boolean processing;
     private int processTimer;
-
-    public int getIngredientAmount() {
-        return ingredient;
-    }
-
-    public int getProductAmount() {
-        return product;
-    }
 
     public boolean isWorking() {
         return processTimer > 0;
@@ -40,12 +35,24 @@ public class TileEntityFuelMaker extends TileEntity implements IInventory, ITick
         return processTimer;
     }
 
+    public FluidEntry getInput() {
+        return inputFluid;
+    }
+
+    public FluidEntry getOutput() {
+        return outputFluid;
+    }
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         ItemStackHelper.saveAllItems(compound, inventory);
-        compound.setInteger("ingredient", ingredient);
-        compound.setInteger("product", product);
+        compound.setBoolean("isProcessing", processing);
+        compound.setInteger("processTimer", processTimer);
+        if(!inputFluid.isEmpty())
+            compound.setTag("inputFluid", inputFluid.serializeNBT());
+        if(!outputFluid.isEmpty())
+            compound.setTag("outputFluid", outputFluid.serializeNBT());
         return compound;
     }
 
@@ -53,40 +60,197 @@ public class TileEntityFuelMaker extends TileEntity implements IInventory, ITick
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         ItemStackHelper.loadAllItems(compound, inventory);
-        this.ingredient = compound.getInteger("ingredient");
-        this.product = compound.getInteger("product");
+        processing = compound.getBoolean("isProcessing");
+        processTimer = compound.getInteger("processTimer");
+        if(compound.hasKey("inputFluid"))
+            inputFluid = new FluidEntry(compound.getCompoundTag("inputFluid"), MAX_STORED_AMOUNT);
+        if(compound.hasKey("outputFluid"))
+            outputFluid = new FluidEntry(compound.getCompoundTag("outputFluid"), MAX_STORED_AMOUNT);
+    }
+
+    public void runAction(int actionID, boolean shiftClick) {
+        switch (actionID) {
+            case 0:
+                dumpInput();
+                break;
+            case 1:
+                transferOutputToInput();
+                break;
+            case 2:
+                processFluidIntoItem(inputFluid, 1, shiftClick);
+                break;
+            case 3:
+                processFluidIntoItem(outputFluid, 2, shiftClick);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown action ID (" + actionID + ")");
+        }
+    }
+
+    public void dumpInput() {
+        if(!inputFluid.isEmpty()) {
+            inputFluid = FluidEntry.EMPTY;
+        }
+    }
+
+    public void transferOutputToInput() {
+        if(inputFluid.isEmpty()) {
+            inputFluid = outputFluid;
+            outputFluid = FluidEntry.EMPTY;
+        } else if(inputFluid.canMix(outputFluid.getType())) {
+            inputFluid.mix(outputFluid);
+            outputFluid = FluidEntry.EMPTY;
+        }
+    }
+
+    public void processFluidIntoItem(FluidEntry entry, int output, boolean max) {
+        if(entry.isEmpty() || !entry.getType().hasFluidHolder())
+            return;
+        FluidType type = entry.getType();
+        Item item = type.getBehavior().getFluidItem();
+        ItemStack stack = this.getStackInSlot(output);
+        if(stack.isEmpty()) {
+           int amount = Math.min(this.getBucketCount(), max ? entry.getAmount() / 10000 : 1);
+           ItemStack out = new ItemStack(item, amount);
+           for (int i = 0; i < amount; i++) {
+               int bucketIndex = getSlotWithBucket();
+               if(bucketIndex == -1)
+                   throw new IllegalStateException("Couldn't find bucket");
+               this.getStackInSlot(bucketIndex).shrink(1);
+           }
+           entry.reduce(amount * 10000);
+           setInventorySlotContents(output, out);
+        } else if(stack.getItem() == item) {
+            int present = stack.getCount();
+            int maxAmount = this.getInventoryStackLimit() - present;
+            int amount = Math.min(maxAmount, Math.min(this.getBucketCount(), max ? entry.getAmount() / 10000 : 1));
+            for (int i = 0; i < amount; i++) {
+                int bucketIndex = getSlotWithBucket();
+                if(bucketIndex == -1)
+                    throw new IllegalStateException("Couldn't find bucket");
+                this.getStackInSlot(bucketIndex).shrink(1);
+            }
+            entry.reduce(amount * 10000);
+            stack.setCount(present + amount);
+        }
+    }
+
+    public int getBucketCount() {
+        int count = 0;
+        for (int i = 6; i < 9; i++) {
+            ItemStack stack = this.getStackInSlot(i);
+            if(!stack.isEmpty() && stack.getItem() == Items.BUCKET) {
+                count += stack.getCount();
+            }
+        }
+        return count;
+    }
+
+    public int getSlotWithBucket() {
+        for (int i = 6; i < 9; i++) {
+            ItemStack stack = this.getStackInSlot(i);
+            if(stack.getItem() == Items.BUCKET) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
     public void update() {
-        if(hasFilters() && ingredient > 0 && product < MAX_STORED_AMOUNT) {
-            if(++processTimer >= 600) {
-                processTimer = 0;
-                for(int i = 4; i < 7; i++) {
-                    getStackInSlot(i).shrink(1);
+        // processing
+        if(!this.inputFluid.isEmpty() && this.inputFluid.getType().hasResult() && this.hasFilters()) {
+            FluidProcessResult result = this.inputFluid.getType().getProcessResult();
+            if(this.inputFluid.getAmount() >= result.getRequiredAmount() && (this.outputFluid.isEmpty() || this.outputFluid.canMix(result.getType())) && outputFluid.getAmount() + result.getResultAmount() <= MAX_STORED_AMOUNT) {
+                if(!processing) {
+                    processing = true;
+                } else if(++processTimer >= 600) {
+                    processTimer = 0;
+                    if(this.outputFluid.isEmpty()) {
+                        this.outputFluid = new FluidEntry(result.getType(), MAX_STORED_AMOUNT);
+                    }
+                    outputFluid.add(result.getResultAmount());
+                    inputFluid.reduce(result.getRequiredAmount());
+                    world.playEvent(1035, pos, 0);
+                    for (int i = 3; i < 6; i++) {
+                        getStackInSlot(i).shrink(1);
+                    }
+                    markDirty();
                 }
-                world.playEvent(1035, pos, 0);
-                int amount = Math.min(ingredient, 1000);
-                ingredient -= amount;
-                product += amount / 2;
+            } else stopProcessing();
+        } else stopProcessing();
+
+        // input handling
+        ItemStack stack = this.getStackInSlot(0);
+        if(stack.getItem() instanceof IFuelMakerItem) {
+            IFuelMakerItem item = (IFuelMakerItem) stack.getItem();
+            FluidType type = item.getFluid();
+            if(inputFluid.isEmpty()) {
+                this.inputFluid = new FluidEntry(type, MAX_STORED_AMOUNT);
             }
-        } else {
-            processTimer = 0;
+            if(inputFluid.canMix(type)) {
+                int maxAdd = MAX_STORED_AMOUNT - this.inputFluid.getAmount();
+                int amount = Math.min(maxAdd, item.getFluidAmount(stack));
+                if(amount > 0) {
+                    inputFluid.add(amount);
+                    ItemStack processed = item.processInsertion(stack.copy(), amount);
+                    setInventorySlotContents(0, processed);
+                    markDirty();
+                    if(item.shouldCreateEmptyBucket()) {
+                        boolean created = false;
+                        for (int i = 6; i < 9; i++) {
+                            ItemStack itemStack = this.getStackInSlot(i);
+                            if(itemStack.isEmpty()) {
+                                setInventorySlotContents(i, new ItemStack(Items.BUCKET));
+                                created = true;
+                                break;
+                            } else if(itemStack.getItem() == Items.BUCKET && itemStack.getCount() < itemStack.getMaxStackSize()) {
+                                itemStack.setCount(itemStack.getCount() + 1);
+                                created = true;
+                                break;
+                            }
+                        }
+                        if(!created) {
+                            if(!world.isRemote) {
+                                EntityItem entityItem = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, new ItemStack(Items.BUCKET));
+                                world.spawnEntity(entityItem);
+                            }
+                        }
+                    }
+                }
+            }
         }
-        if(ingredient < MAX_STORED_AMOUNT) {
-            if(getStackInSlot(0).getItem() == Registries.VMItems.BUCKET_OF_ACTIVATED_FUEL_SUBSTANCE && getStackInSlot(1).getCount() < 64) {
-                getStackInSlot(0).shrink(1);
-                setInventorySlotContents(1, new ItemStack(Items.BUCKET, getStackInSlot(1).isEmpty() ? 1 : getStackInSlot(1).getCount() + 1));
-                ingredient += 1000;
+
+        // custom item behavior tick
+        this.tickOutputSlot(1, this.inputFluid);
+        this.tickOutputSlot(2, this.outputFluid);
+    }
+
+    boolean hasFilters() {
+        for(int i = 3; i < 6; i++) {
+            if(!(getStackInSlot(i).getItem() instanceof IFilter)) {
+                return false;
             }
         }
-        if(product >= 1000) {
-            if(!getStackInSlot(2).isEmpty()) {
-                getStackInSlot(2).shrink(1);
-                ItemStack stack = getStackInSlot(3);
-                setInventorySlotContents(3, new ItemStack(Registries.VMItems.BUCKET_OF_FUEL, stack.isEmpty() ? 1 : stack.getCount() + 1));
-                product -= 1000;
-            }
+        return true;
+    }
+
+    void stopProcessing() {
+        processing = false;
+        processTimer = 0;
+    }
+
+    void tickOutputSlot(int slotID, FluidEntry entry) {
+        ItemStack stack = this.getStackInSlot(slotID);
+        if(entry.isEmpty() || stack.isEmpty())
+            return;
+        FluidType type = entry.getType();
+        if(!type.hasFluidItemBehavior())
+            return;
+        FluidItemBehavior behavior = type.getBehavior();
+        if(behavior.isItemValidForProcessing(stack) && behavior.canProcess(entry.getAmount())) {
+            behavior.process(stack, entry, slotID, this);
+            markDirty();
         }
     }
 
@@ -106,15 +270,6 @@ public class TileEntityFuelMaker extends TileEntity implements IInventory, ITick
         return new SPacketUpdateTileEntity(pos, getBlockMetadata(), getUpdateTag());
     }
 
-    private boolean hasFilters() {
-        for(int i = 4; i < 7; i++) {
-            if(getStackInSlot(i).getItem() != Registries.VMItems.FUEL_FILTER) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     // SOME IINVENTORY CRAP -----------------------------------------------------
 
     @Override
@@ -129,7 +284,7 @@ public class TileEntityFuelMaker extends TileEntity implements IInventory, ITick
 
     @Override
     public int getSizeInventory() {
-        return 7;
+        return 9;
     }
 
     @Override

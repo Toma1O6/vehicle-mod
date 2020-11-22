@@ -149,32 +149,6 @@ public final class VehicleStats {
 		}
 		return f;
 	}
-	
-	public static void writeStatsToBuf(ByteBuf buf, VehicleStats stats) {
-		buf.writeFloat(stats.maxHealth);
-		buf.writeFloat(stats.maxSpeed);
-		buf.writeFloat(stats.acceleration);
-		buf.writeFloat(stats.turnSpeed);
-		buf.writeFloat(stats.maxTurningAngle);
-		buf.writeFloat(stats.brakeSpeed);
-		buf.writeFloat(stats.fuelConsumption);
-		buf.writeInt(stats.fuelCapacity);
-		stats.cameraOff.toBuffer(buf);
-	}
-	
-	public static VehicleStats readStatsFromBuf(ByteBuf buf) {
-		VehicleStats stats = new VehicleStats(0F, 0F, 0F, 0F, 0F, 0F, 0F, 10);
-		stats.maxHealth = buf.readFloat();
-		stats.maxSpeed = buf.readFloat();
-		stats.acceleration = buf.readFloat();
-		stats.turnSpeed = buf.readFloat();
-		stats.maxTurningAngle = buf.readFloat();
-		stats.brakeSpeed = buf.readFloat();
-		stats.fuelConsumption = buf.readFloat();
-		stats.fuelCapacity = buf.readInt();
-		stats.cameraOff.fromBuffer(buf);
-		return stats;
-	}
 
 	public static class Vector3i {
 

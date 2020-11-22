@@ -3,7 +3,6 @@ package dev.toma.vehiclemod.config;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.SpeedDisplayUnit;
 import dev.toma.vehiclemod.network.VMNetworkManager;
-import dev.toma.vehiclemod.network.packets.CPacketSyncConfig;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Name;
@@ -63,10 +62,10 @@ public class VMConfig {
 	public static VehicleStats protonP1_tunned = new VehicleStats(220F, 1.4F, 0.007F, 0.022F, 0.23F, 3.3F, 0.0044F, 50).track();
 
 	@Name("Sputnik Ambulance")
-	public static VehicleStats sputnikAmbulance = new VehicleStats(250F, 1.14F, 0.0042F, 0.016F, 0.14F, 3.0F, 0.0072F, 70, new VehicleStats.Vector3i(0, 0, -3)).track();
+	public static VehicleStats sputnikAmbulance = new VehicleStats(300F, 1.14F, 0.0042F, 0.016F, 0.14F, 3.0F, 0.0072F, 70, new VehicleStats.Vector3i(0, 0, -3)).track();
 
 	@Name("Sputnik Firetruck")
-	public static VehicleStats sputnikFiretruck = new VehicleStats(400F, 1.0F, 0.0038F, 0.011F, 0.09F, 2.3F, 0.01F, 100, new VehicleStats.Vector3i(0, 0, -5)).track();
+	public static VehicleStats sputnikFiretruck = new VehicleStats(500F, 1.0F, 0.0038F, 0.011F, 0.09F, 2.3F, 0.01F, 100, new VehicleStats.Vector3i(0, 0, -5)).track();
 
 	@Mod.EventBusSubscriber(modid = VehicleMod.MODID)
 	public static class Event {
@@ -75,13 +74,6 @@ public class VMConfig {
 		public static void configChanged(ConfigChangedEvent e) {
 			if(e.getModID().equals(VehicleMod.MODID)) {
 				ConfigManager.sync(VehicleMod.MODID, Type.INSTANCE);
-			}
-		}
-		
-		@SubscribeEvent
-		public static void logIn(PlayerEvent.PlayerLoggedInEvent e) {
-			if(e.player instanceof EntityPlayerMP) {
-				VMNetworkManager.instance().sendTo(new CPacketSyncConfig(), (EntityPlayerMP)e.player);
 			}
 		}
 	}

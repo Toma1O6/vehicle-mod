@@ -1,91 +1,98 @@
 package dev.toma.vehiclemod.common.container;
 
-import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
-import net.minecraft.entity.player.EntityPlayer;
+import dev.toma.vehiclemod.common.fluids.IFilter;
+import dev.toma.vehiclemod.common.fluids.IFuelMakerItem;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerFuelMaker extends Container {
+public class ContainerFuelMaker extends ModContainer<TileEntityFuelMaker> {
 
-    private final TileEntityFuelMaker tileEntityFuelMaker;
+    static final String FILTER_TEXTURE = "vehiclemod:items/filter_empty";
+    static final String BUCKET_TEXTURE = "vehiclemod:items/bucket_empty";
 
     public ContainerFuelMaker(InventoryPlayer player, TileEntityFuelMaker tileEntityFuelMaker) {
-        this.tileEntityFuelMaker = tileEntityFuelMaker;
-        addSlotToContainer(new Slot(tileEntityFuelMaker, 0, 29, 7) {
-            @Override
-            public boolean isItemValid(ItemStack stack) {
-                return stack.getItem() == Registries.VMItems.BUCKET_OF_ACTIVATED_FUEL_SUBSTANCE;
-            }
-        });
-        addSlotToContainer(new Slot(tileEntityFuelMaker, 1, 29, 62) {
-            @Override
-            public boolean isItemValid(ItemStack stack) {
-                return stack.getItem() == Items.BUCKET;
-            }
-        });
-        addSlotToContainer(new Slot(tileEntityFuelMaker, 2, 131, 7) {
-            @Override
-            public boolean isItemValid(ItemStack stack) {
-                return stack.getItem() == Items.BUCKET;
-            }
-        });
-        addSlotToContainer(new Slot(tileEntityFuelMaker, 3, 131, 62) {
-            @Override
-            public boolean isItemValid(ItemStack stack) {
-                return stack.getItem() == Registries.VMItems.BUCKET_OF_FUEL;
-            }
-        });
-        for(int i = 0; i < 3; i++) {
-            addSlotToContainer(new Slot(tileEntityFuelMaker, 4 + i, 62 + i * 18, 46) {
-                @Override
-                public boolean isItemValid(ItemStack stack) {
-                    return stack.getItem() == Registries.VMItems.FUEL_FILTER;
-                }
-            });
+        super(tileEntityFuelMaker);
+
+        addSlotToContainer(new SlotInput(tileEntityFuelMaker, 0, 8, 8));
+        addSlotToContainer(new SlotOutput(tileEntityFuelMaker, 1, 26, 124));
+        addSlotToContainer(new SlotOutput(tileEntityFuelMaker, 2, 134, 124));
+        for (int x = 0; x < 3; x++) {
+            addSlotToContainer(new SlotFilter(tileEntityFuelMaker, x + 3, 62 + x * 18, 84));
+            addSlotToContainer(new SlotBucket(tileEntityFuelMaker, x + 6, 62 + x * 18, 124));
         }
-        for(int y = 0; y < 3; y++) {
-            for(int x = 0; x < 9; x++) {
-                addSlotToContainer(new Slot(player, x + y * 9 + 9, 8 + x * 18, 87 + y * 18));
-            }
+
+        addDefaultInventory(player, 148);
+    }
+
+    static class SlotInput extends Slot {
+
+        public SlotInput(IInventory inventory, int id, int x, int y) {
+            super(inventory, id, x, y);
         }
-        for(int x = 0; x < 9; x++) {
-            addSlotToContainer(new Slot(player, x, 8 + x * 18, 145));
+
+        @Override
+        public boolean isItemValid(ItemStack stack) {
+            return stack.getItem() instanceof IFuelMakerItem;
+        }
+
+        @Override
+        public String getSlotTexture() {
+            return BUCKET_TEXTURE;
         }
     }
 
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
+    static class SlotOutput extends Slot {
 
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
-
-            if (index < this.tileEntityFuelMaker.getSizeInventory()) {
-                if (!this.mergeItemStack(itemstack1, this.tileEntityFuelMaker.getSizeInventory(), this.inventorySlots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.mergeItemStack(itemstack1, 0, this.tileEntityFuelMaker.getSizeInventory(), false)) {
-                return ItemStack.EMPTY;
-            }
-
-            if (itemstack1.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
-            } else {
-                slot.onSlotChanged();
-            }
+        public SlotOutput(IInventory inventory, int id, int x, int y) {
+            super(inventory, id, x, y);
         }
 
-        return itemstack;
+        @Override
+        public int getSlotStackLimit() {
+            return 1;
+        }
+
+        @Override
+        public String getSlotTexture() {
+            return BUCKET_TEXTURE;
+        }
     }
 
-    @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
-        return true;
+    static class SlotFilter extends Slot {
+
+        public SlotFilter(IInventory inventory, int id, int x, int y) {
+            super(inventory, id, x, y);
+        }
+
+        @Override
+        public boolean isItemValid(ItemStack stack) {
+            return stack.getItem() instanceof IFilter;
+        }
+
+        @Override
+        public String getSlotTexture() {
+            return FILTER_TEXTURE;
+        }
+    }
+
+    static class SlotBucket extends Slot {
+
+        public SlotBucket(IInventory inventory, int id, int x, int y) {
+            super(inventory, id, x, y);
+        }
+
+        @Override
+        public boolean isItemValid(ItemStack stack) {
+            return stack.getItem() == Items.BUCKET;
+        }
+
+        @Override
+        public String getSlotTexture() {
+            return BUCKET_TEXTURE;
+        }
     }
 }

@@ -20,8 +20,11 @@ import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleProtonP1;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik2000L;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
 import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleSputnikDuster;
+import dev.toma.vehiclemod.common.fluids.FluidItemBehavior;
+import dev.toma.vehiclemod.common.fluids.FluidType;
 import dev.toma.vehiclemod.common.items.*;
 import dev.toma.vehiclemod.common.tunning.StatModifierType;
+import dev.toma.vehiclemod.init.FluidTypes;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -44,11 +47,14 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.RegistryBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class Registries {
+
+    public static IForgeRegistry<FluidType> FLUID_TYPES;
 
     @ObjectHolder(VehicleMod.MODID)
     public static final class VMItems {
@@ -89,6 +95,20 @@ public class Registries {
         static int id = 0;
 
         @SubscribeEvent
+        public static void makeRegistries(RegistryEvent.NewRegistry event) {
+            FLUID_TYPES = new RegistryBuilder<FluidType>().setName(VehicleMod.getResource("fluid_types")).setType(FluidType.class).setMaxID(Integer.MAX_VALUE - 1).create();
+        }
+
+        @SubscribeEvent
+        public static void onFluidTypeRegister(RegistryEvent.Register<FluidType> event) {
+            event.getRegistry().registerAll(
+                    new FluidType.Builder().behavior(new FluidItemBehavior.Bucket(VMItems.BUCKET_OF_ACTIVATED_FUEL_SUBSTANCE)).processInto(() -> FluidTypes.FUEL, 10000, 20000).fluidColor(0xA53344).build().setRegistryName("activated_fuel_substance"),
+                    new FluidType.Builder().behavior(new FluidItemBehavior.Bucket(VMItems.BUCKET_OF_FUEL)).processInto(() -> FluidTypes.NITRO, 2500, 10000).fluidColor(0xFFFF00).build().setRegistryName("fuel"),
+                    new FluidType.Builder().behavior(new FluidItemBehavior.Nitro()).fluidColor(0x00FFFF).build().setRegistryName("nitro")
+            );
+        }
+
+        @SubscribeEvent
         public static void onBlockRegister(RegistryEvent.Register<Block> e) {
             IForgeRegistry<Block> registry = e.getRegistry();
             registry.registerAll(
@@ -122,9 +142,9 @@ public class Registries {
                     new ItemVehicleSpawner<>("spawn_sputnikambulance", VehicleSputnikAmbulance.class, VehicleSputnikAmbulance::new),
                     new ItemVehicleSpawner<>("spawn_sputnikfiretruck", VehicleSputnikFiretruck.class, VehicleSputnikFiretruck::new),
                     new VMItem("bucket_of_liquid_coal"),
-                    new VMItem("bucket_of_activated_fuel_substance"),
-                    new VMItem("bucket_of_fuel"),
-                    new VMItem("fuel_filter"),
+                    new ItemFluidBucket("bucket_of_activated_fuel_substance", () -> FluidTypes.ACTIVATED_FUEL_SUBSTANCE),
+                    new ItemFluidBucket("bucket_of_fuel", () -> FluidTypes.FUEL),
+                    new ItemFuelFilter("fuel_filter"),
                     new ItemLockpick("lockpick"),
                     new ItemCarKey("car_key"),
                     new ItemCarLock("iron_car_lock", EnumCarLockType.IRON),
@@ -148,6 +168,10 @@ public class Registries {
                     new ItemPerk("bronze_tank_perk", StatModifierType.FUEL_CAPACITY, 0.03F),
                     new ItemPerk("silver_tank_perk", StatModifierType.FUEL_CAPACITY, 0.06F),
                     new ItemPerk("gold_tank_perk", StatModifierType.FUEL_CAPACITY, 0.1F),
+                    new ItemNitroCan("nitro_bottle_25", 2500),
+                    new ItemNitroCan("nitro_bottle_50", 5000),
+                    new ItemNitroCan("nitro_bottle_75", 7500),
+                    new ItemNitroCan("nitro_bottle_100", 10000),
                     new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {

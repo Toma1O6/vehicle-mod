@@ -58,6 +58,8 @@ public class ClientEventHandler {
 			map.registerSprite(new ResourceLocation(name.getResourceDomain(), "items/" + name.getResourcePath()));
 		}
 		map.registerSprite(VehicleMod.getResource("items/perk_empty"));
+		map.registerSprite(VehicleMod.getResource("items/filter_empty"));
+		map.registerSprite(VehicleMod.getResource("items/bucket_empty"));
 	}
 
 	@SubscribeEvent
