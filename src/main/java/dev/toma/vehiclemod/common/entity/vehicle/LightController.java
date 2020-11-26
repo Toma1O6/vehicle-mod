@@ -40,7 +40,11 @@ public class LightController implements INBTSerializable<NBTTagCompound> {
     }
 
     public void setTurnLightStatus(TurnLightStatus status) {
-        this.turnLightStatus = status;
+        if(turnLightStatus == status) {
+            turnLightStatus = TurnLightStatus.OFF;
+        } else {
+            this.turnLightStatus = status;
+        }
     }
 
     public boolean getLightFlag() {
