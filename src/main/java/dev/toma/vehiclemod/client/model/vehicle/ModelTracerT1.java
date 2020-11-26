@@ -590,7 +590,7 @@ public class ModelTracerT1 extends ModelVehicle{
     }
 
     @Override
-    public void doVehicleRender() {
+    public void renderModel() {
         Wheels.render(1f);
         Chasis.render(1f);
         bone.render(1f);

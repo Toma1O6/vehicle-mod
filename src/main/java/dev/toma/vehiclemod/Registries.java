@@ -168,10 +168,10 @@ public class Registries {
                     new ItemPerk("bronze_tank_perk", StatModifierType.FUEL_CAPACITY, 0.03F),
                     new ItemPerk("silver_tank_perk", StatModifierType.FUEL_CAPACITY, 0.06F),
                     new ItemPerk("gold_tank_perk", StatModifierType.FUEL_CAPACITY, 0.1F),
-                    new ItemNitroCan("nitro_bottle_25", 2500),
-                    new ItemNitroCan("nitro_bottle_50", 5000),
-                    new ItemNitroCan("nitro_bottle_75", 7500),
-                    new ItemNitroCan("nitro_bottle_100", 10000),
+                    new ItemNitroCan("nitro_bottle_25", 62, 2500),
+                    new ItemNitroCan("nitro_bottle_50", 83, 5000),
+                    new ItemNitroCan("nitro_bottle_75", 94, 7500),
+                    new ItemNitroCan("nitro_bottle_100", 100, 10000),
                     new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {

@@ -17,5 +17,9 @@ public class CommonProxy {
 
     public void playSoundAt(EntityVehicle vehicle) {}
 
+    public void playNitroSound(EntityVehicle vehicle) {
+
+    }
+
     public <L extends ILockpickable> void openLockpickUI(L lockpickable) {}
 }

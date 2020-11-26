@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderSputnikFiretruck extends RenderVehicle<VehicleSputnikFiretruck> {
 
-    private final ModelVehicle model;
+    private final ModelSputnikFiretruck model;
 
     public RenderSputnikFiretruck(RenderManager manager) {
         super(manager);
@@ -23,7 +23,7 @@ public class RenderSputnikFiretruck extends RenderVehicle<VehicleSputnikFiretruc
     }
 
     @Override
-    public ModelVehicle getVehicleModel() {
+    public ModelVehicle<VehicleSputnikFiretruck> getVehicleModel() {
         return model;
     }
 
@@ -37,7 +37,7 @@ public class RenderSputnikFiretruck extends RenderVehicle<VehicleSputnikFiretruc
         GlStateManager.translate(0, -24, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.disableLighting();
-        model.doVehicleRender();
+        model.renderModel();
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

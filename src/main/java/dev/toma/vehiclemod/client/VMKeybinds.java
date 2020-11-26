@@ -4,6 +4,7 @@ import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.ISpecialVehicle;
 import dev.toma.vehiclemod.network.VMNetworkManager;
+import dev.toma.vehiclemod.network.packets.SPacketChangeLightStatus;
 import dev.toma.vehiclemod.network.packets.SPacketHonk;
 import dev.toma.vehiclemod.network.packets.SPacketSiren;
 import net.minecraft.client.Minecraft;
@@ -24,12 +25,15 @@ public class VMKeybinds {
     static final String CATEGORY = "category." + VehicleMod.MODID;
     public static KeyBinding CAR_SIREN;
     public static KeyBinding CAR_HORN;
+    public static KeyBinding CAR_LIGHTS;
 
     public static void init() {
         CAR_SIREN = new KeyBinding("key.vehiclemod.car_siren", Keyboard.KEY_G, CATEGORY);
         CAR_HORN = new KeyBinding("key.vehiclemod.car_horn", Keyboard.KEY_F, CATEGORY);
+        CAR_LIGHTS = new KeyBinding("key.vehiclemod.car_lights", Keyboard.KEY_L, CATEGORY);
         ClientRegistry.registerKeyBinding(CAR_SIREN);
         ClientRegistry.registerKeyBinding(CAR_HORN);
+        ClientRegistry.registerKeyBinding(CAR_LIGHTS);
     }
 
     @SubscribeEvent
@@ -40,6 +44,12 @@ public class VMKeybinds {
             Entity entity = player.getRidingEntity();
             if(entity instanceof ISpecialVehicle && player == entity.getControllingPassenger()) {
                 VMNetworkManager.instance().sendToServer(new SPacketSiren());
+            }
+        } else if(CAR_LIGHTS.isPressed()) {
+            Entity entity = player.getRidingEntity();
+            if(entity instanceof EntityVehicle && player == entity.getControllingPassenger()) {
+                EntityVehicle vehicle = (EntityVehicle) entity;
+                VMNetworkManager.instance().sendToServer(SPacketChangeLightStatus.headlights(vehicle, !vehicle.lightController.getLightFlag()));
             }
         }
     }

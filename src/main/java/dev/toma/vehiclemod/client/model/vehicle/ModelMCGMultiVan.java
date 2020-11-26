@@ -496,7 +496,7 @@ public class ModelMCGMultiVan extends ModelVehicle {
     }
 
     @Override
-    public void doVehicleRender() {
+    public void renderModel() {
         bone21.render(1f);
         bone41.render(1f);
         bone42.render(1f);

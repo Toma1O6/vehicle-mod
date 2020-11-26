@@ -3,7 +3,6 @@ package dev.toma.vehiclemod.common.entity.vehicle;
 import dev.toma.vehiclemod.common.items.ItemPerk;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.common.tunning.IStatApplicator;
-import dev.toma.vehiclemod.common.tunning.StatModifier;
 import dev.toma.vehiclemod.common.tunning.StatPackage;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.util.DevUtil;
@@ -35,6 +34,7 @@ public class VehicleUpgrades {
     float handling;
     float fuelCons;
     float fuelCap;
+    float nitroPower;
 
     public VehicleUpgrades(VehicleStats stats) {
         this(stats, new int[9]);
@@ -137,6 +137,10 @@ public class VehicleUpgrades {
         this.fuelCap += toAdd;
     }
 
+    public void addNitroPower(float toAdd) {
+        this.nitroPower += toAdd;
+    }
+
     public ItemPerk getPerk(int id) {
         return perks[id];
     }
@@ -196,6 +200,10 @@ public class VehicleUpgrades {
         return upgradeMap;
     }
 
+    public float getNitroPower() {
+        return nitroPower;
+    }
+
     private void setDefaults() {
         this.health = 1.0F;
         this.topSpeed = 1.0F;
@@ -204,5 +212,6 @@ public class VehicleUpgrades {
         this.handling = 1.0F;
         this.fuelCons = 1.0F;
         this.fuelCap = 1.0F;
+        this.nitroPower = 1.0F;
     }
 }

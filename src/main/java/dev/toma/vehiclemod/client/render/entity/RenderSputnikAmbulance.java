@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderSputnikAmbulance extends RenderVehicle<VehicleSputnikAmbulance> {
 
-    private final ModelVehicle model;
+    private final ModelVehicle<VehicleSputnikAmbulance> model;
 
     public RenderSputnikAmbulance(RenderManager manager) {
         super(manager);
@@ -18,7 +18,7 @@ public class RenderSputnikAmbulance extends RenderVehicle<VehicleSputnikAmbulanc
     }
 
     @Override
-    public ModelVehicle getVehicleModel() {
+    public ModelVehicle<VehicleSputnikAmbulance> getVehicleModel() {
         return model;
     }
 
@@ -37,7 +37,7 @@ public class RenderSputnikAmbulance extends RenderVehicle<VehicleSputnikAmbulanc
         GlStateManager.translate(0, -24, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.disableLighting();
-        model.doVehicleRender();
+        model.render(entity);
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

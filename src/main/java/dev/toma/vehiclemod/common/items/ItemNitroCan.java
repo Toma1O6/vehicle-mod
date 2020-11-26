@@ -7,9 +7,13 @@ import net.minecraft.item.ItemStack;
 
 public class ItemNitroCan extends VMItem implements IFuelMakerItem {
 
-    public ItemNitroCan(String name, int amount) {
+    final int extractAmount;
+
+    public ItemNitroCan(String name, int extractAmount, int amount) {
         super(name);
         setMaxDamage(amount);
+        setMaxStackSize(1);
+        this.extractAmount = extractAmount;
     }
 
     @Override
@@ -31,5 +35,9 @@ public class ItemNitroCan extends VMItem implements IFuelMakerItem {
     public ItemStack processInsertion(ItemStack stack, int extracted) {
         stack.setItemDamage(stack.getItemDamage() + extracted);
         return stack;
+    }
+
+    public int getExtractAmount() {
+        return extractAmount;
     }
 }

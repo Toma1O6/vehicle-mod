@@ -7,7 +7,6 @@ import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentString;
 
 public class InventoryComponents extends InventoryBasic {
 
@@ -16,7 +15,7 @@ public class InventoryComponents extends InventoryBasic {
     final EntityPlayer player;
 
     public InventoryComponents(EntityPlayer player) {
-        super(new TextComponentString("ComponentInventory"), 12);
+        super("inventory.components", false, 12);
         if(player.getRidingEntity() instanceof EntityVehicle) {
             this.vehicle = (EntityVehicle) player.getRidingEntity();
             this.upgrades = vehicle.getUpgrades();

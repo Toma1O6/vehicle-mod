@@ -25,7 +25,7 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		super(manager);
 	}
 	
-	public abstract ModelVehicle getVehicleModel();
+	public abstract ModelVehicle<V> getVehicleModel();
 	
 	@Override
 	protected ResourceLocation getEntityTexture(V entity) {

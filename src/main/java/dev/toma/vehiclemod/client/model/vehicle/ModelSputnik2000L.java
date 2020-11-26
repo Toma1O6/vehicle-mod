@@ -506,7 +506,7 @@ public class ModelSputnik2000L extends ModelVehicle {
     }
 
     @Override
-    public void doVehicleRender() {
+    public void renderModel() {
         bb_main.render(1f);
         bone21.render(1f);
         bone41.render(1f);

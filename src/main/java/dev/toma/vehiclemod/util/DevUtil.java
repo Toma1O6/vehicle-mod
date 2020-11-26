@@ -21,8 +21,11 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.Item;
 import net.minecraft.launchwrapper.Launch;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.io.BufferedWriter;
@@ -40,6 +43,11 @@ public class DevUtil {
 
     public static ModelCreator creator() {
         return CREATOR;
+    }
+
+    public static <E extends Enum<E>> E getEnumFromNBT(String key, NBTTagCompound nbt, Class<E> eClass) {
+        E[] es = eClass.getEnumConstants();
+        return nbt.hasKey(key, Constants.NBT.TAG_INT) ? es[MathHelper.clamp(nbt.getInteger(key), 0, es.length - 1)] : es[0];
     }
 
     public static float[] getRGB(int color) {

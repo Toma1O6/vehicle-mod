@@ -1,9 +1,10 @@
 package dev.toma.vehiclemod.client.model.vehicle;
 
+import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleSputnikDuster;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 
-public class ModelSputnikDuster extends ModelVehicle {
+public class ModelSputnikDuster extends ModelVehicle<VehicleSputnikDuster> {
 
     private final ModelRenderer bone2;
     private final ModelRenderer bone3;
@@ -728,7 +729,7 @@ public class ModelSputnikDuster extends ModelVehicle {
     }
 
     @Override
-    public void doVehicleRender() {
+    public void renderModel() {
         bone2.render(1f);
         bone3.render(1f);
         bone.render(1f);

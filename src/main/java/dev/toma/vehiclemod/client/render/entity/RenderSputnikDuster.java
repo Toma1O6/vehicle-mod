@@ -16,7 +16,7 @@ public class RenderSputnikDuster extends RenderVehicle<VehicleSputnikDuster> {
     }
 
     @Override
-    public ModelVehicle getVehicleModel() {
+    public ModelVehicle<VehicleSputnikDuster> getVehicleModel() {
         return duster;
     }
 
@@ -30,7 +30,7 @@ public class RenderSputnikDuster extends RenderVehicle<VehicleSputnikDuster> {
         GlStateManager.translate(0, -24, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.disableLighting();
-        getVehicleModel().doVehicleRender();
+        getVehicleModel().render(entity);
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

@@ -30,7 +30,7 @@ public class RenderBeamerS320RS extends RenderVehicle<VehicleBeamerS320RS> {
         GlStateManager.translate(0, -24, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.disableLighting();
-        model.doVehicleRender();
+        model.renderModel();
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

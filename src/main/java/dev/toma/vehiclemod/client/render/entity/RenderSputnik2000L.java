@@ -31,7 +31,7 @@ public class RenderSputnik2000L extends RenderVehicle<VehicleSputnik2000L> {
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.translate(0, -20, 0);
         GlStateManager.disableLighting();
-        sputnik2000L.doVehicleRender();
+        sputnik2000L.renderModel();
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

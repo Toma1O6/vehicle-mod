@@ -1,9 +1,10 @@
 package dev.toma.vehiclemod.client.model.vehicle;
 
+import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleBeamerPickup;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 
-public class ModelBeamerPickup extends ModelVehicle {
+public class ModelBeamerPickup extends ModelVehicle<VehicleBeamerPickup> {
 
     private final ModelRenderer bb_main;
     private final ModelRenderer bone2;
@@ -444,7 +445,7 @@ public class ModelBeamerPickup extends ModelVehicle {
     }
 
     @Override
-    public void doVehicleRender() {
+    public void renderModel() {
         bb_main.render(1f);
         bone2.render(1f);
         bone3.render(1f);

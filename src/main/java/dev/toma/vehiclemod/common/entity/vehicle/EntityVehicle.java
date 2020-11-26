@@ -49,9 +49,11 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public EnumVehicleState currentState;
     public EnumVehicleState prevState;
     public final LockManager lockManager;
+    public final LightController lightController;
     protected VehicleContainer inventory = this.createInvetory();
     protected VehicleSoundPack soundPack;
     protected VehicleUpgrades upgrades;
+    protected NitroHandler nitroHandler;
     protected VehicleTexture texture;
     private double distanceTraveled = 0;
     private boolean isStarted = false;
@@ -59,10 +61,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public CarSound currentSound;
     @SideOnly(Side.CLIENT)
     public CarHonkSound honkSound;
-    private boolean inputForward;
-    private boolean inputBack;
-    private boolean inputRight;
-    private boolean inputLeft;
+    protected boolean inputForward;
+    protected boolean inputBack;
+    protected boolean inputRight;
+    protected boolean inputLeft;
 
     public static double getMovementSpeed(EntityVehicle vehicle) {
         return Math.sqrt(vehicle.motionX * vehicle.motionX + vehicle.motionZ * vehicle.motionZ);
@@ -81,12 +83,14 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         stepHeight = 1f;
         preventEntitySpawning = true;
         this.upgrades = this.createVehicleUpgrades();
+        this.nitroHandler = new NitroHandler(this);
         texture = getBaseTexture();
         this.health = this.upgrades.getActualStats().maxHealth;
         this.setFuel();
         ignoreFrustumCheck = true;
         this.soundPack = createSoundPack();
         this.lockManager = new LockManager(EnumCarLockType.IRON);
+        this.lightController = new LightController();
     }
 
     public EntityVehicle(World world, BlockPos pos) {
@@ -151,6 +155,11 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         float accModifier = healthpct < 0.25F ? this.health / quarterHealth : 1.0F;
         if (inputForward && !inputBack && (hasFuel() || currentSpeed < 0)) {
             float mod = Math.max(0.04F, Math.abs(1.0F - currentSpeed / stats.maxSpeed));
+            Entity controller = this.getControllingPassenger();
+            if(nitroHandler.canUseNitro(controller)) {
+                nitroHandler.update(controller, true);
+                mod += upgrades.getNitroPower();
+            } else nitroHandler.update(controller, false);
             float acceleration = mod * stats.acceleration * accModifier;
             burnFuel();
             currentSpeed = currentSpeed < stats.maxSpeed ? currentSpeed + acceleration : stats.maxSpeed;
@@ -245,6 +254,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public VehicleUpgrades getUpgrades() {
         return upgrades;
+    }
+
+    public NitroHandler getNitroHandler() {
+        return nitroHandler;
     }
 
     public VehicleStats getActualStats() {
@@ -418,7 +431,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public void sync() {
         if(!world.isRemote) {
-            VMNetworkManager.instance().sendToDimension(new CPacketUpdateEntity(this), dimension);
+            VMNetworkManager.instance().sendToAllTracking(new CPacketUpdateEntity(this), this);
         }
     }
 
@@ -535,6 +548,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         ByteBufUtils.writeTag(buf, data);
         NBTTagCompound lock = lockManager.serializeNBT();
         ByteBufUtils.writeTag(buf, lock);
+        NBTTagCompound lights = lightController.serializeNBT();
+        ByteBufUtils.writeTag(buf, lights);
     }
 
     @Override
@@ -545,6 +560,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         texture = VehicleTexture.values()[buf.readInt()];
         upgrades.readFromNBT(ByteBufUtils.readTag(buf));
         lockManager.deserializeNBT(ByteBufUtils.readTag(buf));
+        lightController.deserializeNBT(ByteBufUtils.readTag(buf));
     }
 
     @Override
@@ -603,6 +619,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
         compound.setTag("lock", lockManager.serializeNBT());
         upgrades.writeToNBT(compound);
+        compound.setTag("lightController", lightController.serializeNBT());
         this.writeExtraData(compound);
     }
 
@@ -628,6 +645,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
         lockManager.deserializeNBT(compound.hasKey("lock", Constants.NBT.TAG_COMPOUND) ? compound.getCompoundTag("lock") : new NBTTagCompound());
         upgrades.readFromNBT(compound);
+        lightController.deserializeNBT(compound.hasKey("lightController", Constants.NBT.TAG_COMPOUND) ? compound.getCompoundTag("lightController") : new NBTTagCompound());
         this.readExtraData(compound);
     }
 

@@ -3,9 +3,10 @@ package dev.toma.vehiclemod.client.render.entity;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
 
-public class RenderSputnik3000L<T extends EntityVehicle, M extends ModelVehicle> extends RenderVehicle<T> {
+public class RenderSputnik3000L<T extends EntityVehicle, M extends ModelVehicle<T>> extends RenderVehicle<T> {
 
     private final M model;
 
@@ -15,7 +16,7 @@ public class RenderSputnik3000L<T extends EntityVehicle, M extends ModelVehicle>
     }
 
     @Override
-    public ModelVehicle getVehicleModel() {
+    public ModelVehicle<T> getVehicleModel() {
         return model;
     }
 
@@ -30,7 +31,11 @@ public class RenderSputnik3000L<T extends EntityVehicle, M extends ModelVehicle>
         GlStateManager.translate(0, -24, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.disableLighting();
-        getVehicleModel().doVehicleRender();
+        int light = 0xF00000 | 0xF << 4;
+        int j = light % 0x10000;
+        int k = light / 0x10000;
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
+        getVehicleModel().render(entity);
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

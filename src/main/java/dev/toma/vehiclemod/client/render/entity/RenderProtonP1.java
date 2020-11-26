@@ -5,7 +5,7 @@ import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 
-public class RenderProtonP1<V extends EntityVehicle, M extends ModelVehicle> extends RenderVehicle<V> {
+public class RenderProtonP1<V extends EntityVehicle, M extends ModelVehicle<V>> extends RenderVehicle<V> {
 
     final M model;
 
@@ -15,7 +15,7 @@ public class RenderProtonP1<V extends EntityVehicle, M extends ModelVehicle> ext
     }
 
     @Override
-    public ModelVehicle getVehicleModel() {
+    public ModelVehicle<V> getVehicleModel() {
         return model;
     }
 
@@ -29,7 +29,7 @@ public class RenderProtonP1<V extends EntityVehicle, M extends ModelVehicle> ext
         GlStateManager.translate(0, -24, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.disableLighting();
-        getVehicleModel().doVehicleRender();
+        getVehicleModel().render(entity);
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

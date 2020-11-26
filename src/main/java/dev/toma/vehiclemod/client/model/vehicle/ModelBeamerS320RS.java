@@ -1,9 +1,10 @@
 package dev.toma.vehiclemod.client.model.vehicle;
 
+import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleBeamerS320RS;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 
-public class ModelBeamerS320RS extends ModelVehicle {
+public class ModelBeamerS320RS extends ModelVehicle<VehicleBeamerS320RS> {
 
     private final ModelRenderer bone21;
     private final ModelRenderer bone41;
@@ -829,7 +830,7 @@ public class ModelBeamerS320RS extends ModelVehicle {
     }
 
     @Override
-    public void doVehicleRender() {
+    public void renderModel() {
         bone21.render(1f);
         bone41.render(1f);
         bone42.render(1f);

@@ -1,10 +1,11 @@
 package dev.toma.vehiclemod.client.model.vehicle;
 
+import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 
-public class ModelBeamerS120 extends ModelVehicle {
+public class ModelBeamerS120 extends ModelVehicle<VehicleBeamerS120> {
 
 	private final ModelRenderer bone;
 	private final ModelRenderer bone2;
@@ -543,7 +544,7 @@ public class ModelBeamerS120 extends ModelVehicle {
 	}
 
 	@Override
-	public void doVehicleRender() {
+	public void renderModel() {
 		GlStateManager.translate(21, 0, 0);
 		bone.render(1f);
 		bone2.render(1f);
