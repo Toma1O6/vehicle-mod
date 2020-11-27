@@ -955,24 +955,5 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle<VehicleSputnik3000LE
         bone56.render(1.0F);
         bone57.render(1.0F);
         bone58.render(1.0F);
-        head_lights_a.render(1.0F);
-        head_lights_b.render(1.0F);
-        head_lights_left.render(1.0F);
-        head_lights_right.render(1.0F);
-        siren_a.render(1.0F);
-        siren_b.render(1.0F);
-        siren_c.render(1.0F);
-        siren_d.render(1.0F);
-        siren_e.render(1.0F);
-        siren_f.render(1.0F);
-        siren_g.render(1.0F);
-        siren_h.render(1.0F);
-        plate.render(1.0F);
-        rear_lights.render(1.0F);
-        rear_lights_brake.render(1.0F);
-        rear_lights_reverse.render(1.0F);
-        rear_lights_right.render(1.0F);
-        rear_lights_left.render(1.0F);
-        interier.render(1.0F);
     }
 }
