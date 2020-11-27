@@ -1,9 +1,6 @@
 package dev.toma.vehiclemod.client.model.vehicle;
 
-import dev.toma.vehiclemod.client.lights.BrakeLights;
-import dev.toma.vehiclemod.client.lights.LightEntry;
-import dev.toma.vehiclemod.client.lights.ReverseLights;
-import dev.toma.vehiclemod.client.lights.TurnIndicatorLights;
+import dev.toma.vehiclemod.client.lights.*;
 import dev.toma.vehiclemod.common.entity.vehicle.LightController;
 import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiNightStalker;
 import net.minecraft.client.model.ModelBox;
@@ -968,12 +965,12 @@ public class ModelFedorattiNightStalker extends ModelVehicle<VehicleFedorattiNig
         interier_c.cubeList.add(new ModelBox(interier_c, 176, 224, 0.1F, -0.4F, 0.3F, 1, 1, 1, 0.0F, false));
 
         registerLightEntries(
-                LightEntry.createLights(1.0F, head_lights, rear_lights),
+                new LightControllerEntry<>(1.0F, head_lights, rear_lights),
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.LEFT, head_lights_left, rear_lights_left),
                 new BrakeLights<>(rear_lights_brake),
                 new ReverseLights<>(rear_lights_reverse),
-                LightEntry.createLights(0.7F, plate, interier_a, interier_b, interier_c)
+                new LightControllerEntry<>(0.7F, plate, interier_a, interier_b, interier_c)
         );
     }
 

@@ -844,8 +844,8 @@ public class ModelSputnikAmbulance extends ModelVehicle<VehicleSputnikAmbulance>
 		plate.cubeList.add(new ModelBox(plate, 411, 217, -4.0F, 5.0F, -16.4F, 8, 1, 4, 0.0F, false));
 
 		registerLightEntries(
-				LightEntry.createLights(1.0F, head_lights, rear_lights),
-				LightEntry.createLights(0.6F, interier_a, interier_b, plate),
+				new LightControllerEntry<>(1.0F, head_lights, rear_lights),
+				new LightControllerEntry<>(0.6F, interier_a, interier_b, plate),
 				new BrakeLights<>(rear_lights_brake),
 				new ReverseLights<>(rear_lights_reverse),
 				new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),

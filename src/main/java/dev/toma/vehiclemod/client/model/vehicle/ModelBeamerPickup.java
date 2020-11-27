@@ -1,5 +1,10 @@
 package dev.toma.vehiclemod.client.model.vehicle;
 
+import dev.toma.vehiclemod.client.lights.BrakeLights;
+import dev.toma.vehiclemod.client.lights.LightControllerEntry;
+import dev.toma.vehiclemod.client.lights.ReverseLights;
+import dev.toma.vehiclemod.client.lights.TurnIndicatorLights;
+import dev.toma.vehiclemod.common.entity.vehicle.LightController;
 import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleBeamerPickup;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
@@ -15,7 +20,9 @@ public class ModelBeamerPickup extends ModelVehicle<VehicleBeamerPickup> {
     private final ModelRenderer bone6;
     private final ModelRenderer bone7;
     private final ModelRenderer bone8;
+    private final ModelRenderer bone10;
     private final ModelRenderer bone9;
+    private final ModelRenderer bone11;
     private final ModelRenderer bone12;
     private final ModelRenderer bone13;
     private final ModelRenderer bone14;
@@ -24,6 +31,16 @@ public class ModelBeamerPickup extends ModelVehicle<VehicleBeamerPickup> {
     private final ModelRenderer bone17;
     private final ModelRenderer bone18;
     private final ModelRenderer bone19;
+    private final ModelRenderer head_lights;
+    private final ModelRenderer head_lights_right;
+    private final ModelRenderer head_lights_left;
+    private final ModelRenderer plate;
+    private final ModelRenderer rear_lights;
+    private final ModelRenderer rear_lights_brake;
+    private final ModelRenderer rear_lights_right;
+    private final ModelRenderer rear_lights_left;
+    private final ModelRenderer rear_lights_reverse;
+    private final ModelRenderer interier;
 
     public ModelBeamerPickup() {
         textureWidth = 512;
@@ -60,20 +77,12 @@ public class ModelBeamerPickup extends ModelVehicle<VehicleBeamerPickup> {
         bb_main.cubeList.add(new ModelBox(bb_main, 202, 6, -2.0F, -8.0F, 21.0F, 4, 2, 12, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 209, 34, 0.0F, -10.0F, 33.0F, 18, 4, 3, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 209, 34, 0.0F, -12.0F, 33.0F, 17, 2, 2, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 411, 228, -5.0F, -10.0F, -51.1F, 10, 4, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 400, 228, -5.0F, -8.0F, 35.3F, 10, 4, 1, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 202, 6, -1.0F, -9.0F, -48.0F, 2, 2, 13, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 202, 6, 6.0F, -14.0F, -50.0F, 1, 4, 1, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 202, 6, -7.0F, -14.0F, -50.0F, 1, 4, 1, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 202, 6, -18.0F, -11.0F, -51.0F, 18, 4, 3, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 209, 34, -18.0F, -10.0F, 33.0F, 18, 4, 3, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 209, 34, -17.0F, -12.0F, 33.0F, 17, 2, 2, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 440, 205, -16.4F, -9.1F, 35.3F, 4, 2, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 423, 215, -10.4F, -9.1F, 35.3F, 3, 2, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 443, 248, -15.5F, -11.6F, 34.2F, 3, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 443, 248, 12.7F, -11.6F, 34.2F, 3, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 401, 248, 7.6F, -9.1F, 35.3F, 3, 2, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 443, 205, 12.6F, -9.1F, 35.3F, 4, 2, 1, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 202, 6, -8.0F, -8.0F, 20.0F, 16, 2, 2, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 202, 6, 8.0F, -8.0F, 20.0F, 13, 2, 2, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 202, 6, -21.0F, -8.0F, 20.0F, 13, 2, 2, 0.0F, false));
@@ -148,18 +157,8 @@ public class ModelBeamerPickup extends ModelVehicle<VehicleBeamerPickup> {
         bb_main.cubeList.add(new ModelBox(bb_main, 312, 16, -2.0F, -21.9F, -48.7F, 4, 7, 10, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 312, 16, 2.0F, -23.9F, -43.7F, 12, 2, 4, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 312, 16, 2.0F, -26.9F, -42.7F, 12, 3, 3, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 163, 216, 2.5F, -26.7F, -40.6F, 2, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 348, 245, 2.5F, -24.7F, -40.6F, 2, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 295, 184, 11.5F, -24.7F, -40.6F, 2, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 265, 234, 11.5F, -23.2F, -40.6F, 2, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 199, 217, 12.5F, -26.3F, -40.6F, 1, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 222, 224, 11.2F, -26.3F, -40.6F, 1, 1, 1, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 0, 0, 6.0F, -21.9F, -50.7F, 11, 8, 1, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 137, 14, 7.0F, -19.9F, -51.6F, 4, 4, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 238, 176, 7.5F, -19.5F, -51.9F, 3, 3, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 448, 251, 12.5F, -20.5F, -51.3F, 2, 2, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 448, 251, -14.5F, -20.5F, -51.3F, 2, 2, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 238, 176, -10.5F, -19.5F, -51.9F, 3, 3, 1, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 137, 14, -11.0F, -19.9F, -51.6F, 4, 4, 1, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 0, 0, 0.0F, -10.4F, -45.3F, 17, 1, 8, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 0, 0, -17.0F, -15.0F, -34.0F, 17, 2, 12, 0.0F, false));
@@ -325,7 +324,7 @@ public class ModelBeamerPickup extends ModelVehicle<VehicleBeamerPickup> {
         bone8.cubeList.add(new ModelBox(bone8, 206, 17, -11.0F, -7.0F, -5.5F, 2, 2, 15, 0.0F, false));
         bone8.cubeList.add(new ModelBox(bone8, 206, 17, -10.0F, -8.0F, -5.5F, 2, 2, 15, 0.0F, false));
 
-        ModelRenderer bone10 = new ModelRenderer(this);
+        bone10 = new ModelRenderer(this);
         bone10.setRotationPoint(-0.5F, -18.0F, 18.0F);
         setRotationAngle(bone10, 1.309F, 0.0F, 0.0F);
         bone8.addChild(bone10);
@@ -356,7 +355,7 @@ public class ModelBeamerPickup extends ModelVehicle<VehicleBeamerPickup> {
         bone9.cubeList.add(new ModelBox(bone9, 206, 17, 9.0F, -7.0F, -5.5F, 2, 2, 15, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 206, 17, 10.0F, -8.0F, -5.5F, 2, 2, 15, 0.0F, false));
 
-        ModelRenderer bone11 = new ModelRenderer(this);
+        bone11 = new ModelRenderer(this);
         bone11.setRotationPoint(-1.3889F, -27.522F, 55.9047F);
         setRotationAngle(bone11, 0.1571F, 0.0F, 0.0F);
         bone9.addChild(bone11);
@@ -442,27 +441,84 @@ public class ModelBeamerPickup extends ModelVehicle<VehicleBeamerPickup> {
         setRotationAngle(bone19, 0.0F, 0.6109F, 0.0F);
         bone19.cubeList.add(new ModelBox(bone19, 341, 208, -1.5736F, -2.5F, 0.3692F, 2, 5, 1, 0.0F, false));
         bone19.cubeList.add(new ModelBox(bone19, 158, 28, -2.0736F, -3.0F, 0.2692F, 3, 6, 1, 0.0F, false));
+
+        head_lights = new ModelRenderer(this);
+        head_lights.setRotationPoint(0.0F, 24.0F, 0.0F);
+        head_lights.cubeList.add(new ModelBox(head_lights, 238, 176, -10.5F, -19.5F, -51.9F, 3, 3, 1, 0.0F, false));
+        head_lights.cubeList.add(new ModelBox(head_lights, 238, 176, 7.5F, -19.5F, -51.9F, 3, 3, 1, 0.0F, false));
+
+        head_lights_right = new ModelRenderer(this);
+        head_lights_right.setRotationPoint(0.0F, 24.0F, 0.0F);
+        head_lights_right.cubeList.add(new ModelBox(head_lights_right, 448, 251, -14.5F, -20.5F, -51.3F, 2, 2, 1, 0.0F, false));
+
+        head_lights_left = new ModelRenderer(this);
+        head_lights_left.setRotationPoint(0.0F, 24.0F, 0.0F);
+        head_lights_left.cubeList.add(new ModelBox(head_lights_left, 448, 251, 12.5F, -20.5F, -51.3F, 2, 2, 1, 0.0F, false));
+
+        plate = new ModelRenderer(this);
+        plate.setRotationPoint(0.0F, 24.0F, 0.0F);
+        plate.cubeList.add(new ModelBox(plate, 411, 228, -5.0F, -10.0F, -51.1F, 10, 4, 1, 0.0F, false));
+        plate.cubeList.add(new ModelBox(plate, 400, 228, -5.0F, -8.0F, 35.3F, 10, 4, 1, 0.0F, false));
+
+        rear_lights = new ModelRenderer(this);
+        rear_lights.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights.cubeList.add(new ModelBox(rear_lights, 440, 205, -16.4F, -9.1F, 35.3F, 4, 2, 1, 0.0F, false));
+        rear_lights.cubeList.add(new ModelBox(rear_lights, 443, 205, 12.6F, -9.1F, 35.3F, 4, 2, 1, 0.0F, false));
+
+        rear_lights_brake = new ModelRenderer(this);
+        rear_lights_brake.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights_brake.cubeList.add(new ModelBox(rear_lights_brake, 401, 248, 7.6F, -9.1F, 35.3F, 3, 2, 1, 0.0F, false));
+
+        rear_lights_right = new ModelRenderer(this);
+        rear_lights_right.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights_right.cubeList.add(new ModelBox(rear_lights_right, 443, 248, -15.5F, -11.6F, 34.2F, 3, 1, 1, 0.0F, false));
+
+        rear_lights_left = new ModelRenderer(this);
+        rear_lights_left.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights_left.cubeList.add(new ModelBox(rear_lights_left, 443, 248, 12.7F, -11.6F, 34.2F, 3, 1, 1, 0.0F, false));
+
+        rear_lights_reverse = new ModelRenderer(this);
+        rear_lights_reverse.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights_reverse.cubeList.add(new ModelBox(rear_lights_reverse, 423, 215, -10.4F, -9.1F, 35.3F, 3, 2, 1, 0.0F, false));
+
+        interier = new ModelRenderer(this);
+        interier.setRotationPoint(0.0F, 24.0F, 0.0F);
+        interier.cubeList.add(new ModelBox(interier, 163, 216, 2.5F, -26.7F, -40.6F, 2, 1, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 222, 224, 11.2F, -26.3F, -40.6F, 1, 1, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 199, 217, 12.5F, -26.3F, -40.6F, 1, 1, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 295, 184, 11.5F, -24.7F, -40.6F, 2, 1, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 265, 234, 11.5F, -23.2F, -40.6F, 2, 1, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 348, 245, 2.5F, -24.7F, -40.6F, 2, 1, 1, 0.0F, false));
+
+        registerLightEntries(
+                new LightControllerEntry<>(1.0F, head_lights, rear_lights),
+                new LightControllerEntry<>(0.6F, plate, interier),
+                new BrakeLights<>(rear_lights_brake),
+                new ReverseLights<>(rear_lights_reverse),
+                new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),
+                new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.LEFT, head_lights_left, rear_lights_left)
+        );
     }
 
     @Override
-    public void renderModel() {
-        bb_main.render(1f);
-        bone2.render(1f);
-        bone3.render(1f);
-        bone.render(1f);
-        bone4.render(1f);
-        bone5.render(1f);
-        bone6.render(1f);
-        bone7.render(1f);
-        bone8.render(1f);
-        bone9.render(1f);
-        bone12.render(1f);
-        bone13.render(1f);
-        bone14.render(1f);
-        bone15.render(1f);
-        bone16.render(1f);
-        bone17.render(1f);
-        bone18.render(1f);
-        bone19.render(1f);
+    protected void renderModel() {
+        bb_main.render(1.0F);
+        bone2.render(1.0F);
+        bone3.render(1.0F);
+        bone.render(1.0F);
+        bone4.render(1.0F);
+        bone5.render(1.0F);
+        bone6.render(1.0F);
+        bone7.render(1.0F);
+        bone8.render(1.0F);
+        bone9.render(1.0F);
+        bone12.render(1.0F);
+        bone13.render(1.0F);
+        bone14.render(1.0F);
+        bone15.render(1.0F);
+        bone16.render(1.0F);
+        bone17.render(1.0F);
+        bone18.render(1.0F);
+        bone19.render(1.0F);
     }
 }
