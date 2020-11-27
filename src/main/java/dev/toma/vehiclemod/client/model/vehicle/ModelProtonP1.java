@@ -1,9 +1,6 @@
 package dev.toma.vehiclemod.client.model.vehicle;
 
-import dev.toma.vehiclemod.client.lights.LightEntry;
-import dev.toma.vehiclemod.client.lights.ReverseLights;
-import dev.toma.vehiclemod.client.lights.SimpleBrakeLights;
-import dev.toma.vehiclemod.client.lights.TurnIndicatorLights;
+import dev.toma.vehiclemod.client.lights.*;
 import dev.toma.vehiclemod.common.entity.vehicle.LightController;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleProtonP1;
 import net.minecraft.client.model.ModelBox;
@@ -795,8 +792,8 @@ public class ModelProtonP1 extends ModelVehicle<VehicleProtonP1> {
         interier.cubeList.add(new ModelBox(interier, 445, 237, 10.5F, -11.8F, -6.9F, 1, 1, 1, 0.0F, false));
 
         registerLightEntries(
-                LightEntry.createLights(1.0F, head_lights),
-                LightEntry.createLights(0.5F, interier, plate),
+                new LightControllerEntry<>(1.0F, head_lights),
+                new LightControllerEntry<>(0.5F, interier, plate),
                 new SimpleBrakeLights<>(rear_lights),
                 new ReverseLights<>(rear_lights_reverse),
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),

@@ -888,8 +888,8 @@ public class ModelSputnikFiretruck extends ModelVehicle<VehicleSputnikFiretruck>
         siren_g.cubeList.add(new ModelBox(siren_g, 388, 246, -16.0F, -41.0F, -51.0F, 9, 2, 4, 0.0F, false));
 
         registerLightEntries(
-                LightEntry.createLights(1.0F, head_lights, rear_lights),
-                LightEntry.createLights(0.6F, interier),
+                new LightControllerEntry<>(1.0F, head_lights, rear_lights),
+                new LightControllerEntry<>(0.6F, interier),
                 new BrakeLights<>(rear_lights_brake),
                 new ReverseLights<>(rear_lights_reverse),
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),
@@ -931,21 +931,5 @@ public class ModelSputnikFiretruck extends ModelVehicle<VehicleSputnikFiretruck>
         bone25.render(1.0F);
         bone26.render(1.0F);
         bone27.render(1.0F);
-        head_lights.render(1.0F);
-        head_lights_left.render(1.0F);
-        head_lights_right.render(1.0F);
-        rear_lights_brake.render(1.0F);
-        rear_lights_reverse.render(1.0F);
-        rear_lights.render(1.0F);
-        rear_lights_right.render(1.0F);
-        rear_lights_left.render(1.0F);
-        interier.render(1.0F);
-        siren_a.render(1.0F);
-        siren_b.render(1.0F);
-        siren_c.render(1.0F);
-        siren_d.render(1.0F);
-        siren_e.render(1.0F);
-        siren_f.render(1.0F);
-        siren_g.render(1.0F);
     }
 }

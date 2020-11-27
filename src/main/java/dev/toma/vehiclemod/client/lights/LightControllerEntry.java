@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 
 public class LightControllerEntry<V extends EntityVehicle> extends BasicLightEntry<V> {
 
-    protected LightControllerEntry(float intensity, ModelRenderer... renderers) {
+    public LightControllerEntry(float intensity, ModelRenderer... renderers) {
         super(intensity, renderers);
     }
 

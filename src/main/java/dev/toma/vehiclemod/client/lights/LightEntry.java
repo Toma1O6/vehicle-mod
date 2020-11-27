@@ -7,14 +7,6 @@ import javax.annotation.Nullable;
 
 public interface LightEntry<V extends EntityVehicle> {
 
-    static <V extends EntityVehicle> LightEntry<V> createBasic(float intensity, ModelRenderer... renderers) {
-        return new BasicLightEntry<>(intensity, renderers);
-    }
-
-    static <V extends EntityVehicle> LightEntry<V> createLights(float intensity, ModelRenderer... renderers) {
-        return new LightControllerEntry<>(intensity, renderers);
-    }
-
     int getLightmapX();
 
     int getLightmapY();
