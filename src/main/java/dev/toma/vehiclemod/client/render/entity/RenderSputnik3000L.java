@@ -31,10 +31,6 @@ public class RenderSputnik3000L<T extends EntityVehicle, M extends ModelVehicle<
         GlStateManager.translate(0, -24, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.disableLighting();
-        int light = 0xF00000 | 0xF << 4;
-        int j = light % 0x10000;
-        int k = light / 0x10000;
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
         getVehicleModel().render(entity);
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();

@@ -1,38 +1,102 @@
 package dev.toma.vehiclemod.client.model.vehicle;
 
+import dev.toma.vehiclemod.client.lights.*;
+import dev.toma.vehiclemod.common.entity.vehicle.LightController;
+import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleSputnik3000LEnforcer;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 
-public class ModelSputnik3000LEnforcer extends ModelVehicle {
+public class ModelSputnik3000LEnforcer extends ModelVehicle<VehicleSputnik3000LEnforcer> {
 
     private final ModelRenderer bb_main;
     private final ModelRenderer bone;
     private final ModelRenderer bone2;
     private final ModelRenderer bone3;
     private final ModelRenderer bone4;
+    private final ModelRenderer bone5;
+    private final ModelRenderer bone6;
+    private final ModelRenderer bone7;
     private final ModelRenderer bone8;
+    private final ModelRenderer bone44;
+    private final ModelRenderer bone45;
+    private final ModelRenderer bone26;
+    private final ModelRenderer bone27;
     private final ModelRenderer bone9;
+    private final ModelRenderer bone17;
+    private final ModelRenderer bone18;
+    private final ModelRenderer bone43;
+    private final ModelRenderer bone23;
+    private final ModelRenderer bone22;
+    private final ModelRenderer bone21;
+    private final ModelRenderer bone20;
+    private final ModelRenderer bone19;
     private final ModelRenderer bone10;
+    private final ModelRenderer bone11;
+    private final ModelRenderer bone24;
+    private final ModelRenderer bone25;
+    private final ModelRenderer bone12;
+    private final ModelRenderer bone15;
+    private final ModelRenderer bone16;
+    private final ModelRenderer bone13;
+    private final ModelRenderer bone14;
     private final ModelRenderer bone28;
     private final ModelRenderer bone29;
+    private final ModelRenderer bone31;
+    private final ModelRenderer bone32;
+    private final ModelRenderer bone30;
     private final ModelRenderer bone33;
     private final ModelRenderer bone34;
     private final ModelRenderer bone35;
     private final ModelRenderer bone36;
     private final ModelRenderer bone37;
+    private final ModelRenderer bone40;
     private final ModelRenderer bone38;
     private final ModelRenderer bone39;
     private final ModelRenderer bone41;
     private final ModelRenderer bone42;
     private final ModelRenderer bone46;
     private final ModelRenderer bone47;
+    private final ModelRenderer bone48;
+    private final ModelRenderer bone50;
+    private final ModelRenderer bone49;
     private final ModelRenderer bone51;
+    private final ModelRenderer bone52;
     private final ModelRenderer bone53;
     private final ModelRenderer bone54;
     private final ModelRenderer bone55;
     private final ModelRenderer bone56;
     private final ModelRenderer bone57;
     private final ModelRenderer bone58;
+    private final ModelRenderer bone59;
+    private final ModelRenderer head_lights_a;
+    private final ModelRenderer head_lights_b;
+    private final ModelRenderer bone67;
+    private final ModelRenderer bone68;
+    private final ModelRenderer bone69;
+    private final ModelRenderer head_lights_left;
+    private final ModelRenderer bone71;
+    private final ModelRenderer head_lights_right;
+    private final ModelRenderer siren_a;
+    private final ModelRenderer siren_b;
+    private final ModelRenderer siren_c;
+    private final ModelRenderer bone61;
+    private final ModelRenderer bone62;
+    private final ModelRenderer bone63;
+    private final ModelRenderer siren_d;
+    private final ModelRenderer bone70;
+    private final ModelRenderer bone72;
+    private final ModelRenderer bone73;
+    private final ModelRenderer siren_e;
+    private final ModelRenderer siren_f;
+    private final ModelRenderer siren_g;
+    private final ModelRenderer siren_h;
+    private final ModelRenderer plate;
+    private final ModelRenderer rear_lights;
+    private final ModelRenderer rear_lights_brake;
+    private final ModelRenderer rear_lights_reverse;
+    private final ModelRenderer rear_lights_right;
+    private final ModelRenderer rear_lights_left;
+    private final ModelRenderer interier;
 
     public ModelSputnik3000LEnforcer() {
         textureWidth = 512;
@@ -102,11 +166,7 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bb_main.cubeList.add(new ModelBox(bb_main, 0, 0, -22.0F, -6.0F, 0.0F, 3, 4, 17, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 0, 0, -20.0F, -31.0F, -15.0F, 20, 2, 30, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 131, 14, -17.0F, -32.0F, -2.0F, 17, 1, 7, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 158, 220, 2.0F, -34.0F, -1.0F, 7, 2, 5, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 143, 16, -2.0F, -34.0F, 0.0F, 4, 2, 5, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 425, 182, -16.0F, -34.0F, -1.0F, 7, 2, 5, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 158, 220, 9.0F, -34.0F, -1.0F, 7, 2, 5, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 426, 184, -9.0F, -34.0F, -1.0F, 7, 2, 5, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 131, 14, -17.0F, -35.0F, -2.0F, 17, 1, 7, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 131, 14, 0.0F, -32.0F, -2.0F, 17, 1, 7, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 131, 14, 0.0F, -35.0F, -2.0F, 17, 1, 7, 0.0F, false));
@@ -148,23 +208,10 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bb_main.cubeList.add(new ModelBox(bb_main, 153, 23, -16.0F, -10.1F, -40.7F, 5, 2, 4, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 134, 4, -17.0F, -13.1F, -41.4F, 1, 3, 4, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 134, 4, -11.0F, -13.1F, -41.4F, 7, 3, 4, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 347, 166, -4.0F, -12.1F, -40.8F, 8, 3, 4, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 134, 4, -4.0F, -13.1F, -41.4F, 8, 1, 4, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 134, 4, 4.0F, -13.1F, -41.4F, 7, 3, 4, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 153, 23, 11.0F, -13.1F, -40.7F, 5, 3, 4, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 153, 23, -16.0F, -13.1F, -40.7F, 5, 3, 4, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 441, 180, -15.5F, -12.5F, -40.8F, 4, 2, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 441, 180, 11.5F, -12.5F, -40.8F, 4, 2, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 445, 248, 14.5F, -10.0F, -40.8F, 1, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 445, 248, -15.5F, -10.0F, -40.8F, 1, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 441, 180, -14.0F, -10.0F, -40.8F, 1, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 426, 203, -12.5F, -10.0F, -40.8F, 1, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 426, 203, 11.5F, -10.0F, -40.8F, 1, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 441, 180, 13.0F, -10.0F, -40.8F, 1, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 402, 246, 8.7F, -15.5F, -41.2F, 1, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 175, 217, -8.3F, -15.5F, -41.2F, 1, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 175, 217, 7.3F, -15.5F, -41.2F, 1, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 402, 246, -9.7F, -15.5F, -41.2F, 1, 1, 1, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 137, 15, -17.0F, -14.1F, -41.3F, 17, 1, 3, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 0, 0, -20.0F, -19.0F, 16.0F, 3, 13, 1, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 0, 0, -19.0F, -19.0F, 2.0F, 2, 13, 14, 0.0F, false));
@@ -189,11 +236,6 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bb_main.cubeList.add(new ModelBox(bb_main, 321, 0, 0.0F, -19.0F, 19.0F, 17, 6, 3, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 320, 25, -17.0F, -19.0F, 22.0F, 17, 5, 5, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 321, 0, -17.0F, -19.0F, 19.0F, 17, 6, 3, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 244, 221, -16.4F, -17.0F, 18.9F, 2, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 174, 198, -6.4F, -16.0F, 18.9F, 1, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 104, 153, -3.4F, -18.0F, 18.9F, 6, 4, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 257, 152, -6.4F, -18.0F, 18.9F, 1, 1, 1, 0.0F, false));
-        bb_main.cubeList.add(new ModelBox(bb_main, 183, 225, -16.4F, -18.2F, 18.9F, 2, 1, 1, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 147, 15, -20.0F, -19.0F, 17.0F, 3, 13, 5, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 144, 12, -20.0F, -19.0F, 22.0F, 3, 5, 5, 0.0F, false));
         bb_main.cubeList.add(new ModelBox(bb_main, 0, 0, 0.0F, -9.0F, -18.0F, 18, 6, 18, 0.0F, false));
@@ -270,19 +312,19 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone4.cubeList.add(new ModelBox(bone4, 132, 14, -22.0F, -4.3F, -6.5F, 22, 4, 9, 0.0F, false));
         bone4.cubeList.add(new ModelBox(bone4, 132, 14, 0.0F, -4.3F, -6.5F, 22, 4, 9, 0.0F, false));
 
-        ModelRenderer bone5 = new ModelRenderer(this);
+        bone5 = new ModelRenderer(this);
         bone5.setRotationPoint(0.0F, -2.3F, 3.0F);
         setRotationAngle(bone5, -0.3491F, 0.0F, 0.0F);
         bone4.addChild(bone5);
         bone5.cubeList.add(new ModelBox(bone5, 130, 10, 0.0F, -1.7F, -1.2F, 22, 4, 5, 0.0F, false));
         bone5.cubeList.add(new ModelBox(bone5, 130, 10, -22.0F, -1.7F, -1.2F, 22, 4, 5, 0.0F, false));
 
-        ModelRenderer bone6 = new ModelRenderer(this);
+        bone6 = new ModelRenderer(this);
         bone6.setRotationPoint(0.0F, -2.3F, 3.0F);
         setRotationAngle(bone6, -0.3491F, 0.0F, 0.0F);
         bone4.addChild(bone6);
 
-        ModelRenderer bone7 = new ModelRenderer(this);
+        bone7 = new ModelRenderer(this);
         bone7.setRotationPoint(0.0F, 0.3F, 4.3F);
         setRotationAngle(bone7, -0.5236F, 0.0F, 0.0F);
         bone6.addChild(bone7);
@@ -295,26 +337,26 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone8.cubeList.add(new ModelBox(bone8, 131, 10, 0.0F, -1.4F, -2.7F, 20, 5, 5, 0.0F, false));
         bone8.cubeList.add(new ModelBox(bone8, 132, 7, -20.0F, -1.4F, -2.7F, 20, 5, 5, 0.0F, false));
 
-        ModelRenderer bone44 = new ModelRenderer(this);
+        bone44 = new ModelRenderer(this);
         bone44.setRotationPoint(-20.5F, -1.9F, -3.2F);
         setRotationAngle(bone44, -0.3491F, 0.8727F, 0.0F);
         bone8.addChild(bone44);
         bone44.cubeList.add(new ModelBox(bone44, 213, 25, -0.5F, -0.5F, -3.5F, 1, 1, 6, 0.0F, false));
 
-        ModelRenderer bone45 = new ModelRenderer(this);
+        bone45 = new ModelRenderer(this);
         bone45.setRotationPoint(20.5F, -1.9F, -3.2F);
         setRotationAngle(bone45, -0.3491F, -0.8727F, 0.0F);
         bone8.addChild(bone45);
         bone45.cubeList.add(new ModelBox(bone45, 213, 25, -0.5F, -0.5F, -3.5F, 1, 1, 6, 0.0F, false));
 
-        ModelRenderer bone26 = new ModelRenderer(this);
+        bone26 = new ModelRenderer(this);
         bone26.setRotationPoint(0.5F, -2.4F, -1.7F);
         setRotationAngle(bone26, -0.6109F, 0.0F, 0.0F);
         bone8.addChild(bone26);
         bone26.cubeList.add(new ModelBox(bone26, 152, 15, -20.5F, -1.0F, -10.0F, 3, 2, 14, 0.0F, false));
         bone26.cubeList.add(new ModelBox(bone26, 131, 10, 16.5F, -1.0F, -10.0F, 3, 2, 14, 0.0F, false));
 
-        ModelRenderer bone27 = new ModelRenderer(this);
+        bone27 = new ModelRenderer(this);
         bone27.setRotationPoint(0.5F, -2.4F, -1.7F);
         setRotationAngle(bone27, -0.6109F, 0.0F, 0.0F);
         bone8.addChild(bone27);
@@ -352,9 +394,6 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone9.cubeList.add(new ModelBox(bone9, 192, 24, 7.5F, 4.2F, 19.8F, 1, 3, 1, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 130, 17, -9.0F, 2.2F, 16.4F, 9, 2, 5, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 130, 17, 0.0F, 2.2F, 16.4F, 9, 2, 5, 0.0F, false));
-        bone9.cubeList.add(new ModelBox(bone9, 409, 225, -18.9F, 2.4138F, 15.0072F, 7, 3, 6, 0.0F, false));
-        bone9.cubeList.add(new ModelBox(bone9, 409, 225, 11.9F, 2.4069F, 15.0071F, 7, 3, 6, 0.0F, false));
-        bone9.cubeList.add(new ModelBox(bone9, 427, 248, 11.9F, 5.4081F, 14.9373F, 7, 1, 6, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 138, 15, -12.0F, 7.2F, 13.4F, 12, 5, 8, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 141, 15, -12.0F, 12.2F, 13.4F, 12, 3, 8, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 338, 137, -9.0F, 3.2F, 19.2F, 18, 4, 1, 0.0F, false));
@@ -367,10 +406,6 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone9.cubeList.add(new ModelBox(bone9, 145, 16, 12.0F, 9.2F, 19.4F, 1, 2, 2, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 145, 16, 15.0F, 9.2F, 19.4F, 1, 2, 2, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 145, 16, -16.0F, 9.2F, 19.4F, 1, 2, 2, 0.0F, false));
-        bone9.cubeList.add(new ModelBox(bone9, 422, 248, -15.0F, 9.2F, 19.2F, 2, 2, 2, 0.0F, false));
-        bone9.cubeList.add(new ModelBox(bone9, 171, 215, 16.0F, 9.2F, 19.2F, 2, 2, 2, 0.0F, false));
-        bone9.cubeList.add(new ModelBox(bone9, 172, 215, -18.0F, 9.2F, 19.2F, 2, 2, 2, 0.0F, false));
-        bone9.cubeList.add(new ModelBox(bone9, 400, 247, 13.0F, 9.2F, 19.2F, 2, 2, 2, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 145, 16, 12.0F, 8.2F, 13.4F, 7, 1, 8, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 141, 15, -19.0F, 9.2F, 13.4F, 7, 3, 6, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 141, 15, -19.0F, 12.2F, 13.4F, 7, 3, 6, 0.0F, false));
@@ -379,19 +414,19 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone9.cubeList.add(new ModelBox(bone9, 145, 16, -19.0F, 9.2F, 19.4F, 1, 2, 2, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 145, 16, 18.0F, 9.2F, 19.4F, 1, 2, 2, 0.0F, false));
 
-        ModelRenderer bone17 = new ModelRenderer(this);
+        bone17 = new ModelRenderer(this);
         bone17.setRotationPoint(0.0F, 9.7F, 20.4F);
         setRotationAngle(bone17, 0.7854F, 0.0F, 0.0F);
         bone9.addChild(bone17);
 
-        ModelRenderer bone18 = new ModelRenderer(this);
+        bone18 = new ModelRenderer(this);
         bone18.setRotationPoint(0.0F, 1.0F, -0.5F);
         setRotationAngle(bone18, 0.2618F, 0.0F, 0.0F);
         bone17.addChild(bone18);
         bone18.cubeList.add(new ModelBox(bone18, 196, 16, -21.0F, -2.2F, -2.4F, 21, 5, 3, 0.0F, false));
         bone18.cubeList.add(new ModelBox(bone18, 196, 16, 0.0F, -2.2F, -2.4F, 21, 5, 3, 0.0F, false));
 
-        ModelRenderer bone43 = new ModelRenderer(this);
+        bone43 = new ModelRenderer(this);
         bone43.setRotationPoint(0.0F, 1.1F, 3.3F);
         setRotationAngle(bone43, -0.1745F, 0.0F, 0.0F);
         bone9.addChild(bone43);
@@ -410,26 +445,25 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone43.cubeList.add(new ModelBox(bone43, 216, 21, 10.5F, -2.2F, -1.5F, 1, 5, 2, 0.0F, false));
         bone43.cubeList.add(new ModelBox(bone43, 216, 21, 12.5F, -2.2F, -1.5F, 1, 5, 2, 0.0F, false));
 
-        ModelRenderer bone23 = new ModelRenderer(this);
+        bone23 = new ModelRenderer(this);
         bone23.setRotationPoint(-36.4F, 7.9069F, 18.2071F);
         setRotationAngle(bone23, 0.0F, 0.0F, -3.1416F);
         bone9.addChild(bone23);
-        bone23.cubeList.add(new ModelBox(bone23, 427, 243, -24.5F, 1.4918F, -3.2697F, 7, 1, 6, 0.0F, false));
 
-        ModelRenderer bone22 = new ModelRenderer(this);
+        bone22 = new ModelRenderer(this);
         bone22.setRotationPoint(0.0F, 17.5F, -29.5F);
         bone9.addChild(bone22);
 
-        ModelRenderer bone21 = new ModelRenderer(this);
+        bone21 = new ModelRenderer(this);
         bone21.setRotationPoint(0.0F, 17.5F, -29.5F);
         setRotationAngle(bone21, 0.0F, 0.0F, -1.5708F);
         bone9.addChild(bone21);
 
-        ModelRenderer bone20 = new ModelRenderer(this);
+        bone20 = new ModelRenderer(this);
         bone20.setRotationPoint(0.0F, 17.5F, -29.5F);
         bone9.addChild(bone20);
 
-        ModelRenderer bone19 = new ModelRenderer(this);
+        bone19 = new ModelRenderer(this);
         bone19.setRotationPoint(0.0F, 17.5F, -29.5F);
         bone9.addChild(bone19);
 
@@ -437,35 +471,31 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone10.setRotationPoint(0.0F, 6.5F, 29.5F);
         setRotationAngle(bone10, -0.0349F, 0.0F, 0.0F);
 
-        ModelRenderer bone11 = new ModelRenderer(this);
+        bone11 = new ModelRenderer(this);
         bone11.setRotationPoint(0.0F, 0.1F, 9.8F);
         setRotationAngle(bone11, -0.0175F, 0.0F, 0.0F);
         bone10.addChild(bone11);
         bone11.cubeList.add(new ModelBox(bone11, 136, 11, -19.0F, -1.5F, -2.6F, 19, 6, 5, 0.0F, false));
         bone11.cubeList.add(new ModelBox(bone11, 136, 11, 0.0F, -1.5F, -2.6F, 19, 6, 5, 0.0F, false));
 
-        ModelRenderer bone24 = new ModelRenderer(this);
+        bone24 = new ModelRenderer(this);
         bone24.setRotationPoint(0.0F, -0.7F, 5.9F);
         setRotationAngle(bone24, 0.2967F, 0.0F, 0.0F);
         bone11.addChild(bone24);
 
-        ModelRenderer bone25 = new ModelRenderer(this);
+        bone25 = new ModelRenderer(this);
         bone25.setRotationPoint(0.0F, -0.1F, -0.4F);
         setRotationAngle(bone25, 0.1571F, 0.0F, 0.0F);
         bone24.addChild(bone25);
-        bone25.cubeList.add(new ModelBox(bone25, 398, 248, -13.0F, -0.4F, -0.5F, 1, 1, 1, 0.0F, false));
-        bone25.cubeList.add(new ModelBox(bone25, 175, 219, -9.0F, -0.4F, -0.5F, 1, 1, 1, 0.0F, false));
-        bone25.cubeList.add(new ModelBox(bone25, 175, 219, 8.0F, -0.4F, -0.5F, 1, 1, 1, 0.0F, false));
-        bone25.cubeList.add(new ModelBox(bone25, 398, 248, 12.0F, -0.4F, -0.5F, 1, 1, 1, 0.0F, false));
 
-        ModelRenderer bone12 = new ModelRenderer(this);
+        bone12 = new ModelRenderer(this);
         bone12.setRotationPoint(0.0F, 0.1F, 9.8F);
         setRotationAngle(bone12, -0.0175F, 0.0F, 0.0F);
         bone10.addChild(bone12);
         bone12.cubeList.add(new ModelBox(bone12, 140, 13, -22.0F, 8.2F, 0.2F, 9, 7, 4, 0.0F, false));
         bone12.cubeList.add(new ModelBox(bone12, 140, 13, 13.0F, 8.2F, 0.2F, 9, 7, 4, 0.0F, false));
 
-        ModelRenderer bone15 = new ModelRenderer(this);
+        bone15 = new ModelRenderer(this);
         bone15.setRotationPoint(0.0F, 4.25F, 4.9F);
         setRotationAngle(bone15, -0.1745F, 0.0F, 0.0F);
         bone12.addChild(bone15);
@@ -474,27 +504,25 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone15.cubeList.add(new ModelBox(bone15, 134, 12, 0.0F, -0.25F, -3.5F, 19, 6, 5, 0.0F, false));
         bone15.cubeList.add(new ModelBox(bone15, 136, 11, 0.0F, -5.25F, -3.5F, 19, 5, 5, 0.0F, false));
 
-        ModelRenderer bone16 = new ModelRenderer(this);
+        bone16 = new ModelRenderer(this);
         bone16.setRotationPoint(0.0F, 0.0F, 4.0F);
         setRotationAngle(bone16, -0.3491F, 0.0F, 0.0F);
         bone15.addChild(bone16);
         bone16.cubeList.add(new ModelBox(bone16, 141, 13, -13.0F, -4.05F, -4.1F, 13, 5, 5, 0.0F, false));
         bone16.cubeList.add(new ModelBox(bone16, 141, 12, -19.0F, -4.05F, -4.1F, 1, 5, 5, 0.0F, false));
         bone16.cubeList.add(new ModelBox(bone16, 141, 13, 18.0F, -4.05F, -4.1F, 1, 5, 5, 0.0F, false));
-        bone16.cubeList.add(new ModelBox(bone16, 391, 221, -18.9F, -3.6733F, -2.2588F, 7, 2, 3, 0.0F, false));
-        bone16.cubeList.add(new ModelBox(bone16, 391, 221, 11.9F, -3.5733F, -2.2588F, 7, 2, 3, 0.0F, false));
         bone16.cubeList.add(new ModelBox(bone16, 141, 13, 0.0F, -4.05F, -4.1F, 13, 5, 5, 0.0F, false));
         bone16.cubeList.add(new ModelBox(bone16, 141, 13, 12.0F, -4.05F, -4.1F, 7, 5, 2, 0.0F, false));
         bone16.cubeList.add(new ModelBox(bone16, 141, 12, -19.0F, -4.05F, -4.1F, 7, 5, 2, 0.0F, false));
 
-        ModelRenderer bone13 = new ModelRenderer(this);
+        bone13 = new ModelRenderer(this);
         bone13.setRotationPoint(0.0F, 7.0F, 1.9F);
         setRotationAngle(bone13, 0.8727F, 0.0F, 0.0F);
         bone12.addChild(bone13);
         bone13.cubeList.add(new ModelBox(bone13, 140, 13, -22.0F, -7.8F, -1.3F, 9, 6, 4, 0.0F, false));
         bone13.cubeList.add(new ModelBox(bone13, 140, 13, 13.0F, -7.8F, -1.3F, 9, 6, 4, 0.0F, false));
 
-        ModelRenderer bone14 = new ModelRenderer(this);
+        bone14 = new ModelRenderer(this);
         bone14.setRotationPoint(0.0F, 0.0F, 0.0F);
         setRotationAngle(bone14, -0.4363F, 0.0F, 0.0F);
         bone13.addChild(bone14);
@@ -511,21 +539,21 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone29.setRotationPoint(0.0F, 16.0F, -19.5F);
         setRotationAngle(bone29, 0.1745F, 0.0F, 0.0F);
 
-        ModelRenderer bone31 = new ModelRenderer(this);
+        bone31 = new ModelRenderer(this);
         bone31.setRotationPoint(0.0F, -4.6F, -0.4F);
         setRotationAngle(bone31, 0.3491F, 0.0F, 0.0F);
         bone29.addChild(bone31);
         bone31.cubeList.add(new ModelBox(bone31, 132, 8, 13.0F, -1.6F, -1.9F, 9, 3, 3, 0.0F, false));
         bone31.cubeList.add(new ModelBox(bone31, 132, 8, -22.0F, -1.6F, -1.9F, 9, 3, 3, 0.0F, false));
 
-        ModelRenderer bone32 = new ModelRenderer(this);
+        bone32 = new ModelRenderer(this);
         bone32.setRotationPoint(0.0F, -4.6F, -0.4F);
         setRotationAngle(bone32, 0.7854F, 0.0F, 0.0F);
         bone29.addChild(bone32);
         bone32.cubeList.add(new ModelBox(bone32, 132, 8, 13.0F, -4.0F, -1.3F, 9, 3, 3, 0.0F, false));
         bone32.cubeList.add(new ModelBox(bone32, 132, 8, -22.0F, -4.0F, -1.3F, 9, 3, 3, 0.0F, false));
 
-        ModelRenderer bone30 = new ModelRenderer(this);
+        bone30 = new ModelRenderer(this);
         bone30.setRotationPoint(0.0F, -4.6F, -0.4F);
         setRotationAngle(bone30, 1.0472F, 0.0F, 0.0F);
         bone29.addChild(bone30);
@@ -558,7 +586,7 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone37.setRotationPoint(0.0F, 11.3F, -38.0F);
         setRotationAngle(bone37, 0.3665F, 0.0F, 0.0F);
 
-        ModelRenderer bone40 = new ModelRenderer(this);
+        bone40 = new ModelRenderer(this);
         bone40.setRotationPoint(0.0F, 1.4F, 1.1F);
         setRotationAngle(bone40, -0.2618F, 0.0F, 0.0F);
         bone37.addChild(bone40);
@@ -577,7 +605,6 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone40.cubeList.add(new ModelBox(bone40, 134, 4, -2.0F, -2.7F, -4.7F, 4, 1, 3, 0.0F, false));
         bone40.cubeList.add(new ModelBox(bone40, 134, 4, -2.0F, -5.7F, -4.7F, 4, 1, 3, 0.0F, false));
         bone40.cubeList.add(new ModelBox(bone40, 160, 15, -2.0F, -4.7F, -4.0F, 4, 2, 3, 0.0F, false));
-        bone40.cubeList.add(new ModelBox(bone40, 441, 179, -1.5F, -4.1F, -4.1F, 3, 1, 1, 0.0F, false));
 
         bone38 = new ModelRenderer(this);
         bone38.setRotationPoint(0.0F, 7.5F, -24.5F);
@@ -614,19 +641,19 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone47 = new ModelRenderer(this);
         bone47.setRotationPoint(0.0F, 3.5F, 24.3F);
 
-        ModelRenderer bone48 = new ModelRenderer(this);
+        bone48 = new ModelRenderer(this);
         bone48.setRotationPoint(-23.0F, 0.0F, 0.0F);
         setRotationAngle(bone48, 0.0F, -0.2618F, 0.0F);
         bone47.addChild(bone48);
         bone48.cubeList.add(new ModelBox(bone48, 152, 15, -2.0F, -1.5F, -0.5F, 4, 3, 1, 0.0F, false));
 
-        ModelRenderer bone50 = new ModelRenderer(this);
+        bone50 = new ModelRenderer(this);
         bone50.setRotationPoint(-23.0F, 0.0F, 0.0F);
         setRotationAngle(bone50, 0.0F, -0.2618F, 0.0F);
         bone47.addChild(bone50);
         bone50.cubeList.add(new ModelBox(bone50, 406, 199, -1.5F, -1.1F, -0.6F, 3, 2, 1, 0.0F, false));
 
-        ModelRenderer bone49 = new ModelRenderer(this);
+        bone49 = new ModelRenderer(this);
         bone49.setRotationPoint(23.0F, 0.0F, 0.0F);
         setRotationAngle(bone49, 0.0F, 0.5236F, 0.0F);
         bone47.addChild(bone49);
@@ -636,7 +663,7 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone51 = new ModelRenderer(this);
         bone51.setRotationPoint(0.0F, 6.0F, -8.7F);
 
-        ModelRenderer bone52 = new ModelRenderer(this);
+        bone52 = new ModelRenderer(this);
         bone52.setRotationPoint(0.0F, 0.0F, -6.8F);
         setRotationAngle(bone52, 0.0698F, 0.0F, 0.0F);
         bone51.addChild(bone52);
@@ -726,42 +753,226 @@ public class ModelSputnik3000LEnforcer extends ModelVehicle {
         bone58.cubeList.add(new ModelBox(bone58, 321, 0, -1.5F, 2.9625F, -1.0F, 3, 1, 3, 0.0F, false));
         bone58.cubeList.add(new ModelBox(bone58, 321, 0, -3.5F, 3.3625F, -14.0F, 7, 6, 22, 0.0F, false));
 
-        ModelRenderer bone59 = new ModelRenderer(this);
+        bone59 = new ModelRenderer(this);
         bone59.setRotationPoint(0.0F, 2.8625F, -7.5F);
         setRotationAngle(bone59, 0.1745F, 0.0F, 0.0F);
         bone58.addChild(bone59);
         bone59.cubeList.add(new ModelBox(bone59, 319, 16, -0.5F, -0.1F, -3.5F, 1, 1, 7, 0.0F, false));
+
+        head_lights_a = new ModelRenderer(this);
+        head_lights_a.setRotationPoint(0.0F, 6.5F, 29.5F);
+        setRotationAngle(head_lights_a, -0.0349F, 0.0F, 0.0F);
+        head_lights_a.cubeList.add(new ModelBox(head_lights_a, 409, 225, -18.9F, 2.4138F, 15.0072F, 7, 3, 6, 0.0F, false));
+        head_lights_a.cubeList.add(new ModelBox(head_lights_a, 409, 225, 11.9F, 2.4069F, 15.0071F, 7, 3, 6, 0.0F, false));
+
+        head_lights_b = new ModelRenderer(this);
+        head_lights_b.setRotationPoint(0.0F, 6.5F, 29.5F);
+        setRotationAngle(head_lights_b, -0.0349F, 0.0F, 0.0F);
+
+        bone67 = new ModelRenderer(this);
+        bone67.setRotationPoint(0.0F, 0.1F, 9.8F);
+        setRotationAngle(bone67, -0.0175F, 0.0F, 0.0F);
+        head_lights_b.addChild(bone67);
+
+        bone68 = new ModelRenderer(this);
+        bone68.setRotationPoint(0.0F, 4.25F, 4.9F);
+        setRotationAngle(bone68, -0.1745F, 0.0F, 0.0F);
+        bone67.addChild(bone68);
+
+        bone69 = new ModelRenderer(this);
+        bone69.setRotationPoint(0.0F, 0.0F, 4.0F);
+        setRotationAngle(bone69, -0.3491F, 0.0F, 0.0F);
+        bone68.addChild(bone69);
+        bone69.cubeList.add(new ModelBox(bone69, 391, 221, -18.9F, -3.6733F, -2.2588F, 7, 2, 3, 0.0F, false));
+        bone69.cubeList.add(new ModelBox(bone69, 391, 221, 11.9F, -3.5733F, -2.2588F, 7, 2, 3, 0.0F, false));
+
+        head_lights_left = new ModelRenderer(this);
+        head_lights_left.setRotationPoint(0.0F, 6.5F, 29.5F);
+        setRotationAngle(head_lights_left, -0.0349F, 0.0F, 0.0F);
+
+        bone71 = new ModelRenderer(this);
+        bone71.setRotationPoint(-36.4F, 7.9069F, 18.2071F);
+        setRotationAngle(bone71, 0.0F, 0.0F, -3.1416F);
+        head_lights_left.addChild(bone71);
+        bone71.cubeList.add(new ModelBox(bone71, 427, 243, -24.5F, 1.4918F, -3.2697F, 7, 1, 6, 0.0F, false));
+
+        head_lights_right = new ModelRenderer(this);
+        head_lights_right.setRotationPoint(0.0F, 6.5F, 29.5F);
+        setRotationAngle(head_lights_right, -0.0349F, 0.0F, 0.0F);
+        head_lights_right.cubeList.add(new ModelBox(head_lights_right, 427, 248, 11.9F, 5.4081F, 14.9373F, 7, 1, 6, 0.0F, false));
+
+        siren_a = new ModelRenderer(this);
+        siren_a.setRotationPoint(0.0F, 6.5F, 29.5F);
+        setRotationAngle(siren_a, -0.0349F, 0.0F, 0.0F);
+        siren_a.cubeList.add(new ModelBox(siren_a, 422, 248, -15.0F, 9.2F, 19.2F, 2, 2, 2, 0.0F, false));
+        siren_a.cubeList.add(new ModelBox(siren_a, 400, 247, 13.0F, 9.2F, 19.2F, 2, 2, 2, 0.0F, false));
+
+        siren_b = new ModelRenderer(this);
+        siren_b.setRotationPoint(0.0F, 6.5F, 29.5F);
+        setRotationAngle(siren_b, -0.0349F, 0.0F, 0.0F);
+        siren_b.cubeList.add(new ModelBox(siren_b, 171, 215, 16.0F, 9.2F, 19.2F, 2, 2, 2, 0.0F, false));
+        siren_b.cubeList.add(new ModelBox(siren_b, 172, 215, -18.0F, 9.2F, 19.2F, 2, 2, 2, 0.0F, false));
+
+        siren_c = new ModelRenderer(this);
+        siren_c.setRotationPoint(0.0F, 6.5F, 29.5F);
+        setRotationAngle(siren_c, -0.0349F, 0.0F, 0.0F);
+
+        bone61 = new ModelRenderer(this);
+        bone61.setRotationPoint(0.0F, 0.1F, 9.8F);
+        setRotationAngle(bone61, -0.0175F, 0.0F, 0.0F);
+        siren_c.addChild(bone61);
+
+        bone62 = new ModelRenderer(this);
+        bone62.setRotationPoint(0.0F, -0.7F, 5.9F);
+        setRotationAngle(bone62, 0.2967F, 0.0F, 0.0F);
+        bone61.addChild(bone62);
+
+        bone63 = new ModelRenderer(this);
+        bone63.setRotationPoint(0.0F, -0.1F, -0.4F);
+        setRotationAngle(bone63, 0.1571F, 0.0F, 0.0F);
+        bone62.addChild(bone63);
+        bone63.cubeList.add(new ModelBox(bone63, 398, 248, -13.0F, -0.4F, -0.5F, 1, 1, 1, 0.0F, false));
+        bone63.cubeList.add(new ModelBox(bone63, 398, 248, 12.0F, -0.4F, -0.5F, 1, 1, 1, 0.0F, false));
+
+        siren_d = new ModelRenderer(this);
+        siren_d.setRotationPoint(0.0F, 6.5F, 29.5F);
+        setRotationAngle(siren_d, -0.0349F, 0.0F, 0.0F);
+
+        bone70 = new ModelRenderer(this);
+        bone70.setRotationPoint(0.0F, 0.1F, 9.8F);
+        setRotationAngle(bone70, -0.0175F, 0.0F, 0.0F);
+        siren_d.addChild(bone70);
+
+        bone72 = new ModelRenderer(this);
+        bone72.setRotationPoint(0.0F, -0.7F, 5.9F);
+        setRotationAngle(bone72, 0.2967F, 0.0F, 0.0F);
+        bone70.addChild(bone72);
+
+        bone73 = new ModelRenderer(this);
+        bone73.setRotationPoint(0.0F, -0.1F, -0.4F);
+        setRotationAngle(bone73, 0.1571F, 0.0F, 0.0F);
+        bone72.addChild(bone73);
+        bone73.cubeList.add(new ModelBox(bone73, 175, 219, -9.0F, -0.4F, -0.5F, 1, 1, 1, 0.0F, false));
+        bone73.cubeList.add(new ModelBox(bone73, 175, 219, 8.0F, -0.4F, -0.5F, 1, 1, 1, 0.0F, false));
+
+        siren_e = new ModelRenderer(this);
+        siren_e.setRotationPoint(0.0F, 24.0F, 0.0F);
+        siren_e.cubeList.add(new ModelBox(siren_e, 158, 220, 9.0F, -34.0F, -1.0F, 7, 2, 5, 0.0F, false));
+        siren_e.cubeList.add(new ModelBox(siren_e, 158, 220, 2.0F, -34.0F, -1.0F, 7, 2, 5, 0.0F, false));
+
+        siren_f = new ModelRenderer(this);
+        siren_f.setRotationPoint(0.0F, 24.0F, 0.0F);
+        siren_f.cubeList.add(new ModelBox(siren_f, 425, 182, -16.0F, -34.0F, -1.0F, 7, 2, 5, 0.0F, false));
+        siren_f.cubeList.add(new ModelBox(siren_f, 426, 184, -9.0F, -34.0F, -1.0F, 7, 2, 5, 0.0F, false));
+
+        siren_g = new ModelRenderer(this);
+        siren_g.setRotationPoint(0.0F, 24.0F, 0.0F);
+        siren_g.cubeList.add(new ModelBox(siren_g, 402, 246, 8.7F, -15.5F, -41.2F, 1, 1, 1, 0.0F, false));
+        siren_g.cubeList.add(new ModelBox(siren_g, 402, 246, -9.7F, -15.5F, -41.2F, 1, 1, 1, 0.0F, false));
+
+        siren_h = new ModelRenderer(this);
+        siren_h.setRotationPoint(0.0F, 24.0F, 0.0F);
+        siren_h.cubeList.add(new ModelBox(siren_h, 175, 217, -8.3F, -15.5F, -41.2F, 1, 1, 1, 0.0F, false));
+        siren_h.cubeList.add(new ModelBox(siren_h, 175, 217, 7.3F, -15.5F, -41.2F, 1, 1, 1, 0.0F, false));
+
+        plate = new ModelRenderer(this);
+        plate.setRotationPoint(0.0F, 24.0F, 0.0F);
+        plate.cubeList.add(new ModelBox(plate, 347, 166, -4.0F, -12.1F, -40.8F, 8, 3, 4, 0.0F, false));
+
+        rear_lights = new ModelRenderer(this);
+        rear_lights.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights.cubeList.add(new ModelBox(rear_lights, 441, 180, 11.5F, -12.5F, -40.8F, 4, 2, 1, 0.0F, false));
+        rear_lights.cubeList.add(new ModelBox(rear_lights, 441, 180, -15.5F, -12.5F, -40.8F, 4, 2, 1, 0.0F, false));
+
+        rear_lights_brake = new ModelRenderer(this);
+        rear_lights_brake.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights_brake.cubeList.add(new ModelBox(rear_lights_brake, 441, 179, -1.5F, -15.4F, -41.0F, 3, 1, 1, 0.0F, false));
+        rear_lights_brake.cubeList.add(new ModelBox(rear_lights_brake, 441, 180, 13.0F, -10.0F, -40.8F, 1, 1, 1, 0.0F, false));
+        rear_lights_brake.cubeList.add(new ModelBox(rear_lights_brake, 441, 180, -14.0F, -10.0F, -40.8F, 1, 1, 1, 0.0F, false));
+
+        rear_lights_reverse = new ModelRenderer(this);
+        rear_lights_reverse.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights_reverse.cubeList.add(new ModelBox(rear_lights_reverse, 426, 203, 11.5F, -10.0F, -40.8F, 1, 1, 1, 0.0F, false));
+        rear_lights_reverse.cubeList.add(new ModelBox(rear_lights_reverse, 426, 203, -12.5F, -10.0F, -40.8F, 1, 1, 1, 0.0F, false));
+
+        rear_lights_right = new ModelRenderer(this);
+        rear_lights_right.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights_right.cubeList.add(new ModelBox(rear_lights_right, 445, 248, 14.5F, -10.0F, -40.8F, 1, 1, 1, 0.0F, false));
+
+        rear_lights_left = new ModelRenderer(this);
+        rear_lights_left.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights_left.cubeList.add(new ModelBox(rear_lights_left, 445, 248, -15.5F, -10.0F, -40.8F, 1, 1, 1, 0.0F, false));
+
+        interier = new ModelRenderer(this);
+        interier.setRotationPoint(0.0F, 24.0F, 0.0F);
+        interier.cubeList.add(new ModelBox(interier, 104, 153, -3.4F, -18.0F, 18.9F, 6, 4, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 257, 152, -6.4F, -18.0F, 18.9F, 1, 1, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 174, 198, -6.4F, -16.0F, 18.9F, 1, 1, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 244, 221, -16.4F, -17.0F, 18.9F, 2, 1, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 183, 225, -16.4F, -18.2F, 18.9F, 2, 1, 1, 0.0F, false));
+
+        registerLightEntries(
+                new LightControllerEntry<>(1.0F, head_lights_a, head_lights_b, rear_lights),
+                new LightControllerEntry<>(0.6F, plate, interier),
+                new BrakeLights<>(rear_lights_brake),
+                new ReverseLights<>(rear_lights_reverse),
+                new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),
+                new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.LEFT, head_lights_left, rear_lights_left),
+                new SirenLights<>(500, siren_a, siren_c, siren_g),
+                new SirenLights<>(500, f -> 1.0F - f, siren_b, siren_d, siren_h),
+                new SirenLights<>(1000, siren_e),
+                new SirenLights<>(1000, f -> 1.0F - f, siren_f)
+        );
     }
 
     @Override
-    public void renderModel() {
-        bb_main.render(1f);
-        bone.render(1f);
-        bone2.render(1f);
-        bone3.render(1f);
-        bone4.render(1f);
-        bone8.render(1f);
-        bone9.render(1f);
-        bone10.render(1f);
-        bone28.render(1f);
-        bone29.render(1f);
-        bone33.render(1f);
-        bone34.render(1f);
-        bone35.render(1f);
-        bone36.render(1f);
-        bone37.render(1f);
-        bone38.render(1f);
-        bone39.render(1f);
-        bone41.render(1f);
-        bone42.render(1f);
-        bone46.render(1f);
-        bone47.render(1f);
-        bone51.render(1f);
-        bone53.render(1f);
-        bone54.render(1f);
-        bone55.render(1f);
-        bone56.render(1f);
-        bone57.render(1f);
-        bone58.render(1f);
+    protected void renderModel() {
+        bb_main.render(1.0F);
+        bone.render(1.0F);
+        bone2.render(1.0F);
+        bone3.render(1.0F);
+        bone4.render(1.0F);
+        bone8.render(1.0F);
+        bone9.render(1.0F);
+        bone10.render(1.0F);
+        bone28.render(1.0F);
+        bone29.render(1.0F);
+        bone33.render(1.0F);
+        bone34.render(1.0F);
+        bone35.render(1.0F);
+        bone36.render(1.0F);
+        bone37.render(1.0F);
+        bone38.render(1.0F);
+        bone39.render(1.0F);
+        bone41.render(1.0F);
+        bone42.render(1.0F);
+        bone46.render(1.0F);
+        bone47.render(1.0F);
+        bone51.render(1.0F);
+        bone53.render(1.0F);
+        bone54.render(1.0F);
+        bone55.render(1.0F);
+        bone56.render(1.0F);
+        bone57.render(1.0F);
+        bone58.render(1.0F);
+        head_lights_a.render(1.0F);
+        head_lights_b.render(1.0F);
+        head_lights_left.render(1.0F);
+        head_lights_right.render(1.0F);
+        siren_a.render(1.0F);
+        siren_b.render(1.0F);
+        siren_c.render(1.0F);
+        siren_d.render(1.0F);
+        siren_e.render(1.0F);
+        siren_f.render(1.0F);
+        siren_g.render(1.0F);
+        siren_h.render(1.0F);
+        plate.render(1.0F);
+        rear_lights.render(1.0F);
+        rear_lights_brake.render(1.0F);
+        rear_lights_reverse.render(1.0F);
+        rear_lights_right.render(1.0F);
+        rear_lights_left.render(1.0F);
+        interier.render(1.0F);
     }
 }
