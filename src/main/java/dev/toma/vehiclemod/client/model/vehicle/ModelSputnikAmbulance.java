@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.client.model.vehicle;
 
-import dev.toma.vehiclemod.client.lights.LightEntry;
+import dev.toma.vehiclemod.client.lights.*;
+import dev.toma.vehiclemod.common.entity.vehicle.LightController;
 import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleSputnikAmbulance;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
@@ -842,8 +843,19 @@ public class ModelSputnikAmbulance extends ModelVehicle<VehicleSputnikAmbulance>
 		setRotationAngle(plate, 1.5708F, 0.0F, 0.0F);
 		plate.cubeList.add(new ModelBox(plate, 411, 217, -4.0F, 5.0F, -16.4F, 8, 1, 4, 0.0F, false));
 
-		registerLightEntries(LightEntry.createLights(1.0F, head_lights, head_lights_right, head_lights_left, rear_lights, rear_lights_right, rear_lights_left,
-                rear_lights_reverse, rear_lights_brake, interier_a, interier_b, siren_a, siren_b, siren_c, siren_d, siren_e, siren_f, siren_g, plate));
+		registerLightEntries(
+				LightEntry.createLights(1.0F, head_lights, rear_lights),
+				LightEntry.createLights(0.6F, interier_a, interier_b, plate),
+				new BrakeLights<>(rear_lights_brake),
+				new ReverseLights<>(rear_lights_reverse),
+				new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),
+				new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.LEFT, head_lights_left, rear_lights_left),
+				new SirenLights<>(350, siren_a),
+				new SirenLights<>(550, siren_b, siren_f),
+				new SirenLights<>(550, f -> 1.0F - f, siren_c, siren_g),
+				new SirenLights<>(1000, siren_e),
+				new SirenLights<>(1000, f -> 1.0F - f, siren_d)
+		);
 	}
 
     @Override
