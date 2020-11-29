@@ -16,7 +16,7 @@ public class RenderTracerT1 extends RenderVehicle<VehicleTracerT1> {
     }
 
     @Override
-    public ModelVehicle getVehicleModel() {
+    public ModelVehicle<VehicleTracerT1> getVehicleModel() {
         return model;
     }
 
@@ -30,7 +30,7 @@ public class RenderTracerT1 extends RenderVehicle<VehicleTracerT1> {
         GlStateManager.translate(0, -8, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.disableLighting();
-        model.renderModel();
+        model.render(entity);
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

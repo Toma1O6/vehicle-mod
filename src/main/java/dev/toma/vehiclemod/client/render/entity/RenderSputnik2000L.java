@@ -16,7 +16,7 @@ public class RenderSputnik2000L extends RenderVehicle<VehicleSputnik2000L> {
     }
 
     @Override
-    public ModelVehicle getVehicleModel() {
+    public ModelVehicle<VehicleSputnik2000L> getVehicleModel() {
         return sputnik2000L;
     }
 
@@ -31,7 +31,7 @@ public class RenderSputnik2000L extends RenderVehicle<VehicleSputnik2000L> {
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.translate(0, -20, 0);
         GlStateManager.disableLighting();
-        sputnik2000L.renderModel();
+        sputnik2000L.render(entity);
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

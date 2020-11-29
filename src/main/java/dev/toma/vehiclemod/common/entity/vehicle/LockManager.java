@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.common.entity.vehicle;
 
 import dev.toma.vehiclemod.common.ILockpickable;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.UUID;
@@ -41,7 +42,7 @@ public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagComp
     public void deserializeNBT(NBTTagCompound nbt) {
         carLockType = EnumCarLockType.values()[nbt.getByte("lockType")];
         unlocked = nbt.getBoolean("unlocked");
-        linkedUUID = UUID.fromString(nbt.getString("key"));
+        linkedUUID = nbt.hasKey("key", Constants.NBT.TAG_STRING) ? UUID.fromString(nbt.getString("key")) : UUID.randomUUID();
     }
 
     @Override

@@ -15,7 +15,7 @@ public class RenderMCGMultiVan extends RenderVehicle<VehicleMCGMultiVan> {
     }
 
     @Override
-    public ModelVehicle getVehicleModel() {
+    public ModelVehicle<VehicleMCGMultiVan> getVehicleModel() {
         return model;
     }
 
@@ -29,7 +29,7 @@ public class RenderMCGMultiVan extends RenderVehicle<VehicleMCGMultiVan> {
         GlStateManager.translate(0, -24, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.disableLighting();
-        model.renderModel();
+        model.render(entity);
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

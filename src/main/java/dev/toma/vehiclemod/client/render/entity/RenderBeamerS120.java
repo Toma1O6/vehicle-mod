@@ -15,7 +15,7 @@ public class RenderBeamerS120 extends RenderVehicle<VehicleBeamerS120> {
 	}
 	
 	@Override
-	public ModelVehicle getVehicleModel() {
+	public ModelVehicle<VehicleBeamerS120> getVehicleModel() {
 		return model;
 	}
 	
@@ -29,7 +29,7 @@ public class RenderBeamerS120 extends RenderVehicle<VehicleBeamerS120> {
 		GlStateManager.translate(0, -5, 0);
 		GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
 		GlStateManager.disableLighting();
-		model.renderModel();
+		model.render(entity);
 		GlStateManager.enableLighting();
 		GlStateManager.popMatrix();
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);

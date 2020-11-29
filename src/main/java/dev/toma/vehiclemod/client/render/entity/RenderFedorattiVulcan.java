@@ -16,7 +16,7 @@ public class RenderFedorattiVulcan extends RenderVehicle<VehicleFedorattiVulcan>
     }
 
     @Override
-    public ModelVehicle getVehicleModel() {
+    public ModelVehicle<VehicleFedorattiVulcan> getVehicleModel() {
         return model;
     }
 
@@ -31,7 +31,7 @@ public class RenderFedorattiVulcan extends RenderVehicle<VehicleFedorattiVulcan>
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.translate(0, -17, 0);
         GlStateManager.disableLighting();
-        model.renderModel();
+        model.render(entity);
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

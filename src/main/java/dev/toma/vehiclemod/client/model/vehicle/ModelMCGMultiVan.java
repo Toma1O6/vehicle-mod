@@ -1,13 +1,53 @@
 package dev.toma.vehiclemod.client.model.vehicle;
 
+import dev.toma.vehiclemod.client.lights.BrakeLights;
+import dev.toma.vehiclemod.client.lights.LightControllerEntry;
+import dev.toma.vehiclemod.client.lights.ReverseLights;
+import dev.toma.vehiclemod.client.lights.TurnIndicatorLights;
+import dev.toma.vehiclemod.common.entity.vehicle.LightController;
+import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleMCGMultiVan;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 
-public class ModelMCGMultiVan extends ModelVehicle {
+public class ModelMCGMultiVan extends ModelVehicle<VehicleMCGMultiVan> {
 
     private final ModelRenderer bone21;
+    private final ModelRenderer bone22;
     private final ModelRenderer bone41;
+    private final ModelRenderer bone43;
+    private final ModelRenderer bone44;
     private final ModelRenderer bone42;
+    private final ModelRenderer bone45;
+    private final ModelRenderer bone2;
+    private final ModelRenderer bone3;
+    private final ModelRenderer bone4;
+    private final ModelRenderer bone5;
+    private final ModelRenderer bone6;
+    private final ModelRenderer bone12;
+    private final ModelRenderer bone13;
+    private final ModelRenderer bone7;
+    private final ModelRenderer bone8;
+    private final ModelRenderer bone14;
+    private final ModelRenderer bone15;
+    private final ModelRenderer bone16;
+    private final ModelRenderer bone17;
+    private final ModelRenderer bone18;
+    private final ModelRenderer bone9;
+    private final ModelRenderer bone10;
+    private final ModelRenderer bone11;
+    private final ModelRenderer bone19;
+    private final ModelRenderer bone20;
+    private final ModelRenderer bone;
+    private final ModelRenderer head_lights;
+    private final ModelRenderer head_lights_left;
+    private final ModelRenderer head_lights_right;
+    private final ModelRenderer plate;
+    private final ModelRenderer rear_lights;
+    private final ModelRenderer rear_lights_brake;
+    private final ModelRenderer rear_lights_right;
+    private final ModelRenderer rear_lights_left;
+    private final ModelRenderer rear_lights_reverse;
+    private final ModelRenderer interier;
 
     public ModelMCGMultiVan() {
         textureWidth = 512;
@@ -32,10 +72,10 @@ public class ModelMCGMultiVan extends ModelVehicle {
         bone21.cubeList.add(new ModelBox(bone21, 150, 27, -25.2F, -8.0F, -46.0F, 7, 8, 8, 0.0F, false));
         bone21.cubeList.add(new ModelBox(bone21, 150, 27, -25.2F, -14.0F, -52.0F, 7, 8, 8, 0.0F, false));
 
-        ModelRenderer bone22 = new ModelRenderer(this);
+        bone22 = new ModelRenderer(this);
         bone22.setRotationPoint(2.5F, -27.0F, 33.0F);
-        setRotationAngle(bone22, -0.7854F, 0.0F, 0.0F);
         bone21.addChild(bone22);
+        setRotationAngle(bone22, -0.7854F, 0.0F, 0.0F);
         bone22.cubeList.add(new ModelBox(bone22, 150, 27, 13.8F, 1.6568F, 20.3848F, 7, 8, 8, 0.0F, false));
         bone22.cubeList.add(new ModelBox(bone22, 150, 27, 13.8F, -4.3432F, 14.3848F, 7, 8, 8, 0.0F, false));
         bone22.cubeList.add(new ModelBox(bone22, 150, 27, 13.8F, 1.6568F, 8.3848F, 7, 8, 8, 0.0F, false));
@@ -56,7 +96,8 @@ public class ModelMCGMultiVan extends ModelVehicle {
         bone41 = new ModelRenderer(this);
         bone41.setRotationPoint(0.0F, 24.0F, 0.0F);
 
-        ModelRenderer bone43 = new ModelRenderer(this);
+
+        bone43 = new ModelRenderer(this);
         bone43.setRotationPoint(0.0F, 0.0F, 0.0F);
         bone41.addChild(bone43);
         bone43.cubeList.add(new ModelBox(bone43, 237, 32, 7.0F, -12.0F, -43.0F, 17, 2, 2, 0.0F, false));
@@ -84,10 +125,10 @@ public class ModelMCGMultiVan extends ModelVehicle {
         bone43.cubeList.add(new ModelBox(bone43, 237, 32, -9.0F, -10.0F, -43.0F, 16, 2, 2, 0.0F, false));
         bone43.cubeList.add(new ModelBox(bone43, 237, 32, -9.0F, -11.0F, -42.0F, 16, 2, 2, 0.0F, false));
 
-        ModelRenderer bone44 = new ModelRenderer(this);
+        bone44 = new ModelRenderer(this);
         bone44.setRotationPoint(3.0F, -27.0F, -44.0F);
-        setRotationAngle(bone44, -0.7854F, 0.0F, 0.0F);
         bone43.addChild(bone44);
+        setRotationAngle(bone44, -0.7854F, 0.0F, 0.0F);
         bone44.cubeList.add(new ModelBox(bone44, 237, 32, 4.0F, 9.6066F, 11.435F, 17, 2, 2, 0.0F, false));
         bone44.cubeList.add(new ModelBox(bone44, 237, 32, 4.0F, 8.6066F, 12.435F, 17, 2, 2, 0.0F, false));
         bone44.cubeList.add(new ModelBox(bone44, 237, 32, 4.0F, 9.6066F, 13.435F, 17, 2, 2, 0.0F, false));
@@ -258,10 +299,6 @@ public class ModelMCGMultiVan extends ModelVehicle {
         bone42.cubeList.add(new ModelBox(bone42, 205, 9, -22.0F, -25.0F, -30.0F, 1, 1, 2, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 0, 0, -22.0F, -21.0F, -46.0F, 3, 7, 5, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 0, 0, 19.0F, -21.0F, -46.0F, 3, 7, 5, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 441, 249, 19.0F, -16.0F, -67.0F, 2, 4, 2, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 441, 249, -21.0F, -16.0F, -67.0F, 2, 4, 2, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 372, 206, -18.0F, -16.0F, -67.0F, 4, 4, 2, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 372, 206, 14.0F, -16.0F, -67.0F, 4, 4, 2, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 258, 44, 13.0F, -17.0F, -67.4F, 9, 1, 1, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 258, 44, 13.0F, -12.0F, -67.4F, 9, 1, 1, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 258, 44, 21.0F, -16.0F, -67.4F, 1, 4, 1, 0.0F, false));
@@ -279,12 +316,6 @@ public class ModelMCGMultiVan extends ModelVehicle {
         bone42.cubeList.add(new ModelBox(bone42, 246, 28, 1.0F, -19.0F, -66.0F, 1, 10, 1, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 314, 26, 20.0F, -22.0F, 46.0F, 3, 8, 2, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 314, 26, -23.0F, -22.0F, 46.0F, 3, 8, 2, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 499, 250, -22.5F, -21.5F, 46.2F, 2, 3, 2, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 443, 248, -22.5F, -18.0F, 46.2F, 2, 1, 2, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 409, 214, -22.5F, -16.5F, 46.2F, 2, 1, 2, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 409, 214, 20.5F, -16.5F, 46.2F, 2, 1, 2, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 443, 248, 20.5F, -18.0F, 46.2F, 2, 1, 2, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 499, 250, 20.5F, -21.5F, 46.2F, 2, 3, 2, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 321, 40, -19.0F, -27.2F, -54.1F, 19, 8, 5, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 321, 40, 0.0F, -27.2F, -54.1F, 19, 8, 5, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 130, 144, 11.0F, -16.0F, -39.0F, 4, 2, 12, 0.0F, false));
@@ -299,24 +330,15 @@ public class ModelMCGMultiVan extends ModelVehicle {
         bone42.cubeList.add(new ModelBox(bone42, 130, 144, -6.0F, -18.0F, -39.0F, 6, 2, 12, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 130, 144, 0.0F, -16.0F, -39.0F, 5, 2, 12, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 130, 144, 0.0F, -18.0F, -39.0F, 5, 2, 12, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 228, 209, 4.0F, -26.2F, -50.0F, 2, 1, 1, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 178, 224, 14.0F, -24.2F, -50.0F, 3, 1, 1, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 102, 151, 14.0F, -26.2F, -50.0F, 3, 1, 1, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 188, 222, 4.0F, -24.8F, -50.0F, 2, 1, 1, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 375, 251, 5.0F, -22.8F, -50.0F, 2, 1, 1, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 376, 137, -2.0F, -26.8F, -50.0F, 5, 5, 1, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 406, 184, -18.0F, -26.8F, -50.0F, 5, 4, 1, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 216, 17, -6.0F, -8.9F, -69.7F, 12, 5, 1, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 178, 144, -5.5F, -8.4F, -69.8F, 11, 4, 1, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 216, 17, -6.0F, -11.4F, 48.3F, 12, 5, 1, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 167, 142, -5.5F, -11.0F, 48.4F, 11, 4, 1, 0.0F, false));
-        bone42.cubeList.add(new ModelBox(bone42, 494, 245, -2.5F, -46.0F, 50.2F, 5, 1, 1, 0.0F, false));
         bone42.cubeList.add(new ModelBox(bone42, 360, 71, -3.0F, -46.5F, 50.1F, 6, 2, 1, 0.0F, false));
 
-        ModelRenderer bone45 = new ModelRenderer(this);
+        bone45 = new ModelRenderer(this);
         bone45.setRotationPoint(-20.0F, -23.0F, -27.9F);
-        setRotationAngle(bone45, 0.0F, 0.0F, 0.7854F);
         bone42.addChild(bone45);
+        setRotationAngle(bone45, 0.0F, 0.0F, 0.7854F);
         bone45.cubeList.add(new ModelBox(bone45, 187, 27, 21.6274F, -7.6568F, -8.5F, 2, 2, 41, 0.0F, false));
         bone45.cubeList.add(new ModelBox(bone45, 187, 27, 20.6274F, -6.6568F, -8.5F, 2, 2, 41, 0.0F, false));
         bone45.cubeList.add(new ModelBox(bone45, 187, 27, 21.6274F, -5.6568F, -8.5F, 2, 2, 41, 0.0F, false));
@@ -330,49 +352,50 @@ public class ModelMCGMultiVan extends ModelVehicle {
         bone45.cubeList.add(new ModelBox(bone45, 187, 27, 22.6274F, -6.6568F, -24.5F, 2, 2, 16, 0.0F, false));
         bone45.cubeList.add(new ModelBox(bone45, 187, 27, 20.6274F, -6.6568F, -24.5F, 2, 2, 16, 0.0F, false));
 
-        ModelRenderer bone2 = new ModelRenderer(this);
+        bone2 = new ModelRenderer(this);
         bone2.setRotationPoint(0.0F, -18.0F, 23.5F);
-        setRotationAngle(bone2, -0.6981F, 0.0F, 0.0F);
         bone42.addChild(bone2);
+        setRotationAngle(bone2, -0.6981F, 0.0F, 0.0F);
         bone2.cubeList.add(new ModelBox(bone2, 0, 0, 20.9F, -6.0F, -5.5F, 2, 10, 5, 0.0F, false));
         bone2.cubeList.add(new ModelBox(bone2, 0, 0, -22.9F, -6.0F, -5.5F, 2, 10, 5, 0.0F, false));
 
-        ModelRenderer bone3 = new ModelRenderer(this);
+        bone3 = new ModelRenderer(this);
         bone3.setRotationPoint(0.0F, -18.0F, 42.5F);
-        setRotationAngle(bone3, 0.6981F, 0.0F, 0.0F);
         bone42.addChild(bone3);
+        setRotationAngle(bone3, 0.6981F, 0.0F, 0.0F);
         bone3.cubeList.add(new ModelBox(bone3, 0, 0, -22.9F, -7.0F, -1.2F, 2, 11, 5, 0.0F, false));
         bone3.cubeList.add(new ModelBox(bone3, 0, 0, 20.9F, -7.0F, -1.2F, 2, 11, 5, 0.0F, false));
 
-        ModelRenderer bone4 = new ModelRenderer(this);
+        bone4 = new ModelRenderer(this);
         bone4.setRotationPoint(0.0F, -24.5F, -66.0F);
-        setRotationAngle(bone4, -0.7854F, 0.0F, 0.0F);
         bone42.addChild(bone4);
+        setRotationAngle(bone4, -0.7854F, 0.0F, 0.0F);
         bone4.cubeList.add(new ModelBox(bone4, 0, 0, 0.0F, -3.1F, 1.1F, 23, 7, 7, 0.0F, false));
         bone4.cubeList.add(new ModelBox(bone4, 0, 0, -23.0F, -3.1F, 1.1F, 23, 7, 7, 0.0F, false));
 
-        ModelRenderer bone5 = new ModelRenderer(this);
+        bone5 = new ModelRenderer(this);
         bone5.setRotationPoint(0.0F, -25.5F, -59.5F);
-        setRotationAngle(bone5, -1.3788F, 0.0F, 0.0F);
         bone42.addChild(bone5);
+        setRotationAngle(bone5, -1.3788F, 0.0F, 0.0F);
 
-        ModelRenderer bone6 = new ModelRenderer(this);
+
+        bone6 = new ModelRenderer(this);
         bone6.setRotationPoint(0.0F, 0.0F, 0.0F);
         bone5.addChild(bone6);
         bone6.cubeList.add(new ModelBox(bone6, 0, 0, -23.0F, -3.6F, -1.0F, 9, 7, 6, 0.0F, false));
         bone6.cubeList.add(new ModelBox(bone6, 0, 0, 14.0F, -3.6F, -1.0F, 9, 7, 6, 0.0F, false));
         bone6.cubeList.add(new ModelBox(bone6, 0, 0, -14.0F, -3.6F, 0.0F, 28, 2, 5, 0.0F, false));
 
-        ModelRenderer bone12 = new ModelRenderer(this);
+        bone12 = new ModelRenderer(this);
         bone12.setRotationPoint(0.0F, 0.9F, 2.0F);
         bone6.addChild(bone12);
         bone12.cubeList.add(new ModelBox(bone12, 0, 0, -14.0F, -2.5F, -3.0F, 28, 5, 6, 0.0F, false));
         bone12.cubeList.add(new ModelBox(bone12, 0, 0, -1.0F, -4.5F, -3.0F, 2, 2, 1, 0.0F, false));
 
-        ModelRenderer bone13 = new ModelRenderer(this);
+        bone13 = new ModelRenderer(this);
         bone13.setRotationPoint(0.0F, -3.5F, -2.5F);
-        setRotationAngle(bone13, 0.1745F, 0.0F, 0.0F);
         bone12.addChild(bone13);
+        setRotationAngle(bone13, 0.1745F, 0.0F, 0.0F);
         bone13.cubeList.add(new ModelBox(bone13, 329, 56, 12.0F, -1.1F, -0.4F, 1, 2, 1, 0.0F, false));
         bone13.cubeList.add(new ModelBox(bone13, 329, 56, 10.0F, -1.1F, -0.4F, 1, 2, 1, 0.0F, false));
         bone13.cubeList.add(new ModelBox(bone13, 329, 56, 8.0F, -1.1F, -0.4F, 1, 2, 1, 0.0F, false));
@@ -388,53 +411,54 @@ public class ModelMCGMultiVan extends ModelVehicle {
         bone13.cubeList.add(new ModelBox(bone13, 329, 56, -13.0F, 7.9F, -0.4F, 1, 2, 1, 0.0F, false));
         bone13.cubeList.add(new ModelBox(bone13, 329, 56, 12.0F, 7.9F, -0.4F, 1, 2, 1, 0.0F, false));
 
-        ModelRenderer bone7 = new ModelRenderer(this);
+        bone7 = new ModelRenderer(this);
         bone7.setRotationPoint(0.0F, -25.25F, -53.25F);
         bone42.addChild(bone7);
         bone7.cubeList.add(new ModelBox(bone7, 0, 0, 19.0F, -0.75F, -8.75F, 3, 18, 7, 0.0F, false));
         bone7.cubeList.add(new ModelBox(bone7, 0, 0, -22.0F, -0.75F, -8.75F, 3, 18, 7, 0.0F, false));
 
-        ModelRenderer bone8 = new ModelRenderer(this);
+        bone8 = new ModelRenderer(this);
         bone8.setRotationPoint(0.0F, 0.0F, 1.75F);
-        setRotationAngle(bone8, -0.0873F, 0.0F, 0.0F);
         bone7.addChild(bone8);
+        setRotationAngle(bone8, -0.0873F, 0.0F, 0.0F);
         bone8.cubeList.add(new ModelBox(bone8, 0, 0, 19.0F, -1.75F, -4.8F, 3, 19, 2, 0.0F, false));
         bone8.cubeList.add(new ModelBox(bone8, 0, 0, -22.0F, -1.75F, -4.8F, 3, 19, 2, 0.0F, false));
         bone8.cubeList.add(new ModelBox(bone8, 0, 0, -22.0F, -16.75F, -4.8F, 3, 16, 3, 0.0F, false));
         bone8.cubeList.add(new ModelBox(bone8, 0, 0, 19.0F, -16.75F, -4.8F, 3, 16, 3, 0.0F, false));
 
-        ModelRenderer bone14 = new ModelRenderer(this);
+        bone14 = new ModelRenderer(this);
         bone14.setRotationPoint(22.5F, -7.75F, -4.3F);
         bone8.addChild(bone14);
 
-        ModelRenderer bone15 = new ModelRenderer(this);
+
+        bone15 = new ModelRenderer(this);
         bone15.setRotationPoint(0.0F, 4.0F, 0.0F);
-        setRotationAngle(bone15, 0.0F, 0.0F, 0.8727F);
         bone14.addChild(bone15);
+        setRotationAngle(bone15, 0.0F, 0.0F, 0.8727F);
         bone15.cubeList.add(new ModelBox(bone15, 242, 37, -0.5F, -4.0F, 0.5F, 1, 5, 1, 0.0F, false));
 
-        ModelRenderer bone16 = new ModelRenderer(this);
+        bone16 = new ModelRenderer(this);
         bone16.setRotationPoint(0.0F, -4.0F, 0.0F);
-        setRotationAngle(bone16, 0.0F, 0.0F, 0.8727F);
         bone14.addChild(bone16);
+        setRotationAngle(bone16, 0.0F, 0.0F, 0.8727F);
         bone16.cubeList.add(new ModelBox(bone16, 242, 37, -0.5F, -4.0F, 0.3F, 1, 5, 1, 0.0F, false));
 
-        ModelRenderer bone17 = new ModelRenderer(this);
+        bone17 = new ModelRenderer(this);
         bone17.setRotationPoint(-22.5F, -3.75F, -4.3F);
-        setRotationAngle(bone17, 0.0F, 0.0F, -0.8727F);
         bone8.addChild(bone17);
+        setRotationAngle(bone17, 0.0F, 0.0F, -0.8727F);
         bone17.cubeList.add(new ModelBox(bone17, 242, 37, -0.5F, -4.0F, 0.5F, 1, 7, 1, 0.0F, false));
 
-        ModelRenderer bone18 = new ModelRenderer(this);
+        bone18 = new ModelRenderer(this);
         bone18.setRotationPoint(-22.5F, -11.75F, -3.3F);
-        setRotationAngle(bone18, 0.0F, 0.0F, -0.8727F);
         bone8.addChild(bone18);
+        setRotationAngle(bone18, 0.0F, 0.0F, -0.8727F);
         bone18.cubeList.add(new ModelBox(bone18, 242, 37, -0.5F, -4.0F, -0.7F, 1, 7, 1, 0.0F, false));
 
-        ModelRenderer bone9 = new ModelRenderer(this);
+        bone9 = new ModelRenderer(this);
         bone9.setRotationPoint(-0.4167F, -25.0F, -29.0F);
-        setRotationAngle(bone9, -0.1745F, 0.0F, 0.0F);
         bone42.addChild(bone9);
+        setRotationAngle(bone9, -0.1745F, 0.0F, 0.0F);
         bone9.cubeList.add(new ModelBox(bone9, 144, 133, 11.4167F, -8.0F, -1.0F, 4, 17, 3, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 144, 133, 5.4167F, -8.0F, -1.0F, 6, 17, 3, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 144, 133, 0.4167F, -8.0F, -1.0F, 5, 17, 3, 0.0F, false));
@@ -442,10 +466,10 @@ public class ModelMCGMultiVan extends ModelVehicle {
         bone9.cubeList.add(new ModelBox(bone9, 144, 133, -11.5833F, -8.0F, -1.0F, 6, 17, 3, 0.0F, false));
         bone9.cubeList.add(new ModelBox(bone9, 144, 133, -15.5833F, -8.0F, -1.0F, 4, 17, 3, 0.0F, false));
 
-        ModelRenderer bone10 = new ModelRenderer(this);
+        bone10 = new ModelRenderer(this);
         bone10.setRotationPoint(9.0F, -15.2F, -49.6F);
-        setRotationAngle(bone10, 0.7854F, 0.0F, 0.0F);
         bone42.addChild(bone10);
+        setRotationAngle(bone10, 0.7854F, 0.0F, 0.0F);
         bone10.cubeList.add(new ModelBox(bone10, 321, 40, -4.0F, -1.0F, -0.5F, 2, 4, 1, 0.0F, false));
         bone10.cubeList.add(new ModelBox(bone10, 321, 40, -1.0F, -1.0F, -0.5F, 2, 4, 1, 0.0F, false));
         bone10.cubeList.add(new ModelBox(bone10, 321, 40, 2.0F, -1.0F, -0.5F, 2, 4, 1, 0.0F, false));
@@ -454,10 +478,10 @@ public class ModelMCGMultiVan extends ModelVehicle {
         bone10.cubeList.add(new ModelBox(bone10, 321, 40, -9.0F, -2.0F, 7.5F, 1, 1, 1, 0.0F, false));
         bone10.cubeList.add(new ModelBox(bone10, 321, 40, -9.0F, 0.0F, 7.5F, 1, 1, 1, 0.0F, false));
 
-        ModelRenderer bone11 = new ModelRenderer(this);
+        bone11 = new ModelRenderer(this);
         bone11.setRotationPoint(9.5F, -25.7F, -47.6F);
-        setRotationAngle(bone11, 0.2618F, 0.0F, 0.0F);
         bone42.addChild(bone11);
+        setRotationAngle(bone11, 0.2618F, 0.0F, 0.0F);
         bone11.cubeList.add(new ModelBox(bone11, 321, 40, -0.5F, -3.5F, 0.5F, 1, 7, 1, 0.0F, false));
         bone11.cubeList.add(new ModelBox(bone11, 321, 40, -0.5F, -0.5F, -0.5F, 1, 1, 1, 0.0F, false));
         bone11.cubeList.add(new ModelBox(bone11, 321, 40, -1.5F, -1.5F, -2.5F, 3, 3, 2, 0.0F, false));
@@ -476,29 +500,92 @@ public class ModelMCGMultiVan extends ModelVehicle {
         bone11.cubeList.add(new ModelBox(bone11, 321, 40, -2.5F, 1.5F, 0.5F, 1, 1, 1, 0.0F, false));
         bone11.cubeList.add(new ModelBox(bone11, 321, 40, 1.5F, 1.5F, 0.5F, 1, 1, 1, 0.0F, false));
 
-        ModelRenderer bone19 = new ModelRenderer(this);
+        bone19 = new ModelRenderer(this);
         bone19.setRotationPoint(-25.5F, -35.025F, -53.7F);
-        setRotationAngle(bone19, 0.0F, 0.1745F, 0.0F);
         bone42.addChild(bone19);
+        setRotationAngle(bone19, 0.0F, 0.1745F, 0.0F);
         bone19.cubeList.add(new ModelBox(bone19, 0, 0, -1.5F, -5.275F, -1.3F, 3, 10, 1, 0.0F, false));
         bone19.cubeList.add(new ModelBox(bone19, 234, 34, -1.5F, -5.275F, -0.3F, 3, 10, 1, 0.0F, false));
         bone19.cubeList.add(new ModelBox(bone19, 234, 178, -1.0F, 1.525F, -0.2F, 2, 2, 1, 0.0F, false));
         bone19.cubeList.add(new ModelBox(bone19, 234, 178, -1.0F, -4.975F, -0.2F, 2, 6, 1, 0.0F, false));
 
-        ModelRenderer bone20 = new ModelRenderer(this);
+        bone20 = new ModelRenderer(this);
         bone20.setRotationPoint(25.5F, -35.025F, -53.7F);
-        setRotationAngle(bone20, 0.0F, -0.1745F, 0.0F);
         bone42.addChild(bone20);
+        setRotationAngle(bone20, 0.0F, -0.1745F, 0.0F);
         bone20.cubeList.add(new ModelBox(bone20, 234, 34, -1.5F, -5.275F, -0.3F, 3, 10, 1, 0.0F, false));
         bone20.cubeList.add(new ModelBox(bone20, 0, 0, -1.5F, -5.275F, -1.3F, 3, 10, 1, 0.0F, false));
         bone20.cubeList.add(new ModelBox(bone20, 234, 178, -1.0F, 1.525F, -0.2F, 2, 2, 1, 0.0F, false));
         bone20.cubeList.add(new ModelBox(bone20, 234, 178, -1.0F, -4.975F, -0.2F, 2, 6, 1, 0.0F, false));
+
+        bone = new ModelRenderer(this);
+        bone.setRotationPoint(0.0F, 24.0F, 0.0F);
+
+
+        head_lights = new ModelRenderer(this);
+        head_lights.setRotationPoint(0.0F, 24.0F, 0.0F);
+        head_lights.cubeList.add(new ModelBox(head_lights, 372, 206, 13.0F, -15.0F, -57.0F, 4, 4, 2, 0.0F, false));
+        head_lights.cubeList.add(new ModelBox(head_lights, 372, 206, -19.0F, -15.0F, -57.0F, 4, 4, 2, 0.0F, false));
+
+        head_lights_left = new ModelRenderer(this);
+        head_lights_left.setRotationPoint(0.0F, 24.0F, 0.0F);
+        head_lights_left.cubeList.add(new ModelBox(head_lights_left, 441, 249, 18.0F, -15.0F, -57.0F, 2, 4, 2, 0.0F, false));
+
+        head_lights_right = new ModelRenderer(this);
+        head_lights_right.setRotationPoint(0.0F, 24.0F, 0.0F);
+        head_lights_right.cubeList.add(new ModelBox(head_lights_right, 441, 249, -22.0F, -15.0F, -57.0F, 2, 4, 2, 0.0F, false));
+
+        plate = new ModelRenderer(this);
+        plate.setRotationPoint(0.0F, 24.0F, 0.0F);
+        plate.cubeList.add(new ModelBox(plate, 178, 144, -6.5F, -7.4F, -59.8F, 11, 4, 1, 0.0F, false));
+        plate.cubeList.add(new ModelBox(plate, 167, 142, -6.5F, -10.0F, 58.4F, 11, 4, 1, 0.0F, false));
+
+        rear_lights = new ModelRenderer(this);
+        rear_lights.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights.cubeList.add(new ModelBox(rear_lights, 499, 250, 19.5F, -20.5F, 56.2F, 2, 3, 2, 0.0F, false));
+        rear_lights.cubeList.add(new ModelBox(rear_lights, 499, 250, -23.5F, -20.5F, 56.2F, 2, 3, 2, 0.0F, false));
+
+        rear_lights_brake = new ModelRenderer(this);
+        rear_lights_brake.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights_brake.cubeList.add(new ModelBox(rear_lights_brake, 494, 245, -3.5F, -45.0F, 60.2F, 5, 1, 1, 0.0F, false));
+
+        rear_lights_right = new ModelRenderer(this);
+        rear_lights_right.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights_right.cubeList.add(new ModelBox(rear_lights_right, 443, 248, -23.5F, -17.0F, 56.2F, 2, 1, 2, 0.0F, false));
+
+        rear_lights_left = new ModelRenderer(this);
+        rear_lights_left.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights_left.cubeList.add(new ModelBox(rear_lights_left, 443, 248, 19.5F, -17.0F, 56.2F, 2, 1, 2, 0.0F, false));
+
+        rear_lights_reverse = new ModelRenderer(this);
+        rear_lights_reverse.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights_reverse.cubeList.add(new ModelBox(rear_lights_reverse, 409, 214, -23.5F, -15.5F, 56.2F, 2, 1, 2, 0.0F, false));
+        rear_lights_reverse.cubeList.add(new ModelBox(rear_lights_reverse, 409, 214, 19.5F, -15.5F, 56.2F, 2, 1, 2, 0.0F, false));
+
+        interier = new ModelRenderer(this);
+        interier.setRotationPoint(0.0F, 24.0F, 0.0F);
+        interier.cubeList.add(new ModelBox(interier, 376, 137, -3.0F, -25.8F, -40.0F, 5, 5, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 375, 251, 4.0F, -21.8F, -40.0F, 2, 1, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 188, 222, 3.0F, -23.8F, -40.0F, 2, 1, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 102, 151, 13.0F, -25.2F, -40.0F, 3, 1, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 178, 224, 13.0F, -23.2F, -40.0F, 3, 1, 1, 0.0F, false));
+        interier.cubeList.add(new ModelBox(interier, 228, 209, 3.0F, -25.2F, -40.0F, 2, 1, 1, 0.0F, false));
+
+        registerLightEntries(
+                new LightControllerEntry<>(1.0F, head_lights, rear_lights),
+                new LightControllerEntry<>(0.6F, interier, plate),
+                new BrakeLights<>(rear_lights_brake),
+                new ReverseLights<>(rear_lights_reverse),
+                new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),
+                new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.LEFT, head_lights_left, rear_lights_left)
+        );
     }
 
     @Override
-    public void renderModel() {
-        bone21.render(1f);
-        bone41.render(1f);
-        bone42.render(1f);
+    protected void renderModel() {
+        bone21.render(1.0F);
+        bone41.render(1.0F);
+        bone42.render(1.0F);
+        bone.render(1.0F);
     }
 }

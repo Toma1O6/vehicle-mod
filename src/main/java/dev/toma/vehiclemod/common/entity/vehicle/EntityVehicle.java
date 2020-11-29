@@ -345,8 +345,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                 double x = e.motionX - motionX;
                 double z = e.motionZ - motionZ;
                 double xz = Math.sqrt(x * x + z * z);
-                float vehicleDamage = (float) (xz * 75F);
-                float userDamage = (float) (xz * 35F);
+                float vehicleDamage = (float) (xz * 150F);
+                float userDamage = (float) (xz * 60F);
                 e.attackEntityFrom(DamageSource.FALL, vehicleDamage);
                 for (Entity entity : e.getPassengers()) {
                     if (entity.getIsInvulnerable())
