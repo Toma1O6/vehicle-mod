@@ -435,6 +435,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
     }
 
+    public void attemptStart() {
+        
+    }
+
     @Override
     public int[] getCombinations() {
         return lockManager.getCombinations();

@@ -71,6 +71,12 @@ public class ModelBeamerS120 extends ModelVehicle<VehicleBeamerS120> {
 	private final ModelRenderer bone54;
 	private final ModelRenderer head_lights_right;
 	private final ModelRenderer bone56;
+	private final ModelRenderer plate;
+	private final ModelRenderer bone77;
+	private final ModelRenderer bone78;
+	private final ModelRenderer bone79;
+	private final ModelRenderer bone80;
+	private final ModelRenderer interior;
 	private final ModelRenderer rear_lights;
 	private final ModelRenderer bone58;
 	private final ModelRenderer bone59;
@@ -94,12 +100,6 @@ public class ModelBeamerS120 extends ModelVehicle<VehicleBeamerS120> {
 	private final ModelRenderer bone74;
 	private final ModelRenderer bone75;
 	private final ModelRenderer bone76;
-	private final ModelRenderer rear_lights_plate;
-	private final ModelRenderer bone77;
-	private final ModelRenderer bone78;
-	private final ModelRenderer bone79;
-	private final ModelRenderer bone80;
-	private final ModelRenderer interior;
 
 	public ModelBeamerS120() {
 		textureWidth = 512;
@@ -189,10 +189,6 @@ public class ModelBeamerS120 extends ModelVehicle<VehicleBeamerS120> {
 		bone4.addChild(bone20);
 		bone20.cubeList.add(new ModelBox(bone20, 2, 51, -25.0F, -25.0F, -11.5F, 20, 10, 6, 0.0F, false));
 		bone20.cubeList.add(new ModelBox(bone20, 2, 51, 6.0F, -25.0F, -11.5F, 19, 10, 6, 0.0F, false));
-		bone20.cubeList.add(new ModelBox(bone20, 429, 174, 18.0F, -22.7397F, -12.0927F, 3, 4, 1, 0.0F, false));
-		bone20.cubeList.add(new ModelBox(bone20, 429, 174, 15.0F, -22.7397F, -12.0927F, 3, 4, 1, 0.0F, false));
-		bone20.cubeList.add(new ModelBox(bone20, 406, 230, 13.0F, -22.7397F, -12.0927F, 2, 4, 1, 0.0F, false));
-		bone20.cubeList.add(new ModelBox(bone20, 406, 230, -15.0F, -22.7397F, -12.0927F, 2, 4, 1, 0.0F, false));
 		bone20.cubeList.add(new ModelBox(bone20, 201, 36, -1.0F, -28.3F, -12.7F, 27, 4, 7, 0.0F, false));
 		bone20.cubeList.add(new ModelBox(bone20, 227, 35, -9.0F, -28.3F, -12.7F, 10, 4, 7, 0.0F, false));
 		bone20.cubeList.add(new ModelBox(bone20, 225, 40, -14.0F, -28.3F, -12.7F, 2, 4, 7, 0.0F, false));
@@ -206,9 +202,6 @@ public class ModelBeamerS120 extends ModelVehicle<VehicleBeamerS120> {
 		bone25.setRotationPoint(-17.5F, -24.0F, -13.0F);
 		setRotationAngle(bone25, 0.0F, 0.0F, 3.1416F);
 		bone20.addChild(bone25);
-		bone25.cubeList.add(new ModelBox(bone25, 429, 174, 0.5F, -5.2603F, 0.9073F, 3, 4, 1, 0.0F, false));
-		bone25.cubeList.add(new ModelBox(bone25, 441, 252, 3.5F, -5.2603F, 0.9073F, 2, 4, 1, 0.0F, false));
-		bone25.cubeList.add(new ModelBox(bone25, 441, 249, -40.5F, -5.2603F, 0.9073F, 2, 4, 1, 0.0F, false));
 
 		bone27 = new ModelRenderer(this);
 		bone27.setRotationPoint(-19.5F, 10.5F, 15.5F);
@@ -643,125 +636,14 @@ public class ModelBeamerS120 extends ModelVehicle<VehicleBeamerS120> {
 		head_lights_right.addChild(bone56);
 		bone56.cubeList.add(new ModelBox(bone56, 442, 248, -22.0F, 1.0F, -4.0F, 1, 1, 3, 0.0F, false));
 
-		rear_lights = new ModelRenderer(this);
-		rear_lights.setRotationPoint(-11.0F, -5.0F, -40.0F);
-		setRotationAngle(rear_lights, -0.7854F, 0.0F, 0.0F);
-
-		bone58 = new ModelRenderer(this);
-		bone58.setRotationPoint(-10.0F, -52.0F, 46.5F);
-		setRotationAngle(bone58, -1.4835F, 0.0F, 0.0F);
-		rear_lights.addChild(bone58);
-
-		bone59 = new ModelRenderer(this);
-		bone59.setRotationPoint(0.0F, 6.0F, -22.0F);
-		setRotationAngle(bone59, -0.8727F, 0.0F, 0.0F);
-		bone58.addChild(bone59);
-
-		bone60 = new ModelRenderer(this);
-		bone60.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotationAngle(bone60, 0.1571F, 0.0F, 0.0F);
-		bone59.addChild(bone60);
-
-		bone61 = new ModelRenderer(this);
-		bone61.setRotationPoint(-17.5F, -24.0F, -13.0F);
-		setRotationAngle(bone61, 0.0F, 0.0F, 3.1416F);
-		bone60.addChild(bone61);
-
-		rear_lights_brake = new ModelRenderer(this);
-		rear_lights_brake.setRotationPoint(-11.0F, -5.0F, -40.0F);
-		setRotationAngle(rear_lights_brake, -0.7854F, 0.0F, 0.0F);
-
-		bone57 = new ModelRenderer(this);
-		bone57.setRotationPoint(-10.0F, -52.0F, 46.5F);
-		setRotationAngle(bone57, -1.4835F, 0.0F, 0.0F);
-		rear_lights_brake.addChild(bone57);
-
-		bone62 = new ModelRenderer(this);
-		bone62.setRotationPoint(0.0F, 6.0F, -22.0F);
-		setRotationAngle(bone62, -0.8727F, 0.0F, 0.0F);
-		bone57.addChild(bone62);
-
-		bone63 = new ModelRenderer(this);
-		bone63.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotationAngle(bone63, 0.1571F, 0.0F, 0.0F);
-		bone62.addChild(bone63);
-		bone63.cubeList.add(new ModelBox(bone63, 429, 174, -18.0F, -22.7397F, -12.0927F, 3, 4, 1, 0.0F, false));
-
-		rear_lights_reverse = new ModelRenderer(this);
-		rear_lights_reverse.setRotationPoint(-11.0F, -5.0F, -40.0F);
-		setRotationAngle(rear_lights_reverse, -0.7854F, 0.0F, 0.0F);
-
-		bone65 = new ModelRenderer(this);
-		bone65.setRotationPoint(-10.0F, -52.0F, 46.5F);
-		setRotationAngle(bone65, -1.4835F, 0.0F, 0.0F);
-		rear_lights_reverse.addChild(bone65);
-
-		bone66 = new ModelRenderer(this);
-		bone66.setRotationPoint(0.0F, 6.0F, -22.0F);
-		setRotationAngle(bone66, -0.8727F, 0.0F, 0.0F);
-		bone65.addChild(bone66);
-
-		bone67 = new ModelRenderer(this);
-		bone67.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotationAngle(bone67, 0.1571F, 0.0F, 0.0F);
-		bone66.addChild(bone67);
-
-		rear_lights_left = new ModelRenderer(this);
-		rear_lights_left.setRotationPoint(-11.0F, -5.0F, -40.0F);
-		setRotationAngle(rear_lights_left, -0.7854F, 0.0F, 0.0F);
-
-		bone69 = new ModelRenderer(this);
-		bone69.setRotationPoint(-10.0F, -52.0F, 46.5F);
-		setRotationAngle(bone69, -1.4835F, 0.0F, 0.0F);
-		rear_lights_left.addChild(bone69);
-
-		bone70 = new ModelRenderer(this);
-		bone70.setRotationPoint(0.0F, 6.0F, -22.0F);
-		setRotationAngle(bone70, -0.8727F, 0.0F, 0.0F);
-		bone69.addChild(bone70);
-
-		bone71 = new ModelRenderer(this);
-		bone71.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotationAngle(bone71, 0.1571F, 0.0F, 0.0F);
-		bone70.addChild(bone71);
-
-		bone72 = new ModelRenderer(this);
-		bone72.setRotationPoint(-17.5F, -24.0F, -13.0F);
-		setRotationAngle(bone72, 0.0F, 0.0F, 3.1416F);
-		bone71.addChild(bone72);
-
-		rear_lights_right = new ModelRenderer(this);
-		rear_lights_right.setRotationPoint(-11.0F, -5.0F, -40.0F);
-		setRotationAngle(rear_lights_right, -0.7854F, 0.0F, 0.0F);
-
-		bone73 = new ModelRenderer(this);
-		bone73.setRotationPoint(-10.0F, -52.0F, 46.5F);
-		setRotationAngle(bone73, -1.4835F, 0.0F, 0.0F);
-		rear_lights_right.addChild(bone73);
-
-		bone74 = new ModelRenderer(this);
-		bone74.setRotationPoint(0.0F, 6.0F, -22.0F);
-		setRotationAngle(bone74, -0.8727F, 0.0F, 0.0F);
-		bone73.addChild(bone74);
-
-		bone75 = new ModelRenderer(this);
-		bone75.setRotationPoint(0.0F, 0.0F, 0.0F);
-		setRotationAngle(bone75, 0.1571F, 0.0F, 0.0F);
-		bone74.addChild(bone75);
-
-		bone76 = new ModelRenderer(this);
-		bone76.setRotationPoint(-17.5F, -24.0F, -13.0F);
-		setRotationAngle(bone76, 0.0F, 0.0F, 3.1416F);
-		bone75.addChild(bone76);
-
-		rear_lights_plate = new ModelRenderer(this);
-		rear_lights_plate.setRotationPoint(-11.0F, -5.0F, -40.0F);
-		setRotationAngle(rear_lights_plate, -0.7854F, 0.0F, 0.0F);
+		plate = new ModelRenderer(this);
+		plate.setRotationPoint(-11.0F, -5.0F, -40.0F);
+		setRotationAngle(plate, -0.7854F, 0.0F, 0.0F);
 
 		bone77 = new ModelRenderer(this);
 		bone77.setRotationPoint(-10.0F, -52.0F, 46.5F);
 		setRotationAngle(bone77, -1.4835F, 0.0F, 0.0F);
-		rear_lights_plate.addChild(bone77);
+		plate.addChild(bone77);
 
 		bone78 = new ModelRenderer(this);
 		bone78.setRotationPoint(0.0F, 6.0F, -22.0F);
@@ -791,9 +673,127 @@ public class ModelBeamerS120 extends ModelVehicle<VehicleBeamerS120> {
 		interior.cubeList.add(new ModelBox(interior, 352, 246, 4.0F, -5.5F, 4.3F, 2, 1, 1, 0.0F, false));
 		interior.cubeList.add(new ModelBox(interior, 220, 209, -4.0F, -5.5F, -0.7F, 6, 1, 5, 0.0F, false));
 
+		rear_lights = new ModelRenderer(this);
+		rear_lights.setRotationPoint(-11.0F, -5.0F, -40.0F);
+		setRotationAngle(rear_lights, -0.7854F, 0.0F, 0.0F);
+
+		bone58 = new ModelRenderer(this);
+		bone58.setRotationPoint(-10.0F, -52.0F, 46.5F);
+		setRotationAngle(bone58, -1.4835F, 0.0F, 0.0F);
+		rear_lights.addChild(bone58);
+
+		bone59 = new ModelRenderer(this);
+		bone59.setRotationPoint(0.0F, 6.0F, -22.0F);
+		setRotationAngle(bone59, -0.8727F, 0.0F, 0.0F);
+		bone58.addChild(bone59);
+
+		bone60 = new ModelRenderer(this);
+		bone60.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotationAngle(bone60, 0.1571F, 0.0F, 0.0F);
+		bone59.addChild(bone60);
+		bone60.cubeList.add(new ModelBox(bone60, 429, 174, 18.0F, -22.7397F, -12.0927F, 3, 4, 1, 0.0F, false));
+
+		bone61 = new ModelRenderer(this);
+		bone61.setRotationPoint(-17.5F, -24.0F, -13.0F);
+		setRotationAngle(bone61, 0.0F, 0.0F, 3.1416F);
+		bone60.addChild(bone61);
+		bone61.cubeList.add(new ModelBox(bone61, 429, 174, 0.5F, -5.2603F, 0.9073F, 3, 4, 1, 0.0F, false));
+
+		rear_lights_brake = new ModelRenderer(this);
+		rear_lights_brake.setRotationPoint(-11.0F, -5.0F, -40.0F);
+		setRotationAngle(rear_lights_brake, -0.7854F, 0.0F, 0.0F);
+
+		bone57 = new ModelRenderer(this);
+		bone57.setRotationPoint(-10.0F, -52.0F, 46.5F);
+		setRotationAngle(bone57, -1.4835F, 0.0F, 0.0F);
+		rear_lights_brake.addChild(bone57);
+
+		bone62 = new ModelRenderer(this);
+		bone62.setRotationPoint(0.0F, 6.0F, -22.0F);
+		setRotationAngle(bone62, -0.8727F, 0.0F, 0.0F);
+		bone57.addChild(bone62);
+
+		bone63 = new ModelRenderer(this);
+		bone63.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotationAngle(bone63, 0.1571F, 0.0F, 0.0F);
+		bone62.addChild(bone63);
+		bone63.cubeList.add(new ModelBox(bone63, 429, 174, 15.0F, -22.7397F, -12.0927F, 3, 4, 1, 0.0F, false));
+		bone63.cubeList.add(new ModelBox(bone63, 429, 174, -18.0F, -22.7397F, -12.0927F, 3, 4, 1, 0.0F, false));
+
+		rear_lights_reverse = new ModelRenderer(this);
+		rear_lights_reverse.setRotationPoint(-11.0F, -5.0F, -40.0F);
+		setRotationAngle(rear_lights_reverse, -0.7854F, 0.0F, 0.0F);
+
+		bone65 = new ModelRenderer(this);
+		bone65.setRotationPoint(-10.0F, -52.0F, 46.5F);
+		setRotationAngle(bone65, -1.4835F, 0.0F, 0.0F);
+		rear_lights_reverse.addChild(bone65);
+
+		bone66 = new ModelRenderer(this);
+		bone66.setRotationPoint(0.0F, 6.0F, -22.0F);
+		setRotationAngle(bone66, -0.8727F, 0.0F, 0.0F);
+		bone65.addChild(bone66);
+
+		bone67 = new ModelRenderer(this);
+		bone67.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotationAngle(bone67, 0.1571F, 0.0F, 0.0F);
+		bone66.addChild(bone67);
+		bone67.cubeList.add(new ModelBox(bone67, 406, 230, 13.0F, -22.7397F, -12.0927F, 2, 4, 1, 0.0F, false));
+		bone67.cubeList.add(new ModelBox(bone67, 406, 230, -15.0F, -22.7397F, -12.0927F, 2, 4, 1, 0.0F, false));
+
+		rear_lights_left = new ModelRenderer(this);
+		rear_lights_left.setRotationPoint(-11.0F, -5.0F, -40.0F);
+		setRotationAngle(rear_lights_left, -0.7854F, 0.0F, 0.0F);
+
+		bone69 = new ModelRenderer(this);
+		bone69.setRotationPoint(-10.0F, -52.0F, 46.5F);
+		setRotationAngle(bone69, -1.4835F, 0.0F, 0.0F);
+		rear_lights_left.addChild(bone69);
+
+		bone70 = new ModelRenderer(this);
+		bone70.setRotationPoint(0.0F, 6.0F, -22.0F);
+		setRotationAngle(bone70, -0.8727F, 0.0F, 0.0F);
+		bone69.addChild(bone70);
+
+		bone71 = new ModelRenderer(this);
+		bone71.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotationAngle(bone71, 0.1571F, 0.0F, 0.0F);
+		bone70.addChild(bone71);
+
+		bone72 = new ModelRenderer(this);
+		bone72.setRotationPoint(-17.5F, -24.0F, -13.0F);
+		setRotationAngle(bone72, 0.0F, 0.0F, 3.1416F);
+		bone71.addChild(bone72);
+		bone72.cubeList.add(new ModelBox(bone72, 441, 249, -40.5F, -5.2603F, 0.9073F, 2, 4, 1, 0.0F, false));
+
+		rear_lights_right = new ModelRenderer(this);
+		rear_lights_right.setRotationPoint(-11.0F, -5.0F, -40.0F);
+		setRotationAngle(rear_lights_right, -0.7854F, 0.0F, 0.0F);
+
+		bone73 = new ModelRenderer(this);
+		bone73.setRotationPoint(-10.0F, -52.0F, 46.5F);
+		setRotationAngle(bone73, -1.4835F, 0.0F, 0.0F);
+		rear_lights_right.addChild(bone73);
+
+		bone74 = new ModelRenderer(this);
+		bone74.setRotationPoint(0.0F, 6.0F, -22.0F);
+		setRotationAngle(bone74, -0.8727F, 0.0F, 0.0F);
+		bone73.addChild(bone74);
+
+		bone75 = new ModelRenderer(this);
+		bone75.setRotationPoint(0.0F, 0.0F, 0.0F);
+		setRotationAngle(bone75, 0.1571F, 0.0F, 0.0F);
+		bone74.addChild(bone75);
+
+		bone76 = new ModelRenderer(this);
+		bone76.setRotationPoint(-17.5F, -24.0F, -13.0F);
+		setRotationAngle(bone76, 0.0F, 0.0F, 3.1416F);
+		bone75.addChild(bone76);
+		bone76.cubeList.add(new ModelBox(bone76, 441, 252, 3.5F, -5.2603F, 0.9073F, 2, 4, 1, 0.0F, false));
+
 		registerLightEntries(
 				new LightControllerEntry<>(1.0F, head_lights, rear_lights),
-				new LightControllerEntry<>(0.6F, rear_lights_plate, interior),
+				new LightControllerEntry<>(0.6F, interior, plate),
 				new BrakeLights<>(rear_lights_brake),
 				new ReverseLights<>(rear_lights_reverse),
 				new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),
