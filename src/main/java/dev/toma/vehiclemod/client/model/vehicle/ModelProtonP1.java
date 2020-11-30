@@ -89,6 +89,7 @@ public class ModelProtonP1 extends ModelVehicle<VehicleProtonP1> {
     private final ModelRenderer rear_lights_right;
     private final ModelRenderer rear_lights_left;
     private final ModelRenderer interier;
+    private final ModelRenderer rear_lights_brake;
 
     public ModelProtonP1() {
         textureWidth = 512;
@@ -765,8 +766,8 @@ public class ModelProtonP1 extends ModelVehicle<VehicleProtonP1> {
 
         rear_lights = new ModelRenderer(this);
         rear_lights.setRotationPoint(0.0F, 24.0F, 0.0F);
-        rear_lights.cubeList.add(new ModelBox(rear_lights, 426, 184, -12.5F, -11.2F, 33.5F, 3, 2, 1, 0.0F, false));
-        rear_lights.cubeList.add(new ModelBox(rear_lights, 426, 184, 9.5F, -11.2F, 33.5F, 3, 2, 1, 0.0F, false));
+        rear_lights.cubeList.add(new ModelBox(rear_lights, 426, 184, -12.6F, -11.2F, 33.5F, 2, 2, 1, 0.0F, false));
+        rear_lights.cubeList.add(new ModelBox(rear_lights, 426, 184, 10.6F, -11.2F, 33.5F, 2, 2, 1, 0.0F, false));
 
         rear_lights_reverse = new ModelRenderer(this);
         rear_lights_reverse.setRotationPoint(0.0F, 24.0F, 0.0F);
@@ -791,11 +792,16 @@ public class ModelProtonP1 extends ModelVehicle<VehicleProtonP1> {
         interier.cubeList.add(new ModelBox(interier, 173, 224, 10.5F, -13.1F, -6.9F, 1, 1, 1, 0.0F, false));
         interier.cubeList.add(new ModelBox(interier, 445, 237, 10.5F, -11.8F, -6.9F, 1, 1, 1, 0.0F, false));
 
+        rear_lights_brake = new ModelRenderer(this);
+        rear_lights_brake.setRotationPoint(0.0F, 24.0F, 0.0F);
+        rear_lights_brake.cubeList.add(new ModelBox(rear_lights_brake, 426, 184, -10.4F, -11.2F, 33.5F, 1, 2, 1, 0.0F, false));
+        rear_lights_brake.cubeList.add(new ModelBox(rear_lights_brake, 426, 184, 9.4F, -11.2F, 33.5F, 1, 2, 1, 0.0F, false));
+
         registerLightEntries(
-                new LightControllerEntry<>(1.0F, head_lights),
+                new LightControllerEntry<>(1.0F, head_lights, rear_lights),
                 new LightControllerEntry<>(0.8F, interier),
                 new LightControllerEntry<>(0.6F, plate),
-                new SimpleBrakeLights<>(rear_lights),
+                new BrakeLights<>(rear_lights_brake),
                 new ReverseLights<>(rear_lights_reverse),
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.LEFT, head_lights_left, rear_lights_left)
@@ -803,7 +809,7 @@ public class ModelProtonP1 extends ModelVehicle<VehicleProtonP1> {
     }
 
     @Override
-    public void renderModel() {
+    protected void renderModel() {
         bb_main.render(1.0F);
         bone2.render(1.0F);
         bone3.render(1.0F);
