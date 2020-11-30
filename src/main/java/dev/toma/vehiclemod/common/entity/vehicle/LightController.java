@@ -10,7 +10,7 @@ public class LightController implements INBTSerializable<NBTTagCompound> {
     private TurnLightStatus turnLightStatus = TurnLightStatus.OFF;
 
     public boolean areLightsOn(EntityVehicle vehicle) {
-        return vehicle.fuel > 0.0F && lights;
+        return lights;
     }
 
     public boolean isReversing(EntityVehicle vehicle) {

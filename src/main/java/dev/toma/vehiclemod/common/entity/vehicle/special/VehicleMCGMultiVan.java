@@ -36,6 +36,7 @@ public class VehicleMCGMultiVan extends EntityVehicleSpecial {
                 .rls(VMSounds.MCGMV_GAS)
                 .str(VMSounds.MCGMV_START)
                 .honk(VMSounds.HORN_15)
+                .starting(VMSounds.CAR_START_E)
                 .build();
     }
 

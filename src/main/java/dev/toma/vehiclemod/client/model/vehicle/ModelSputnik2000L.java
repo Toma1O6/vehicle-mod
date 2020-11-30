@@ -593,7 +593,7 @@ public class ModelSputnik2000L extends ModelVehicle<VehicleSputnik2000L> {
 
         registerLightEntries(
                 new LightControllerEntry<>(1.0F, head_lights, rear_lights),
-                new LightControllerEntry<>(0.6F, plate, interier),
+                new LightControllerEntry<>(0.8F, plate, interier),
                 new BrakeLights<>(rear_lights_brake),
                 new ReverseLights<>(rear_lights_reverse),
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right_a, head_lights_right_b, rear_lights_right),
@@ -608,5 +608,6 @@ public class ModelSputnik2000L extends ModelVehicle<VehicleSputnik2000L> {
         bone42.render(1.0F);
         bone.render(1.0F);
         bone10.render(1.0F);
+        bb_main.render(1.0F);
     }
 }

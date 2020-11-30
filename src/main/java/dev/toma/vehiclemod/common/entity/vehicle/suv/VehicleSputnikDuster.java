@@ -36,6 +36,7 @@ public class VehicleSputnikDuster extends EntityVehicleSUV {
                 .rls(VMSounds.SPUTNIK_DUSTER_GAS)
                 .str(VMSounds.SPUTNIK_DUSTER_START)
                 .honk(VMSounds.HORN_8)
+                .starting(VMSounds.CAR_START_D)
                 .build();
     }
 

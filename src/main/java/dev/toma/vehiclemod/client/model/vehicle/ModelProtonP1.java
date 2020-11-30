@@ -793,7 +793,7 @@ public class ModelProtonP1 extends ModelVehicle<VehicleProtonP1> {
 
         registerLightEntries(
                 new LightControllerEntry<>(1.0F, head_lights),
-                new LightControllerEntry<>(0.5F, interier, plate),
+                new LightControllerEntry<>(0.8F, interier, plate),
                 new SimpleBrakeLights<>(rear_lights),
                 new ReverseLights<>(rear_lights_reverse),
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),

@@ -84,4 +84,13 @@ public class VMSounds {
     public static final SoundEvent HORN_13 = null;
     public static final SoundEvent HORN_15 = null;
     public static final SoundEvent HORN_29S = null;
+    public static final SoundEvent CAR_START_A = null;
+    public static final SoundEvent CAR_START_B = null;
+    public static final SoundEvent CAR_START_C = null;
+    public static final SoundEvent CAR_START_D = null;
+    public static final SoundEvent CAR_START_E = null;
+    public static final SoundEvent CAR_START_F = null;
+    public static final SoundEvent CAR_START_G = null;
+    public static final SoundEvent INDICATOR_ON = null;
+    public static final SoundEvent INDICATOR_OFF = null;
 }

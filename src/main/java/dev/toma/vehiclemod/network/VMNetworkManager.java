@@ -12,7 +12,7 @@ public class VMNetworkManager {
 
 	private static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(VehicleMod.MODID);
 	
-	private static int id = -1;
+	private static int id = 0;
 	
 	public static SimpleNetworkWrapper instance() {
 		return INSTANCE;
@@ -36,6 +36,7 @@ public class VMNetworkManager {
 		registerServerPacket(SPacketHonk.Handler.class, SPacketHonk.class);
 		registerServerPacket(SPacketFuelMakerAction.Handler.class, SPacketFuelMakerAction.class);
 		registerServerPacket(SPacketChangeLightStatus.Handler.class, SPacketChangeLightStatus.class);
+		registerServerPacket(SPacketVehicleAction.Handler.class, SPacketVehicleAction.class);
 	}
 	
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerClientPacket(Class<? extends IMessageHandler<REQ, REPLY>> handler, Class<REQ> packet) {

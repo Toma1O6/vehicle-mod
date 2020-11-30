@@ -8,6 +8,7 @@ import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.SPacketChangeLightStatus;
 import dev.toma.vehiclemod.network.packets.SPacketHonk;
 import dev.toma.vehiclemod.network.packets.SPacketSiren;
+import dev.toma.vehiclemod.network.packets.SPacketVehicleAction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
@@ -30,6 +31,8 @@ public class VMKeybinds {
     public static KeyBinding INDICATOR_RIGHT;
     public static KeyBinding INDICATOR_LEFT;
     public static KeyBinding INDICATOR_WARNING;
+    public static KeyBinding ECO_MODE;
+    public static KeyBinding START;
 
     public static void init() {
         CAR_SIREN = new KeyBinding("key.vehiclemod.car_siren", Keyboard.KEY_G, CATEGORY);
@@ -38,12 +41,16 @@ public class VMKeybinds {
         INDICATOR_RIGHT = new KeyBinding("key.vehiclemod.indicator_right", Keyboard.KEY_V, CATEGORY);
         INDICATOR_LEFT = new KeyBinding("key.vehiclemod.indicator_left", Keyboard.KEY_X, CATEGORY);
         INDICATOR_WARNING = new KeyBinding("key.vehiclemod.indicator_warning", Keyboard.KEY_C, CATEGORY);
+        ECO_MODE = new KeyBinding("key.vehiclemod.eco_mode", Keyboard.KEY_K, CATEGORY);
+        START = new KeyBinding("key.vehiclemod.start", Keyboard.KEY_R, CATEGORY);
         ClientRegistry.registerKeyBinding(CAR_SIREN);
         ClientRegistry.registerKeyBinding(CAR_HORN);
         ClientRegistry.registerKeyBinding(CAR_LIGHTS);
         ClientRegistry.registerKeyBinding(INDICATOR_RIGHT);
         ClientRegistry.registerKeyBinding(INDICATOR_LEFT);
         ClientRegistry.registerKeyBinding(INDICATOR_WARNING);
+        ClientRegistry.registerKeyBinding(ECO_MODE);
+        ClientRegistry.registerKeyBinding(START);
     }
 
     @SubscribeEvent
@@ -78,6 +85,20 @@ public class VMKeybinds {
             if(entity instanceof EntityVehicle && player == entity.getControllingPassenger()) {
                 EntityVehicle vehicle = (EntityVehicle) entity;
                 VMNetworkManager.instance().sendToServer(SPacketChangeLightStatus.turnStatus(vehicle, LightController.TurnLightStatus.WARNING));
+            }
+        } else if(ECO_MODE.isPressed()) {
+            Entity entity = player.getRidingEntity();
+            if(entity instanceof EntityVehicle && player == entity.getControllingPassenger()) {
+                EntityVehicle vehicle = (EntityVehicle) entity;
+                VMNetworkManager.instance().sendToServer(SPacketVehicleAction.eco(!vehicle.isEcoMode()));
+            }
+        } else if(START.isPressed()) {
+            Entity entity = player.getRidingEntity();
+            if(entity instanceof EntityVehicle && player == entity.getControllingPassenger()) {
+                EntityVehicle vehicle = (EntityVehicle) entity;
+                if(!vehicle.isStarted() && vehicle.getStartCooldown() == 0) {
+                    VMNetworkManager.instance().sendToServer(SPacketVehicleAction.start());
+                }
             }
         }
     }

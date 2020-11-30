@@ -293,7 +293,16 @@ public class Registries {
                     registerSound("horn_12"),
                     registerSound("horn_13"),
                     registerSound("horn_15"),
-                    registerSound("horn_29s")
+                    registerSound("horn_29s"),
+                    registerSound("car_start_a"),
+                    registerSound("car_start_b"),
+                    registerSound("car_start_c"),
+                    registerSound("car_start_d"),
+                    registerSound("car_start_e"),
+                    registerSound("car_start_f"),
+                    registerSound("car_start_g"),
+                    registerSound("indicator_on"),
+                    registerSound("indicator_off")
             );
         }
 

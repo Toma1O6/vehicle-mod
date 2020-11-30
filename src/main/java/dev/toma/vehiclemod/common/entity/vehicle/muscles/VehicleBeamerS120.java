@@ -34,6 +34,7 @@ public class VehicleBeamerS120 extends EntityVehicleMuscles {
 				.rls(VMSounds.BEAMER_GAS)
 				.str(VMSounds.BEAMER_START)
 				.honk(VMSounds.HORN_3)
+				.starting(VMSounds.CAR_START_D)
 				.build();
 	}
 

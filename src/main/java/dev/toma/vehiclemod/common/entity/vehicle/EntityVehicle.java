@@ -18,14 +18,17 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.play.server.SPacketSoundEffect;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
@@ -50,6 +53,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public EnumVehicleState prevState;
     public final LockManager lockManager;
     public final LightController lightController;
+    public boolean ecoMode;
     protected VehicleContainer inventory = this.createInvetory();
     protected VehicleSoundPack soundPack;
     protected VehicleUpgrades upgrades;
@@ -57,6 +61,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     protected VehicleTexture texture;
     private double distanceTraveled = 0;
     private boolean isStarted = false;
+    private int startCooldown;
     @SideOnly(Side.CLIENT)
     public CarSound currentSound;
     @SideOnly(Side.CLIENT)
@@ -115,22 +120,19 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     private void updateVehicle() {
-        if (isFunctional()) {
-            updateMotion();
-        }
-        if (!this.isBeingRidden() && (!noAccelerationInput() || !noTurningInput() || !hasFuel() || !isFunctional())) {
+        updateMotion();
+        if (!this.isBeingRidden() && (!noAccelerationInput() || !noTurningInput() || !hasFuel() || !isStarted())) {
             inputForward = false;
             inputBack = false;
             inputRight = false;
             inputLeft = false;
         }
+        if (startCooldown > 0 && --startCooldown == 0) {
+            this.attemptStart();
+        }
 
         handleEntityCollisions();
         checkState();
-
-        if (!world.isRemote) {
-            VMNetworkManager.instance().sendToAllAround(new CPacketVehicleData(this), new TargetPoint(dimension, posX, posY, posZ, 256));
-        }
 
         spawnParticles();
         move(MoverType.SELF, motionX, motionY, motionZ);
@@ -156,17 +158,23 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         if (inputForward && !inputBack && (hasFuel() || currentSpeed < 0)) {
             float mod = Math.max(0.04F, Math.abs(1.0F - currentSpeed / stats.maxSpeed));
             Entity controller = this.getControllingPassenger();
-            if(nitroHandler.canUseNitro(controller)) {
+            if (nitroHandler.canUseNitro(controller)) {
                 nitroHandler.update(controller, true);
                 mod += upgrades.getNitroPower();
             } else nitroHandler.update(controller, false);
             float acceleration = mod * stats.acceleration * accModifier;
+            float maxSpeed = stats.maxSpeed;
+            if (ecoMode) {
+                maxSpeed *= 0.75F;
+                acceleration *= 0.4F;
+            }
             burnFuel();
-            currentSpeed = currentSpeed < stats.maxSpeed ? currentSpeed + acceleration : stats.maxSpeed;
+            currentSpeed = currentSpeed < maxSpeed ? Math.min(maxSpeed, currentSpeed + acceleration) : stats.maxSpeed;
         }
         if (!inputForward && inputBack && (hasFuel() || currentSpeed > 0)) {
             burnFuel();
-            currentSpeed = currentSpeed > 0 ? currentSpeed - stats.brakeSpeed : currentSpeed > (-stats.maxSpeed * 0.3f) ? currentSpeed - (stats.acceleration * accModifier) : -stats.maxSpeed * 0.3f;
+            float speed = world.isRainingAt(this.getPosition()) ? stats.brakeSpeed * 0.6F : stats.brakeSpeed;
+            currentSpeed = currentSpeed > 0 ? currentSpeed - speed : currentSpeed > (-stats.maxSpeed * 0.3f) ? currentSpeed - (stats.acceleration * accModifier) : -stats.maxSpeed * 0.3f;
         }
 
         if (inputRight && !inputLeft) {
@@ -212,7 +220,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             motionY = -0.15d;
         }
 
-        if (isInLava() && isFunctional()) {
+        if (isInLava()) {
             health -= 10;
         }
         if (!world.isRemote && health < 0) {
@@ -227,7 +235,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     public void updateInput(boolean forward, boolean back, boolean right, boolean left, EntityPlayer player) {
-        if (this.getControllingPassenger() == player) {
+        if (this.getControllingPassenger() == player && isStarted) {
             this.rotationYaw = rotationYaw < 0f ? rotationYaw + 360f : rotationYaw > 360f ? rotationYaw - 360f : rotationYaw;
             this.inputForward = forward;
             this.inputBack = back;
@@ -280,10 +288,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         this.health = this.health + amount > this.getActualStats().maxHealth ? this.getActualStats().maxHealth : this.health + amount;
     }
 
-    public boolean isFunctional() {
-        return health > 0;
-    }
-
     public void setFuel() {
         fuel = 5.0F;
     }
@@ -307,7 +311,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                 world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, true, posX + engineVec.x, posY + engineVec.y, posZ + engineVec.z, 0d, 0.1d, 0d);
             }
 
-            if (hasFuel() && !this.getPassengers().isEmpty()) {
+            if (hasFuel() && isStarted) {
                 int i = 1;
                 while (i < this.getPartVecs().length) {
                     Vec3d exhaustVec = (new Vec3d(getPartVecs()[i].x, getPartVecs()[i].y + 0.25d, getPartVecs()[i].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
@@ -402,7 +406,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     private void burnFuel() {
-        this.fuel = Math.max(0.0F, this.fuel - this.getActualStats().fuelConsumption);
+        float base = this.getActualStats().fuelConsumption;
+        float toBurn = ecoMode ? base * 0.5F : base;
+        this.fuel = Math.max(0.0F, this.fuel - toBurn);
     }
 
     private boolean isStandingStill() {
@@ -430,13 +436,43 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     public void sync() {
-        if(!world.isRemote) {
+        if (!world.isRemote) {
             VMNetworkManager.instance().sendToAllTracking(new CPacketUpdateEntity(this), this);
         }
     }
 
-    public void attemptStart() {
-        
+    private void attemptStart() {
+        if (!world.isRemote && this.hasFuel() && rand.nextFloat() <= MathHelper.clamp(health / getActualStats().maxHealth, 0.05F, 0.95F)) {
+            isStarted = true;
+            WorldServer server = (WorldServer) world;
+            for (EntityPlayerMP playerMP : server.getPlayers(EntityPlayerMP.class, p -> p.dimension == dimension)) {
+                playerMP.connection.sendPacket(new SPacketSoundEffect(soundPack.start(), SoundCategory.MASTER, posX, posY, posZ, 1.0F, 1.0F));
+            }
+            sync();
+        }
+    }
+
+    public void initiateStart() {
+        if (!isStarted && startCooldown == 0) {
+            this.startCooldown = 30;
+            world.playSound(null, posX, posY, posZ, this.soundPack.starting(), SoundCategory.MASTER, 1.0F, 1.0F);
+        }
+    }
+
+    public int getStartCooldown() {
+        return startCooldown;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public boolean isEcoMode() {
+        return ecoMode;
+    }
+
+    public void setEcoMode(boolean ecoMode) {
+        this.ecoMode = ecoMode;
     }
 
     @Override
@@ -513,8 +549,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         ItemStack stack = player.getHeldItem(hand);
         if (!player.isSneaking()) {
             if (!world.isRemote) {
-                if(canFitPassenger(player) && player.getRidingEntity() == null) {
-                    if(canBeRidden(player)) {
+                if (canFitPassenger(player) && player.getRidingEntity() == null) {
+                    if (canBeRidden(player)) {
                         player.startRiding(this);
                         return true;
                     } else {
@@ -547,6 +583,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         buf.writeFloat(fuel);
         buf.writeDouble(distanceTraveled);
         buf.writeInt(texture.ordinal());
+        buf.writeBoolean(ecoMode);
+        buf.writeBoolean(isStarted);
+        buf.writeInt(startCooldown);
         NBTTagCompound data = new NBTTagCompound();
         this.upgrades.writeToNBT(data);
         ByteBufUtils.writeTag(buf, data);
@@ -562,18 +601,12 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         fuel = buf.readFloat();
         distanceTraveled = buf.readDouble();
         texture = VehicleTexture.values()[buf.readInt()];
+        ecoMode = buf.readBoolean();
+        isStarted = buf.readBoolean();
+        startCooldown = buf.readInt();
         upgrades.readFromNBT(ByteBufUtils.readTag(buf));
         lockManager.deserializeNBT(ByteBufUtils.readTag(buf));
         lightController.deserializeNBT(ByteBufUtils.readTag(buf));
-    }
-
-    @Override
-    protected void addPassenger(Entity passenger) {
-        if (this.getPassengers().isEmpty() && !isStarted && hasFuel() && isFunctional()) {
-            world.playSound(null, posX, posY, posZ, this.soundPack.start(), SoundCategory.MASTER, 1.0F, 1.0F);
-            isStarted = true;
-        }
-        super.addPassenger(passenger);
     }
 
     @Override
@@ -605,6 +638,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         compound.setFloat("fuel", this.fuel);
         compound.setFloat("speed", this.currentSpeed);
         compound.setInteger("textureid", this.texture.ordinal());
+        compound.setBoolean("ecoMode", ecoMode);
+        compound.setBoolean("started", isStarted);
+        compound.setInteger("startCooldown", startCooldown);
         compound.setDouble("traveledDist", this.distanceTraveled);
         if (hasInventory()) {
             NBTTagList invNBT = new NBTTagList();
@@ -637,6 +673,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         fuel = compound.getFloat("fuel");
         currentSpeed = compound.getFloat("speed");
         texture = VehicleTexture.values()[compound.getInteger("textureid")];
+        ecoMode = compound.getBoolean("ecoMode");
+        isStarted = compound.getBoolean("started");
+        startCooldown = compound.getInteger("startCooldown");
         distanceTraveled = compound.getDouble("traveledDist");
         if (compound.hasKey("inventory")) {
             NBTTagList list = compound.getTagList("inventory", Constants.NBT.TAG_COMPOUND);

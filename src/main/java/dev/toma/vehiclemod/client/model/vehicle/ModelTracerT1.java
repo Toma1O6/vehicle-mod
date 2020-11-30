@@ -8,6 +8,7 @@ import dev.toma.vehiclemod.common.entity.vehicle.LightController;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 
 public class ModelTracerT1 extends ModelVehicle<VehicleTracerT1> {
 
@@ -681,17 +682,17 @@ public class ModelTracerT1 extends ModelVehicle<VehicleTracerT1> {
 
         registerLightEntries(
                 new LightControllerEntry<>(1.0F, head_lights, rear_lights),
-                new LightControllerEntry<>(0.6F, interier),
+                new LightControllerEntry<>(0.8F, interier),
                 new BrakeLights<>(rear_lights_brake),
                 new ReverseLights<>(rear_lights_reverse),
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.LEFT, head_lights_left, rear_lights_left)
-
         );
     }
 
     @Override
     protected void renderModel() {
+        GlStateManager.translate(22, 0, 0);
         Wheels.render(1.0F);
         Chasis.render(1.0F);
         bone.render(1.0F);

@@ -72,6 +72,7 @@ public class VehicleSputnikAmbulance extends EntityVehicleSirens {
                 .rls(VMSounds.SPUTNIK_AMBULANCE_GAS)
                 .str(VMSounds.SPUTNIK_AMBULANCE_START)
                 .honk(VMSounds.HORN_2)
+                .starting(VMSounds.CAR_START_E)
                 .build();
     }
 

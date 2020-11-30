@@ -795,7 +795,7 @@ public class ModelSputnikDuster extends ModelVehicle<VehicleSputnikDuster> {
 
         registerLightEntries(
                 new LightControllerEntry<>(1.0F, head_lights_a, rear_lights),
-                new LightControllerEntry<>(0.6F, head_lights_b, interier, plate_a, plate_b),
+                new LightControllerEntry<>(0.8F, head_lights_b, interier, plate_a, plate_b),
                 new BrakeLights<>(rear_lights_brake),
                 new ReverseLights<>(rear_lights_reverse),
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),

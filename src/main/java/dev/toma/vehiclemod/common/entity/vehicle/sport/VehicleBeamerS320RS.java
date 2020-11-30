@@ -35,6 +35,7 @@ public class VehicleBeamerS320RS extends EntityVehicleSport {
                 .rls(VMSounds.BEAMERB1_GAS)
                 .str(VMSounds.BEAMERB1_START)
                 .honk(VMSounds.HORN_13)
+                .starting(VMSounds.CAR_START_C)
                 .build();
     }
 

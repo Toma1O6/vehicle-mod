@@ -725,7 +725,7 @@ public class ModelFedorattiVulcan extends ModelVehicle<VehicleFedorattiVulcan> {
 
         registerLightEntries(
                 new LightControllerEntry<>(1.0F, head_lights, rear_lights),
-                new LightControllerEntry<>(0.6F, plate, interier),
+                new LightControllerEntry<>(0.8F, plate, interier),
                 new BrakeLights<>(rear_lights_brake),
                 new ReverseLights<>(rear_lights_reverse),
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT,  head_lights_right, rear_lights_right),

@@ -35,6 +35,7 @@ public class VehicleProtonP1 extends EntityVehicleStandart {
                 .rls(VMSounds.PROTON_P1_GAS)
                 .str(VMSounds.PROTON_P1_START)
                 .honk(VMSounds.HORN_1)
+                .starting(VMSounds.CAR_START_A)
                 .build();
     }
 

@@ -76,5 +76,14 @@
     "horn_12": {"category": "master", "sounds": [{"name": "vehiclemod:horn_12", "stream": "true"}]},
     "horn_13": {"category": "master", "sounds": [{"name": "vehiclemod:horn_13", "stream": "true"}]},
     "horn_15": {"category": "master", "sounds": [{"name": "vehiclemod:horn_15", "stream": "true"}]},
-    "horn_29s": {"category": "master", "sounds": [{"name": "vehiclemod:horn_29s", "stream": "true"}]}
+    "horn_29s": {"category": "master", "sounds": [{"name": "vehiclemod:horn_29s", "stream": "true"}]},
+    "car_start_a": {"category": "master", "sounds": [{"name": "vehiclemod:car_start_a", "stream": "true"}]},
+    "car_start_b": {"category": "master", "sounds": [{"name": "vehiclemod:car_start_b", "stream": "true"}]},
+    "car_start_c": {"category": "master", "sounds": [{"name": "vehiclemod:car_start_c", "stream": "true"}]},
+    "car_start_d": {"category": "master", "sounds": [{"name": "vehiclemod:car_start_d", "stream": "true"}]},
+    "car_start_e": {"category": "master", "sounds": [{"name": "vehiclemod:car_start_e", "stream": "true"}]},
+    "car_start_f": {"category": "master", "sounds": [{"name": "vehiclemod:car_start_f", "stream": "true"}]},
+    "car_start_g": {"category": "master", "sounds": [{"name": "vehiclemod:car_start_g", "stream": "true"}]},
+    "indicator_on": {"category": "master", "sounds": [{"name": "vehiclemod:indicator_on", "stream": "true"}]},
+    "indicator_off": {"category": "master", "sounds": [{"name": "vehiclemod:indicator_off", "stream": "true"}]}
 }

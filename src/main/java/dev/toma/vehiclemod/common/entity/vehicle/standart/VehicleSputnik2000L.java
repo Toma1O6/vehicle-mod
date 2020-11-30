@@ -35,6 +35,7 @@ public class VehicleSputnik2000L extends EntityVehicleStandart {
                 .rls(VMSounds.SPUTNIK_GAS)
                 .str(VMSounds.SPUTNIK_START)
                 .honk(VMSounds.HORN_6)
+                .starting(VMSounds.CAR_START_A)
                 .build();
     }
 

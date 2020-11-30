@@ -20,11 +20,18 @@ public abstract class ModelVehicle<V extends EntityVehicle> extends ModelBase {
 	}
 
 	public final void render(V vehicle) {
+		int i = 0;
+		int j = 0;
+		if(vehicle != null) {
+			int light = vehicle.world.getCombinedLight(vehicle.getPosition(), 0);
+			i = light % 0x10000;
+			j = light / 0x10000;
+		}
 		this.renderModel();
 		for (LightEntry<V> entry : lights) {
 			if(entry.shouldApplyLight(vehicle)) {
 				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, entry.getLightmapX(), entry.getLightmapY());
-			} else OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 0, 0);
+			} else OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, i, j);
 			for (ModelRenderer renderer : entry.getModels())
 				renderer.render(1.0F);
 		}

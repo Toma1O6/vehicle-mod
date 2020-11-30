@@ -35,6 +35,7 @@ public class VehicleBeamerPickup extends EntityVehicleSpecial {
                 .rls(VMSounds.BEAMERPICKUP_GAS)
                 .str(VMSounds.BEAMERPICKUP_START)
                 .honk(VMSounds.HORN_9)
+                .starting(VMSounds.CAR_START_E)
                 .build();
     }
 

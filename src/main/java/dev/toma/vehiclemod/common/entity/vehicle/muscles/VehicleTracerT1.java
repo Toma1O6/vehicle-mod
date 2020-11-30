@@ -35,6 +35,7 @@ public class VehicleTracerT1 extends EntityVehicleMuscles {
                 .rls(VMSounds.TRACER_GAS)
                 .str(VMSounds.TRACER_START)
                 .honk(VMSounds.HORN_11)
+                .starting(VMSounds.CAR_START_D)
                 .build();
     }
 

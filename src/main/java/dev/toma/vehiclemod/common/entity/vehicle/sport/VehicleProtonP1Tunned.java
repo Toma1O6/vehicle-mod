@@ -36,6 +36,7 @@ public class VehicleProtonP1Tunned extends EntityVehicleSport {
                 .rls(VMSounds.PROTON_P1_TUNNED_GAS)
                 .str(VMSounds.PROTON_P1_TUNNED_START)
                 .honk(VMSounds.HORN_1)
+                .starting(VMSounds.CAR_START_G)
                 .build();
     }
 
