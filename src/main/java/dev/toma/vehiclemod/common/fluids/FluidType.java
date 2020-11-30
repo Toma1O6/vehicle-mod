@@ -61,8 +61,8 @@ public class FluidType extends IForgeRegistryEntry.Impl<FluidType> {
             return this;
         }
 
-        public Builder processInto(Supplier<FluidType> type, int resultAmount, int requiredAmount) {
-            this.result = new FluidProcessResult(type, resultAmount, requiredAmount);
+        public Builder processInto(Supplier<FluidType> type, int resultAmount, int requiredAmount, int processTime) {
+            this.result = new FluidProcessResult(type, resultAmount, requiredAmount, processTime);
             return this;
         }
 

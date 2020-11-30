@@ -7,11 +7,13 @@ public class FluidProcessResult {
     private final Supplier<FluidType> type;
     private final int resultAmount;
     private final int requiredAmount;
+    private final int processTime;
 
-    public FluidProcessResult(Supplier<FluidType> type, int resultAmount, int requiredAmount) {
+    public FluidProcessResult(Supplier<FluidType> type, int resultAmount, int requiredAmount, int processTime) {
         this.type = type;
         this.resultAmount = resultAmount;
         this.requiredAmount = requiredAmount;
+        this.processTime = processTime;
     }
 
     public FluidType getType() {
@@ -24,5 +26,9 @@ public class FluidProcessResult {
 
     public int getResultAmount() {
         return resultAmount;
+    }
+
+    public int getProcessTime() {
+        return processTime;
     }
 }

@@ -102,8 +102,8 @@ public class Registries {
         @SubscribeEvent
         public static void onFluidTypeRegister(RegistryEvent.Register<FluidType> event) {
             event.getRegistry().registerAll(
-                    new FluidType.Builder().behavior(new FluidItemBehavior.Bucket(VMItems.BUCKET_OF_ACTIVATED_FUEL_SUBSTANCE)).processInto(() -> FluidTypes.FUEL, 10000, 20000).fluidColor(0xA53344).build().setRegistryName("activated_fuel_substance"),
-                    new FluidType.Builder().behavior(new FluidItemBehavior.Bucket(VMItems.BUCKET_OF_FUEL)).processInto(() -> FluidTypes.NITRO, 2500, 10000).fluidColor(0xFFFF00).build().setRegistryName("fuel"),
+                    new FluidType.Builder().behavior(new FluidItemBehavior.Bucket(VMItems.BUCKET_OF_ACTIVATED_FUEL_SUBSTANCE)).processInto(() -> FluidTypes.FUEL, 10000, 20000, 600).fluidColor(0xA53344).build().setRegistryName("activated_fuel_substance"),
+                    new FluidType.Builder().behavior(new FluidItemBehavior.Bucket(VMItems.BUCKET_OF_FUEL)).processInto(() -> FluidTypes.NITRO, 2500, 10000, 1200).fluidColor(0xFFFF00).build().setRegistryName("fuel"),
                     new FluidType.Builder().behavior(new FluidItemBehavior.Nitro()).fluidColor(0x00FFFF).build().setRegistryName("nitro")
             );
         }

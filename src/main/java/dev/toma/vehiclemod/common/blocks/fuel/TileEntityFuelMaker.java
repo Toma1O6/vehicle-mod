@@ -164,7 +164,7 @@ public class TileEntityFuelMaker extends TileEntity implements IInventory, ITick
             if(this.inputFluid.getAmount() >= result.getRequiredAmount() && (this.outputFluid.isEmpty() || this.outputFluid.canMix(result.getType())) && outputFluid.getAmount() + result.getResultAmount() <= MAX_STORED_AMOUNT) {
                 if(!processing) {
                     processing = true;
-                } else if(++processTimer >= 600) {
+                } else if(++processTimer >= result.getProcessTime()) {
                     processTimer = 0;
                     if(this.outputFluid.isEmpty()) {
                         this.outputFluid = new FluidEntry(result.getType(), MAX_STORED_AMOUNT);

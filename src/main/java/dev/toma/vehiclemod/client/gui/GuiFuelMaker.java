@@ -4,6 +4,7 @@ import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.container.ContainerFuelMaker;
 import dev.toma.vehiclemod.common.fluids.FluidEntry;
+import dev.toma.vehiclemod.common.fluids.FluidType;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.SPacketFuelMakerAction;
 import dev.toma.vehiclemod.util.DevUtil;
@@ -60,12 +61,13 @@ public class GuiFuelMaker extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         GlStateManager.disableLighting();
-        drawFluid(25, tileEntityFuelMaker.getInput());
+        FluidEntry input = tileEntityFuelMaker.getInput();
+        drawFluid(25, input);
         drawFuelBarIndicator(25);
         drawFluid(133, tileEntityFuelMaker.getOutput());
         drawFuelBarIndicator(133);
         if(tileEntityFuelMaker.isWorking()) {
-            float prg = tileEntityFuelMaker.getProcessTimer() / 600.0F;
+            float prg = tileEntityFuelMaker.getProcessTimer() / (float) input.getType().getProcessResult().getProcessTime();
             int diff = 208 - 176;
             double aus = 176 / 256D;
             double aue = (176 + diff * prg) / 256D;
