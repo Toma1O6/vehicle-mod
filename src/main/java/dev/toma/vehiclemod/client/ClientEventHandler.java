@@ -86,7 +86,11 @@ public class ClientEventHandler {
 				boolean lowHealth = health <= 0.5;
 				double speed = Math.sqrt(car.motionX*car.motionX + car.motionZ*car.motionZ) * 40;
 				SpeedDisplayUnit unit = VMConfig.speedUnit;
-				mc.fontRenderer.drawStringWithShadow(unit.getDisplayString(speed), 16, resolution.getScaledHeight() - 35, car.isEcoMode() ? 0x00FF00 : 0xFFFFFF);
+				String speedString = unit.getDisplayString(speed);
+				mc.fontRenderer.drawStringWithShadow(speedString, 16, resolution.getScaledHeight() - 35, 0xFFFFFF);
+				if(car.isEcoMode()) {
+					mc.fontRenderer.drawStringWithShadow("Eco", 90, resolution.getScaledHeight() - 35, 0x00ff00);
+				}
 				VehicleHUDType type = VehicleHUDType.FUEL_STATE;
 				int x = (int)((33 * 120) / 256F);
 				int y = resolution.getScaledHeight() - 15;

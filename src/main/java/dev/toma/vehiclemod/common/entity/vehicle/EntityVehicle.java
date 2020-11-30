@@ -134,16 +134,20 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         handleEntityCollisions();
         checkState();
 
+        if (!world.isRemote) {
+            VMNetworkManager.instance().sendToAllAround(new CPacketVehicleData(this), new TargetPoint(dimension, posX, posY, posZ, 256));
+        }
+
         spawnParticles();
         move(MoverType.SELF, motionX, motionY, motionZ);
 
         double d0;
         if (collidedHorizontally && (d0 = getMovementSpeed(this)) > 0.2) {
             currentSpeed = 0f;
-            health -= d0 * 200f;
+            health -= d0 * 50f;
             for (Entity e : this.getPassengers()) {
                 if (!e.getIsInvulnerable()) {
-                    e.attackEntityFrom(DamageSource.FALL, (float) d0 * 50f);
+                    e.attackEntityFrom(DamageSource.FALL, (float) d0 * 25f);
                 }
             }
         }
