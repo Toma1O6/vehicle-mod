@@ -1,8 +1,5 @@
 {
     "variants": {
-        "facing=north": {"model": "vehiclemod:fuel_maker"},
-        "facing=east": {"model": "vehiclemod:fuel_maker", "y": 90},
-        "facing=south": {"model": "vehiclemod:fuel_maker", "y": 180},
-        "facing=west": {"model": "vehiclemod:fuel_maker", "y": 270}
+        "normal": {"model": "vehiclemod:fuel_maker", "y": 90}
     }
 }

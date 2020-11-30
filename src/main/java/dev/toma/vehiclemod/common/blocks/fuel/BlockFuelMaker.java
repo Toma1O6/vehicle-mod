@@ -4,10 +4,7 @@ import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.blocks.BlockBasic;
 import dev.toma.vehiclemod.util.GuiHandler;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
@@ -23,17 +20,9 @@ import javax.annotation.Nullable;
 
 public class BlockFuelMaker extends BlockBasic {
 
-    public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-
     public BlockFuelMaker(String name) {
         super(name, Material.IRON);
         this.setHardness(1.5F);
-        setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-    }
-
-    @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
 
     @Override
@@ -75,20 +64,5 @@ public class BlockFuelMaker extends BlockBasic {
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileEntityFuelMaker();
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(FACING).getHorizontalIndex();
-    }
-
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
-    }
-
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, FACING);
     }
 }

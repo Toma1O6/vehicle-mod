@@ -458,7 +458,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public void initiateStart() {
         if (!isStarted && startCooldown == 0) {
-            this.startCooldown = 30;
+            this.startCooldown = 22;
             world.playSound(null, posX, posY, posZ, this.soundPack.starting(), SoundCategory.MASTER, 1.0F, 1.0F);
         }
     }

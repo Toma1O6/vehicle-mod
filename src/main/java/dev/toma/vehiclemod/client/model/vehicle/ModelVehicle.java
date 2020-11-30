@@ -35,6 +35,7 @@ public abstract class ModelVehicle<V extends EntityVehicle> extends ModelBase {
 			for (ModelRenderer renderer : entry.getModels())
 				renderer.render(1.0F);
 		}
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 	}
 
 	protected abstract void renderModel();
