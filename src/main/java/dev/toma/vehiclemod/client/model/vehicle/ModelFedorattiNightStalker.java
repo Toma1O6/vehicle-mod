@@ -970,7 +970,8 @@ public class ModelFedorattiNightStalker extends ModelVehicle<VehicleFedorattiNig
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.LEFT, head_lights_left, rear_lights_left),
                 new BrakeLights<>(rear_lights_brake),
                 new ReverseLights<>(rear_lights_reverse),
-                new LightControllerEntry<>(0.8F, plate, interier_a, interier_b, interier_c)
+                new LightControllerEntry<>(0.8F, interier_a, interier_b, interier_c),
+                new LightControllerEntry<>(0.6F, plate)
         );
     }
 

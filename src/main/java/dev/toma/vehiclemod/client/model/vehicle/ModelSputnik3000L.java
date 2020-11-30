@@ -799,7 +799,8 @@ public class ModelSputnik3000L extends ModelVehicle<VehicleSputnik3000L> {
 
         registerLightEntries(
                 new LightControllerEntry<>(1.0F, head_lights_a, head_lights_b, rear_lights),
-                new LightControllerEntry<>(0.8F, plate, interier),
+                new LightControllerEntry<>(0.8F, interier),
+                new LightControllerEntry<>(0.6F, plate),
                 new BrakeLights<>(rear_lights_brake),
                 new ReverseLights<>(rear_lights_reverse),
                 new TurnIndicatorLights<>(1000, LightController.TurnLightStatus.RIGHT, head_lights_right, rear_lights_right),
