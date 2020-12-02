@@ -22,13 +22,17 @@ public class ModContainer<I extends IInventory> extends Container {
     }
 
     public void addDefaultInventory(InventoryPlayer inv, int ys) {
+        this.addDefaultInventory(inv, 8, ys);
+    }
+
+    public void addDefaultInventory(InventoryPlayer inv, int xs, int ys) {
         for(int y = 0; y < 3; y++) {
             for(int x = 0; x < 9; x++) {
-                addSlotToContainer(new Slot(inv, 9 + y * 9 + x, 8 + x * 18, ys + y * 18));
+                addSlotToContainer(new Slot(inv, 9 + y * 9 + x, xs + x * 18, ys + y * 18));
             }
         }
         for(int x = 0; x < 9; x++) {
-            addSlotToContainer(new Slot(inv, x, 8 + x * 18, ys + 58));
+            addSlotToContainer(new Slot(inv, x, xs + x * 18, ys + 58));
         }
     }
 

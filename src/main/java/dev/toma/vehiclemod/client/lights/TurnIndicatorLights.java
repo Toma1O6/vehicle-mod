@@ -32,7 +32,9 @@ public class TurnIndicatorLights<V extends EntityVehicle> extends BasicLightEntr
             int cycleSwap = cycle / 2;
             flag = time % cycle < cycleSwap;
             if(prevState != flag) {
-                Minecraft.getMinecraft().player.playSound(flag ? VMSounds.INDICATOR_ON : VMSounds.INDICATOR_OFF, 1.0F, 1.0F);
+                if(status != LightController.TurnLightStatus.WARNING || this.status == LightController.TurnLightStatus.RIGHT) {
+                    Minecraft.getMinecraft().player.playSound(flag ? VMSounds.INDICATOR_ON : VMSounds.INDICATOR_OFF, 1.0F, 1.0F);
+                }
             }
             prevState = flag;
         }

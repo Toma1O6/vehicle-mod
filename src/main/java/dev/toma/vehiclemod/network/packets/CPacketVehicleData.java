@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.network.packets;
 
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.EnumVehicleState;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -13,6 +14,7 @@ public class CPacketVehicleData implements IMessage {
 
 	private int vehicleID;
 	private float currentSpeed, turnModifier, health, fuel;
+	private EnumVehicleState state;
 	
 	public CPacketVehicleData() {
 	}
@@ -23,6 +25,7 @@ public class CPacketVehicleData implements IMessage {
 		this.turnModifier = vehicle.turnModifier;
 		this.health = vehicle.health;
 		this.fuel = vehicle.fuel;
+		this.state = vehicle.currentState;
 	}
 	
 	@Override
@@ -32,6 +35,7 @@ public class CPacketVehicleData implements IMessage {
 		buf.writeFloat(turnModifier);
 		buf.writeFloat(health);
 		buf.writeFloat(fuel);
+		buf.writeInt(state.ordinal());
 	}
 	
 	@Override
@@ -41,6 +45,7 @@ public class CPacketVehicleData implements IMessage {
 		turnModifier = buf.readFloat();
 		health = buf.readFloat();
 		fuel = buf.readFloat();
+		state = EnumVehicleState.values()[buf.readInt()];
 	}
 	
 	public static class Handler implements IMessageHandler<CPacketVehicleData, IMessage> {
@@ -63,6 +68,7 @@ public class CPacketVehicleData implements IMessage {
 					car.turnModifier = p.turnModifier;
 					car.health = p.health;
 					car.fuel = p.fuel;
+					car.currentState = p.state;
 				}
 			}
 		}

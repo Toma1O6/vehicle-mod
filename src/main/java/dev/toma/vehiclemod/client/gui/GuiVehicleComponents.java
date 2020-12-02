@@ -24,7 +24,7 @@ public class GuiVehicleComponents extends GuiContainer {
 
     public GuiVehicleComponents(InventoryPlayer player, InventoryComponents components) {
         super(new ContainerVehicleComponents(player, components));
-        xSize = 205;
+        xSize = 234;
         ySize = 176;
     }
 
@@ -51,20 +51,20 @@ public class GuiVehicleComponents extends GuiContainer {
             float accelerationStat = fixValue((stats.acceleration - VehicleStats.accelerationMin) / (VehicleStats.accelerationMax - VehicleStats.accelerationMin));
             float handlingStat = fixValue((stats.turnSpeed - VehicleStats.handlingMin) / (VehicleStats.handlingMax - VehicleStats.handlingMin));
             float brakingStat = fixValue((stats.brakeSpeed - VehicleStats.brakingMin) / (VehicleStats.brakingMax - VehicleStats.brakingMin));
-            fontRenderer.drawString("SPD", 8, 54, 0xaa00);
-            fontRenderer.drawString("ACC", 8, 63, 0xaa0000);
-            fontRenderer.drawString("HDL", 8, 72, 0xaa);
-            fontRenderer.drawString("BRK", 8, 81, 0xaaaa00);
-            DevUtil.drawColor(27, 55, (int)(27 + 142 * speedStat), 60, 0.0F, 1.0F, 0.0F, 1.0F);
-            DevUtil.drawColor(27, 64, (int)(27 + 142 * accelerationStat), 69, 1.0F, 0.0F, 0.0F, 1.0F);
-            DevUtil.drawColor(27, 73, (int)(27 + 142 * handlingStat), 78, 0.0F, 0.0F, 1.0F, 1.0F);
-            DevUtil.drawColor(27, 82, (int)(27 + 142 * brakingStat), 87, 1.0F, 1.0F, 0.0F, 1.0F);
+            fontRenderer.drawString("SPD", 37, 54, 0xaa00);
+            fontRenderer.drawString("ACC", 37, 63, 0xaa0000);
+            fontRenderer.drawString("HDL", 37, 72, 0xaa);
+            fontRenderer.drawString("BRK", 37, 81, 0xaaaa00);
+            DevUtil.drawColor(56, 55, (int)(56 + 142 * speedStat), 60, 0.0F, 1.0F, 0.0F, 1.0F);
+            DevUtil.drawColor(56, 64, (int)(56 + 142 * accelerationStat), 69, 1.0F, 0.0F, 0.0F, 1.0F);
+            DevUtil.drawColor(56, 73, (int)(56 + 142 * handlingStat), 78, 0.0F, 0.0F, 1.0F, 1.0F);
+            DevUtil.drawColor(56, 82, (int)(56 + 142 * brakingStat), 87, 1.0F, 1.0F, 0.0F, 1.0F);
         }
         Map<ItemVehicleUpgrade.Type, Integer> map = upgrades.getUpgradeMap();
         int j = 0;
         for (Map.Entry<ItemVehicleUpgrade.Type, Integer> entry : map.entrySet()) {
             String text = String.format("[%d]", entry.getValue());
-            fontRenderer.drawString(text, 8 + j * 18 + (18 - fontRenderer.getStringWidth(text)) / 2, 28, ItemVehicleUpgrade.Type.getColor(entry.getValue()).getColorValue());
+            fontRenderer.drawString(text, 37 + j * 18 + (18 - fontRenderer.getStringWidth(text)) / 2, 28, ItemVehicleUpgrade.Type.getColor(entry.getValue()).getColorValue());
             ++j;
         }
     }

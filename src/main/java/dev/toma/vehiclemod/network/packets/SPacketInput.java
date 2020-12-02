@@ -9,15 +9,16 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class SPacketInput implements IMessage {
 	
-	boolean forward, back, right, left;
+	boolean forward, back, right, left, nitro;
 	
 	public SPacketInput() {}
 	
-	public SPacketInput(boolean forward, boolean back, boolean right, boolean left) {
+	public SPacketInput(boolean forward, boolean back, boolean right, boolean left, boolean nitro) {
 		this.forward = forward;
 		this.back = back;
 		this.right = right;
 		this.left = left;
+		this.nitro = nitro;
 	}
 	
 	@Override
@@ -26,6 +27,7 @@ public class SPacketInput implements IMessage {
 		buf.writeBoolean(back);
 		buf.writeBoolean(right);
 		buf.writeBoolean(left);
+		buf.writeBoolean(nitro);
 	}
 	
 	@Override
@@ -34,6 +36,7 @@ public class SPacketInput implements IMessage {
 		back = buf.readBoolean();
 		right = buf.readBoolean();
 		left = buf.readBoolean();
+		nitro = buf.readBoolean();
 	}
 	
 	public static class Handler implements IMessageHandler<SPacketInput, IMessage> {
@@ -43,7 +46,7 @@ public class SPacketInput implements IMessage {
 			EntityPlayerMP player = ctx.getServerHandler().player;
 			player.getServer().addScheduledTask(() -> {
 				if(player.isRiding() && player.getRidingEntity() instanceof EntityVehicle) {
-					((EntityVehicle)player.getRidingEntity()).updateInput(p.forward, p.back, p.right, p.left, player);
+					((EntityVehicle)player.getRidingEntity()).updateInput(p.forward, p.back, p.right, p.left, p.nitro, player);
 				}
 			});
 			return null;

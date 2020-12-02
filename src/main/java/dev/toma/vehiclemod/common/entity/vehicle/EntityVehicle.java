@@ -70,6 +70,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     protected boolean inputBack;
     protected boolean inputRight;
     protected boolean inputLeft;
+    public boolean inputNitro;
 
     public static double getMovementSpeed(EntityVehicle vehicle) {
         return Math.sqrt(vehicle.motionX * vehicle.motionX + vehicle.motionZ * vehicle.motionZ);
@@ -238,13 +239,14 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         VehicleMod.proxy.playSoundAt(this);
     }
 
-    public void updateInput(boolean forward, boolean back, boolean right, boolean left, EntityPlayer player) {
-        if (this.getControllingPassenger() == player && isStarted) {
+    public void updateInput(boolean forward, boolean back, boolean right, boolean left, boolean nitro, EntityPlayer player) {
+        if (isStarted) {
             this.rotationYaw = rotationYaw < 0f ? rotationYaw + 360f : rotationYaw > 360f ? rotationYaw - 360f : rotationYaw;
             this.inputForward = forward;
             this.inputBack = back;
             this.inputRight = right;
             this.inputLeft = left;
+            this.inputNitro = nitro;
         }
     }
 
@@ -664,6 +666,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         compound.setTag("lock", lockManager.serializeNBT());
         upgrades.writeToNBT(compound);
         compound.setTag("lightController", lightController.serializeNBT());
+        //compound.setTag("nitro", nitroHandler.);
         this.writeExtraData(compound);
     }
 

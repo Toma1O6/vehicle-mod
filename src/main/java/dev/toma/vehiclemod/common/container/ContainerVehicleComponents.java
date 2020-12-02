@@ -1,11 +1,14 @@
 package dev.toma.vehiclemod.common.container;
 
+import dev.toma.vehiclemod.common.entity.vehicle.NitroHandler;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
 import dev.toma.vehiclemod.common.inventory.InventoryComponents;
+import dev.toma.vehiclemod.common.items.ItemNitroCan;
 import dev.toma.vehiclemod.common.items.ItemPerk;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -14,13 +17,18 @@ public class ContainerVehicleComponents extends ModContainer<InventoryComponents
 
     public ContainerVehicleComponents(InventoryPlayer player, InventoryComponents components) {
         super(components);
+        NitroHandler handler = components.getVehicle().getNitroHandler();
+        IInventory nitroInventory = handler.getInventory();
         for (int x = 0; x < 9; x++) {
-            addSlotToContainer(new SlotTunning(components, x, 8 + x * 18, 8));
+            addSlotToContainer(new SlotTunning(components, x, 37 + x * 18, 8));
         }
         for (int y = 0; y < 3; y++) {
-            addSlotToContainer(new SlotPerk(components, 9 + y, 181, 19 + y * 18));
+            addSlotToContainer(new SlotPerk(components, 9 + y, 210, 19 + y * 18));
         }
-        addDefaultInventory(player, 94);
+        for (int y = 0; y < 5; y++) {
+            addSlotToContainer(new SlotNitro(nitroInventory, y, 8, 19 + y * 18));
+        }
+        addDefaultInventory(player, 37, 94);
     }
 
     @Override
@@ -88,6 +96,18 @@ public class ContainerVehicleComponents extends ModContainer<InventoryComponents
             ItemPerk perk = upgrades.getPerk(index);
             ResourceLocation name = perk.getRegistryName();
             return name.getResourceDomain() + ":items/" + name.getResourcePath();
+        }
+    }
+
+    static class SlotNitro extends Slot {
+
+        public SlotNitro(IInventory inventory, int i, int x, int y) {
+            super(inventory, i, x, y);
+        }
+
+        @Override
+        public boolean isItemValid(ItemStack stack) {
+            return stack.getItem() instanceof ItemNitroCan;
         }
     }
 }

@@ -21,12 +21,11 @@ public class VehicleInputHandler {
 		if(player != null) {
 			GameSettings gs = Minecraft.getMinecraft().gameSettings;
 			if(e.phase == Phase.END) {
-				if(player.isRiding() && player.getRidingEntity() instanceof EntityVehicle) {
-
+				if(player.getRidingEntity() instanceof EntityVehicle && player.getRidingEntity().getControllingPassenger() == player) {
 					((EntityVehicle)player.getRidingEntity()).updateInput(gs.keyBindForward.isKeyDown(), gs.keyBindBack.isKeyDown(),
-							gs.keyBindRight.isKeyDown(), gs.keyBindLeft.isKeyDown(), player);
+							gs.keyBindRight.isKeyDown(), gs.keyBindLeft.isKeyDown(), VMKeybinds.NITRO.isKeyDown(), player);
 					VMNetworkManager.instance().sendToServer(new SPacketInput(gs.keyBindForward.isKeyDown(), 
-							gs.keyBindBack.isKeyDown(), gs.keyBindRight.isKeyDown(), gs.keyBindLeft.isKeyDown()));
+							gs.keyBindBack.isKeyDown(), gs.keyBindRight.isKeyDown(), gs.keyBindLeft.isKeyDown(), VMKeybinds.NITRO.isKeyDown()));
 				}
 			}
 		}

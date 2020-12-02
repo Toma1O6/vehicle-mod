@@ -33,6 +33,7 @@ public class VMKeybinds {
     public static KeyBinding INDICATOR_WARNING;
     public static KeyBinding ECO_MODE;
     public static KeyBinding START;
+    public static KeyBinding NITRO;
 
     public static void init() {
         CAR_SIREN = new KeyBinding("key.vehiclemod.car_siren", Keyboard.KEY_G, CATEGORY);
@@ -43,6 +44,7 @@ public class VMKeybinds {
         INDICATOR_WARNING = new KeyBinding("key.vehiclemod.indicator_warning", Keyboard.KEY_C, CATEGORY);
         ECO_MODE = new KeyBinding("key.vehiclemod.eco_mode", Keyboard.KEY_K, CATEGORY);
         START = new KeyBinding("key.vehiclemod.start", Keyboard.KEY_R, CATEGORY);
+        NITRO = new KeyBinding("key.vehiclemod.nitro", Keyboard.KEY_LCONTROL, CATEGORY);
         ClientRegistry.registerKeyBinding(CAR_SIREN);
         ClientRegistry.registerKeyBinding(CAR_HORN);
         ClientRegistry.registerKeyBinding(CAR_LIGHTS);
@@ -51,6 +53,7 @@ public class VMKeybinds {
         ClientRegistry.registerKeyBinding(INDICATOR_WARNING);
         ClientRegistry.registerKeyBinding(ECO_MODE);
         ClientRegistry.registerKeyBinding(START);
+        ClientRegistry.registerKeyBinding(NITRO);
     }
 
     @SubscribeEvent

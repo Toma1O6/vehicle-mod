@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 
 public class NitroHandler {
 
-    private final InventoryBasic inventory = new InventoryBasic("inventory.nitro", false, 3);
+    private final InventoryBasic inventory = new InventoryBasic("inventory.nitro", false, 5);
     private final EntityVehicle vehicle;
     private boolean state;
 
@@ -17,7 +17,7 @@ public class NitroHandler {
     }
 
     public boolean canUseNitro(Entity entity) {
-        return entity != null && entity.isSprinting() && hasNitro();
+        return entity != null && vehicle.inputNitro && hasNitro();
     }
 
     public boolean hasNitro() {
@@ -52,7 +52,7 @@ public class NitroHandler {
     }
 
     public boolean isNitroActive() {
-        return state;
+        return vehicle.inputNitro && state;
     }
 
     private int getFirstUsableNitroSlot() {

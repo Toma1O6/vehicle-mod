@@ -1,24 +1,36 @@
 package dev.toma.vehiclemod.common.entity.vehicle;
 
 import dev.toma.vehiclemod.util.DevUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class LightController implements INBTSerializable<NBTTagCompound> {
 
     private boolean lights = true;
     private TurnLightStatus turnLightStatus = TurnLightStatus.OFF;
 
+    @SideOnly(Side.CLIENT)
     public boolean areLightsOn(EntityVehicle vehicle) {
         return lights;
     }
 
+    @SideOnly(Side.CLIENT)
     public boolean isReversing(EntityVehicle vehicle) {
-        return vehicle.currentSpeed <= vehicle.prevSpeed && vehicle.currentSpeed < 0 && vehicle.inputBack;
+        if(vehicle.getControllingPassenger() == Minecraft.getMinecraft().player) {
+            return vehicle.currentSpeed <= vehicle.prevSpeed && vehicle.currentSpeed < 0 && vehicle.inputBack;
+        }
+        return vehicle.currentSpeed < 0 && vehicle.currentSpeed <= vehicle.prevSpeed;
     }
 
+    @SideOnly(Side.CLIENT)
     public boolean isBraking(EntityVehicle vehicle) {
-        return vehicle.inputBack && vehicle.currentSpeed >= 0;
+        if(vehicle.getControllingPassenger() == Minecraft.getMinecraft().player) {
+            return vehicle.inputBack && vehicle.currentSpeed >= 0;
+        }
+        return vehicle.currentSpeed > 0 && vehicle.currentState == EnumVehicleState.BRAKING;
     }
 
     @Override
