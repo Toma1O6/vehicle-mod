@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.proxy;
 
+import dev.toma.vehiclemod.client.CarNitroSound;
 import dev.toma.vehiclemod.client.CarSound;
 import dev.toma.vehiclemod.client.VMKeybinds;
 import dev.toma.vehiclemod.client.VehicleInputHandler;
@@ -13,6 +14,7 @@ import dev.toma.vehiclemod.client.render.entity.*;
 import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.NitroHandler;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
 import dev.toma.vehiclemod.common.entity.vehicle.special.*;
@@ -24,8 +26,11 @@ import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
 import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiNightStalker;
 import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiVulcan;
 import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleSputnikDuster;
+import dev.toma.vehiclemod.common.items.ItemNitroCan;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -66,6 +71,19 @@ public class ClientProxy extends CommonProxy {
 		CarSound sound = new CarSound(event, v);
 		v.currentSound = sound;
 		handler.playSound(sound);
+	}
+
+	@Override
+	public void playNitroSound(EntityVehicle vehicle) {
+		NitroHandler handler = vehicle.getNitroHandler();
+		IInventory inv = handler.getInventory();
+		int slotID = handler.getFirstUsableNitroSlot();
+		if(slotID >= 0) {
+			ItemStack stack = inv.getStackInSlot(slotID);
+			if(!stack.isEmpty() && stack.getItem() instanceof ItemNitroCan) {
+				Minecraft.getMinecraft().getSoundHandler().playSound(new CarNitroSound(((ItemNitroCan) stack.getItem()).getBurnSound(), vehicle));
+			}
+		}
 	}
 
 	@Override

@@ -85,5 +85,9 @@
     "car_start_f": {"category": "master", "sounds": [{"name": "vehiclemod:car_start_f", "stream": "true"}]},
     "car_start_g": {"category": "master", "sounds": [{"name": "vehiclemod:car_start_g", "stream": "true"}]},
     "indicator_on": {"category": "master", "sounds": [{"name": "vehiclemod:indicator_on", "stream": "true"}]},
-    "indicator_off": {"category": "master", "sounds": [{"name": "vehiclemod:indicator_off", "stream": "true"}]}
+    "indicator_off": {"category": "master", "sounds": [{"name": "vehiclemod:indicator_off", "stream": "true"}]},
+    "nitro_start": {"category": "master", "sounds": [{"name": "vehiclemod:nitro_start", "stream": "true"}]},
+    "nitro_end": {"category": "master", "sounds": [{"name": "vehiclemod:nitro_end", "stream": "true"}]},
+    "nitro_a": {"category": "master", "sounds": [{"name": "vehiclemod:nitro_a", "stream": "true"}]},
+    "nitro_b": {"category": "master", "sounds": [{"name": "vehiclemod:nitro_b", "stream": "true"}]}
 }

@@ -25,6 +25,7 @@ import dev.toma.vehiclemod.common.fluids.FluidType;
 import dev.toma.vehiclemod.common.items.*;
 import dev.toma.vehiclemod.common.tunning.StatModifierType;
 import dev.toma.vehiclemod.init.FluidTypes;
+import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -162,16 +163,19 @@ public class Registries {
                     new ItemPerk("bronze_handling_perk", StatModifierType.HANDLING, 0.02F),
                     new ItemPerk("silver_handling_perk", StatModifierType.HANDLING, 0.04F),
                     new ItemPerk("gold_handling_perk", StatModifierType.HANDLING, 0.06F),
-                    new ItemPerk("bronze_speed_perk", StatModifierType.TOP_SPEED, 0.02F),
-                    new ItemPerk("silver_speed_perk", StatModifierType.TOP_SPEED, 0.04F),
-                    new ItemPerk("gold_speed_perk", StatModifierType.TOP_SPEED, 0.06F),
+                    new ItemPerk("bronze_speed_perk", StatModifierType.TOP_SPEED, 0.01F),
+                    new ItemPerk("silver_speed_perk", StatModifierType.TOP_SPEED, 0.03F),
+                    new ItemPerk("gold_speed_perk", StatModifierType.TOP_SPEED, 0.05F),
                     new ItemPerk("bronze_tank_perk", StatModifierType.FUEL_CAPACITY, 0.03F),
                     new ItemPerk("silver_tank_perk", StatModifierType.FUEL_CAPACITY, 0.06F),
                     new ItemPerk("gold_tank_perk", StatModifierType.FUEL_CAPACITY, 0.1F),
-                    new ItemNitroCan("nitro_bottle_25", 62, 2500),
-                    new ItemNitroCan("nitro_bottle_50", 83, 5000),
-                    new ItemNitroCan("nitro_bottle_75", 94, 7500),
-                    new ItemNitroCan("nitro_bottle_100", 100, 10000),
+                    new ItemPerk("bronze_nitro_perk", StatModifierType.NITRO_POWER, 0.03F),
+                    new ItemPerk("silver_nitro_perk", StatModifierType.NITRO_POWER, 0.06F),
+                    new ItemPerk("gold_nitro_perk", StatModifierType.NITRO_POWER, 0.1F),
+                    new ItemNitroCan("nitro_bottle_25", 62, 2500, () -> VMSounds.NITRO_A),
+                    new ItemNitroCan("nitro_bottle_50", 83, 5000, () -> VMSounds.NITRO_A),
+                    new ItemNitroCan("nitro_bottle_75", 94, 7500, () -> VMSounds.NITRO_B),
+                    new ItemNitroCan("nitro_bottle_100", 100, 10000, () -> VMSounds.NITRO_B),
                     new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {
@@ -302,7 +306,11 @@ public class Registries {
                     registerSound("car_start_f"),
                     registerSound("car_start_g"),
                     registerSound("indicator_on"),
-                    registerSound("indicator_off")
+                    registerSound("indicator_off"),
+                    registerSound("nitro_start"),
+                    registerSound("nitro_end"),
+                    registerSound("nitro_a"),
+                    registerSound("nitro_b")
             );
         }
 

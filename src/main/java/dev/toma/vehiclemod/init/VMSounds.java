@@ -93,4 +93,8 @@ public class VMSounds {
     public static final SoundEvent CAR_START_G = null;
     public static final SoundEvent INDICATOR_ON = null;
     public static final SoundEvent INDICATOR_OFF = null;
+    public static final SoundEvent NITRO_START = null;
+    public static final SoundEvent NITRO_END = null;
+    public static final SoundEvent NITRO_A = null;
+    public static final SoundEvent NITRO_B = null;
 }

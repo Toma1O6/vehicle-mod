@@ -13,6 +13,7 @@ public class CarNitroSound extends MovingSound {
     public CarNitroSound(SoundEvent event, EntityVehicle vehicle) {
         super(event, SoundCategory.MASTER);
         this.vehicle = vehicle;
+        this.repeat = true;
     }
 
     @Override

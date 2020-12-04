@@ -2,11 +2,17 @@ package dev.toma.vehiclemod.common.entity.vehicle;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.items.ItemNitroCan;
+import dev.toma.vehiclemod.init.VMSounds;
+import dev.toma.vehiclemod.util.DevUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.INBTSerializable;
 
-public class NitroHandler {
+public class NitroHandler implements INBTSerializable<NBTTagList> {
 
     private final InventoryBasic inventory = new InventoryBasic("inventory.nitro", false, 5);
     private final EntityVehicle vehicle;
@@ -42,11 +48,11 @@ public class NitroHandler {
         if(using) {
             burnNitro();
             if(!state) {
-                // play start sound
+                entity.playSound(VMSounds.NITRO_START, 1.0F, 1.0F);
                 VehicleMod.proxy.playNitroSound(vehicle);
             }
         } else if(!using && state) {
-            // play stop sound and stop nitro sound
+            entity.playSound(VMSounds.NITRO_END, 1.0F, 1.0F);
         }
         this.state = using;
     }
@@ -55,7 +61,17 @@ public class NitroHandler {
         return vehicle.inputNitro && state;
     }
 
-    private int getFirstUsableNitroSlot() {
+    @Override
+    public NBTTagList serializeNBT() {
+        return DevUtil.inventoryToNBT(inventory);
+    }
+
+    @Override
+    public void deserializeNBT(NBTTagList nbt) {
+        DevUtil.loadInventoryFromNBT(inventory, nbt);
+    }
+
+    public int getFirstUsableNitroSlot() {
         for (int i = 0; i < inventory.getSizeInventory(); i++) {
             ItemStack stack = inventory.getStackInSlot(i);
             if(!stack.isEmpty() && stack.getItem() instanceof ItemNitroCan && stack.getItemDamage() < stack.getMaxDamage()) {

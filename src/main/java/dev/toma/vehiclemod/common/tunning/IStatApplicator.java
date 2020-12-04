@@ -11,6 +11,7 @@ public interface IStatApplicator {
     IStatApplicator FUEL_CONSUMPTION = VehicleUpgrades::addFuelCons;
     IStatApplicator FUEL_CAPACITY = VehicleUpgrades::addFuelCap;
     IStatApplicator DURABILITY = VehicleUpgrades::addHealth;
+    IStatApplicator NITRO_PW = VehicleUpgrades::addNitroPower;
 
     void applyOnStat(VehicleUpgrades upgrades, float value);
 }

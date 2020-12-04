@@ -19,9 +19,12 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -93,8 +96,31 @@ public class DevUtil {
         return false;
     }
 
+    public static NBTTagList inventoryToNBT(IInventory inventory) {
+        NBTTagList list = new NBTTagList();
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            ItemStack stack = inventory.getStackInSlot(i);
+            if(stack.isEmpty())
+                continue;
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setInteger("index", i);
+            compound.setTag("item", stack.serializeNBT());
+            list.appendTag(compound);
+        }
+        return list;
+    }
+
+    public static void loadInventoryFromNBT(IInventory inventory, NBTTagList list) {
+        for (int i = 0; i < list.tagCount(); i++) {
+            NBTTagCompound nbt = list.getCompoundTagAt(i);
+            int index = nbt.getInteger("index");
+            ItemStack stack = new ItemStack(nbt.getCompoundTag("item"));
+            inventory.setInventorySlotContents(index, stack);
+        }
+    }
+
     public static boolean isDev() {
-        return (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+        return (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
     }
 
     public static void drawImage2D(Minecraft mc, ResourceLocation location, int x, int y, int width, int height, double uStart, double vStart, double uEnd, double vEnd) {

@@ -2,6 +2,8 @@ package dev.toma.vehiclemod.client;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.NitroHandler;
+import dev.toma.vehiclemod.common.items.ItemNitroCan;
 import dev.toma.vehiclemod.common.items.ItemPerk;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.config.VMConfig;
@@ -15,6 +17,8 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -86,7 +90,22 @@ public class ClientEventHandler {
 				String speedString = unit.getDisplayString(speed);
 				mc.fontRenderer.drawStringWithShadow(speedString, 16, resolution.getScaledHeight() - 35, 0xFFFFFF);
 				if(car.isEcoMode()) {
-					mc.fontRenderer.drawStringWithShadow("Eco", 90, resolution.getScaledHeight() - 35, 0x00ff00);
+					mc.fontRenderer.drawStringWithShadow("Eco", 16, resolution.getScaledHeight() - 45, 0x00ff00);
+				}
+				NitroHandler nitroHandler = car.getNitroHandler();
+				IInventory nitroInventory = nitroHandler.getInventory();
+				boolean found = false;
+				for (int i = 0; i < nitroInventory.getSizeInventory(); i++) {
+					ItemStack stack = nitroInventory.getStackInSlot(i);
+					ResourceLocation icon = ItemNitroCan.EMPTY_ICON;
+					if(stack.getItem() instanceof ItemNitroCan) {
+						if(stack.getItemDamage() < stack.getMaxDamage()) {
+							ItemNitroCan can = (ItemNitroCan) stack.getItem();
+							icon = found ? can.getIcon_available() : can.getIcon_active();
+							found = true;
+						}
+					}
+					DevUtil.drawImage2D(mc, icon, 74 + i * 10, resolution.getScaledHeight() - 40, 16, 16);
 				}
 				VehicleHUDType type = VehicleHUDType.FUEL_STATE;
 				int x = (int)((33 * 120) / 256F);

@@ -13,6 +13,7 @@ public class StatModifierType {
     public static final StatModifierType DURABILITY = create("Durability", IStatApplicator.DURABILITY);
     public static final StatModifierType FUEL_CONSUMPTION = create("Fuel consumption", IStatApplicator.FUEL_CONSUMPTION, true);
     public static final StatModifierType FUEL_CAPACITY = create("Fuel capacity", IStatApplicator.FUEL_CAPACITY);
+    public static final StatModifierType NITRO_POWER = create("Nitro power", IStatApplicator.NITRO_PW);
 
     final String name;
     final IStatApplicator applicator;

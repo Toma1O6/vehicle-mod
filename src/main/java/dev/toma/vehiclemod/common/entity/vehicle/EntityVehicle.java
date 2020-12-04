@@ -666,7 +666,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         compound.setTag("lock", lockManager.serializeNBT());
         upgrades.writeToNBT(compound);
         compound.setTag("lightController", lightController.serializeNBT());
-        //compound.setTag("nitro", nitroHandler.);
+        compound.setTag("nitro", nitroHandler.serializeNBT());
         this.writeExtraData(compound);
     }
 
@@ -696,6 +696,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         lockManager.deserializeNBT(compound.hasKey("lock", Constants.NBT.TAG_COMPOUND) ? compound.getCompoundTag("lock") : new NBTTagCompound());
         upgrades.readFromNBT(compound);
         lightController.deserializeNBT(compound.hasKey("lightController", Constants.NBT.TAG_COMPOUND) ? compound.getCompoundTag("lightController") : new NBTTagCompound());
+        nitroHandler.deserializeNBT(compound.hasKey("nitro", Constants.NBT.TAG_LIST) ? compound.getTagList("nitro", Constants.NBT.TAG_COMPOUND) : new NBTTagList());
         this.readExtraData(compound);
     }
 
