@@ -42,7 +42,7 @@ public class FuelMakerRenderer extends FastTESR<TileEntityFuelMaker> {
         float b = ( color        & 255) / 255.0F;
         double u1 = 12 / 16.0D;
         double y1 = y + 1 / 16.0D;
-        double y2 = y1 + (10 / 16.0D) * f;
+        double y2 = y1 + (9.5 / 16.0D) * f;
         double w = 3.8 / 16.0D;
         buffer.pos(x, y2, z + w).color(r, g, b, 1.0F).tex(u1, 1.0D).lightmap(k, l).endVertex();
         buffer.pos(x + w, y2, z + w).color(r, g, b, 1.0F).tex(1.0D, 1.0D).lightmap(k, l).endVertex();

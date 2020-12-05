@@ -23,9 +23,9 @@ public class VehicleInputHandler {
 			if(e.phase == Phase.END) {
 				if(player.getRidingEntity() instanceof EntityVehicle && player.getRidingEntity().getControllingPassenger() == player) {
 					((EntityVehicle)player.getRidingEntity()).updateInput(gs.keyBindForward.isKeyDown(), gs.keyBindBack.isKeyDown(),
-							gs.keyBindRight.isKeyDown(), gs.keyBindLeft.isKeyDown(), VMKeybinds.NITRO.isKeyDown(), player);
+							gs.keyBindRight.isKeyDown(), gs.keyBindLeft.isKeyDown(), player);
 					VMNetworkManager.instance().sendToServer(new SPacketInput(gs.keyBindForward.isKeyDown(), 
-							gs.keyBindBack.isKeyDown(), gs.keyBindRight.isKeyDown(), gs.keyBindLeft.isKeyDown(), VMKeybinds.NITRO.isKeyDown()));
+							gs.keyBindBack.isKeyDown(), gs.keyBindRight.isKeyDown(), gs.keyBindLeft.isKeyDown()));
 				}
 			}
 		}

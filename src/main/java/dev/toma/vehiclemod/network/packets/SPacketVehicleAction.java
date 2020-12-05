@@ -13,35 +13,51 @@ public class SPacketVehicleAction implements IMessage {
 
     Action action;
     boolean eco;
+    int nitroSlot;
 
     public SPacketVehicleAction() {}
 
-    public SPacketVehicleAction(Action action, boolean eco) {
+    public SPacketVehicleAction(Action action, boolean eco, int nitroSlot) {
         this.action = action;
         this.eco = eco;
+        this.nitroSlot = nitroSlot;
     }
 
     public static SPacketVehicleAction start() {
-        return new SPacketVehicleAction(Action.START, false);
+        return new SPacketVehicleAction(Action.START, false, 0);
     }
 
     public static SPacketVehicleAction eco(boolean state) {
-        return new SPacketVehicleAction(Action.ECO, state);
+        return new SPacketVehicleAction(Action.ECO, state, 0);
+    }
+
+    public static SPacketVehicleAction nitro(int slotID) {
+        return new SPacketVehicleAction(Action.NITRO, false, slotID);
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
         buf.writeInt(action.ordinal());
-        if(action == Action.ECO) {
-            buf.writeBoolean(eco);
+        switch (action) {
+            case ECO:
+                buf.writeBoolean(eco);
+                break;
+            case NITRO:
+                buf.writeInt(nitroSlot);
+                break;
         }
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
         action = Action.values()[buf.readInt()];
-        if(action == Action.ECO) {
-            eco = buf.readBoolean();
+        switch (action) {
+            case ECO:
+                eco = buf.readBoolean();
+                break;
+            case NITRO:
+                nitroSlot = buf.readInt();
+                break;
         }
     }
 
@@ -66,6 +82,9 @@ public class SPacketVehicleAction implements IMessage {
                             vehicle.setEcoMode(message.eco);
                             vehicle.sync();
                             break;
+                        case NITRO:
+                            vehicle.getNitroHandler().initiateUse(player, message.nitroSlot);
+                            break;
                     }
                 }
             });
@@ -75,6 +94,7 @@ public class SPacketVehicleAction implements IMessage {
 
     public enum Action {
         START,
-        ECO
+        ECO,
+        NITRO
     }
 }

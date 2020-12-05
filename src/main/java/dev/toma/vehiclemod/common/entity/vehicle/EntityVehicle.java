@@ -70,7 +70,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     protected boolean inputBack;
     protected boolean inputRight;
     protected boolean inputLeft;
-    public boolean inputNitro;
 
     public static double getMovementSpeed(EntityVehicle vehicle) {
         return Math.sqrt(vehicle.motionX * vehicle.motionX + vehicle.motionZ * vehicle.motionZ);
@@ -157,16 +156,14 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     private void updateMotion() {
         Vec3d lookVec = this.getLookVec();
         VehicleStats stats = this.getActualStats();
+        Entity controller = this.getControllingPassenger();
+        this.nitroHandler.tick(controller);
         float healthpct = health / stats.maxHealth;
         float quarterHealth = stats.maxHealth / 4f;
         float accModifier = healthpct < 0.25F ? this.health / quarterHealth : 1.0F;
+        float mod = nitroHandler.isNitroActive() ? upgrades.getNitroPower() : 0.0F;
         if (inputForward && !inputBack && (hasFuel() || currentSpeed < 0)) {
-            float mod = Math.max(0.04F, Math.abs(1.0F - currentSpeed / stats.maxSpeed));
-            Entity controller = this.getControllingPassenger();
-            if (nitroHandler.canUseNitro(controller)) {
-                nitroHandler.update(controller, true);
-                mod += upgrades.getNitroPower();
-            } else nitroHandler.update(controller, false);
+            mod += Math.max(0.04F, Math.abs(1.0F - currentSpeed / stats.maxSpeed));
             float acceleration = mod * stats.acceleration * accModifier;
             float maxSpeed = stats.maxSpeed;
             if (ecoMode) {
@@ -239,14 +236,13 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         VehicleMod.proxy.playSoundAt(this);
     }
 
-    public void updateInput(boolean forward, boolean back, boolean right, boolean left, boolean nitro, EntityPlayer player) {
+    public void updateInput(boolean forward, boolean back, boolean right, boolean left, EntityPlayer player) {
         if (isStarted) {
             this.rotationYaw = rotationYaw < 0f ? rotationYaw + 360f : rotationYaw > 360f ? rotationYaw - 360f : rotationYaw;
             this.inputForward = forward;
             this.inputBack = back;
             this.inputRight = right;
             this.inputLeft = left;
-            this.inputNitro = nitro;
         }
     }
 
@@ -322,6 +318,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                 while (i < this.getPartVecs().length) {
                     Vec3d exhaustVec = (new Vec3d(getPartVecs()[i].x, getPartVecs()[i].y + 0.25d, getPartVecs()[i].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
                     world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, true, posX + exhaustVec.x, posY + exhaustVec.y, posZ + exhaustVec.z, 0, 0.02d, 0);
+                    if(nitroHandler.isNitroActive())
+                        world.spawnParticle(EnumParticleTypes.FLAME, true, posX + exhaustVec.x, posY + exhaustVec.y, posZ + exhaustVec.z, 0, 0, 0);
                     ++i;
                 }
             }

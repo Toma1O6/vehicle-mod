@@ -13,9 +13,7 @@ public interface FluidItemBehavior {
     @Nullable
     Item getFluidItem();
 
-    boolean isItemValidForProcessing(ItemStack stack);
-
-    boolean canProcess(int amount);
+    boolean canProcess(ItemStack stack, int amount);
 
     void process(ItemStack stack, FluidEntry entry, int slotID, IInventory inventory);
 
@@ -33,13 +31,8 @@ public interface FluidItemBehavior {
         }
 
         @Override
-        public boolean isItemValidForProcessing(ItemStack stack) {
-            return stack.getItem() == Items.BUCKET;
-        }
-
-        @Override
-        public boolean canProcess(int amount) {
-            return amount >= 10000;
+        public boolean canProcess(ItemStack stack, int amount) {
+            return stack.getItem() == Items.BUCKET && amount >= 10000;
         }
 
         @Override
@@ -57,20 +50,14 @@ public interface FluidItemBehavior {
         }
 
         @Override
-        public boolean isItemValidForProcessing(ItemStack stack) {
-            return stack.getItem() instanceof ItemNitroCan && stack.getItemDamage() > 0;
-        }
-
-        @Override
-        public boolean canProcess(int amount) {
-            return amount > 0;
+        public boolean canProcess(ItemStack stack, int amount) {
+            return stack.getItem() instanceof ItemNitroCan && stack.getItemDamage() == 1 && amount > 0;
         }
 
         @Override
         public void process(ItemStack stack, FluidEntry entry, int slotID, IInventory inventory) {
-            int amount = Math.min(stack.getItemDamage(), Math.min(50, entry.getAmount()));
-            stack.setItemDamage(stack.getItemDamage() - amount);
-            entry.reduce(amount);
+            stack.setItemDamage(0);
+            entry.reduce(((ItemNitroCan) stack.getItem()).getCapacity());
         }
     }
 }

@@ -94,15 +94,14 @@ public class ClientEventHandler {
 				}
 				NitroHandler nitroHandler = car.getNitroHandler();
 				IInventory nitroInventory = nitroHandler.getInventory();
-				boolean found = false;
 				for (int i = 0; i < nitroInventory.getSizeInventory(); i++) {
 					ItemStack stack = nitroInventory.getStackInSlot(i);
 					ResourceLocation icon = ItemNitroCan.EMPTY_ICON;
 					if(stack.getItem() instanceof ItemNitroCan) {
-						if(stack.getItemDamage() < stack.getMaxDamage()) {
+						boolean flag = nitroHandler.isNitroActive() && nitroHandler.getActiveSlot() == i;
+						if(stack.getItemDamage() < stack.getMaxDamage() || flag) {
 							ItemNitroCan can = (ItemNitroCan) stack.getItem();
-							icon = found ? can.getIcon_available() : can.getIcon_active();
-							found = true;
+							icon = flag ? can.getIcon_active() : can.getIcon_available();
 						}
 					}
 					DevUtil.drawImage2D(mc, icon, 74 + i * 10, resolution.getScaledHeight() - 40, 16, 16);

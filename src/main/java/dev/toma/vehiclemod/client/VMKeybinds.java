@@ -4,6 +4,7 @@ import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.ISpecialVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.LightController;
+import dev.toma.vehiclemod.common.entity.vehicle.NitroHandler;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.SPacketChangeLightStatus;
 import dev.toma.vehiclemod.network.packets.SPacketHonk;
@@ -101,6 +102,17 @@ public class VMKeybinds {
                 EntityVehicle vehicle = (EntityVehicle) entity;
                 if(!vehicle.isStarted() && vehicle.getStartCooldown() == 0) {
                     VMNetworkManager.instance().sendToServer(SPacketVehicleAction.start());
+                }
+            }
+        } else if(NITRO.isPressed()) {
+            Entity entity = player.getRidingEntity();
+            if(entity instanceof EntityVehicle && player == entity.getControllingPassenger()) {
+                EntityVehicle vehicle = (EntityVehicle) entity;
+                NitroHandler handler = vehicle.getNitroHandler();
+                int slot = handler.getFirstUsableNitroSlot();
+                if(vehicle.isStarted() && slot != -1) {
+                    handler.initiateUse(player, slot);
+                    VMNetworkManager.instance().sendToServer(SPacketVehicleAction.nitro(slot));
                 }
             }
         }

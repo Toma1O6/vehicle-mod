@@ -248,7 +248,7 @@ public class TileEntityFuelMaker extends TileEntity implements IInventory, ITick
         if(!type.hasFluidItemBehavior())
             return;
         FluidItemBehavior behavior = type.getBehavior();
-        if(behavior.isItemValidForProcessing(stack) && behavior.canProcess(entry.getAmount())) {
+        if(behavior.canProcess(stack, entry.getAmount())) {
             behavior.process(stack, entry, slotID, this);
             markDirty();
         }

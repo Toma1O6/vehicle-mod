@@ -13,16 +13,18 @@ import java.util.function.Supplier;
 public class ItemNitroCan extends VMItem implements IFuelMakerItem {
 
     public static final ResourceLocation EMPTY_ICON = VehicleMod.getResource("textures/gui/nitro_empty.png");
-    final int extractAmount;
+    final int capacity;
+    final int useTicks;
     final Supplier<SoundEvent> soundSupplier;
     final ResourceLocation icon_available;
     final ResourceLocation icon_active;
 
-    public ItemNitroCan(String name, int extractAmount, int amount, Supplier<SoundEvent> soundSupplier) {
+    public ItemNitroCan(String name, int capacity, int useTicks, Supplier<SoundEvent> soundSupplier) {
         super(name);
-        setMaxDamage(amount);
+        setMaxDamage(1);
         setMaxStackSize(1);
-        this.extractAmount = extractAmount;
+        this.capacity = capacity;
+        this.useTicks = useTicks;
         this.soundSupplier = soundSupplier;
         this.icon_available = VehicleMod.getResource("textures/gui/" + name + "_available.png");
         this.icon_active = VehicleMod.getResource("textures/gui/" + name + "_active.png");
@@ -35,7 +37,7 @@ public class ItemNitroCan extends VMItem implements IFuelMakerItem {
 
     @Override
     public int getFluidAmount(ItemStack stack) {
-        return stack.getMaxDamage() - stack.getItemDamage();
+        return stack.getItemDamage() > 0 ? 0 : capacity;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class ItemNitroCan extends VMItem implements IFuelMakerItem {
 
     @Override
     public ItemStack processInsertion(ItemStack stack, int extracted) {
-        stack.setItemDamage(stack.getItemDamage() + extracted);
+        stack.setItemDamage(stack.getMaxDamage());
         return stack;
     }
 
@@ -61,7 +63,11 @@ public class ItemNitroCan extends VMItem implements IFuelMakerItem {
         return icon_available;
     }
 
-    public int getExtractAmount() {
-        return extractAmount;
+    public int getUseTicks() {
+        return useTicks;
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 }

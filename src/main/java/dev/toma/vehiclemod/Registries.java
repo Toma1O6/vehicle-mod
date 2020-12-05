@@ -169,13 +169,13 @@ public class Registries {
                     new ItemPerk("bronze_tank_perk", StatModifierType.FUEL_CAPACITY, 0.03F),
                     new ItemPerk("silver_tank_perk", StatModifierType.FUEL_CAPACITY, 0.06F),
                     new ItemPerk("gold_tank_perk", StatModifierType.FUEL_CAPACITY, 0.1F),
-                    new ItemPerk("bronze_nitro_perk", StatModifierType.NITRO_POWER, 0.03F),
-                    new ItemPerk("silver_nitro_perk", StatModifierType.NITRO_POWER, 0.06F),
-                    new ItemPerk("gold_nitro_perk", StatModifierType.NITRO_POWER, 0.1F),
-                    new ItemNitroCan("nitro_bottle_25", 62, 2500, () -> VMSounds.NITRO_A),
-                    new ItemNitroCan("nitro_bottle_50", 83, 5000, () -> VMSounds.NITRO_A),
-                    new ItemNitroCan("nitro_bottle_75", 94, 7500, () -> VMSounds.NITRO_B),
-                    new ItemNitroCan("nitro_bottle_100", 100, 10000, () -> VMSounds.NITRO_B),
+                    new ItemPerk("bronze_nitro_perk", StatModifierType.NITRO_POWER, 0.02F),
+                    new ItemPerk("silver_nitro_perk", StatModifierType.NITRO_POWER, 0.04F),
+                    new ItemPerk("gold_nitro_perk", StatModifierType.NITRO_POWER, 0.06F),
+                    new ItemNitroCan("nitro_bottle_25", 2500, 40, () -> VMSounds.NITRO_A),
+                    new ItemNitroCan("nitro_bottle_50", 5000, 60, () -> VMSounds.NITRO_A),
+                    new ItemNitroCan("nitro_bottle_75", 7500, 80, () -> VMSounds.NITRO_B),
+                    new ItemNitroCan("nitro_bottle_100", 10000, 100, () -> VMSounds.NITRO_B),
                     new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {
