@@ -212,6 +212,6 @@ public class VehicleUpgrades {
         this.handling = 1.0F;
         this.fuelCons = 1.0F;
         this.fuelCap = 1.0F;
-        this.nitroPower = 0.3F;
+        this.nitroPower = 0.2F;
     }
 }
