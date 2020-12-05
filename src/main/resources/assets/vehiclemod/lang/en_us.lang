@@ -146,10 +146,17 @@ item.gold_speed_perk.name=Gold Speed Perk
 item.bronze_tank_perk.name=Bronze Tank Perk
 item.silver_tank_perk.name=Silver Tank Perk
 item.gold_tank_perk.name=Gold Tank Perk
+item.bronze_nitro_perk.name=Bronze Nitro Perk
+item.silver_nitro_perk.name=Silver Nitro Perk
+item.gold_nitro_perk.name=Gold Nitro Perk
 item.car_key.name=Car Key
 item.iron_car_lock.name=Iron Car Lock
 item.gold_car_lock.name=Gold Car Lock
 item.diamond_car_lock.name=Diamond Car Lock
+item.nitro_bottle_25.name=Nitro Bottle (2.5L)
+item.nitro_bottle_50.name=Nitro Bottle (5.0L)
+item.nitro_bottle_75.name=Nitro Bottle (7.5L)
+item.nitro_bottle_100.name=Nitro Bottle (10.0L)
 
 entity.vehiclemod:beamer_s120.name=Beamer S120
 entity.vehiclemod:fedoratti_vulcan.name=Fedoratti Vulcan
@@ -169,6 +176,17 @@ entity.vehiclemod:sputnik_firetruck.name=Sputnik Firetruck
 
 itemGroup.vehicle_mod=Vehicle Mod
 
+fluid.vehiclemod:activated_fuel_substance=Activated Fuel Substance
+fluid.vehiclemod:fuel=Fuel
+fluid.vehiclemod:nitro=Nitro
+
 category.vehiclemod=Vehicle Mod
 key.vehiclemod.car_siren=Car Siren
 key.vehiclemod.car_horn=Car Horn
+key.vehiclemod.car_lights=Car Lights
+key.vehiclemod.indicator_right=Right Indicator
+key.vehiclemod.indicator_left=Left Indicator
+key.vehiclemod.indicator_warning=Warning Indicator
+key.vehiclemod.eco_mode=Car Eco Mode
+key.vehiclemod.start=Start Car
+key.vehiclemod.nitro=Use Nitro
