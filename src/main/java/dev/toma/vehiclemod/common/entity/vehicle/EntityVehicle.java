@@ -175,7 +175,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
         if (!inputForward && inputBack && (hasFuel() || currentSpeed > 0)) {
             burnFuel();
-            float speed = world.isRainingAt(this.getPosition()) ? stats.brakeSpeed * 0.6F : stats.brakeSpeed;
+            float speed = world.isRainingAt(this.getPosition()) ? stats.brakeSpeed * 0.5F : stats.brakeSpeed;
             currentSpeed = currentSpeed > 0 ? currentSpeed - speed : currentSpeed > (-stats.maxSpeed * 0.3f) ? currentSpeed - (stats.acceleration * accModifier) : -stats.maxSpeed * 0.3f;
         }
 
