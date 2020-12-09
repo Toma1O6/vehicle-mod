@@ -1,17 +1,16 @@
 package dev.toma.vehiclemod.common.entity.vehicle.standart;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.vecmath.Vector3f;
-
 public class VehicleProtonP1 extends EntityVehicleStandart {
 
-    static final Vector3f[] PARTS = {new Vector3f(1.5f, 0.2f, 0.0f), new Vector3f(-2.3f, 0.2f, 0.6f)};
+    static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.5, 0.45, 0).exhaust(-2.3, 0.45, 0.6).build();
 
     public VehicleProtonP1(World world) {
         super(world);
@@ -55,8 +54,8 @@ public class VehicleProtonP1 extends EntityVehicleStandart {
     }
 
     @Override
-    public Vector3f[] getPartVecs() {
-        return PARTS;
+    public PositionManager getVehiclePositions() {
+        return POSITIONS;
     }
 
     @Override

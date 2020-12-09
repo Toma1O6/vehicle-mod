@@ -26,7 +26,7 @@ import java.util.Random;
 
 public class BlockMechanicPackage extends BlockBasic {
 
-    private static final AxisAlignedBB AABB = new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.3, 0.9);
+    protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.3, 0.9);
     private final Variant variant;
 
     public BlockMechanicPackage(Variant variant) {

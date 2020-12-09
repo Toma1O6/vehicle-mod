@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.common.entity.vehicle.muscles;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
@@ -12,7 +13,7 @@ import javax.vecmath.Vector3f;
 
 public class VehicleTracerT1 extends EntityVehicleMuscles {
 
-    private static final Vector3f[] VECTOR_3_FS = {new Vector3f(1.5F, 0.25F, 0), new Vector3f(-2.2F, 0.05F, 0.3F)};
+    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.5, 0.5, 0).exhaust(-2.2, 0.3, 0.3).build();
 
     public VehicleTracerT1(World world) {
         super(world);
@@ -50,8 +51,8 @@ public class VehicleTracerT1 extends EntityVehicleMuscles {
     }
 
     @Override
-    public Vector3f[] getPartVecs() {
-        return VECTOR_3_FS;
+    public PositionManager getVehiclePositions() {
+        return POSITIONS;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
@@ -10,12 +11,10 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.vecmath.Vector3f;
-
 public class VehicleSputnikAmbulance extends EntityVehicleSirens {
 
     private static final VehicleTexture[] VALID_TEXTURES = {VehicleTexture.BLUE, VehicleTexture.RED, VehicleTexture.UTILITY_YELLOW, VehicleTexture.BRICK};
-    private static final Vector3f[] PARTS = {new Vector3f(2.5F, 0.4F, 0.0F), new Vector3f(-2.8F, -0.1F, 0.7F)};
+    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(2.5, 0.65, 0).exhaust(-2.8, -0.35, 0.7).build();
 
     public VehicleSputnikAmbulance(World world) {
         super(world);
@@ -50,8 +49,8 @@ public class VehicleSputnikAmbulance extends EntityVehicleSirens {
     }
 
     @Override
-    public Vector3f[] getPartVecs() {
-        return PARTS;
+    public PositionManager getVehiclePositions() {
+        return POSITIONS;
     }
 
     @Override

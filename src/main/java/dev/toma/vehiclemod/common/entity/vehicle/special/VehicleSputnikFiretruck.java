@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
@@ -8,6 +9,7 @@ import dev.toma.vehiclemod.init.VMSounds;
 import dev.toma.vehiclemod.util.DevUtil;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
@@ -15,7 +17,7 @@ import javax.vecmath.Vector3f;
 public class VehicleSputnikFiretruck extends EntityVehicleSirens {
 
     static final VehicleTexture[] VALID_COLORS = {VehicleTexture.GRAY, VehicleTexture.RED, VehicleTexture.UTILITY_YELLOW, VehicleTexture.HELL};
-    static final Vector3f[] PARTS = {new Vector3f(3.4F, 0.4F, 0.0F), new Vector3f(-3.2F, 0.2F, 0.9F), new Vector3f(-3.2F, 0.2F, -0.9F)};
+    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(3.4, 0.65, 0).exhaust(new Vec3d(-3.2, 0.45, 0.9), new Vec3d(-3.2, 0.45, -0.9)).build();
 
     public VehicleSputnikFiretruck(World world) {
         super(world);
@@ -50,8 +52,8 @@ public class VehicleSputnikFiretruck extends EntityVehicleSirens {
     }
 
     @Override
-    public Vector3f[] getPartVecs() {
-        return PARTS;
+    public PositionManager getVehiclePositions() {
+        return POSITIONS;
     }
 
     @Override

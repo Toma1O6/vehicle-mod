@@ -10,24 +10,31 @@ import net.minecraft.util.SoundEvent;
 
 import java.util.function.Supplier;
 
-public class ItemNitroCan extends VMItem implements IFuelMakerItem {
+public class ItemNitroCan extends VMItem implements IFuelMakerItem, ITunerPackageEntry {
 
     public static final ResourceLocation EMPTY_ICON = VehicleMod.getResource("textures/gui/nitro_empty.png");
+    final int tier;
     final int capacity;
     final int useTicks;
     final Supplier<SoundEvent> soundSupplier;
     final ResourceLocation icon_available;
     final ResourceLocation icon_active;
 
-    public ItemNitroCan(String name, int capacity, int useTicks, Supplier<SoundEvent> soundSupplier) {
+    public ItemNitroCan(String name, int tier, int capacity, int useTicks, Supplier<SoundEvent> soundSupplier) {
         super(name);
         setMaxDamage(1);
         setMaxStackSize(1);
+        this.tier = tier;
         this.capacity = capacity;
         this.useTicks = useTicks;
         this.soundSupplier = soundSupplier;
         this.icon_available = VehicleMod.getResource("textures/gui/" + name + "_available.png");
         this.icon_active = VehicleMod.getResource("textures/gui/" + name + "_active.png");
+    }
+
+    @Override
+    public int getTier() {
+        return tier;
     }
 
     @Override

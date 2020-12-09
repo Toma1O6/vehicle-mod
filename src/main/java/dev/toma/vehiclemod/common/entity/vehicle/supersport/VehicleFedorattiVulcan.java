@@ -1,18 +1,18 @@
 package dev.toma.vehiclemod.common.entity.vehicle.supersport;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import javax.vecmath.Vector3f;
 
 public class VehicleFedorattiVulcan extends EntityVehicleSuperSport {
 
-    private static final Vector3f[] VECTOR_3_FS = {new Vector3f(-1.3F, 0.7F, 0), new Vector3f(-2.1F, 0.15F, -0.55F), new Vector3f(-2.1F, 0.15F, 0.55F)};
+    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(-1.3, 0.95, 0).exhaust(new Vec3d(-2.1, 0.4, -0.55), new Vec3d(-2.1, 0.4, 0.55)).build();
 
     public VehicleFedorattiVulcan(World world) {
         super(world);
@@ -46,8 +46,8 @@ public class VehicleFedorattiVulcan extends EntityVehicleSuperSport {
     }
 
     @Override
-    public Vector3f[] getPartVecs() {
-        return VECTOR_3_FS;
+    public PositionManager getVehiclePositions() {
+        return POSITIONS;
     }
 
     @Override

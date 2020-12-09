@@ -1,17 +1,16 @@
 package dev.toma.vehiclemod.common.entity.vehicle.muscles;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.vecmath.Vector3f;
-
 public class VehicleBeamerS120 extends EntityVehicleMuscles {
 
-	private static final Vector3f[] PARTS = {new Vector3f(2.0f, 0.5f, 0f), new Vector3f(-2.0f, 0.15f, 0.47f)};
+	private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(2, 0.75, 0).exhaust(-2, 0.4, 0.47).build();
 	
 	public VehicleBeamerS120(World world) {
 		super(world);
@@ -47,12 +46,12 @@ public class VehicleBeamerS120 extends EntityVehicleMuscles {
 	public int maximumAmountOfPassengers() {
 		return 4;
 	}
-	
+
 	@Override
-	public Vector3f[] getPartVecs() {
-		return PARTS;
+	public PositionManager getVehiclePositions() {
+		return POSITIONS;
 	}
-	
+
 	@Override
 	public VehicleStats getConfigStats() {
 		return VMConfig.beamer_s120;

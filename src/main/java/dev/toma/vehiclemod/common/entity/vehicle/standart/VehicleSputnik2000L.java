@@ -1,18 +1,20 @@
 package dev.toma.vehiclemod.common.entity.vehicle.standart;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.EntityVehicleStandart;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
 public class VehicleSputnik2000L extends EntityVehicleStandart {
 
-    private static final Vector3f[] PARTS = {new Vector3f(1.7F, 0.5F, 0.0F), new Vector3f(-1.95F, 0.15F, 0.3F)};
+    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.7, 0.75, 0).exhaust(new Vec3d(-1.95, 0.4, 0.3)).build();
 
     public VehicleSputnik2000L(World world) {
         super(world);
@@ -40,6 +42,11 @@ public class VehicleSputnik2000L extends EntityVehicleStandart {
     }
 
     @Override
+    public PositionManager getVehiclePositions() {
+        return POSITIONS;
+    }
+
+    @Override
     public int maximumAmountOfPassengers() {
         return 2;
     }
@@ -52,11 +59,6 @@ public class VehicleSputnik2000L extends EntityVehicleStandart {
     @Override
     public VehicleStats getConfigStats() {
         return VMConfig.sputnik2000L;
-    }
-
-    @Override
-    public Vector3f[] getPartVecs() {
-        return PARTS;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -11,7 +12,7 @@ import javax.vecmath.Vector3f;
 
 public class VehicleBeamerPickup extends EntityVehicleSpecial {
 
-    static final Vector3f[] PARTS = {new Vector3f(1.8f, 0.3f, 0), new Vector3f(-1.8f, 0f, 0f)};
+    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.8, 0.55, 0).exhaust(-1.8, 0.25, 0).build();
 
     public VehicleBeamerPickup(World world) {
         super(world);
@@ -50,8 +51,8 @@ public class VehicleBeamerPickup extends EntityVehicleSpecial {
     }
 
     @Override
-    public Vector3f[] getPartVecs() {
-        return PARTS;
+    public PositionManager getVehiclePositions() {
+        return POSITIONS;
     }
 
     @Override

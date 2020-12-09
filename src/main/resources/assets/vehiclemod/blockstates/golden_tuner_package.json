@@ -1,0 +1,7 @@
+{
+  "variants": {
+	"normal": {
+	  "model": "vehiclemod:golden_tuner_package"
+	}
+  }
+}

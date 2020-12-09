@@ -17,8 +17,8 @@ public class BasicLightEntry<V extends EntityVehicle> implements LightEntry<V> {
     public void recalculateForIntensity(float intensity) {
         int value = (int) (0xF * intensity);
         int totalLight = 0xF00000 | value << 4;
-        this.setLightmapX(totalLight % 0x10000);
-        this.setLightmapY(totalLight / 0x10000);
+        setLightmapX(totalLight % 0x10000);
+        setLightmapY(totalLight / 0x10000);
     }
 
     @Override

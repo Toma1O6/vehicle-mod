@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
@@ -63,8 +64,8 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSirens {
     }
 
     @Override
-    public Vector3f[] getPartVecs() {
-        return VehicleSputnik3000L.PARTS;
+    public PositionManager getVehiclePositions() {
+        return VehicleSputnik3000L.POSITIONS;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.common.entity.vehicle.standart;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -11,7 +12,7 @@ import javax.vecmath.Vector3f;
 
 public class VehicleSputnik3000L extends EntityVehicleStandart {
 
-    public static Vector3f[] PARTS = {new Vector3f(1.75F, 0.4F, 0), new Vector3f(-1.9F, 0, 0.5F)};
+    public static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.75, 0.65, 0).exhaust(-1.9, 0.25, 0.5).build();
 
     public VehicleSputnik3000L(World world) {
         super(world);
@@ -49,8 +50,8 @@ public class VehicleSputnik3000L extends EntityVehicleStandart {
     }
 
     @Override
-    public Vector3f[] getPartVecs() {
-        return PARTS;
+    public PositionManager getVehiclePositions() {
+        return POSITIONS;
     }
 
     @Override

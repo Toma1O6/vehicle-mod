@@ -105,8 +105,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public abstract EnumVehicleType getVehicleType();
 
-    public abstract Vector3f[] getPartVecs();
-
     public abstract VehicleStats getConfigStats();
 
     public abstract int maximumAmountOfPassengers();
@@ -114,6 +112,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public abstract VehicleSoundPack createSoundPack();
 
     public abstract VehicleContainer createInvetory();
+
+    public abstract PositionManager getVehiclePositions();
 
     public VehicleUpgrades createVehicleUpgrades() {
         return new VehicleUpgrades(this.getConfigStats());
@@ -308,25 +308,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     private void spawnParticles() {
         if (world.isRemote) {
-            if (health / getActualStats().maxHealth <= 0.5f) {
-                Vec3d engineVec = (new Vec3d(getPartVecs()[0].x, getPartVecs()[0].y + 0.25d, getPartVecs()[0].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
-                world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, true, posX + engineVec.x, posY + engineVec.y, posZ + engineVec.z, 0d, 0.1d, 0d);
-            }
-
-            if (hasFuel() && isStarted) {
-                int i = 1;
-                while (i < this.getPartVecs().length) {
-                    Vec3d exhaustVec = (new Vec3d(getPartVecs()[i].x, getPartVecs()[i].y + 0.25d, getPartVecs()[i].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
-                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, true, posX + exhaustVec.x, posY + exhaustVec.y, posZ + exhaustVec.z, 0, 0.02d, 0);
-                    if(nitroHandler.isNitroActive())
-                        world.spawnParticle(EnumParticleTypes.FLAME, true, posX + exhaustVec.x, posY + exhaustVec.y, posZ + exhaustVec.z, 0, 0, 0);
-                    ++i;
-                }
-            }
-            if (health < 0) {
-                Vec3d engine = (new Vec3d(getPartVecs()[0].x, getPartVecs()[0].y + 0.25d, getPartVecs()[0].z)).rotateYaw(-this.rotationYaw * 0.017453292F - ((float) Math.PI / 2F));
-                world.spawnParticle(EnumParticleTypes.CLOUD, true, posX + engine.x, posY + engine.y, posZ + engine.z, 0d, 0.05d, 0d);
-            }
+            float health = this.health / this.getActualStats().maxHealth;
+            this.getVehiclePositions().tickParticles(world, health, isStarted && fuel > 0, nitroHandler.isNitroActive(), posX, posY, posZ, rotationYaw);
         }
     }
 

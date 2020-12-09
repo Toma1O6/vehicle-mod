@@ -10,6 +10,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -52,6 +53,26 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 			float f2 = entity.height + 0.5F;
 			this.drawInfo(entity, mc, (float)x, (float)y + f2, (float)z);
 		}
+		// neons
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(x, y, z);
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.disableTexture2D();
+		GlStateManager.enableBlend();
+		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+		GlStateManager.disableLighting();
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder builder = tessellator.getBuffer();
+		builder.begin(7, DefaultVertexFormats.POSITION_COLOR);
+		builder.pos(3, 0.01, -3).color(0.0F, 1.0F, 1.0F, 0.2F).endVertex();
+		builder.pos(-3, 0.01, -3).color(0.0F, 1.0F, 1.0F, 0.2F).endVertex();
+		builder.pos(-3, 0.01, 3).color(0.0F, 1.0F, 1.0F, 0.2F).endVertex();
+		builder.pos(3, 0.01, 3).color(0.0F, 1.0F, 1.0F, 0.2F).endVertex();
+		tessellator.draw();
+		GlStateManager.disableBlend();
+		GlStateManager.enableTexture2D();
+		GlStateManager.popMatrix();
 	}
 
 	private void drawInfo(V vehicle, Minecraft mc, float x, float y, float z) {

@@ -1,0 +1,7 @@
+{
+  "variants": {
+	"normal": {
+	  "model": "vehiclemod:bronze_tuner_package"
+	}
+  }
+}

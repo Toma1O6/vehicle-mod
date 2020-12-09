@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.common.entity.vehicle.supersport;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
@@ -8,11 +9,9 @@ import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.vecmath.Vector3f;
-
 public class VehicleFedorattiNightStalker extends EntityVehicleSuperSport {
 
-    static final Vector3f[] PARTS = {new Vector3f(-1.5F, 0.4F, 0.0F), new Vector3f(-2.25F, 0.2F, 0.0F)};
+    static final PositionManager POSITIONS = PositionManager.Builder.create().engine(-1.5, 0.65, 0).exhaust(-2.25, 0.45, 0).build();
 
     public VehicleFedorattiNightStalker(World world) {
         super(world);
@@ -56,8 +55,8 @@ public class VehicleFedorattiNightStalker extends EntityVehicleSuperSport {
     }
 
     @Override
-    public Vector3f[] getPartVecs() {
-        return PARTS;
+    public PositionManager getVehiclePositions() {
+        return POSITIONS;
     }
 
     @Override

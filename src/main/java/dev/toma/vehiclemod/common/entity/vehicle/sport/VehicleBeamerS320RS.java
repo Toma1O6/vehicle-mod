@@ -1,18 +1,20 @@
 package dev.toma.vehiclemod.common.entity.vehicle.sport;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
 
 public class VehicleBeamerS320RS extends EntityVehicleSport {
 
-    static final Vector3f[] PARTS = {new Vector3f(1.5F, 0.4F, 0.0F), new Vector3f(-2.2F, 0.3F, 0.7F), new Vector3f(-2.2f, 0.3F, -0.8F)};
+    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.5, 0.65, 0.0).exhaust(new Vec3d(-2.2, 0.55, 0.7), new Vec3d(-2.2, 0.55, -0.8)).build();
 
     public VehicleBeamerS320RS(World world) {
         super(world);
@@ -40,8 +42,8 @@ public class VehicleBeamerS320RS extends EntityVehicleSport {
     }
 
     @Override
-    public Vector3f[] getPartVecs() {
-        return PARTS;
+    public PositionManager getVehiclePositions() {
+        return POSITIONS;
     }
 
     @Override

@@ -1,0 +1,6 @@
+{
+  "parent": "vehiclemod:block/package",
+  "textures": {
+	"package": "vehiclemod:blocks/golden_tuner_package"
+  }
+}

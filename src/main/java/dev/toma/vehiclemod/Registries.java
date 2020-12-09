@@ -5,6 +5,7 @@ import dev.toma.vehiclemod.client.render.item.RenderItemSpawner;
 import dev.toma.vehiclemod.common.blocks.BlockMechanicPackage;
 import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.blocks.BlockSecret;
+import dev.toma.vehiclemod.common.blocks.BlockTunerPackage;
 import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.EnumCarLockType;
@@ -13,12 +14,12 @@ import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
 import dev.toma.vehiclemod.common.entity.vehicle.special.*;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleBeamerS320RS;
-import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiNightStalker;
-import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiVulcan;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleProtonP1Tunned;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleProtonP1;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik2000L;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
+import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiNightStalker;
+import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiVulcan;
 import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleSputnikDuster;
 import dev.toma.vehiclemod.common.fluids.FluidItemBehavior;
 import dev.toma.vehiclemod.common.fluids.FluidType;
@@ -87,6 +88,10 @@ public class Registries {
         public static final BlockMechanicPackage MECHANIC_PACKAGE_GOLDEN = null;
         public static final BlockMechanicPackage MECHANIC_PACKAGE_PLATINUM = null;
         public static final BlockSecret SECRET = null;
+        public static final BlockTunerPackage BRONZE_TUNER_PACKAGE = null;
+        public static final BlockTunerPackage SILVER_TUNER_PACKAGE = null;
+        public static final BlockTunerPackage GOLDEN_TUNER_PACKAGE = null;
+        public static final BlockTunerPackage PLATINUM_TUNER_PACKAGE = null;
     }
 
     @EventBusSubscriber
@@ -115,7 +120,11 @@ public class Registries {
             registry.registerAll(
                     new BlockPetrolPump("petrol_pump"),
                     new BlockFuelMaker("fuel_maker"),
-                    new BlockSecret("secret")
+                    new BlockSecret("secret"),
+                    new BlockTunerPackage("bronze_tuner_package", 0),
+                    new BlockTunerPackage("silver_tuner_package", 1),
+                    new BlockTunerPackage("golden_tuner_package", 2),
+                    new BlockTunerPackage("platinum_tuner_package", 3)
             );
             for (BlockMechanicPackage.Variant variant : BlockMechanicPackage.Variant.values()) {
                 registry.register(new BlockMechanicPackage(variant));
@@ -172,10 +181,44 @@ public class Registries {
                     new ItemPerk("bronze_nitro_perk", StatModifierType.NITRO_POWER, 0.04F),
                     new ItemPerk("silver_nitro_perk", StatModifierType.NITRO_POWER, 0.07F),
                     new ItemPerk("gold_nitro_perk", StatModifierType.NITRO_POWER, 0.10F),
-                    new ItemNitroCan("nitro_bottle_25", 2500, 40, () -> VMSounds.NITRO_A),
-                    new ItemNitroCan("nitro_bottle_50", 5000, 60, () -> VMSounds.NITRO_A),
-                    new ItemNitroCan("nitro_bottle_75", 7500, 80, () -> VMSounds.NITRO_B),
-                    new ItemNitroCan("nitro_bottle_100", 10000, 100, () -> VMSounds.NITRO_B),
+                    new ItemNitroCan("nitro_bottle_25", 0, 2500, 40, () -> VMSounds.NITRO_A),
+                    new ItemNitroCan("nitro_bottle_50", 1, 5000, 60, () -> VMSounds.NITRO_A),
+                    new ItemNitroCan("nitro_bottle_75", 2, 7500, 80, () -> VMSounds.NITRO_B),
+                    new ItemNitroCan("nitro_bottle_100", 3, 10000, 100, () -> VMSounds.NITRO_B),
+                    new ItemNeon("neon_tube_blue", 0),
+                    new ItemNeon("neon_tube_green", 0),
+                    new ItemNeon("neon_tube_red", 0),
+                    new ItemNeon("neon_tube_yellow", 0),
+                    new ItemNitroCloud("nitro_cloud_spray_blue", 0),
+                    new ItemNitroCloud("nitro_cloud_spray_green", 0),
+                    new ItemNitroCloud("nitro_cloud_spray_red", 0),
+                    new ItemNitroCloud("nitro_cloud_spray_yellow", 0),
+                    new ItemNeon("neon_tube_brown", 1),
+                    new ItemNeon("neon_tube_ice", 1),
+                    new ItemNeon("neon_tube_lime", 1),
+                    new ItemNeon("neon_tube_pink", 1),
+                    new ItemNitroCloud("nitro_cloud_spray_brown", 1),
+                    new ItemNitroCloud("nitro_cloud_spray_light_blue", 1),
+                    new ItemNitroCloud("nitro_cloud_spray_silver", 1),
+                    new ItemNitroCloud("nitro_cloud_spray_pink", 1),
+                    new ItemTunerPackage("neon_pulser_slow", 2),
+                    new ItemNeon("neon_tube_magenta", 2),
+                    new ItemNeon("neon_tube_orange", 2),
+                    new ItemNeon("neon_tube_teal", 2),
+                    new ItemNeon("neon_tube_white", 2),
+                    new ItemNitroCloud("nitro_cloud_spray_black", 2),
+                    new ItemNitroCloud("nitro_cloud_spray_lime", 2),
+                    new ItemNitroCloud("nitro_cloud_spray_orange", 2),
+                    new ItemNitroCloud("nitro_cloud_spray_white", 2),
+                    new ItemTunerPackage("neon_pulser_fast", 3),
+                    new ItemNeon("neon_tube_cyan", 3),
+                    new ItemNeon("neon_tube_gold", 3),
+                    new ItemNeon("neon_tube_purple", 3),
+                    new ItemNeon("neon_tube_ruby", 3),
+                    new ItemNitroCloud("nitro_cloud_spray_cyan", 3),
+                    new ItemNitroCloud("nitro_cloud_spray_gold", 3),
+                    new ItemNitroCloud("nitro_cloud_spray_purple", 3),
+                    new ItemNitroCloud("nitro_cloud_spray_ruby", 3),
                     new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {
@@ -359,40 +402,6 @@ public class Registries {
                     registerModel(Item.getItemFromBlock(BLOCKS.getValue(rl)));
                 }
             }
-
-            //GENERATES TUNNING RECIPES
-            /*Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            File dir = new File("D:/mcmods/1.12.2/vehicle-mod/src/main/resources/assets/vehiclemod/recipes");
-            for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
-                for (int i = 2; i < 8; i++) {
-                    try {
-                        int n = i - 1;
-                        String outputName = type.name().toLowerCase() + "_" + i;
-                        String ingredientName = outputName.replaceAll("_[0-9]+", "_" + n);
-                        File file = new File(dir, outputName + ".json");
-                        JsonObject recipeObject = new JsonObject();
-                        recipeObject.addProperty("type", "minecraft:crafting_shaped");
-                        JsonArray pattern = new JsonArray();
-                        pattern.add("PPP");
-                        recipeObject.add("pattern", pattern);
-                        JsonObject key = new JsonObject();
-                        JsonObject p = new JsonObject();
-                        p.addProperty("item", "vehiclemod:" + ingredientName);
-                        key.add("P", p);
-                        recipeObject.add("key", key);
-                        JsonObject result = new JsonObject();
-                        result.addProperty("item", "vehiclemod:" + outputName);
-                        result.addProperty("count", 1);
-                        recipeObject.add("result", result);
-                        FileWriter writer = new FileWriter(file);
-                        writer.write(gson.toJson(recipeObject));
-                        writer.close();
-                        System.out.println("Created recipe for " + outputName);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            }*/
         }
 
         @SubscribeEvent
