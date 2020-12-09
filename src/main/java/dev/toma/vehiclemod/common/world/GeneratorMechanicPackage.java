@@ -20,7 +20,6 @@ public class GeneratorMechanicPackage extends PackageGenerator {
     public void generateBlock(BlockPos pos, World world, Random random) {
         BlockMechanicPackage.Variant variant = VARIANT.getRandom();
         world.setBlockState(pos, variant.getPackage().getDefaultState());
-        System.out.println(pos);
         TileEntity tileEntity = world.getTileEntity(pos);
         if(tileEntity instanceof TileEntityMechanicPackage) {
             ((TileEntityMechanicPackage) tileEntity).fill(variant);

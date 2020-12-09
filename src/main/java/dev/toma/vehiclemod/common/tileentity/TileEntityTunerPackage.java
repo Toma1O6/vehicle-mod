@@ -32,7 +32,7 @@ public class TileEntityTunerPackage extends TileEntityInventory implements ILock
             List<Item> pool = LOOT_POOL.get().lookup(tier);
             Item item = getRandom(pool, VehicleMod.random);
             setInventorySlotContents(0, new ItemStack(item));
-            combinations = new int[3 + tier];
+            combinations = new int[5 + tier];
             for (int i = 0; i < combinations.length; i++)
                 combinations[i] = i;
             ILockpickable.shuffle(combinations);

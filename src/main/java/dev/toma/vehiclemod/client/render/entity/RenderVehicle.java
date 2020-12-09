@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.client.render.entity;
 
+import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
@@ -17,11 +18,14 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
+import org.lwjgl.opengl.GL11;
 
 import java.text.DecimalFormat;
 
 public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
-	
+
+	static final ResourceLocation NEON = VehicleMod.getResource("textures/entity/neon_texture.png");
+
 	public RenderVehicle(RenderManager manager) {
 		super(manager);
 	}
@@ -57,21 +61,23 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.disableTexture2D();
 		GlStateManager.enableBlend();
 		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 		GlStateManager.disableLighting();
+		Minecraft.getMinecraft().getTextureManager().bindTexture(NEON);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder builder = tessellator.getBuffer();
-		builder.begin(7, DefaultVertexFormats.POSITION_COLOR);
-		builder.pos(3, 0.01, -3).color(0.0F, 1.0F, 1.0F, 0.2F).endVertex();
-		builder.pos(-3, 0.01, -3).color(0.0F, 1.0F, 1.0F, 0.2F).endVertex();
-		builder.pos(-3, 0.01, 3).color(0.0F, 1.0F, 1.0F, 0.2F).endVertex();
-		builder.pos(3, 0.01, 3).color(0.0F, 1.0F, 1.0F, 0.2F).endVertex();
+		GlStateManager.shadeModel(GL11.GL_SMOOTH);
+		builder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+		builder.pos(3, 0.01, -3).tex(1, 0).color(1.0F, 1.0F, 0.0F, 0.4F).endVertex();
+		builder.pos(-3, 0.01, -3).tex(0, 0).color(1.0F, 0.0F, 0.0F, 0.4F).endVertex();
+		builder.pos(-3, 0.01, 3).tex(0, 1).color(1.0F, 1.0F, 0.0F, 0.4F).endVertex();
+		builder.pos(3, 0.01, 3).tex(1, 1).color(1.0F, 0.0F, 0.0F, 0.4F).endVertex();
 		tessellator.draw();
+		GlStateManager.shadeModel(GL11.GL_FLAT);
 		GlStateManager.disableBlend();
-		GlStateManager.enableTexture2D();
+		GlStateManager.enableLighting();
 		GlStateManager.popMatrix();
 	}
 

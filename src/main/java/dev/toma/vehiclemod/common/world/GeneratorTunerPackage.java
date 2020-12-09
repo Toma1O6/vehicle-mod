@@ -32,7 +32,6 @@ public class GeneratorTunerPackage extends PackageGenerator {
         int tier = VARIANT.getRandom().ordinal();
         IBlockState state = TIER_TO_BLOCK_MAP.get().lookup(tier).getDefaultState();
         world.setBlockState(pos, state);
-        System.out.println(pos);
         TileEntity tileEntity = world.getTileEntity(pos);
         if(tileEntity instanceof TileEntityTunerPackage) {
             ((TileEntityTunerPackage) tileEntity).fill(tier);
