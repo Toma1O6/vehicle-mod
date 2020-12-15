@@ -2,14 +2,12 @@ package dev.toma.vehiclemod.util;
 
 import dev.toma.vehiclemod.client.gui.GuiFuelMaker;
 import dev.toma.vehiclemod.client.gui.GuiPetrolPump;
-import dev.toma.vehiclemod.client.gui.GuiVehicleComponents;
 import dev.toma.vehiclemod.client.gui.GuiVehicleInventory;
+import dev.toma.vehiclemod.client.gui.tunning.GuiNeons;
+import dev.toma.vehiclemod.client.gui.tunning.GuiVehicleComponents;
 import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
-import dev.toma.vehiclemod.common.container.ContainerFuelMaker;
-import dev.toma.vehiclemod.common.container.ContainerPetrolPump;
-import dev.toma.vehiclemod.common.container.ContainerVehicle;
-import dev.toma.vehiclemod.common.container.ContainerVehicleComponents;
+import dev.toma.vehiclemod.common.container.*;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.inventory.InventoryComponents;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
@@ -25,6 +23,8 @@ public class GuiHandler implements IGuiHandler {
     public static final int PETROL_PUMP = 1;
     public static final int VEHICLE = 2;
     public static final int VEHICLE_COMPONENT = 3;
+    public static final int VEHICLE_NEON = 4;
+    public static final int VEHICLE_NITRO = 5;
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -39,6 +39,10 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerVehicle(player.inventory, (EntityVehicle) world.getEntityByID(x));
             case VEHICLE_COMPONENT:
                 return new ContainerVehicleComponents(player.inventory, new InventoryComponents(player));
+            case VEHICLE_NEON:
+                if(player.getRidingEntity() instanceof EntityVehicle)
+                    return new ContainerNeons(player.inventory, ((EntityVehicle) player.getRidingEntity()).getNeonHandler().getNeons());
+                return null;
         }
     }
 
@@ -55,6 +59,10 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiVehicleInventory(player.inventory, (EntityVehicle) world.getEntityByID(x));
             case VEHICLE_COMPONENT:
                 return new GuiVehicleComponents(player.inventory, new InventoryComponents(player));
+            case VEHICLE_NEON:
+                if(player.getRidingEntity() instanceof EntityVehicle)
+                    return new GuiNeons(player.inventory, ((EntityVehicle) player.getRidingEntity()).getNeonHandler().getNeons());
+                return null;
         }
     }
 

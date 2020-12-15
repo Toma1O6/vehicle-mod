@@ -110,12 +110,24 @@ public class DevUtil {
         return list;
     }
 
+    public static NBTTagCompound inventoryToNBTCompound(IInventory inventory) {
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setTag("inventory", inventoryToNBT(inventory));
+        return compound;
+    }
+
     public static void loadInventoryFromNBT(IInventory inventory, NBTTagList list) {
         for (int i = 0; i < list.tagCount(); i++) {
             NBTTagCompound nbt = list.getCompoundTagAt(i);
             int index = nbt.getInteger("index");
             ItemStack stack = new ItemStack(nbt.getCompoundTag("item"));
             inventory.setInventorySlotContents(index, stack);
+        }
+    }
+
+    public static void loadInventoryFromNBTCompound(IInventory inventory, NBTTagCompound compound) {
+        if(compound.hasKey("inventory", Constants.NBT.TAG_LIST)) {
+            loadInventoryFromNBT(inventory, compound.getTagList("inventory", Constants.NBT.TAG_COMPOUND));
         }
     }
 

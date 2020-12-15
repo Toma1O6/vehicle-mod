@@ -12,6 +12,7 @@ public class PositionManager {
     private final Vec3d neonBack;
     private final Vec3d neonRight;
     private final Vec3d neonLeft;
+    private final double customLength;
 
     public PositionManager(Builder builder) {
         this.engine = builder.engine;
@@ -20,6 +21,15 @@ public class PositionManager {
         this.neonBack = builder.neonBack;
         this.neonRight = builder.neonRight;
         this.neonLeft = builder.neonLeft;
+        this.customLength = builder.length;
+    }
+
+    public boolean hasCustomNeonLength() {
+        return customLength > 0;
+    }
+
+    public double getCustomLength() {
+        return customLength;
     }
 
     public void tickParticles(World world, float healthPct, boolean engineFlag, boolean nitro, double x, double y, double z, float yaw) {
@@ -65,9 +75,9 @@ public class PositionManager {
         private Vec3d neonBack;
         private Vec3d neonRight;
         private Vec3d neonLeft;
+        private double length;
 
         Builder() {
-            
         }
 
         public static Builder create() {
@@ -89,28 +99,33 @@ public class PositionManager {
         }
 
         public Builder frontNeon(double n) {
-            this.neonFront = new Vec3d(n, 0, 0);
+            this.neonFront = new Vec3d(0, 0, n);
             return this;
         }
 
         public Builder backNeon(double n) {
-            this.neonBack = new Vec3d(-n, 0, 0);
+            this.neonBack = new Vec3d(0, 0, -n);
             return this;
         }
 
         public Builder rightNeon(double n) {
-            this.neonRight = new Vec3d(0, 0, n);
+            this.neonRight = new Vec3d(n, 0, 0);
             return this;
         }
 
         public Builder leftNeon(double n) {
-            this.neonLeft = new Vec3d(0, 0, -n);
+            this.neonLeft = new Vec3d(-n, 0, 0);
             return this;
         }
 
         public Builder sideNeons(double n) {
             rightNeon(n);
             leftNeon(n);
+            return this;
+        }
+
+        public Builder length(double length) {
+            this.length = length;
             return this;
         }
 

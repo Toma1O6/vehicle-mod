@@ -11,6 +11,7 @@ import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.SPacketOpenVehicleComponentGUI;
 import dev.toma.vehiclemod.util.DevUtil;
+import dev.toma.vehiclemod.util.GuiHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.*;
@@ -41,7 +42,7 @@ public class ClientEventHandler {
 		EntityPlayer player = Minecraft.getMinecraft().player;
 		if(event.getGui() instanceof InventoryEffectRenderer && player.getRidingEntity() instanceof EntityVehicle) {
 			event.setCanceled(true);
-			VMNetworkManager.instance().sendToServer(new SPacketOpenVehicleComponentGUI());
+			VMNetworkManager.instance().sendToServer(new SPacketOpenVehicleComponentGUI(GuiHandler.VEHICLE_COMPONENT));
 		}
 	}
 
@@ -61,6 +62,8 @@ public class ClientEventHandler {
 		map.registerSprite(VehicleMod.getResource("items/perk_empty"));
 		map.registerSprite(VehicleMod.getResource("items/filter_empty"));
 		map.registerSprite(VehicleMod.getResource("items/bucket_empty"));
+		map.registerSprite(VehicleMod.getResource("items/neon_empty"));
+		map.registerSprite(VehicleMod.getResource("items/neon_pulser_empty"));
 	}
 
 	@SubscribeEvent

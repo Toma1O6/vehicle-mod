@@ -43,7 +43,13 @@ public class VehicleSputnik2000L extends EntityVehicleStandart {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return POSITIONS;
+        return PositionManager.Builder.create()
+                .engine(1.7, 0.75, 0)
+                .exhaust(new Vec3d(-1.95, 0.4, 0.3))
+                .frontNeon(2.0)
+                .backNeon(1.8)
+                .sideNeons(0.8)
+                .build();
     }
 
     @Override

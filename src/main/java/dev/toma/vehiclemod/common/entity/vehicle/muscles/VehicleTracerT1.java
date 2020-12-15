@@ -52,7 +52,13 @@ public class VehicleTracerT1 extends EntityVehicleMuscles {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return POSITIONS;
+        return PositionManager.Builder.create()
+                .engine(1.5, 0.5, 0)
+                .exhaust(-2.2, 0.3, 0.3)
+                .frontNeon(2.2)
+                .backNeon(2.0)
+                .sideNeons(0.8)
+                .build();
     }
 
     @Override

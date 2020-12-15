@@ -11,7 +11,14 @@ import net.minecraft.world.World;
 
 public class VehicleFedorattiNightStalker extends EntityVehicleSuperSport {
 
-    static final PositionManager POSITIONS = PositionManager.Builder.create().engine(-1.5, 0.65, 0).exhaust(-2.25, 0.45, 0).build();
+    static final PositionManager POSITIONS = PositionManager.Builder.create()
+            .engine(-1.5, 0.65, 0)
+            .exhaust(-2.25, 0.45, 0)
+            .frontNeon(2.75)
+            .backNeon(2.3)
+            .sideNeons(1.0)
+            .length(2.5)
+            .build();
 
     public VehicleFedorattiNightStalker(World world) {
         super(world);

@@ -56,7 +56,13 @@ public class VehicleSputnikDuster extends EntityVehicleSUV {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return POSITIONS;
+        return PositionManager.Builder.create()
+                .engine(2.0, 0.65, 0)
+                .exhaust(-2.0, 0.35, 0.4)
+                .frontNeon(2.5)
+                .backNeon(1.8)
+                .sideNeons(1.0)
+                .build();
     }
 
     @Override

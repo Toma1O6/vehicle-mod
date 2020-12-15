@@ -43,7 +43,13 @@ public class VehicleBeamerS320RS extends EntityVehicleSport {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return POSITIONS;
+        return PositionManager.Builder.create()
+                .engine(1.5, 0.65, 0.0)
+                .exhaust(new Vec3d(-2.2, 0.55, 0.7), new Vec3d(-2.2, 0.55, -0.8))
+                .frontNeon(2.0)
+                .backNeon(2.0)
+                .sideNeons(1.0)
+                .build();
     }
 
     @Override

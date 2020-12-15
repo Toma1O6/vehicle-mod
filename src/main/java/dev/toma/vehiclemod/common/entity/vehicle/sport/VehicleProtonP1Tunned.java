@@ -47,7 +47,13 @@ public class VehicleProtonP1Tunned extends EntityVehicleSport {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return POSITIONS;
+        return PositionManager.Builder.create()
+                .engine(1.5, 0.45, 0)
+                .exhaust(new Vec3d(-2.3, 0.45, 0.75), new Vec3d(-2.3, 0.45, -0.75))
+                .frontNeon(1.8)
+                .backNeon(2.0)
+                .sideNeons(0.9)
+                .build();
     }
 
     @Override

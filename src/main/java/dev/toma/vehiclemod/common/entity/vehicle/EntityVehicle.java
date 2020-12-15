@@ -36,7 +36,6 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.vecmath.Vector3f;
 import java.util.List;
 import java.util.Random;
 
@@ -58,6 +57,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     protected VehicleSoundPack soundPack;
     protected VehicleUpgrades upgrades;
     protected NitroHandler nitroHandler;
+    protected NeonHandler neonHandler;
     protected VehicleTexture texture;
     private double distanceTraveled = 0;
     private boolean isStarted = false;
@@ -89,6 +89,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         preventEntitySpawning = true;
         this.upgrades = this.createVehicleUpgrades();
         this.nitroHandler = new NitroHandler(this);
+        this.neonHandler = new NeonHandler(this);
         texture = getBaseTexture();
         this.health = this.upgrades.getActualStats().maxHealth;
         this.setFuel();
@@ -268,6 +269,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     public NitroHandler getNitroHandler() {
         return nitroHandler;
+    }
+
+    public NeonHandler getNeonHandler() {
+        return neonHandler;
     }
 
     public VehicleStats getActualStats() {
@@ -576,10 +581,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         NBTTagCompound data = new NBTTagCompound();
         this.upgrades.writeToNBT(data);
         ByteBufUtils.writeTag(buf, data);
-        NBTTagCompound lock = lockManager.serializeNBT();
-        ByteBufUtils.writeTag(buf, lock);
-        NBTTagCompound lights = lightController.serializeNBT();
-        ByteBufUtils.writeTag(buf, lights);
+        ByteBufUtils.writeTag(buf, lockManager.serializeNBT());
+        ByteBufUtils.writeTag(buf, lightController.serializeNBT());
+        ByteBufUtils.writeTag(buf, neonHandler.serializeNBT());
     }
 
     @Override
@@ -594,6 +598,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         upgrades.readFromNBT(ByteBufUtils.readTag(buf));
         lockManager.deserializeNBT(ByteBufUtils.readTag(buf));
         lightController.deserializeNBT(ByteBufUtils.readTag(buf));
+        neonHandler.deserializeNBT(ByteBufUtils.readTag(buf));
     }
 
     @Override
@@ -648,6 +653,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         upgrades.writeToNBT(compound);
         compound.setTag("lightController", lightController.serializeNBT());
         compound.setTag("nitro", nitroHandler.serializeNBT());
+        compound.setTag("neons", neonHandler.serializeNBT());
         this.writeExtraData(compound);
     }
 
@@ -678,6 +684,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         upgrades.readFromNBT(compound);
         lightController.deserializeNBT(compound.hasKey("lightController", Constants.NBT.TAG_COMPOUND) ? compound.getCompoundTag("lightController") : new NBTTagCompound());
         nitroHandler.deserializeNBT(compound.hasKey("nitro", Constants.NBT.TAG_LIST) ? compound.getTagList("nitro", Constants.NBT.TAG_COMPOUND) : new NBTTagList());
+        neonHandler.deserializeNBT(compound.hasKey("neons", Constants.NBT.TAG_COMPOUND) ? compound.getCompoundTag("neons") : new NBTTagCompound());
         this.readExtraData(compound);
     }
 

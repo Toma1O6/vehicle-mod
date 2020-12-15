@@ -55,7 +55,13 @@ public class VehicleProtonP1 extends EntityVehicleStandart {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return POSITIONS;
+        return PositionManager.Builder.create()
+                .engine(1.5, 0.45, 0)
+                .exhaust(-2.3, 0.45, 0.6)
+                .frontNeon(1.7)
+                .backNeon(1.9)
+                .sideNeons(0.85)
+                .build();
     }
 
     @Override

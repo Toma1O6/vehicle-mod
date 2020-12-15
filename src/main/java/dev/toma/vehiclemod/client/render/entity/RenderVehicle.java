@@ -3,7 +3,11 @@ package dev.toma.vehiclemod.client.render.entity;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.NeonHandler;
+import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
+import dev.toma.vehiclemod.common.items.ItemNeon;
+import dev.toma.vehiclemod.common.items.ItemNeonPulser;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import net.minecraft.client.Minecraft;
@@ -16,8 +20,10 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
 import java.text.DecimalFormat;
@@ -58,27 +64,85 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 			this.drawInfo(entity, mc, (float)x, (float)y + f2, (float)z);
 		}
 		// neons
+		if(entity != null) {
+			drawNeons(entity, x, y, z, entityYaw);
+		}
+	}
+
+	private void drawNeons(V vehicle, double x, double y, double z, float yaw) {
+		PositionManager positions = vehicle.getVehiclePositions();
+		NeonHandler neonHandler = vehicle.getNeonHandler();
+		ItemStack pulserStack = neonHandler.getPulserUpgrade();
+		int pulse = pulserStack.isEmpty() ? 0 : ((ItemNeonPulser) pulserStack.getItem()).getPulseLength();
+		float aMax = 0.53F;
+		if(pulse > 0) {
+			int time = vehicle.ticksExisted % pulse;
+			float half = pulse / 2.0F;
+			float diff = Math.abs((time - half) / half);
+			aMax = Math.max(0.1F, aMax * diff);
+		}
+		float aMin = Math.max(0.0F, aMax - 0.42F);
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
+		GlStateManager.rotate(-yaw, 0.0F, 1.0F, 0.0F);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableBlend();
 		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 		GlStateManager.disableLighting();
-		Minecraft.getMinecraft().getTextureManager().bindTexture(NEON);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder builder = tessellator.getBuffer();
 		GlStateManager.shadeModel(GL11.GL_SMOOTH);
-		builder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-		builder.pos(3, 0.01, -3).tex(1, 0).color(1.0F, 1.0F, 0.0F, 0.4F).endVertex();
-		builder.pos(-3, 0.01, -3).tex(0, 0).color(1.0F, 0.0F, 0.0F, 0.4F).endVertex();
-		builder.pos(-3, 0.01, 3).tex(0, 1).color(1.0F, 1.0F, 0.0F, 0.4F).endVertex();
-		builder.pos(3, 0.01, 3).tex(1, 1).color(1.0F, 0.0F, 0.0F, 0.4F).endVertex();
-		tessellator.draw();
+		GlStateManager.disableCull();
+		Minecraft.getMinecraft().getTextureManager().bindTexture(NEON);
+		for (NeonHandler.Direction direction : NeonHandler.Direction.values()) {
+			drawNeon(vehicle, direction, neonHandler, positions, yaw, aMax, aMin);
+		}
+		GlStateManager.enableCull();
 		GlStateManager.shadeModel(GL11.GL_FLAT);
 		GlStateManager.disableBlend();
 		GlStateManager.enableLighting();
 		GlStateManager.popMatrix();
+	}
+
+	private void drawNeon(V vehicle, NeonHandler.Direction direction, NeonHandler handler, PositionManager manager, float yaw, float aMax, float aMin) {
+		ItemStack stack = handler.getNeon(direction);
+		if(stack.isEmpty())
+			return;
+		int color = ((ItemNeon) stack.getItem()).getNeonColor();
+		float r = ((color >> 16) & 255) / 255.0F;
+		float g = ((color >>  8) & 255) / 255.0F;
+		float b = ( color        & 255) / 255.0F;
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder builder = tessellator.getBuffer();
+		builder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+		double length = vehicle.width;
+		double neonWidth = 0.15;
+		Vec3d pos = direction.getPosition(manager);
+		if(direction.isVertical()) {
+			if(manager.hasCustomNeonLength()) {
+				length = manager.getCustomLength();
+			}
+			double l = length / 2.0;
+			double w = neonWidth / 2.0;
+			Vec3d p1 = new Vec3d(pos.x - neonWidth, 0.01, +l);
+			Vec3d p2 = new Vec3d(pos.x + neonWidth, 0.01, -l);
+			float a1 = direction.shouldInvert() ? aMin : aMax;
+			float a2 = direction.shouldInvert() ? aMax : aMin;
+			builder.pos(p1.x, p1.y, p2.z).tex(0, 1).color(r, g, b, a1).endVertex();
+			builder.pos(p2.x, p1.y, p2.z).tex(1, 1).color(r, g, b, a2).endVertex();
+			builder.pos(p2.x, p1.y, p1.z).tex(1, 0).color(r, g, b, a2).endVertex();
+			builder.pos(p1.x, p1.y, p1.z).tex(0, 0).color(r, g, b, a1).endVertex();
+		} else {
+			double d = length / 2.0;
+			Vec3d p1 = new Vec3d(+d, 0.01, pos.z - neonWidth);
+			Vec3d p2 = new Vec3d(-d, 0.01, pos.z + neonWidth);
+			float a1 = direction.shouldInvert() ? aMin : aMax;
+			float a2 = direction.shouldInvert() ? aMax : aMin;
+			builder.pos(p1.x, p1.y, p2.z).tex(0, 1).color(r, g, b, a2).endVertex();
+			builder.pos(p2.x, p1.y, p2.z).tex(1, 1).color(r, g, b, a2).endVertex();
+			builder.pos(p2.x, p1.y, p1.z).tex(1, 0).color(r, g, b, a1).endVertex();
+			builder.pos(p1.x, p1.y, p1.z).tex(0, 0).color(r, g, b, a1).endVertex();
+		}
+		tessellator.draw();
 	}
 
 	private void drawInfo(V vehicle, Minecraft mc, float x, float y, float z) {
