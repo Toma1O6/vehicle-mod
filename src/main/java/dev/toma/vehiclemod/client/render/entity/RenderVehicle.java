@@ -75,13 +75,14 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		ItemStack pulserStack = neonHandler.getPulserUpgrade();
 		int pulse = pulserStack.isEmpty() ? 0 : ((ItemNeonPulser) pulserStack.getItem()).getPulseLength();
 		float aMax = 0.53F;
+		float alphaDiff = aMax - VMConfig.min;
 		if(pulse > 0) {
 			int time = vehicle.ticksExisted % pulse;
 			float half = pulse / 2.0F;
 			float diff = Math.abs((time - half) / half);
 			aMax = Math.max(0.1F, aMax * diff);
 		}
-		float aMin = Math.max(0.0F, aMax - 0.42F);
+		float aMin = Math.max(0.0F, aMax - alphaDiff);
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.rotate(-yaw, 0.0F, 1.0F, 0.0F);

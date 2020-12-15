@@ -13,8 +13,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Config(modid = VehicleMod.MODID, name = "Vehicle Mod Config")
 public class VMConfig {
 
-	@Name("Test Neon Color")
-	public static String testNeonColor = "FFFF0000";
+	@Name("Neon light min")
+	@Config.RangeDouble(min = 0.0, max = 1.0)
+	public static float min = 0.10F;
 
 	@Name("Client config")
 	public static ClientConfig clientConfig = new ClientConfig();

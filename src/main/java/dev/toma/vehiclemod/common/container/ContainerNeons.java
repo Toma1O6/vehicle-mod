@@ -39,7 +39,7 @@ public class ContainerNeons extends ModContainer<InventoryNeons> {
                         slot.onSlotChange(stack1, stack);
                     }
                 } else {
-                    if(!mergeItemStack(stack1, 5, 42, false))
+                    if(!mergeItemStack(stack1, 5, 41, false))
                         return ItemStack.EMPTY;
                     slot.onSlotChange(stack1, stack);
                 }
