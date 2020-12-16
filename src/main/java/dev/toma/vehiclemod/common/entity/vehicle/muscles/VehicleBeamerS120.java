@@ -55,7 +55,15 @@ public class VehicleBeamerS120 extends EntityVehicleMuscles {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return POSITIONS;
+        return PositionManager.Builder.create()
+                .engine(2, 0.75, 0)
+                .exhaust(-2, 0.4, 0.47)
+                .frontNeon(2.7)
+                .backNeon(1.8)
+                .frontLength(1.6)
+                .sideNeons(0.9, 0.2)
+                .backLength(1.4)
+                .build();
     }
 
     @Override

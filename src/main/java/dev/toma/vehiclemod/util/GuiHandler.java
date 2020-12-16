@@ -4,6 +4,7 @@ import dev.toma.vehiclemod.client.gui.GuiFuelMaker;
 import dev.toma.vehiclemod.client.gui.GuiPetrolPump;
 import dev.toma.vehiclemod.client.gui.GuiVehicleInventory;
 import dev.toma.vehiclemod.client.gui.tunning.GuiNeons;
+import dev.toma.vehiclemod.client.gui.tunning.GuiNitro;
 import dev.toma.vehiclemod.client.gui.tunning.GuiVehicleComponents;
 import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
@@ -43,6 +44,10 @@ public class GuiHandler implements IGuiHandler {
                 if(player.getRidingEntity() instanceof EntityVehicle)
                     return new ContainerNeons(player.inventory, ((EntityVehicle) player.getRidingEntity()).getNeonHandler().getNeons());
                 return null;
+            case VEHICLE_NITRO:
+                if(player.getRidingEntity() instanceof EntityVehicle)
+                    return new ContainerNitro(player.inventory, ((EntityVehicle) player.getRidingEntity()).getNitroHandler());
+                return null;
         }
     }
 
@@ -62,6 +67,10 @@ public class GuiHandler implements IGuiHandler {
             case VEHICLE_NEON:
                 if(player.getRidingEntity() instanceof EntityVehicle)
                     return new GuiNeons(player.inventory, ((EntityVehicle) player.getRidingEntity()).getNeonHandler().getNeons());
+                return null;
+            case VEHICLE_NITRO:
+                if(player.getRidingEntity() instanceof EntityVehicle)
+                    return new GuiNitro(player.inventory, ((EntityVehicle) player.getRidingEntity()).getNitroHandler());
                 return null;
         }
     }

@@ -121,8 +121,8 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		double neonWidth = 0.15;
 		Vec3d pos = direction.getPosition(manager);
 		if(direction.isVertical()) {
-			if(manager.hasCustomNeonLength()) {
-				length = manager.getCustomLength();
+			if(manager.hasCustomLength(direction)) {
+				length = manager.getLength(direction);
 			}
 			double l = length / 2.0;
 			Vec3d p1 = new Vec3d(pos.x - neonWidth, 0.01, pos.z + l);
@@ -149,6 +149,9 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 				builder.pos(p1.x + neonWidth, p1.y, p1.z).tex(0, 0).color(r, g, b, a1).endVertex();
 			}
 		} else {
+			if(manager.hasCustomLength(direction)) {
+				length = manager.getLength(direction);
+			}
 			double d = length / 2.0;
 			Vec3d p1 = new Vec3d(+d, 0.01, pos.z - neonWidth);
 			Vec3d p2 = new Vec3d(-d, 0.01, pos.z + neonWidth);

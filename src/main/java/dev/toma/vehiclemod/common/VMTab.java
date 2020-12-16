@@ -9,16 +9,10 @@ public class VMTab extends CreativeTabs {
 	
 	public VMTab() {
 		super("vehicle_mod");
-		setBackgroundImageName("item_search.png");
 	}
 	
 	@Override
 	public ItemStack getTabIconItem() {
 		return new ItemStack(Registries.VMItems.FUEL_CAN);
-	}
-
-	@Override
-	public boolean hasSearchBar() {
-		return true;
 	}
 }

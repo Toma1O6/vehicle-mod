@@ -64,6 +64,8 @@ public class ClientEventHandler {
 		map.registerSprite(VehicleMod.getResource("items/bucket_empty"));
 		map.registerSprite(VehicleMod.getResource("items/neon_empty"));
 		map.registerSprite(VehicleMod.getResource("items/neon_pulser_empty"));
+		map.registerSprite(VehicleMod.getResource("items/nitro_can_empty"));
+		map.registerSprite(VehicleMod.getResource("items/nitro_cloud_spray_empty"));
 	}
 
 	@SubscribeEvent
@@ -97,7 +99,7 @@ public class ClientEventHandler {
 				}
 				NitroHandler nitroHandler = car.getNitroHandler();
 				IInventory nitroInventory = nitroHandler.getInventory();
-				for (int i = 0; i < nitroInventory.getSizeInventory(); i++) {
+				for (int i = 0; i < 5; i++) {
 					ItemStack stack = nitroInventory.getStackInSlot(i);
 					ResourceLocation icon = ItemNitroCan.EMPTY_ICON;
 					if(stack.getItem() instanceof ItemNitroCan) {

@@ -10,7 +10,16 @@ import net.minecraft.world.World;
 
 public class VehicleProtonP1 extends EntityVehicleStandart {
 
-    static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.5, 0.45, 0).exhaust(-2.3, 0.45, 0.6).build();
+    public static final PositionManager POSITIONS = PositionManager.Builder.create()
+            .engine(1.5, 0.45, 0)
+            .exhaust(-2.3, 0.45, 0.6)
+            .frontNeon(1.7)
+            .backNeon(2.0)
+            .sideNeons(0.85, -0.1)
+            .frontLength(1.7)
+            .sideLength(1.5)
+            .backLength(1.7)
+            .build();
 
     public VehicleProtonP1(World world) {
         super(world);
@@ -55,13 +64,7 @@ public class VehicleProtonP1 extends EntityVehicleStandart {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(1.5, 0.45, 0)
-                .exhaust(-2.3, 0.45, 0.6)
-                .frontNeon(1.7)
-                .backNeon(1.9)
-                .sideNeons(0.85)
-                .build();
+        return POSITIONS;
     }
 
     @Override

@@ -31,6 +31,11 @@ public class GuiNeons extends GuiTunning<InventoryNeons, ContainerNeons> {
     }
 
     @Override
+    public boolean isButtonEnabled(EnumTunningType tunningType) {
+        return tunningType != EnumTunningType.NEONS || !container.getIInventory().getVehicle().getVehiclePositions().areNeonsDisabled();
+    }
+
+    @Override
     public ResourceLocation getTexture() {
         return TEXTURE;
     }

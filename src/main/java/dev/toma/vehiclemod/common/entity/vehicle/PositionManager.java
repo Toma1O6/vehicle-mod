@@ -1,8 +1,12 @@
 package dev.toma.vehiclemod.common.entity.vehicle;
 
+import dev.toma.vehiclemod.util.DevUtil;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PositionManager {
 
@@ -12,8 +16,8 @@ public class PositionManager {
     private final Vec3d neonBack;
     private final Vec3d neonRight;
     private final Vec3d neonLeft;
-    private final double customLength;
     private final boolean neonsDisabled;
+    private final Map<NeonHandler.Direction, Double> directionDoubleMap;
 
     public PositionManager(Builder builder) {
         this.engine = builder.engine;
@@ -22,16 +26,16 @@ public class PositionManager {
         this.neonBack = builder.neonBack;
         this.neonRight = builder.neonRight;
         this.neonLeft = builder.neonLeft;
-        this.customLength = builder.length;
         this.neonsDisabled = builder.neonsDisabled;
+        this.directionDoubleMap = builder.map;
     }
 
-    public boolean hasCustomNeonLength() {
-        return customLength > 0;
+    public boolean hasCustomLength(NeonHandler.Direction direction) {
+        return directionDoubleMap.containsKey(direction);
     }
 
-    public double getCustomLength() {
-        return customLength;
+    public double getLength(NeonHandler.Direction direction) {
+        return DevUtil.getSafe(directionDoubleMap, direction, 0.0D);
     }
 
     public void tickParticles(World world, float healthPct, boolean engineFlag, boolean nitro, double x, double y, double z, float yaw) {
@@ -44,7 +48,7 @@ public class PositionManager {
                 Vec3d ex = rotateVectorYaw(vec3d, yaw);
                 world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, true, x + ex.x, y + ex.y, z + ex.z, 0, 0.02d, 0);
                 if(nitro)
-                    world.spawnParticle(EnumParticleTypes.FLAME, true, x + ex.x, y + ex.y, y + ex.z, 0, 0, 0);
+                    world.spawnParticle(EnumParticleTypes.FLAME, true, x + ex.x, y + ex.y, z + ex.z, 0, 0, 0);
             }
         }
     }
@@ -81,8 +85,8 @@ public class PositionManager {
         private Vec3d neonBack;
         private Vec3d neonRight;
         private Vec3d neonLeft;
-        private double length;
         private boolean neonsDisabled;
+        private Map<NeonHandler.Direction, Double> map = new HashMap<>();
 
         Builder() {
         }
@@ -147,8 +151,22 @@ public class PositionManager {
             return this;
         }
 
-        public Builder length(double length) {
-            this.length = length;
+        public Builder frontLength(double length) {
+            return this.length(NeonHandler.Direction.FRONT, length);
+        }
+
+        public Builder backLength(double length) {
+            return this.length(NeonHandler.Direction.BACK, length);
+        }
+
+        public Builder sideLength(double length) {
+            length(NeonHandler.Direction.RIGHT, length);
+            length(NeonHandler.Direction.LEFT, length);
+            return this;
+        }
+
+        public Builder length(NeonHandler.Direction direction, double length) {
+            map.put(direction, length);
             return this;
         }
 

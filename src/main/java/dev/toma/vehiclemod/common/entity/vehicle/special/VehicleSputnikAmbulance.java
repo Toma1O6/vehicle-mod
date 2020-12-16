@@ -53,9 +53,10 @@ public class VehicleSputnikAmbulance extends EntityVehicleSirens {
         return PositionManager.Builder.create()
                 .engine(2.5, 0.65, 0)
                 .exhaust(-2.8, -0.35, 0.7)
-                .frontNeon(2.0)
-                .backNeon(2.0)
-                .sideNeons(1.0)
+                .frontNeon(2.8)
+                .backNeon(2.6)
+                .sideNeons(1.0, 0.1)
+                .sideLength(3.0)
                 .build();
     }
 

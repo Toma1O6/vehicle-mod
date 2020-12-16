@@ -56,8 +56,11 @@ public class VehicleBeamerPickup extends EntityVehicleSpecial {
                 .engine(1.8, 0.55, 0)
                 .exhaust(-1.8, 0.25, 0)
                 .frontNeon(2.0)
-                .backNeon(2.0)
-                .sideNeons(1.0)
+                .backNeon(1.5)
+                .sideNeons(0.85, 0.2)
+                .frontLength(1.6)
+                .sideLength(1.4)
+                .backLength(1.4)
                 .build();
     }
 

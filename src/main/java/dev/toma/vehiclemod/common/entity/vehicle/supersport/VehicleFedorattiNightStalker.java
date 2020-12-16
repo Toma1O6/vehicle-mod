@@ -17,7 +17,7 @@ public class VehicleFedorattiNightStalker extends EntityVehicleSuperSport {
             .frontNeon(2.75)
             .backNeon(2.3)
             .sideNeons(1.0)
-            .length(2.5)
+            .sideLength(2.5)
             .build();
 
     public VehicleFedorattiNightStalker(World world) {
@@ -63,7 +63,15 @@ public class VehicleFedorattiNightStalker extends EntityVehicleSuperSport {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return POSITIONS;
+        return PositionManager.Builder.create()
+                .engine(-1.5, 0.65, 0)
+                .exhaust(-2.25, 0.45, 0)
+                .frontNeon(2.8)
+                .backNeon(2.1)
+                .sideNeons(1.0, 0.1)
+                .sideLength(2.5)
+                .backLength(1.5)
+                .build();
     }
 
     @Override

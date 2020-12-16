@@ -55,9 +55,12 @@ public class VehicleTracerT1 extends EntityVehicleMuscles {
         return PositionManager.Builder.create()
                 .engine(1.5, 0.5, 0)
                 .exhaust(-2.2, 0.3, 0.3)
-                .frontNeon(2.2)
+                .frontNeon(2.4)
                 .backNeon(2.0)
                 .sideNeons(0.8)
+                .frontLength(1.4)
+                .sideLength(1.5)
+                .backLength(1.4)
                 .build();
     }
 

@@ -15,4 +15,9 @@ public class InventoryNeons extends InventoryBasic {
     public EntityVehicle getVehicle() {
         return vehicle;
     }
+
+    @Override
+    public int getInventoryStackLimit() {
+        return 1;
+    }
 }

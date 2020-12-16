@@ -50,9 +50,11 @@ public class VehicleFedorattiVulcan extends EntityVehicleSuperSport {
         return PositionManager.Builder.create()
                 .engine(-1.3, 0.95, 0)
                 .exhaust(new Vec3d(-2.1, 0.4, -0.55), new Vec3d(-2.1, 0.4, 0.55))
-                .frontNeon(3.2)
+                .frontNeon(3.3)
                 .backNeon(1.9)
-                .sideNeons(0.95)
+                .sideNeons(0.95, 0.15)
+                .backLength(1.4)
+                .frontLength(1.6)
                 .build();
     }
 

@@ -38,9 +38,14 @@ public abstract class GuiTunning<I extends IInventory, C extends ModContainer<I>
         int i = 0;
         for (EnumTunningType type : EnumTunningType.values()) {
             TabButton button = addButton(new TabButton(this, i, guiLeft + 5 + i * 32, guiTop - 27, 30, 27, type));
-            button.enabled = this.tunningType != button.type;
+            button.visible = this.isButtonEnabled(type);
+            button.enabled = button.visible && this.tunningType != button.type;
             ++i;
         }
+    }
+
+    public boolean isButtonEnabled(EnumTunningType tunningType) {
+        return true;
     }
 
     @Override
@@ -79,15 +84,19 @@ public abstract class GuiTunning<I extends IInventory, C extends ModContainer<I>
         public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
             this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
             mc.getTextureManager().bindTexture(parent.getTexture());
-            if(enabled) {
-                drawTexture(x, y, width, height, 0.0D, 27 / 256.0D);
-                if(hovered) {
-                    FontRenderer renderer = mc.fontRenderer;
-                    int textWidth = renderer.getStringWidth(type.getDisplayName());
-                    renderer.drawString(type.getDisplayName(), x + (width - textWidth) / 2.0F, y - 8, 0xffffff, false);
+            if(visible) {
+                if(enabled) {
+                    drawTexture(x, y, width, height, 0.0D, 27 / 256.0D);
+                    if(hovered) {
+                        FontRenderer renderer = mc.fontRenderer;
+                        int textWidth = renderer.getStringWidth(type.getDisplayName());
+                        renderer.drawString(type.getDisplayName(), x + (width - textWidth) / 2.0F, y - 8, 0xffffff, false);
+                    }
+                } else {
+                    drawTexture(x, y, width, height + 3, 27.0D / 256.0D, 57 / 256.0D);
                 }
             } else {
-                drawTexture(x, y, width, height + 3, 27.0D / 256.0D, 57 / 256.0D);
+                drawTexture(x, y, width, height, 57 / 256.0D, 84 / 256.0D);
             }
             mc.getRenderItem().renderItemIntoGUI(type.getDisplayIcon(), x + 7, y + 7);
         }

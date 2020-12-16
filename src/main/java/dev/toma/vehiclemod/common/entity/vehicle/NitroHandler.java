@@ -12,7 +12,12 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public class NitroHandler implements INBTSerializable<NBTTagList> {
 
-    private final InventoryBasic inventory = new InventoryBasic("inventory.nitro", false, 5);
+    private final InventoryBasic inventory = new InventoryBasic("inventory.nitro", false, 11) {
+        @Override
+        public int getInventoryStackLimit() {
+            return 1;
+        }
+    };
     private final EntityVehicle vehicle;
     private int useTicksLeft;
     private int startDelay;
@@ -82,5 +87,9 @@ public class NitroHandler implements INBTSerializable<NBTTagList> {
             }
         }
         return -1;
+    }
+
+    public EntityVehicle getVehicle() {
+        return vehicle;
     }
 }

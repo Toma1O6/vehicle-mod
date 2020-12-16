@@ -3,6 +3,7 @@ package dev.toma.vehiclemod.common.entity.vehicle.sport;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
+import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleProtonP1;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -47,13 +48,7 @@ public class VehicleProtonP1Tunned extends EntityVehicleSport {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(1.5, 0.45, 0)
-                .exhaust(new Vec3d(-2.3, 0.45, 0.75), new Vec3d(-2.3, 0.45, -0.75))
-                .frontNeon(1.8)
-                .backNeon(2.0)
-                .sideNeons(0.9)
-                .build();
+        return VehicleProtonP1.POSITIONS;
     }
 
     @Override
