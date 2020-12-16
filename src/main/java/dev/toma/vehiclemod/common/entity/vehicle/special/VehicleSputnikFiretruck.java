@@ -53,7 +53,13 @@ public class VehicleSputnikFiretruck extends EntityVehicleSirens {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return POSITIONS;
+        return PositionManager.Builder.create()
+                .engine(3.4, 0.65, 0)
+                .exhaust(new Vec3d(-3.2, 0.45, 0.9), new Vec3d(-3.2, 0.45, -0.9))
+                .frontNeon(2.0)
+                .backNeon(2.0)
+                .sideNeons(1.0)
+                .build();
     }
 
     @Override

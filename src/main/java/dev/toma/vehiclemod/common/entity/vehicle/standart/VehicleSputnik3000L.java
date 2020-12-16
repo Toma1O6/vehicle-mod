@@ -12,7 +12,7 @@ import javax.vecmath.Vector3f;
 
 public class VehicleSputnik3000L extends EntityVehicleStandart {
 
-    public static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.75, 0.65, 0).exhaust(-1.9, 0.25, 0.5).build();
+    static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.75, 0.65, 0).exhaust(-1.9, 0.25, 0.5).build();
 
     public VehicleSputnik3000L(World world) {
         super(world);

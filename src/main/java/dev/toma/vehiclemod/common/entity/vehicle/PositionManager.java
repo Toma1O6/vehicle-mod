@@ -13,6 +13,7 @@ public class PositionManager {
     private final Vec3d neonRight;
     private final Vec3d neonLeft;
     private final double customLength;
+    private final boolean neonsDisabled;
 
     public PositionManager(Builder builder) {
         this.engine = builder.engine;
@@ -22,6 +23,7 @@ public class PositionManager {
         this.neonRight = builder.neonRight;
         this.neonLeft = builder.neonLeft;
         this.customLength = builder.length;
+        this.neonsDisabled = builder.neonsDisabled;
     }
 
     public boolean hasCustomNeonLength() {
@@ -67,6 +69,10 @@ public class PositionManager {
         return input.rotateYaw(-yaw * 0.017453292F - ((float) Math.PI / 2.0F));
     }
 
+    public boolean areNeonsDisabled() {
+        return neonsDisabled;
+    }
+
     public static class Builder {
 
         private Vec3d engine;
@@ -76,6 +82,7 @@ public class PositionManager {
         private Vec3d neonRight;
         private Vec3d neonLeft;
         private double length;
+        private boolean neonsDisabled;
 
         Builder() {
         }
@@ -113,8 +120,18 @@ public class PositionManager {
             return this;
         }
 
+        public Builder rightNeon(double x, double z) {
+            this.neonRight = new Vec3d(x, 0, z);
+            return this;
+        }
+
         public Builder leftNeon(double n) {
             this.neonLeft = new Vec3d(-n, 0, 0);
+            return this;
+        }
+
+        public Builder leftNeon(double x, double z) {
+            this.neonLeft = new Vec3d(-x, 0, z);
             return this;
         }
 
@@ -124,8 +141,19 @@ public class PositionManager {
             return this;
         }
 
+        public Builder sideNeons(double x, double z) {
+            rightNeon(x, z);
+            leftNeon(x, z);
+            return this;
+        }
+
         public Builder length(double length) {
             this.length = length;
+            return this;
+        }
+
+        public Builder disable() {
+            this.neonsDisabled = true;
             return this;
         }
 

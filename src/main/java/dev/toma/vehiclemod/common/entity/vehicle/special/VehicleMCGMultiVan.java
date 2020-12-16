@@ -53,7 +53,13 @@ public class VehicleMCGMultiVan extends EntityVehicleSpecial {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return POSITIONS;
+        return PositionManager.Builder.create()
+                .engine(2.2, 0.45, 0)
+                .exhaust(-3, 0.55, 0)
+                .frontNeon(2.0)
+                .backNeon(2.0)
+                .sideNeons(1.0)
+                .build();
     }
 
     @Override

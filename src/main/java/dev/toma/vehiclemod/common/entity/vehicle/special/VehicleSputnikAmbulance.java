@@ -50,7 +50,13 @@ public class VehicleSputnikAmbulance extends EntityVehicleSirens {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return POSITIONS;
+        return PositionManager.Builder.create()
+                .engine(2.5, 0.65, 0)
+                .exhaust(-2.8, -0.35, 0.7)
+                .frontNeon(2.0)
+                .backNeon(2.0)
+                .sideNeons(1.0)
+                .build();
     }
 
     @Override

@@ -52,7 +52,13 @@ public class VehicleBeamerPickup extends EntityVehicleSpecial {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return POSITIONS;
+        return PositionManager.Builder.create()
+                .engine(1.8, 0.55, 0)
+                .exhaust(-1.8, 0.25, 0)
+                .frontNeon(2.0)
+                .backNeon(2.0)
+                .sideNeons(1.0)
+                .build();
     }
 
     @Override

@@ -71,6 +71,8 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 
 	private void drawNeons(V vehicle, double x, double y, double z, float yaw) {
 		PositionManager positions = vehicle.getVehiclePositions();
+		if(positions.areNeonsDisabled())
+			return;
 		NeonHandler neonHandler = vehicle.getNeonHandler();
 		ItemStack pulserStack = neonHandler.getPulserUpgrade();
 		int pulse = pulserStack.isEmpty() ? 0 : ((ItemNeonPulser) pulserStack.getItem()).getPulseLength();
@@ -123,25 +125,54 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 				length = manager.getCustomLength();
 			}
 			double l = length / 2.0;
-			double w = neonWidth / 2.0;
-			Vec3d p1 = new Vec3d(pos.x - neonWidth, 0.01, +l);
-			Vec3d p2 = new Vec3d(pos.x + neonWidth, 0.01, -l);
+			Vec3d p1 = new Vec3d(pos.x - neonWidth, 0.01, pos.z + l);
+			Vec3d p2 = new Vec3d(pos.x + neonWidth, 0.01, pos.z - l);
 			float a1 = direction.shouldInvert() ? aMin : aMax;
 			float a2 = direction.shouldInvert() ? aMax : aMin;
-			builder.pos(p1.x, p1.y, p2.z).tex(0, 1).color(r, g, b, a1).endVertex();
-			builder.pos(p2.x, p1.y, p2.z).tex(1, 1).color(r, g, b, a2).endVertex();
-			builder.pos(p2.x, p1.y, p1.z).tex(1, 0).color(r, g, b, a2).endVertex();
-			builder.pos(p1.x, p1.y, p1.z).tex(0, 0).color(r, g, b, a1).endVertex();
+			if(direction.shouldInvert()) {
+				builder.pos(p1.x, p1.y, p2.z).tex(0, 1).color(r, g, b, a1).endVertex();
+				builder.pos(p1.x + neonWidth, p1.y, p2.z).tex(1, 1).color(r, g, b, a2).endVertex();
+				builder.pos(p1.x + neonWidth, p1.y, p1.z).tex(1, 0).color(r, g, b, a2).endVertex();
+				builder.pos(p1.x, p1.y, p1.z).tex(0, 0).color(r, g, b, a1).endVertex();
+				builder.pos(p1.x + neonWidth, p1.y, p2.z).tex(0, 1).color(r, g, b, a2).endVertex();
+				builder.pos(p2.x, p1.y, p2.z).tex(1, 1).color(r, g, b, a2).endVertex();
+				builder.pos(p2.x, p1.y, p1.z).tex(1, 0).color(r, g, b, a2).endVertex();
+				builder.pos(p1.x + neonWidth, p1.y, p1.z).tex(0, 0).color(r, g, b, a2).endVertex();
+			} else {
+				builder.pos(p1.x, p1.y, p2.z).tex(0, 1).color(r, g, b, a1).endVertex();
+				builder.pos(p1.x + neonWidth, p1.y, p2.z).tex(1, 1).color(r, g, b, a1).endVertex();
+				builder.pos(p1.x + neonWidth, p1.y, p1.z).tex(1, 0).color(r, g, b, a1).endVertex();
+				builder.pos(p1.x, p1.y, p1.z).tex(0, 0).color(r, g, b, a1).endVertex();
+				builder.pos(p1.x + neonWidth, p1.y, p2.z).tex(0, 1).color(r, g, b, a1).endVertex();
+				builder.pos(p2.x, p1.y, p2.z).tex(1, 1).color(r, g, b, a2).endVertex();
+				builder.pos(p2.x, p1.y, p1.z).tex(1, 0).color(r, g, b, a2).endVertex();
+				builder.pos(p1.x + neonWidth, p1.y, p1.z).tex(0, 0).color(r, g, b, a1).endVertex();
+			}
 		} else {
 			double d = length / 2.0;
 			Vec3d p1 = new Vec3d(+d, 0.01, pos.z - neonWidth);
 			Vec3d p2 = new Vec3d(-d, 0.01, pos.z + neonWidth);
 			float a1 = direction.shouldInvert() ? aMin : aMax;
 			float a2 = direction.shouldInvert() ? aMax : aMin;
-			builder.pos(p1.x, p1.y, p2.z).tex(0, 1).color(r, g, b, a2).endVertex();
-			builder.pos(p2.x, p1.y, p2.z).tex(1, 1).color(r, g, b, a2).endVertex();
-			builder.pos(p2.x, p1.y, p1.z).tex(1, 0).color(r, g, b, a1).endVertex();
-			builder.pos(p1.x, p1.y, p1.z).tex(0, 0).color(r, g, b, a1).endVertex();
+			if(direction.shouldInvert()) {
+				builder.pos(p1.x, p1.y, p1.z + neonWidth).tex(0, 1).color(r, g, b, a2).endVertex();
+				builder.pos(p2.x, p1.y, p1.z + neonWidth).tex(1, 1).color(r, g, b, a2).endVertex();
+				builder.pos(p2.x, p1.y, p1.z).tex(1, 0).color(r, g, b, a1).endVertex();
+				builder.pos(p1.x, p1.y, p1.z).tex(0, 0).color(r, g, b, a1).endVertex();
+				builder.pos(p1.x, p1.y, p2.z).tex(0, 1).color(r, g, b, a2).endVertex();
+				builder.pos(p2.x, p1.y, p2.z).tex(1, 1).color(r, g, b, a2).endVertex();
+				builder.pos(p2.x, p1.y, p1.z + neonWidth).tex(1, 0).color(r, g, b, a2).endVertex();
+				builder.pos(p1.x, p1.y, p1.z + neonWidth).tex(0, 0).color(r, g, b, a2).endVertex();
+			} else {
+				builder.pos(p1.x, p1.y, p1.z + neonWidth).tex(0, 1).color(r, g, b, a1).endVertex();
+				builder.pos(p2.x, p1.y, p1.z + neonWidth).tex(1, 1).color(r, g, b, a1).endVertex();
+				builder.pos(p2.x, p1.y, p1.z).tex(1, 0).color(r, g, b, a1).endVertex();
+				builder.pos(p1.x, p1.y, p1.z).tex(0, 0).color(r, g, b, a1).endVertex();
+				builder.pos(p1.x, p1.y, p2.z).tex(0, 1).color(r, g, b, a2).endVertex();
+				builder.pos(p2.x, p1.y, p2.z).tex(1, 1).color(r, g, b, a2).endVertex();
+				builder.pos(p2.x, p1.y, p1.z + neonWidth).tex(1, 0).color(r, g, b, a1).endVertex();
+				builder.pos(p1.x, p1.y, p1.z + neonWidth).tex(0, 0).color(r, g, b, a1).endVertex();
+			}
 		}
 		tessellator.draw();
 	}

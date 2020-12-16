@@ -16,6 +16,12 @@ import javax.vecmath.Vector3f;
 
 public class VehicleSputnik3000LEnforcer extends EntityVehicleSirens {
 
+    static final PositionManager POSITIONS = PositionManager.Builder.create()
+            .engine(1.75, 0.65, 0)
+            .exhaust(-1.9, 0.25, 0.5)
+            .disable()
+            .build();
+
     public VehicleSputnik3000LEnforcer(World world) {
         super(world);
         setSize(2.0f, 1.5f);
@@ -65,7 +71,7 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSirens {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return VehicleSputnik3000L.POSITIONS;
+        return POSITIONS;
     }
 
     @Override
