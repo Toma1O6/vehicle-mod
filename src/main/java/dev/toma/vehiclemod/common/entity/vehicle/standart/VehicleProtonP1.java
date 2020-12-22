@@ -53,6 +53,11 @@ public class VehicleProtonP1 extends EntityVehicleStandart {
     }
 
     @Override
+    public int getNitroCloudSpraySlotCount() {
+        return 3;
+    }
+
+    @Override
     public VehicleStats getConfigStats() {
         return VMConfig.protonP1;
     }

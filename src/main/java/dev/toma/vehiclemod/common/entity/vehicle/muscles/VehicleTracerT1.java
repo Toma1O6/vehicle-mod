@@ -46,6 +46,11 @@ public class VehicleTracerT1 extends EntityVehicleMuscles {
     }
 
     @Override
+    public int getNitroCloudSpraySlotCount() {
+        return 4;
+    }
+
+    @Override
     public VehicleStats getConfigStats() {
         return VMConfig.tracer_t1;
     }

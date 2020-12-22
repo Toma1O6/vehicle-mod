@@ -61,6 +61,11 @@ public class VehicleSputnikAmbulance extends EntityVehicleSirens {
     }
 
     @Override
+    public int getNitroCloudSpraySlotCount() {
+        return 4;
+    }
+
+    @Override
     public VehicleStats getConfigStats() {
         return VMConfig.sputnikAmbulance;
     }

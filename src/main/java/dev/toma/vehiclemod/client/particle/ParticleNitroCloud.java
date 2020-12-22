@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.client.particle;
 
+import dev.toma.vehiclemod.config.VMConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleCloud;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -21,6 +22,7 @@ public class ParticleNitroCloud extends ParticleCloud {
 
     public ParticleNitroCloud(World world, double px, double py, double pz, double sx, double sy, double sz, int tint) {
         super(world, px, py, pz, sx, sy, sz);
+        tint = Integer.decode("0x"+ VMConfig.color);
         this.particleRed = ((tint >> 16) & 255) / 255.0F;
         this.particleGreen = ((tint >> 8) & 255) / 255.0F;
         this.particleBlue = (tint & 255) / 255.0F;

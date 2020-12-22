@@ -45,6 +45,11 @@ public class VehicleSputnikDuster extends EntityVehicleSUV {
     }
 
     @Override
+    public int getNitroCloudSpraySlotCount() {
+        return 5;
+    }
+
+    @Override
     public VehicleStats getConfigStats() {
         return VMConfig.sputnikDuster;
     }

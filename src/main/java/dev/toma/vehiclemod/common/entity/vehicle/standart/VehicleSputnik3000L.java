@@ -8,11 +8,17 @@ import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.vecmath.Vector3f;
-
 public class VehicleSputnik3000L extends EntityVehicleStandart {
 
-    static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.75, 0.65, 0).exhaust(-1.9, 0.25, 0.5).build();
+    static final PositionManager POSITIONS = PositionManager.Builder.create()
+            .engine(1.75, 0.65, 0)
+            .exhaust(-1.9, 0.25, 0.5)
+            .frontNeon(2.3)
+            .backNeon(1.8)
+            .sideNeons(1.0)
+            .backLength(1.4)
+            .frontLength(1.6)
+            .build();
 
     public VehicleSputnik3000L(World world) {
         super(world);
@@ -45,21 +51,18 @@ public class VehicleSputnik3000L extends EntityVehicleStandart {
     }
 
     @Override
+    public int getNitroCloudSpraySlotCount() {
+        return 4;
+    }
+
+    @Override
     public VehicleStats getConfigStats() {
         return VMConfig.sputnik3000L;
     }
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(1.75, 0.65, 0)
-                .exhaust(-1.9, 0.25, 0.5)
-                .frontNeon(2.3)
-                .backNeon(1.8)
-                .sideNeons(1.0)
-                .backLength(1.4)
-                .frontLength(1.6)
-                .build();
+        return POSITIONS;
     }
 
     @Override

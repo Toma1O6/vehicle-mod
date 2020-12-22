@@ -46,6 +46,11 @@ public class VehicleBeamerPickup extends EntityVehicleSpecial {
     }
 
     @Override
+    public int getNitroCloudSpraySlotCount() {
+        return 2;
+    }
+
+    @Override
     public VehicleStats getConfigStats() {
         return VMConfig.beamerPickup;
     }

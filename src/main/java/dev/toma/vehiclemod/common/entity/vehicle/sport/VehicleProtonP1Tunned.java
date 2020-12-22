@@ -52,6 +52,11 @@ public class VehicleProtonP1Tunned extends EntityVehicleSport {
     }
 
     @Override
+    public int getNitroCloudSpraySlotCount() {
+        return 5;
+    }
+
+    @Override
     public double getMountedYOffset() {
         return -0.2;
     }

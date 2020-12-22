@@ -30,6 +30,11 @@ public class VehicleSputnik2000L extends EntityVehicleStandart {
     }
 
     @Override
+    public int getNitroCloudSpraySlotCount() {
+        return 3;
+    }
+
+    @Override
     public VehicleSoundPack createSoundPack() {
         return VehicleSoundPack.Builder.create(this)
                 .acc(VMSounds.SPUTNIK_ACC)

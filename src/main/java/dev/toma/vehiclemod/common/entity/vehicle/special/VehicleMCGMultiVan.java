@@ -47,6 +47,11 @@ public class VehicleMCGMultiVan extends EntityVehicleSpecial {
     }
 
     @Override
+    public int getNitroCloudSpraySlotCount() {
+        return 3;
+    }
+
+    @Override
     public VehicleStats getConfigStats() {
         return VMConfig.mcgMultiVan;
     }

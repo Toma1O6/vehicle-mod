@@ -30,6 +30,11 @@ public class VehicleBeamerS320RS extends EntityVehicleSport {
     }
 
     @Override
+    public int getNitroCloudSpraySlotCount() {
+        return 5;
+    }
+
+    @Override
     public VehicleSoundPack createSoundPack() {
         return VehicleSoundPack.Builder.create(this)
                 .acc(VMSounds.BEAMERB1_ACC)

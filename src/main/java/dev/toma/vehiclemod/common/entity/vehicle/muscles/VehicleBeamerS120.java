@@ -44,6 +44,11 @@ public class VehicleBeamerS120 extends EntityVehicleMuscles {
     }
 
     @Override
+    public int getNitroCloudSpraySlotCount() {
+        return 4;
+    }
+
+    @Override
     public double getMountedYOffset() {
         return -0.15;
     }

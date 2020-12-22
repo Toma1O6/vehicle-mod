@@ -77,7 +77,7 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		ItemStack pulserStack = neonHandler.getPulserUpgrade();
 		int pulse = pulserStack.isEmpty() ? 0 : ((ItemNeonPulser) pulserStack.getItem()).getPulseLength();
 		float aMax = 0.53F;
-		float alphaDiff = aMax - VMConfig.min;
+		float alphaDiff = aMax - 0.10F;
 		if(pulse > 0) {
 			int time = vehicle.ticksExisted % pulse;
 			float half = pulse / 2.0F;

@@ -247,6 +247,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
     }
 
+    public int getNitroCloudSpraySlotCount() {
+        return 6;
+    }
+
     public VehicleTexture getTexture() {
         return texture;
     }
