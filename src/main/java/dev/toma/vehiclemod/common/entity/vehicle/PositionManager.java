@@ -1,5 +1,7 @@
 package dev.toma.vehiclemod.common.entity.vehicle;
 
+import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.client.particle.Particles;
 import dev.toma.vehiclemod.util.DevUtil;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
@@ -47,8 +49,9 @@ public class PositionManager {
             for (Vec3d vec3d : exhausts) {
                 Vec3d ex = rotateVectorYaw(vec3d, yaw);
                 world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, true, x + ex.x, y + ex.y, z + ex.z, 0, 0.02d, 0);
+                VehicleMod.proxy.spawnParticle(Particles.NITRO_CLOUD, world, x + ex.x, y + ex.y, z + ex.z, 0, 0.1, 0, 0xFFFF);
                 if(nitro)
-                    world.spawnParticle(EnumParticleTypes.FLAME, true, x + ex.x, y + ex.y, z + ex.z, 0, 0, 0);
+                    VehicleMod.proxy.spawnParticle(Particles.NITRO_FLAME, world, x + ex.x, y + ex.y, z + ex.z, 0, 0, 0, 1);
             }
         }
     }

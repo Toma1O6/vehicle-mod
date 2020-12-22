@@ -9,6 +9,7 @@ import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1;
 import dev.toma.vehiclemod.client.model.vehicle.ModelProtonP1Tunned;
 import dev.toma.vehiclemod.client.model.vehicle.ModelSputnik3000L;
 import dev.toma.vehiclemod.client.model.vehicle.ModelSputnik3000LEnforcer;
+import dev.toma.vehiclemod.client.particle.Particles;
 import dev.toma.vehiclemod.client.render.block.FuelMakerRenderer;
 import dev.toma.vehiclemod.client.render.entity.*;
 import dev.toma.vehiclemod.common.ILockpickable;
@@ -32,6 +33,7 @@ import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -89,6 +91,11 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public <L extends ILockpickable> void openLockpickUI(L lockpickable) {
 		Minecraft.getMinecraft().displayGuiScreen(new GuiLockpicking<>(lockpickable));
+	}
+
+	@Override
+	public void spawnParticle(Particles.Type<?> type, World world, double posX, double posY, double posZ, double xSpeed, double ySpeed, double zSpeed, int data) {
+		Minecraft.getMinecraft().effectRenderer.addEffect(type.produce(world, posX, posY, posZ, xSpeed, ySpeed, zSpeed, data));
 	}
 
 	private static void registerEntityRenderers() {
