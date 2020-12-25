@@ -55,7 +55,7 @@ public class VehicleSputnikAmbulance extends EntityVehicleSirens {
                 .exhaust(-2.8, -0.35, 0.7)
                 .frontNeon(2.8)
                 .backNeon(2.6)
-                .sideNeons(1.0, 0.1)
+                .sideNeons(1.15, 0.1)
                 .sideLength(3.0)
                 .build();
     }
