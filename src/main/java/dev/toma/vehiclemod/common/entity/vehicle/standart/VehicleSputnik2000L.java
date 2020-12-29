@@ -58,6 +58,9 @@ public class VehicleSputnik2000L extends EntityVehicleStandart {
                 .frontLength(1.4)
                 .sideLength(1.4)
                 .backLength(1.4)
+                .nitroExit(1.0, 0.9, 0.7, -0.1, 0.1, 0.1)
+                .nitroExit(1.0, 0.9, -0.7, -0.1, 0.1, -0.1)
+                .nitroExit(2.0, 0.5, 0.0, 0.15, 0.02, 0)
                 .build();
     }
 
