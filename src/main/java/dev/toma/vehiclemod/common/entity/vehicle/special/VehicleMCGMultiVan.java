@@ -68,6 +68,9 @@ public class VehicleMCGMultiVan extends EntityVehicleSpecial {
                 .frontLength(1.9)
                 .sideLength(2.9)
                 .backLength(1.8)
+                .nitroExit(2.2, 1.1, 0.6, -0.03, 0.15, 0.2)
+                .nitroExit(2.2, 1.1, -0.5, -0.03, 0.15, -0.2)
+                .nitroExit(2.4, 0.5, 0.0, 0.15, 0.02, 0.0)
                 .build();
     }
 
