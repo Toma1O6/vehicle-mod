@@ -67,6 +67,10 @@ public class VehicleTracerT1 extends EntityVehicleMuscles {
                 .frontLength(1.4)
                 .sideLength(1.5)
                 .backLength(1.4)
+                .nitroExit(0.7, 0.8, 0.5, -0.13, 0.1, 0.1)
+                .nitroExit(0.7, 0.8, -0.5, -0.13, 0.1, -0.1)
+                .nitroExit(2.2, 0.3, 0.65, 0.1, 0.05, 0.05)
+                .nitroExit(2.2, 0.3, -0.65, 0.1, 0.05, -0.05)
                 .build();
     }
 
