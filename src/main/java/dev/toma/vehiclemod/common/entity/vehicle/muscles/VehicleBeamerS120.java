@@ -68,6 +68,10 @@ public class VehicleBeamerS120 extends EntityVehicleMuscles {
                 .frontLength(1.6)
                 .sideNeons(0.9, 0.2)
                 .backLength(1.4)
+                .nitroExit(1.9, 0.8, 0.55, -0.1, 0.1, 0.1)
+                .nitroExit(1.9, 0.8, -0.55, -0.1, 0.1, -0.1)
+                .nitroExit(2.5, 0.4, 0.75, 0, 0.05, 0.1)
+                .nitroExit(2.5, 0.4, -0.75, 0, 0.05, -0.1)
                 .build();
     }
 

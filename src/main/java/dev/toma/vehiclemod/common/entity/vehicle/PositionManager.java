@@ -7,7 +7,9 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PositionManager {
@@ -20,6 +22,7 @@ public class PositionManager {
     private final Vec3d neonLeft;
     private final boolean neonsDisabled;
     private final Map<NeonHandler.Direction, Double> directionDoubleMap;
+    private final CloudExit[] nitroClouds;
 
     public PositionManager(Builder builder) {
         this.engine = builder.engine;
@@ -30,6 +33,7 @@ public class PositionManager {
         this.neonLeft = builder.neonLeft;
         this.neonsDisabled = builder.neonsDisabled;
         this.directionDoubleMap = builder.map;
+        this.nitroClouds = builder.cloudExits.toArray(new CloudExit[0]);
     }
 
     public boolean hasCustomLength(NeonHandler.Direction direction) {
@@ -49,10 +53,15 @@ public class PositionManager {
             for (Vec3d vec3d : exhausts) {
                 Vec3d ex = rotateVectorYaw(vec3d, yaw);
                 world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, true, x + ex.x, y + ex.y, z + ex.z, 0, 0.02d, 0);
-                VehicleMod.proxy.spawnParticle(Particles.NITRO_CLOUD, world, x + ex.x, y + ex.y, z + ex.z, 0, 0.1, 0, 0xFFFF);
-                if(nitro)
+                if(nitro) {
                     VehicleMod.proxy.spawnParticle(Particles.NITRO_FLAME, world, x + ex.x, y + ex.y, z + ex.z, 0, 0, 0, 1);
+                }
             }
+        }
+        for (CloudExit exit : nitroClouds) {
+            Vec3d pos = rotateVectorYaw(exit.getPosition(), yaw);
+            Vec3d mot = rotateVectorYaw(exit.getMotion(), yaw);
+            VehicleMod.proxy.spawnParticle(Particles.NITRO_CLOUD, world, x + pos.x, y + pos.y, z + pos.z, mot.x, mot.y, mot.z, 0xFFFF);
         }
     }
 
@@ -70,6 +79,10 @@ public class PositionManager {
 
     public Vec3d getLeftNeon() {
         return neonLeft;
+    }
+
+    public CloudExit[] getNitroClouds() {
+        return nitroClouds;
     }
 
     public Vec3d rotateVectorYaw(Vec3d input, float yaw) {
@@ -90,6 +103,7 @@ public class PositionManager {
         private Vec3d neonLeft;
         private boolean neonsDisabled;
         private Map<NeonHandler.Direction, Double> map = new HashMap<>();
+        private List<CloudExit> cloudExits = new ArrayList<>();
 
         Builder() {
         }
@@ -178,8 +192,32 @@ public class PositionManager {
             return this;
         }
 
+        public Builder nitroExit(double x, double y, double z, double motionX, double motionY, double motionZ) {
+            this.cloudExits.add(new CloudExit(new Vec3d(x, y, z), new Vec3d(motionX, motionY, motionZ)));
+            return this;
+        }
+
         public PositionManager build() {
             return new PositionManager(this);
+        }
+    }
+
+    public static class CloudExit {
+
+        Vec3d position;
+        Vec3d motion;
+
+        CloudExit(Vec3d position, Vec3d motion) {
+            this.position = position;
+            this.motion = motion;
+        }
+
+        public Vec3d getMotion() {
+            return motion;
+        }
+
+        public Vec3d getPosition() {
+            return position;
         }
     }
 }

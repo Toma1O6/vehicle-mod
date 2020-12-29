@@ -4,6 +4,7 @@ import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiNigh
 import dev.toma.vehiclemod.client.model.vehicle.ModelFedorattiNightStalker;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
 
 public class RenderFedorattiNightStalker extends RenderVehicle<VehicleFedorattiNightStalker> {
@@ -30,9 +31,8 @@ public class RenderFedorattiNightStalker extends RenderVehicle<VehicleFedorattiN
         GlStateManager.rotate(180f, 0f, 1f, 0f);
         GlStateManager.translate(0, -24, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
-        GlStateManager.disableLighting();
+        RenderHelper.enableGUIStandardItemLighting();
         modelFedorattiNightStalker.render(entity);
-        GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }

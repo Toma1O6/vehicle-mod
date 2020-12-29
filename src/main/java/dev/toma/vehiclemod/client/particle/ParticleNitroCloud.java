@@ -1,6 +1,5 @@
 package dev.toma.vehiclemod.client.particle;
 
-import dev.toma.vehiclemod.config.VMConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleCloud;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -22,11 +21,10 @@ public class ParticleNitroCloud extends ParticleCloud {
 
     public ParticleNitroCloud(World world, double px, double py, double pz, double sx, double sy, double sz, int tint) {
         super(world, px, py, pz, sx, sy, sz);
-        tint = Integer.decode("0x"+ VMConfig.color);
         this.particleRed = ((tint >> 16) & 255) / 255.0F;
         this.particleGreen = ((tint >> 8) & 255) / 255.0F;
         this.particleBlue = (tint & 255) / 255.0F;
-        this.particleMaxAge = 12;
+        this.particleMaxAge = 8;
     }
 
     public void updateTextureIndex(int index) {
@@ -51,19 +49,6 @@ public class ParticleNitroCloud extends ParticleCloud {
         this.motionX *= 0.9599999785423279D;
         this.motionY *= 0.9599999785423279D;
         this.motionZ *= 0.9599999785423279D;
-        EntityPlayer entityplayer = this.world.getClosestPlayer(this.posX, this.posY, this.posZ, 2.0D, false);
-
-        if (entityplayer != null)
-        {
-            AxisAlignedBB axisalignedbb = entityplayer.getEntityBoundingBox();
-
-            if (this.posY > axisalignedbb.minY)
-            {
-                this.posY += (axisalignedbb.minY - this.posY) * 0.2D;
-                this.motionY += (entityplayer.motionY - this.motionY) * 0.2D;
-                this.setPosition(this.posX, this.posY, this.posZ);
-            }
-        }
 
         if (this.onGround)
         {
