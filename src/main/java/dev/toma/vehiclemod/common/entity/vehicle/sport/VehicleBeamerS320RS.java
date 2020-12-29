@@ -57,6 +57,11 @@ public class VehicleBeamerS320RS extends EntityVehicleSport {
                 .rightNeon(1.0, -0.1)
                 .leftNeon(0.95, -0.1)
                 .backLength(0.9)
+                .nitroExit(1.4, 0.8, 0.6, -0.1, 0.1, 0.1)
+                .nitroExit(1.4, 0.8, -0.6, -0.1, 0.1, -0.1)
+                .nitroExit(1.9, 0.7, 0.8, 0.1, 0.02, 0.1)
+                .nitroExit(1.9, 0.7, -0.8, 0.1, 0.02, -0.1)
+                .nitroExit(2.0, 0.7, 0.0, 0.12, 0.01, 0.0)
                 .build();
     }
 
