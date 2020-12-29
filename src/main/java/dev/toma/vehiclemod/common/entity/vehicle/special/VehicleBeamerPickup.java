@@ -66,6 +66,8 @@ public class VehicleBeamerPickup extends EntityVehicleSpecial {
                 .frontLength(1.6)
                 .sideLength(1.4)
                 .backLength(1.4)
+                .nitroExit(2.0, 0.6, 0.75, -0.05, 0.1, 0.1)
+                .nitroExit(2.0, 0.6, -0.75, -0.05, 0.1, -0.1)
                 .build();
     }
 
