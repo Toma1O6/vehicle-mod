@@ -62,6 +62,12 @@ public class VehicleSputnikFiretruck extends EntityVehicleSirens {
                 .frontLength(2.3)
                 .sideLength(2.1)
                 .backLength(2.3)
+                .nitroExit(3.5, 0.8, 0.4, 0.1, 0.02, 0.15)
+                .nitroExit(3.5, 0.8, -0.4, 0.1, 0.02, -0.15)
+                .nitroExit(1.4, 0.5, 1.0, 0.1, 0.0, 0.2)
+                .nitroExit(1.4, 0.5, -1.0, 0.1, 0.0, -0.2)
+                .nitroExit(-2.5, 0.6, 1.0, -0.1, 0.0, 0.1)
+                .nitroExit(-2.5, 0.6, -1.0, -0.1, 0.0, -0.1)
                 .build();
     }
 
