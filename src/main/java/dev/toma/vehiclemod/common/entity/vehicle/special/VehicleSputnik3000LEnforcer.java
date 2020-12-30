@@ -19,7 +19,15 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSirens {
     static final PositionManager POSITIONS = PositionManager.Builder.create()
             .engine(1.75, 0.65, 0)
             .exhaust(-1.9, 0.25, 0.5)
-            .disable()
+            .frontNeon(2.3)
+            .backNeon(1.8)
+            .sideNeons(1.0)
+            .backLength(1.4)
+            .frontLength(1.6)
+            .nitroExit(1.5, 0.8, 0.45, -0.1, 0.1, 0.1)
+            .nitroExit(1.5, 0.8, -0.45, -0.1, 0.1, -0.1)
+            .nitroExit(2.0, 0.4, 0.8, 0.05, 0.05, 0.1)
+            .nitroExit(2.0, 0.4, -0.8, 0.05, 0.05, -0.1)
             .build();
 
     public VehicleSputnik3000LEnforcer(World world) {
