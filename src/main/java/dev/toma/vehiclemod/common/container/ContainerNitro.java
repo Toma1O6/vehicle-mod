@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.common.container;
 
+import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.common.entity.vehicle.NitroHandler;
 import dev.toma.vehiclemod.common.items.ItemNitroCan;
 import dev.toma.vehiclemod.common.items.ItemNitroCloud;
@@ -30,6 +31,8 @@ public class ContainerNitro extends ModContainer<InventoryBasic> {
                 addSlotToContainer(new SlotNitroCloudSpray(handler.getInventory(), 5 + y * 3 + x, 116 + x * 18, 8 + y * 18, i -> i > slots));
             }
         }
+
+        addSlotToContainer(new SlotNitroLED(handler.getInventory(), 11, 152, 44));
 
         addDefaultInventory(player, 64);
     }
@@ -77,6 +80,23 @@ public class ContainerNitro extends ModContainer<InventoryBasic> {
         @Override
         public String getSlotTexture() {
             return disabled ? "vehiclemod:items/nitro_cloud_spray_empty_disabled" : "vehiclemod:items/nitro_cloud_spray_empty";
+        }
+    }
+
+    static class SlotNitroLED extends Slot {
+
+        SlotNitroLED(IInventory inventory, int id, int x, int y) {
+            super(inventory, id, x, y);
+        }
+
+        @Override
+        public boolean isItemValid(ItemStack stack) {
+            return stack.getItem() == Registries.VMItems.NITRO_LED;
+        }
+
+        @Override
+        public String getSlotTexture() {
+            return "vehiclemod:items/nitro_led_empty";
         }
     }
 }

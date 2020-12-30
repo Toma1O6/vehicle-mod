@@ -6,18 +6,18 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class ParticleNitroCloud extends ParticleCloud {
 
+    public static final int LIGHT_FLAG = 0x1;
     private static final ResourceLocation PARTICLE_TEXTURES = new ResourceLocation("textures/particle/particles.png");
     // allows me to change texture index
     boolean fakeFX;
+    boolean useLight;
 
     public ParticleNitroCloud(World world, double px, double py, double pz, double sx, double sy, double sz, int tint) {
         super(world, px, py, pz, sx, sy, sz);
@@ -25,6 +25,7 @@ public class ParticleNitroCloud extends ParticleCloud {
         this.particleGreen = ((tint >> 8) & 255) / 255.0F;
         this.particleBlue = (tint & 255) / 255.0F;
         this.particleMaxAge = 8;
+        this.useLight = ((tint >> 24) & LIGHT_FLAG) != 0;
     }
 
     public void updateTextureIndex(int index) {
@@ -64,6 +65,9 @@ public class ParticleNitroCloud extends ParticleCloud {
 
     @Override
     public int getBrightnessForRender(float p_189214_1_) {
+        if(!useLight) {
+            return super.getBrightnessForRender(p_189214_1_);
+        }
         float f = 1.0F - ((float) this.particleAge + p_189214_1_) / (float) this.particleMaxAge;
         f = MathHelper.clamp(f, 0.0F, 1.0F);
         int i = super.getBrightnessForRender(p_189214_1_);

@@ -318,7 +318,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     private void spawnParticles() {
         if (world.isRemote) {
             float health = this.health / this.getActualStats().maxHealth;
-            this.getVehiclePositions().tickParticles(world, health, isStarted && fuel > 0, nitroHandler.isNitroActive(), posX, posY, posZ, rotationYaw);
+            this.getVehiclePositions().tickParticles(this, world, health, isStarted && fuel > 0, nitroHandler.isNitroActive(), posX, posY, posZ, rotationYaw);
         }
     }
 

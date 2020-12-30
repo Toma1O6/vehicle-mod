@@ -20,7 +20,7 @@ public class NitroHandler implements INBTSerializable<NBTTagList> {
 
     public NitroHandler(EntityVehicle vehicle) {
         this.vehicle = vehicle;
-        this.inventory = new InventoryBasic("inventory.nitro", false, 11) {
+        this.inventory = new InventoryBasic("inventory.nitro", false, 12) {
             @Override
             public int getInventoryStackLimit() {
                 return 1;
@@ -81,7 +81,7 @@ public class NitroHandler implements INBTSerializable<NBTTagList> {
     }
 
     public int getFirstUsableNitroSlot() {
-        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+        for (int i = 0; i < 5; i++) {
             ItemStack stack = inventory.getStackInSlot(i);
             if(!stack.isEmpty() && stack.getItem() instanceof ItemNitroCan && stack.getItemDamage() < stack.getMaxDamage()) {
                 return i;

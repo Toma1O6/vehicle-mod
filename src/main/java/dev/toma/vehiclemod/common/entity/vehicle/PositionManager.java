@@ -1,8 +1,12 @@
 package dev.toma.vehiclemod.common.entity.vehicle;
 
+import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.client.particle.ParticleNitroCloud;
 import dev.toma.vehiclemod.client.particle.Particles;
+import dev.toma.vehiclemod.common.items.ItemNitroCloud;
 import dev.toma.vehiclemod.util.DevUtil;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -44,7 +48,7 @@ public class PositionManager {
         return DevUtil.getSafe(directionDoubleMap, direction, 0.0D);
     }
 
-    public void tickParticles(World world, float healthPct, boolean engineFlag, boolean nitro, double x, double y, double z, float yaw) {
+    public void tickParticles(EntityVehicle vehicle, World world, float healthPct, boolean engineFlag, boolean nitro, double x, double y, double z, float yaw) {
         if(healthPct <= 0.5F) {
             Vec3d eng = rotateVectorYaw(engine, yaw);
             world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, true, x + eng.x, y + eng.y, z + eng.z, 0.0D, 0.1D, 0.0D);
@@ -58,10 +62,21 @@ public class PositionManager {
                 }
             }
         }
-        for (CloudExit exit : nitroClouds) {
-            Vec3d pos = rotateVectorYaw(exit.getPosition(), yaw);
-            Vec3d mot = rotateVectorYaw(exit.getMotion(), yaw);
-            VehicleMod.proxy.spawnParticle(Particles.NITRO_CLOUD, world, x + pos.x, y + pos.y, z + pos.z, mot.x, mot.y, mot.z, 0xFFFF);
+        // TODO
+        boolean nitroCloud = true;
+        if(nitroCloud) {
+            boolean litUp = vehicle.getNitroHandler().getInventory().getStackInSlot(11).getItem() == Registries.VMItems.NITRO_LED;
+            for (int i = 0; i < vehicle.getNitroCloudSpraySlotCount(); i++) {
+                ItemStack stack = vehicle.getNitroHandler().getInventory().getStackInSlot(5 + i);
+                if(!stack.isEmpty()) {
+                    ItemNitroCloud cloud = (ItemNitroCloud) stack.getItem();
+                    CloudExit exit = nitroClouds[i];
+                    Vec3d pos = rotateVectorYaw(exit.getPosition(), yaw);
+                    Vec3d mot = rotateVectorYaw(exit.getMotion(), yaw);
+                    int clr = litUp ? cloud.getColor() | ParticleNitroCloud.LIGHT_FLAG << 24 : cloud.getColor();
+                    VehicleMod.proxy.spawnParticle(Particles.NITRO_CLOUD, world, x + pos.x, y + pos.y, z + pos.z, mot.x, mot.y, mot.z, clr);
+                }
+            }
         }
     }
 

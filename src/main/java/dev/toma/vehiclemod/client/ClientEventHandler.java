@@ -67,6 +67,7 @@ public class ClientEventHandler {
 		map.registerSprite(VehicleMod.getResource("items/nitro_can_empty"));
 		map.registerSprite(VehicleMod.getResource("items/nitro_cloud_spray_empty"));
 		map.registerSprite(VehicleMod.getResource("items/nitro_cloud_spray_empty_disabled"));
+		map.registerSprite(VehicleMod.getResource("items/nitro_led_empty"));
 	}
 
 	@SubscribeEvent

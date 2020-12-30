@@ -24,10 +24,6 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSirens {
             .sideNeons(1.0)
             .backLength(1.4)
             .frontLength(1.6)
-            .nitroExit(1.5, 0.8, 0.45, -0.1, 0.1, 0.1)
-            .nitroExit(1.5, 0.8, -0.45, -0.1, 0.1, -0.1)
-            .nitroExit(2.0, 0.4, 0.8, 0.05, 0.05, 0.1)
-            .nitroExit(2.0, 0.4, -0.8, 0.05, 0.05, -0.1)
             .build();
 
     public VehicleSputnik3000LEnforcer(World world) {
@@ -60,6 +56,11 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSirens {
                 .honk(VMSounds.HORN_29S)
                 .starting(VMSounds.CAR_START_A)
                 .build();
+    }
+
+    @Override
+    public int getNitroCloudSpraySlotCount() {
+        return 0;
     }
 
     @Override

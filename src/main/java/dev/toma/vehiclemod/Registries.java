@@ -80,6 +80,7 @@ public class Registries {
         public static final ItemVehicleUpgrade ENGINE_7 = null;
         public static final ItemNeon NEON_TUBE_RED = null;
         public static final ItemNitroCan NITRO_BOTTLE_100 = null;
+        public static final VMItem NITRO_LED = null;
     }
 
     @ObjectHolder(VehicleMod.MODID)
@@ -222,6 +223,7 @@ public class Registries {
                     new ItemNitroCloud("nitro_cloud_spray_gold", 3, 0xd1ab21),
                     new ItemNitroCloud("nitro_cloud_spray_purple", 3, 0x5200a5),
                     new ItemNitroCloud("nitro_cloud_spray_ruby", 3, 0xbf0046),
+                    new VMItem("nitro_led"),
                     new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {

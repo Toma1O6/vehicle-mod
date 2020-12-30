@@ -195,6 +195,7 @@ item.nitro_cloud_spray_cyan.name=Cyan Nitro Cloud Spray
 item.nitro_cloud_spray_gold.name=Gold Nitro Cloud Spray
 item.nitro_cloud_spray_purple.name=Purple Nitro Cloud Spray
 item.nitro_cloud_spray_ruby.name=Ruby Nitro Cloud Spray
+item.nitro_led.name=Nitro LED
 
 entity.vehiclemod:beamer_s120.name=Beamer S120
 entity.vehiclemod:fedoratti_vulcan.name=Fedoratti Vulcan
