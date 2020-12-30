@@ -46,7 +46,7 @@ public class VehicleSputnikDuster extends EntityVehicleSUV {
 
     @Override
     public int getNitroCloudSpraySlotCount() {
-        return 5;
+        return 6;
     }
 
     @Override
@@ -69,6 +69,12 @@ public class VehicleSputnikDuster extends EntityVehicleSUV {
                 .sideNeons(1.1, 0.2)
                 .frontLength(2.2)
                 .backLength(1.8)
+                .nitroExit(1.5, 1.2, 0.7, -0.05, 0.1, 0.1)
+                .nitroExit(1.5, 1.2, -0.7, -0.05, 0.1, -0.1)
+                .nitroExit(2.4, 0.6, 1.0, -0.1, 0.02, 0.1)
+                .nitroExit(2.4, 0.6, -1.0, -0.1, 0.02, -0.1)
+                .nitroExit(2.5, 0.6, 0.8, 0.15, 0.0, 0.0)
+                .nitroExit(2.5, 0.6, -0.8, 0.15, 0.0, 0.0)
                 .build();
     }
 
