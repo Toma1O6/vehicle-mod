@@ -71,6 +71,12 @@ public class VehicleFedorattiNightStalker extends EntityVehicleSuperSport {
                 .sideNeons(1.0, 0.1)
                 .sideLength(2.5)
                 .backLength(1.5)
+                .nitroExit(1.6, 0.8, 0.65, -0.1, 0.1, 0.1)
+                .nitroExit(1.6, 0.8, -0.65, -0.1, 0.1, -0.1)
+                .nitroExit(2.7, 0.2, 0.65, 0.1, 0.0, 0.05)
+                .nitroExit(2.7, 0.2, -0.65, 0.1, 0.0, -0.05)
+                .nitroExit(-1.4, 0.8, 0.3, -0.1, 0.1, 0.05)
+                .nitroExit(-1.4, 0.8, -0.3, -0.1, 0.1, -0.05)
                 .build();
     }
 
