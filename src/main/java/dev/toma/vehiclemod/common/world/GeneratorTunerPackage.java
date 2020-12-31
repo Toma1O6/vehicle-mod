@@ -3,6 +3,7 @@ package dev.toma.vehiclemod.common.world;
 import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.common.blocks.BlockTunerPackage;
 import dev.toma.vehiclemod.common.tileentity.TileEntityTunerPackage;
+import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.util.function.LazyLoad;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +25,7 @@ public class GeneratorTunerPackage extends PackageGenerator {
 
     @Override
     public float getChance() {
-        return 0.04F;
+        return VMConfig.worldConfig.getTunerPackageSpawnChance();
     }
 
     @Override

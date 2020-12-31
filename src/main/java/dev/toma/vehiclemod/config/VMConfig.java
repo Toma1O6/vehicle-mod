@@ -13,11 +13,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Config(modid = VehicleMod.MODID, name = "Vehicle Mod Config")
 public class VMConfig {
 
-	@Name("Nitro Cloud Color")
-	public static String color = "00FFFF";
-
 	@Name("Client config")
 	public static ClientConfig clientConfig = new ClientConfig();
+
+	@Name("World config")
+	public static WorldConfig worldConfig = new WorldConfig();
 
 	@Name("Speed display unit")
 	public static SpeedDisplayUnit speedUnit = SpeedDisplayUnit.KILOMETRES_PER_HOUR;

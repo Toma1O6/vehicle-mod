@@ -3,6 +3,7 @@ package dev.toma.vehiclemod.common.capability.chunks;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.entity.vehicle.EnumVehicleType;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.util.WeightedRandom;
@@ -68,7 +69,7 @@ public class ChunkDataFactory implements ChunkData {
                 if (!data.isMarked() && !world.isRemote) {
                     data.mark();
                     chunk.markDirty();
-                    if(random.nextFloat() <= 0.007F) {
+                    if(random.nextFloat() <= VMConfig.worldConfig.getVehicleSpawnChance()) {
                         ChunkPos pos = chunk.getPos();
                         int x = (pos.x << 4) + random.nextInt(16);
                         int z = (pos.z << 4) + random.nextInt(16);
