@@ -12,4 +12,9 @@ public class ItemNeon extends ItemTunerPackage {
     public int getNeonColor() {
         return color;
     }
+
+    @Override
+    public Category getCategory() {
+        return Category.NEON;
+    }
 }

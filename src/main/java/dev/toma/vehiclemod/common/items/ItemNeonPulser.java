@@ -12,4 +12,9 @@ public class ItemNeonPulser extends ItemTunerPackage {
     public int getPulseLength() {
         return pulseLength;
     }
+
+    @Override
+    public Category getCategory() {
+        return Category.MISC;
+    }
 }

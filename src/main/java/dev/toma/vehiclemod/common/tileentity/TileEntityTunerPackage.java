@@ -4,6 +4,7 @@ import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.items.ITunerPackageEntry;
 import dev.toma.vehiclemod.network.packets.SPacketLockpickAttempt;
+import dev.toma.vehiclemod.util.ArgWeightedRandom;
 import dev.toma.vehiclemod.util.function.LazyLoad;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -16,23 +17,30 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class TileEntityTunerPackage extends TileEntityInventory implements ILockpickable {
 
-    private static final LazyLoad<IntHashMap<List<Item>>> LOOT_POOL = new LazyLoad<>(TileEntityTunerPackage::genLootPool);
+    private static final LazyLoad<IntHashMap<Map<ITunerPackageEntry.Category, List<Item>>>> LOOT_POOL = new LazyLoad<>(TileEntityTunerPackage::genLootPool);
+    private static final ArgWeightedRandom<ITunerPackageEntry.Category, Integer> CATEGORIES = new ArgWeightedRandom<>(ITunerPackageEntry.Category::getChance, ITunerPackageEntry.Category.values());
     private int[] combinations;
-    private NonNullList<ItemStack> inventory = NonNullList.withSize(1, ItemStack.EMPTY);
+    private NonNullList<ItemStack> inventory = NonNullList.withSize(2, ItemStack.EMPTY);
 
     public void fill(int tier) {
         if(!isInvalid() && !world.isRemote) {
-            List<Item> pool = LOOT_POOL.get().lookup(tier);
-            Item item = getRandom(pool, VehicleMod.random);
-            setInventorySlotContents(0, new ItemStack(item));
-            combinations = new int[5 + tier];
+            for (int i = 0; i < 2; i++) {
+                ITunerPackageEntry.Category category = CATEGORIES.getRandom(tier);
+                List<Item> pool = LOOT_POOL.get().lookup(tier).getOrDefault(category, Collections.emptyList());
+                if(pool.isEmpty()) {
+                    VehicleMod.logger.error("Found empty loot pool (T:{},C:{})", tier, category);
+                    continue;
+                }
+                Item item = getRandom(pool, VehicleMod.random);
+                setInventorySlotContents(i, new ItemStack(item));
+            }
+            combinations = new int[6 + tier];
             for (int i = 0; i < combinations.length; i++)
                 combinations[i] = i;
             ILockpickable.shuffle(combinations);
@@ -108,26 +116,27 @@ public class TileEntityTunerPackage extends TileEntityInventory implements ILock
         combinations = compound.getIntArray("combinations");
     }
 
-    static <I extends Item & ITunerPackageEntry> IntHashMap<List<Item>> genLootPool() {
+    static <I extends Item & ITunerPackageEntry> IntHashMap<Map<ITunerPackageEntry.Category, List<Item>>> genLootPool() {
         List<I> items = ForgeRegistries.ITEMS.getValuesCollection().stream()
                 .filter(item -> item instanceof ITunerPackageEntry)
                 .map(it -> (I) it)
                 .collect(Collectors.toList());
-        IntHashMap<List<Item>> map = new IntHashMap<>();
+        IntHashMap<Map<ITunerPackageEntry.Category, List<Item>>> lootPool = new IntHashMap<>();
         for (I i : items) {
             int tier = i.getTier();
-            lookup(map, tier).add(i);
+            ITunerPackageEntry.Category category = i.getCategory();
+            lookup(lootPool, tier, HashMap::new).computeIfAbsent(category, cat -> new ArrayList<>()).add(i);
         }
-        return map;
+        return lootPool;
     }
 
-    static <T> List<T> lookup(IntHashMap<List<T>> map, int hashEntry) {
-        List<T> list = map.lookup(hashEntry);
-        if(list == null) {
-            list = new ArrayList<>();
-            map.addKey(hashEntry, list);
+    static <T> T lookup(IntHashMap<T> map, int hashEntry, Supplier<T> factory) {
+        T t = map.lookup(hashEntry);
+        if(t == null) {
+            t = factory.get();
+            map.addKey(hashEntry, t);
         }
-        return list;
+        return t;
     }
 
     static <T> T getRandom(List<T> list, Random random) {

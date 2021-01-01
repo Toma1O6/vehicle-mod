@@ -33,7 +33,7 @@ public class PackageGenerator implements IWorldGenerator {
     public static final WeightedRandom<PackageSpawner> PACKAGE = new WeightedRandom.NullableWeightedRandom<>(PackageSpawner::getChance, new PackageSpawner[] {
             new PackageSpawner(VMConfig.worldConfig.mechanicPackageSpawnChance, (pos, world, random) -> {
                 BlockMechanicPackage.Variant variant = VARIANT.getRandom();
-                world.setBlockState(pos, variant.getPackage().getDefaultState());
+                world.setBlockState(pos, variant.getPackage().getDefaultState(), 2 | 16);
                 TileEntity tileEntity = world.getTileEntity(pos);
                 if(tileEntity instanceof TileEntityMechanicPackage) {
                     ((TileEntityMechanicPackage) tileEntity).fill(variant);
@@ -42,7 +42,7 @@ public class PackageGenerator implements IWorldGenerator {
             new PackageSpawner(VMConfig.worldConfig.tunerPackageSpawnChance, (pos, world, random) -> {
                 int tier = VARIANT.getRandom().ordinal();
                 IBlockState state = TIER_TO_BLOCK_MAP.get().lookup(tier).getDefaultState();
-                world.setBlockState(pos, state);
+                world.setBlockState(pos, state, 2 | 16);
                 TileEntity tileEntity = world.getTileEntity(pos);
                 if(tileEntity instanceof TileEntityTunerPackage) {
                     ((TileEntityTunerPackage) tileEntity).fill(tier);

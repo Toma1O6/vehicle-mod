@@ -38,6 +38,11 @@ public class ItemNitroCan extends VMItem implements IFuelMakerItem, ITunerPackag
     }
 
     @Override
+    public Category getCategory() {
+        return Category.NITRO;
+    }
+
+    @Override
     public FluidType getFluid() {
         return FluidTypes.NITRO;
     }

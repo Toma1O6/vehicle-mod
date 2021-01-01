@@ -1,6 +1,6 @@
 package dev.toma.vehiclemod.common.items;
 
-public class ItemTunerPackage extends VMItem implements ITunerPackageEntry {
+public abstract class ItemTunerPackage extends VMItem implements ITunerPackageEntry {
 
     final int tier;
 

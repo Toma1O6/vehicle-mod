@@ -12,4 +12,9 @@ public class ItemNitroCloud extends ItemTunerPackage {
     public int getColor() {
         return color;
     }
+
+    @Override
+    public Category getCategory() {
+        return Category.CLOUD;
+    }
 }
