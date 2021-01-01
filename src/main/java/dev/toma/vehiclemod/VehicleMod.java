@@ -8,8 +8,7 @@ import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
 import dev.toma.vehiclemod.common.tileentity.TileEntityTunerPackage;
-import dev.toma.vehiclemod.common.world.GeneratorMechanicPackage;
-import dev.toma.vehiclemod.common.world.GeneratorTunerPackage;
+import dev.toma.vehiclemod.common.world.PackageGenerator;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.proxy.CommonProxy;
@@ -62,8 +61,7 @@ public class VehicleMod {
 		GameRegistry.registerTileEntity(TileEntityMechanicPackage.class, getResource("mechanic_package"));
 		GameRegistry.registerTileEntity(TileEntityTunerPackage.class, getResource("tuner_package"));
 		GameRegistry.registerTileEntity(TileEntitySecret.class, getResource("secret"));
-		GameRegistry.registerWorldGenerator(new GeneratorMechanicPackage(), 0);
-		GameRegistry.registerWorldGenerator(new GeneratorTunerPackage(), 2);
+		GameRegistry.registerWorldGenerator(new PackageGenerator(), 0);
 		proxy.init(e);
 	}
 	

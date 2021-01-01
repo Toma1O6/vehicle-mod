@@ -11,23 +11,15 @@ public class WorldConfig {
 
     @Config.Name("Mechanic package spawn chance")
     @Config.Comment({"Enter value between 0-100", "Use 0 to disable spawning"})
-    @Config.RangeDouble(min = 0.0, max = 100.0)
-    public float mechanicPackageSpawnChance = 8.0F;
+    @Config.RangeInt(min = 0, max = 100)
+    public int mechanicPackageSpawnChance = 8;
 
     @Config.Name("Tuner package spawn chance")
     @Config.Comment({"Enter value between 0-100", "Use 0 to disable spawning"})
-    @Config.RangeDouble(min = 0.0, max = 100.0)
-    public float tunerPackageSpawnChance = 4.0F;
+    @Config.RangeInt(min = 0, max = 100)
+    public int tunerPackageSpawnChance = 4;
 
     public float getVehicleSpawnChance() {
         return vehicleSpawnChance / 100.0F;
-    }
-
-    public float getMechanicPackageSpawnChance() {
-        return mechanicPackageSpawnChance / 100.0F;
-    }
-
-    public float getTunerPackageSpawnChance() {
-        return tunerPackageSpawnChance / 100.0F;
     }
 }
