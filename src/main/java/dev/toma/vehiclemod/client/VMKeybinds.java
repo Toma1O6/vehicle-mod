@@ -6,10 +6,7 @@ import dev.toma.vehiclemod.common.entity.vehicle.ISpecialVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.LightController;
 import dev.toma.vehiclemod.common.entity.vehicle.NitroHandler;
 import dev.toma.vehiclemod.network.VMNetworkManager;
-import dev.toma.vehiclemod.network.packets.SPacketChangeLightStatus;
-import dev.toma.vehiclemod.network.packets.SPacketHonk;
-import dev.toma.vehiclemod.network.packets.SPacketSiren;
-import dev.toma.vehiclemod.network.packets.SPacketVehicleAction;
+import dev.toma.vehiclemod.network.packets.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
@@ -21,6 +18,10 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.input.Keyboard;
+
+import java.util.function.BiConsumer;
+import java.util.function.BooleanSupplier;
+import java.util.function.Predicate;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class VMKeybinds {
@@ -108,6 +109,8 @@ public class VMKeybinds {
             Entity entity = player.getRidingEntity();
             if(entity instanceof EntityVehicle && player == entity.getControllingPassenger()) {
                 EntityVehicle vehicle = (EntityVehicle) entity;
+                if(vehicle.isStationary())
+                    return;
                 NitroHandler handler = vehicle.getNitroHandler();
                 int slot = handler.getFirstUsableNitroSlot();
                 if(vehicle.isStarted() && slot != -1) {
@@ -118,7 +121,12 @@ public class VMKeybinds {
         }
     }
 
-    static boolean hornKeyState;
+    static KeyStateListener hornKeyListener = new KeyStateListener(vehicle -> CAR_HORN.isKeyDown(), (aBoolean, vehicle) -> VMNetworkManager.instance().sendToServer(new SPacketHonk(aBoolean, vehicle)));
+    static KeyStateListener nitroKeyListener = new KeyStateListener(vehicle -> {
+        NitroHandler handler = vehicle.getNitroHandler();
+        int nitroSlot = handler.getFirstUsableNitroSlot();
+        return NITRO.isKeyDown() && nitroSlot >= 0 && vehicle.isStationary();
+    }, (aBoolean, vehicle) -> VMNetworkManager.instance().sendToServer(new SPacketCloudStatus(aBoolean)));
 
     @SubscribeEvent
     public static void clientTick(TickEvent.ClientTickEvent event) {
@@ -128,11 +136,29 @@ public class VMKeybinds {
             return;
         Entity entity = player.getRidingEntity();
         if(entity instanceof EntityVehicle && entity.getControllingPassenger() == player) {
-            boolean current = CAR_HORN.isKeyDown();
-            if(current != hornKeyState) {
-                VMNetworkManager.instance().sendToServer(new SPacketHonk(current, (EntityVehicle) entity));
+            EntityVehicle vehicle = (EntityVehicle) entity;
+            hornKeyListener.tick(vehicle);
+            nitroKeyListener.tick(vehicle);
+        }
+    }
+
+    static class KeyStateListener {
+
+        boolean savedState;
+        final Predicate<EntityVehicle> condition;
+        final BiConsumer<Boolean, EntityVehicle> action;
+
+        KeyStateListener(Predicate<EntityVehicle> condition, BiConsumer<Boolean, EntityVehicle> action) {
+            this.condition = condition;
+            this.action = action;
+        }
+
+        void tick(EntityVehicle vehicle) {
+            boolean actualState = condition.test(vehicle);
+            if(actualState != savedState) {
+                action.accept(actualState, vehicle);
             }
-            hornKeyState = current;
+            savedState = actualState;
         }
     }
 }

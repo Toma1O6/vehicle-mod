@@ -24,6 +24,7 @@ public class VMNetworkManager {
 		registerClientPacket(CPacketSendSpecialVehicleStatus.Handler.class, CPacketSendSpecialVehicleStatus.class);
 		registerClientPacket(CPacketHonk.Handler.class, CPacketHonk.class);
 		registerClientPacket(CPacketSendLightStatus.Handler.class, CPacketSendLightStatus.class);
+		registerClientPacket(CPacketCloudStatus.Handler.class, CPacketCloudStatus.class);
 	}
 	
 	private static void registerServerPackets() {
@@ -37,6 +38,7 @@ public class VMNetworkManager {
 		registerServerPacket(SPacketFuelMakerAction.Handler.class, SPacketFuelMakerAction.class);
 		registerServerPacket(SPacketChangeLightStatus.Handler.class, SPacketChangeLightStatus.class);
 		registerServerPacket(SPacketVehicleAction.Handler.class, SPacketVehicleAction.class);
+		registerServerPacket(SPacketCloudStatus.Handler.class, SPacketCloudStatus.class);
 	}
 	
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerClientPacket(Class<? extends IMessageHandler<REQ, REPLY>> handler, Class<REQ> packet) {

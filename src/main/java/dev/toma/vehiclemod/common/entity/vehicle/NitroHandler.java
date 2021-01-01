@@ -17,6 +17,7 @@ public class NitroHandler implements INBTSerializable<NBTTagList> {
     private int useTicksLeft;
     private int startDelay;
     private int slotID;
+    private boolean cloudsActive;
 
     public NitroHandler(EntityVehicle vehicle) {
         this.vehicle = vehicle;
@@ -26,6 +27,14 @@ public class NitroHandler implements INBTSerializable<NBTTagList> {
                 return 1;
             }
         };
+    }
+
+    public void setCloudState(boolean state) {
+        this.cloudsActive = state;
+    }
+
+    public boolean areCloudsActive() {
+        return cloudsActive;
     }
 
     public void initiateUse(Entity entity, int slotID) {

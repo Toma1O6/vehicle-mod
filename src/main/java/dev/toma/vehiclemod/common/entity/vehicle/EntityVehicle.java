@@ -431,6 +431,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         return true;
     }
 
+    public boolean isStationary() {
+        return currentSpeed == 0;
+    }
+
     public void sync() {
         if (!world.isRemote) {
             VMNetworkManager.instance().sendToAllTracking(new CPacketUpdateEntity(this), this);

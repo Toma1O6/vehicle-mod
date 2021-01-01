@@ -62,8 +62,7 @@ public class PositionManager {
                 }
             }
         }
-        // TODO
-        boolean nitroCloud = true;
+        boolean nitroCloud = vehicle.getNitroHandler().areCloudsActive();
         if(nitroCloud) {
             boolean litUp = vehicle.getNitroHandler().getInventory().getStackInSlot(11).getItem() == Registries.VMItems.NITRO_LED;
             for (int i = 0; i < vehicle.getNitroCloudSpraySlotCount(); i++) {
