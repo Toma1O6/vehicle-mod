@@ -16,7 +16,7 @@ public class VehicleSputnikAmbulance extends EntityVehicleSirens {
     private static final VehicleTexture[] VALID_TEXTURES = {VehicleTexture.BLUE, VehicleTexture.RED, VehicleTexture.UTILITY_YELLOW, VehicleTexture.BRICK};
     private static final PositionManager POSITIONS = PositionManager.Builder.create()
             .engine(2.5, 0.65, 0)
-            .exhaust(-2.8, -0.35, 0.7)
+            .exhaust(-2.8, 0.2, 0.7)
             .frontNeon(2.8)
             .backNeon(2.6)
             .sideNeons(1.15, 0.1)

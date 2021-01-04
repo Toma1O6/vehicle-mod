@@ -7,13 +7,14 @@ import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class VehicleProtonP1Tunned extends EntityVehicleSport {
 
     static final PositionManager POSITIONS = PositionManager.Builder.create()
             .engine(1.5, 0.45, 0)
-            .exhaust(-2.3, 0.45, 0.6)
+            .exhaust(new Vec3d( -2.3, 0.45, 0.65), new Vec3d(-2.3, 0.45, -0.65))
             .frontNeon(1.7)
             .backNeon(2.0)
             .sideNeons(0.85, -0.1)
