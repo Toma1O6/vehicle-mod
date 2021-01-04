@@ -52,6 +52,8 @@ public class PackageGenerator implements IWorldGenerator {
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+        if(world.provider.getDimension() != 0)
+            return;
         PackageSpawner spawner = PACKAGE.getRandom();
         if(spawner == null)
             return;

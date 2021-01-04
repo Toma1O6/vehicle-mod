@@ -97,4 +97,5 @@ public class VMSounds {
     public static final SoundEvent NITRO_END = null;
     public static final SoundEvent NITRO_A = null;
     public static final SoundEvent NITRO_B = null;
+    public static final SoundEvent NITRO_CLOUD = null;
 }

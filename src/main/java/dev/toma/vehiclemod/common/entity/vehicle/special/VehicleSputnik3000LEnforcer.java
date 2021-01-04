@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
+import dev.toma.vehiclemod.common.entity.vehicle.NeonHandler;
 import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
@@ -24,6 +25,7 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSirens {
             .sideNeons(1.0)
             .backLength(1.4)
             .frontLength(1.6)
+            .disable()
             .build();
 
     public VehicleSputnik3000LEnforcer(World world) {

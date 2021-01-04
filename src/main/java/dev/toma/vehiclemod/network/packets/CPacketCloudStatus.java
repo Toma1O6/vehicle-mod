@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.network.packets;
 
+import dev.toma.vehiclemod.client.NitroCloudSound;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -46,6 +47,7 @@ public class CPacketCloudStatus implements IMessage {
                 Entity entity = world.getEntityByID(message.entityID);
                 if(entity instanceof EntityVehicle) {
                     ((EntityVehicle) entity).getNitroHandler().setCloudState(message.state);
+                    mc.getSoundHandler().playSound(new NitroCloudSound((EntityVehicle) entity));
                 }
             });
             return null;

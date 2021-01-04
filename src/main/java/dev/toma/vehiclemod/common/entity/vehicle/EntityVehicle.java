@@ -181,10 +181,10 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
 
         if (inputRight && !inputLeft) {
-            turnModifier = turnModifier < stats.maxTurningAngle ? turnModifier < 0 ? turnModifier + stats.turnSpeed + 0.5F : turnModifier + stats.turnSpeed : stats.maxTurningAngle;
+            turnModifier = turnModifier < stats.maxTurningAngle ? turnModifier < 0 ? turnModifier + stats.turnSpeed + 0.5F : turnModifier + (stats.turnSpeed * 0.8F) : stats.maxTurningAngle;
         }
         if (inputLeft && !inputRight) {
-            turnModifier = turnModifier > -stats.maxTurningAngle ? turnModifier > 0 ? turnModifier - stats.turnSpeed - 0.5F : turnModifier - stats.turnSpeed : -stats.maxTurningAngle;
+            turnModifier = turnModifier > -stats.maxTurningAngle ? turnModifier > 0 ? turnModifier - stats.turnSpeed - 0.5F : turnModifier - (stats.turnSpeed * 0.8F) : -stats.maxTurningAngle;
         }
 
         if (noAccelerationInput() || !hasFuel()) {

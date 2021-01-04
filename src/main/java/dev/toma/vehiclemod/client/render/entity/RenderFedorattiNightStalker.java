@@ -31,8 +31,9 @@ public class RenderFedorattiNightStalker extends RenderVehicle<VehicleFedorattiN
         GlStateManager.rotate(180f, 0f, 1f, 0f);
         GlStateManager.translate(0, -24, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
-        RenderHelper.enableGUIStandardItemLighting();
+        GlStateManager.disableLighting();
         modelFedorattiNightStalker.render(entity);
+        GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }

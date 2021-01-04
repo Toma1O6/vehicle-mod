@@ -12,7 +12,7 @@ public class WorldConfig {
     @Config.Name("Mechanic package spawn chance")
     @Config.Comment({"Enter value between 0-100", "Use 0 to disable spawning"})
     @Config.RangeInt(min = 0, max = 100)
-    public int mechanicPackageSpawnChance = 8;
+    public int mechanicPackageSpawnChance = 9;
 
     @Config.Name("Tuner package spawn chance")
     @Config.Comment({"Enter value between 0-100", "Use 0 to disable spawning"})

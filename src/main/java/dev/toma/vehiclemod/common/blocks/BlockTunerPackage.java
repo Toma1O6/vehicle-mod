@@ -3,6 +3,7 @@ package dev.toma.vehiclemod.common.blocks;
 import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.tileentity.TileEntityTunerPackage;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -29,6 +30,16 @@ public class BlockTunerPackage extends BlockBasic {
         super(name, Material.IRON);
         this.tier = tier;
         setHardness(2.2F);
+    }
+
+    @Override
+    public boolean isTopSolid(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        return MapColor.AIR;
     }
 
     @Override

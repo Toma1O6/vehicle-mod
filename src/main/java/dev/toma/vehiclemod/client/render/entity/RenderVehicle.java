@@ -64,7 +64,7 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 			this.drawInfo(entity, mc, (float)x, (float)y + f2, (float)z);
 		}
 		// neons
-		if(entity != null) {
+		if(entity != null && entity.lightController.areLightsOn(entity)) {
 			drawNeons(entity, x, y, z, entityYaw);
 		}
 	}

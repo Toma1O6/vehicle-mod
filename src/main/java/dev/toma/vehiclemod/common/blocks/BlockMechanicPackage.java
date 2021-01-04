@@ -1,13 +1,11 @@
 package dev.toma.vehiclemod.common.blocks;
 
-import com.google.common.base.Preconditions;
 import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.VehicleMod;
-import dev.toma.vehiclemod.client.gui.GuiLockpicking;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -38,6 +36,16 @@ public class BlockMechanicPackage extends BlockBasic {
 
     public Variant getVariant() {
         return variant;
+    }
+
+    @Override
+    public boolean isTopSolid(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        return MapColor.AIR;
     }
 
     @Override
@@ -98,10 +106,10 @@ public class BlockMechanicPackage extends BlockBasic {
 
     public enum Variant {
 
-        BRONZE   (55, 1, 4, 0.60F, 0.25F, 0.08F, 0.05F, 0.02F, 0.00F, 0.00F, 0.07F, 0.00F, 0.00F),
+        BRONZE   (40, 1, 4, 0.60F, 0.25F, 0.08F, 0.05F, 0.02F, 0.00F, 0.00F, 0.07F, 0.00F, 0.00F),
         SILVER   (30, 1, 5, 0.30F, 0.40F, 0.15F, 0.08F, 0.05F, 0.02F, 0.00F, 0.00F, 0.07F, 0.00F),
-        GOLDEN   (10, 2, 6, 0.15F, 0.35F, 0.20F, 0.15F, 0.08F, 0.05F, 0.02F, 0.00F, 0.00F, 0.07F),
-        PLATINUM ( 5, 2, 7, 0.00F, 0.15F, 0.33F, 0.27F, 0.13F, 0.08F, 0.04F, 0.15F, 0.15F, 0.15F);
+        GOLDEN   (20, 2, 6, 0.15F, 0.35F, 0.20F, 0.15F, 0.08F, 0.05F, 0.02F, 0.00F, 0.00F, 0.07F),
+        PLATINUM (10, 2, 7, 0.00F, 0.15F, 0.33F, 0.27F, 0.13F, 0.08F, 0.04F, 0.15F, 0.15F, 0.15F);
 
         final int spawnChance;
         final int partCount;

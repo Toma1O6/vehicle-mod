@@ -358,7 +358,8 @@ public class Registries {
                     registerSound("nitro_start"),
                     registerSound("nitro_end"),
                     registerSound("nitro_a"),
-                    registerSound("nitro_b")
+                    registerSound("nitro_b"),
+                    registerSound("nitro_cloud")
             );
         }
 
