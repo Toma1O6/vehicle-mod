@@ -8,11 +8,22 @@ import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.vecmath.Vector3f;
-
 public class VehicleMCGMultiVan extends EntityVehicleSpecial {
 
-    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(2.2, 0.45, 0).exhaust(-3, 0.55, 0).build();
+    private static final PositionManager POSITIONS = PositionManager.Builder.create()
+            .engine(2.2, 0.45, 0)
+            .exhaust(-3, 0.55, 0)
+            .frontNeon(2.5)
+            .backNeon(2.4)
+            .leftNeon(1.07)
+            .rightNeon(1.0)
+            .frontLength(1.9)
+            .sideLength(2.9)
+            .backLength(1.8)
+            .nitroExit(2.2, 1.1, 0.6, -0.03, 0.15, 0.2)
+            .nitroExit(2.2, 1.1, -0.5, -0.03, 0.15, -0.2)
+            .nitroExit(2.4, 0.5, 0.0, 0.15, 0.02, 0.0)
+            .build();
 
     public VehicleMCGMultiVan(World world) {
         super(world);
@@ -58,20 +69,7 @@ public class VehicleMCGMultiVan extends EntityVehicleSpecial {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(2.2, 0.45, 0)
-                .exhaust(-3, 0.55, 0)
-                .frontNeon(2.5)
-                .backNeon(2.4)
-                .leftNeon(1.07)
-                .rightNeon(1.0)
-                .frontLength(1.9)
-                .sideLength(2.9)
-                .backLength(1.8)
-                .nitroExit(2.2, 1.1, 0.6, -0.03, 0.15, 0.2)
-                .nitroExit(2.2, 1.1, -0.5, -0.03, 0.15, -0.2)
-                .nitroExit(2.4, 0.5, 0.0, 0.15, 0.02, 0.0)
-                .build();
+        return POSITIONS;
     }
 
     @Override

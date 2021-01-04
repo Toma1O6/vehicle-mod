@@ -9,11 +9,23 @@ import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.vecmath.Vector3f;
-
 public class VehicleTracerT1 extends EntityVehicleMuscles {
 
-    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.5, 0.5, 0).exhaust(-2.2, 0.3, 0.3).build();
+    private static final PositionManager POSITIONS = PositionManager.Builder.create()
+            .engine(1.5, 0.5, 0)
+            .exhaust(-2.2, 0.3, 0.3)
+            .frontNeon(2.4)
+            .backNeon(2.0)
+            .rightNeon(0.85)
+            .leftNeon(0.8)
+            .frontLength(1.4)
+            .sideLength(1.5)
+            .backLength(1.4)
+            .nitroExit(0.7, 0.8, 0.5, -0.13, 0.1, 0.1)
+            .nitroExit(0.7, 0.8, -0.5, -0.13, 0.1, -0.1)
+            .nitroExit(2.2, 0.3, 0.65, 0.1, 0.05, 0.05)
+            .nitroExit(2.2, 0.3, -0.65, 0.1, 0.05, -0.05)
+            .build();
 
     public VehicleTracerT1(World world) {
         super(world);
@@ -57,21 +69,7 @@ public class VehicleTracerT1 extends EntityVehicleMuscles {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(1.5, 0.5, 0)
-                .exhaust(-2.2, 0.3, 0.3)
-                .frontNeon(2.4)
-                .backNeon(2.0)
-                .rightNeon(0.85)
-                .leftNeon(0.8)
-                .frontLength(1.4)
-                .sideLength(1.5)
-                .backLength(1.4)
-                .nitroExit(0.7, 0.8, 0.5, -0.13, 0.1, 0.1)
-                .nitroExit(0.7, 0.8, -0.5, -0.13, 0.1, -0.1)
-                .nitroExit(2.2, 0.3, 0.65, 0.1, 0.05, 0.05)
-                .nitroExit(2.2, 0.3, -0.65, 0.1, 0.05, -0.05)
-                .build();
+        return POSITIONS;
     }
 
     @Override

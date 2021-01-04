@@ -10,11 +10,23 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import javax.vecmath.Vector3f;
-
 public class VehicleBeamerS320RS extends EntityVehicleSport {
 
-    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.5, 0.65, 0.0).exhaust(new Vec3d(-2.2, 0.55, 0.7), new Vec3d(-2.2, 0.55, -0.8)).build();
+    private static final PositionManager POSITIONS = PositionManager.Builder.create()
+            .engine(1.5, 0.65, 0.0)
+            .exhaust(new Vec3d(-2.2, 0.55, 0.7), new Vec3d(-2.2, 0.55, -0.8))
+            .frontNeon(2.0)
+            .backNeon(1.9)
+            .frontLength(1.8)
+            .rightNeon(1.0, -0.1)
+            .leftNeon(0.95, -0.1)
+            .backLength(0.9)
+            .nitroExit(1.4, 0.8, 0.6, -0.1, 0.1, 0.1)
+            .nitroExit(1.4, 0.8, -0.6, -0.1, 0.1, -0.1)
+            .nitroExit(1.9, 0.7, 0.8, 0.1, 0.02, 0.1)
+            .nitroExit(1.9, 0.7, -0.8, 0.1, 0.02, -0.1)
+            .nitroExit(2.0, 0.7, 0.0, 0.12, 0.01, 0.0)
+            .build();
 
     public VehicleBeamerS320RS(World world) {
         super(world);
@@ -48,21 +60,7 @@ public class VehicleBeamerS320RS extends EntityVehicleSport {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(1.5, 0.65, 0.0)
-                .exhaust(new Vec3d(-2.2, 0.55, 0.7), new Vec3d(-2.2, 0.55, -0.8))
-                .frontNeon(2.0)
-                .backNeon(1.9)
-                .frontLength(1.8)
-                .rightNeon(1.0, -0.1)
-                .leftNeon(0.95, -0.1)
-                .backLength(0.9)
-                .nitroExit(1.4, 0.8, 0.6, -0.1, 0.1, 0.1)
-                .nitroExit(1.4, 0.8, -0.6, -0.1, 0.1, -0.1)
-                .nitroExit(1.9, 0.7, 0.8, 0.1, 0.02, 0.1)
-                .nitroExit(1.9, 0.7, -0.8, 0.1, 0.02, -0.1)
-                .nitroExit(2.0, 0.7, 0.0, 0.12, 0.01, 0.0)
-                .build();
+        return POSITIONS;
     }
 
     @Override

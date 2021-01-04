@@ -12,12 +12,25 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import javax.vecmath.Vector3f;
-
 public class VehicleSputnikFiretruck extends EntityVehicleSirens {
 
     static final VehicleTexture[] VALID_COLORS = {VehicleTexture.GRAY, VehicleTexture.RED, VehicleTexture.UTILITY_YELLOW, VehicleTexture.HELL};
-    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(3.4, 0.65, 0).exhaust(new Vec3d(-3.2, 0.45, 0.9), new Vec3d(-3.2, 0.45, -0.9)).build();
+    private static final PositionManager POSITIONS = PositionManager.Builder.create()
+            .engine(3.4, 0.65, 0)
+            .exhaust(new Vec3d(-3.2, 0.45, 0.9), new Vec3d(-3.2, 0.45, -0.9))
+            .frontNeon(3.5)
+            .backNeon(2.9)
+            .sideNeons(1.2, 0.6)
+            .frontLength(2.3)
+            .sideLength(2.1)
+            .backLength(2.3)
+            .nitroExit(3.5, 0.8, 0.4, 0.1, 0.02, 0.15)
+            .nitroExit(3.5, 0.8, -0.4, 0.1, 0.02, -0.15)
+            .nitroExit(1.4, 0.5, 1.0, 0.1, 0.0, 0.2)
+            .nitroExit(1.4, 0.5, -1.0, 0.1, 0.0, -0.2)
+            .nitroExit(-2.5, 0.6, 1.0, -0.1, 0.0, 0.1)
+            .nitroExit(-2.5, 0.6, -1.0, -0.1, 0.0, -0.1)
+            .build();
 
     public VehicleSputnikFiretruck(World world) {
         super(world);
@@ -53,22 +66,7 @@ public class VehicleSputnikFiretruck extends EntityVehicleSirens {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(3.4, 0.65, 0)
-                .exhaust(new Vec3d(-3.2, 0.45, 0.9), new Vec3d(-3.2, 0.45, -0.9))
-                .frontNeon(3.5)
-                .backNeon(2.9)
-                .sideNeons(1.2, 0.6)
-                .frontLength(2.3)
-                .sideLength(2.1)
-                .backLength(2.3)
-                .nitroExit(3.5, 0.8, 0.4, 0.1, 0.02, 0.15)
-                .nitroExit(3.5, 0.8, -0.4, 0.1, 0.02, -0.15)
-                .nitroExit(1.4, 0.5, 1.0, 0.1, 0.0, 0.2)
-                .nitroExit(1.4, 0.5, -1.0, 0.1, 0.0, -0.2)
-                .nitroExit(-2.5, 0.6, 1.0, -0.1, 0.0, 0.1)
-                .nitroExit(-2.5, 0.6, -1.0, -0.1, 0.0, -0.1)
-                .build();
+        return POSITIONS;
     }
 
     @Override

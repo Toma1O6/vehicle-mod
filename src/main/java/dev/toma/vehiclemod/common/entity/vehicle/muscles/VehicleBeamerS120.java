@@ -13,9 +13,15 @@ public class VehicleBeamerS120 extends EntityVehicleMuscles {
     private static final PositionManager POSITIONS = PositionManager.Builder.create()
             .engine(2, 0.75, 0)
             .exhaust(-2, 0.4, 0.47)
-            .frontNeon(2.6)
+            .frontNeon(2.7)
             .backNeon(1.8)
-            .sideNeons(0.9)
+            .frontLength(1.6)
+            .sideNeons(0.9, 0.2)
+            .backLength(1.4)
+            .nitroExit(1.9, 0.8, 0.55, -0.1, 0.1, 0.1)
+            .nitroExit(1.9, 0.8, -0.55, -0.1, 0.1, -0.1)
+            .nitroExit(2.5, 0.4, 0.75, 0, 0.05, 0.1)
+            .nitroExit(2.5, 0.4, -0.75, 0, 0.05, -0.1)
             .build();
 
     public VehicleBeamerS120(World world) {
@@ -60,19 +66,7 @@ public class VehicleBeamerS120 extends EntityVehicleMuscles {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(2, 0.75, 0)
-                .exhaust(-2, 0.4, 0.47)
-                .frontNeon(2.7)
-                .backNeon(1.8)
-                .frontLength(1.6)
-                .sideNeons(0.9, 0.2)
-                .backLength(1.4)
-                .nitroExit(1.9, 0.8, 0.55, -0.1, 0.1, 0.1)
-                .nitroExit(1.9, 0.8, -0.55, -0.1, 0.1, -0.1)
-                .nitroExit(2.5, 0.4, 0.75, 0, 0.05, 0.1)
-                .nitroExit(2.5, 0.4, -0.75, 0, 0.05, -0.1)
-                .build();
+        return POSITIONS;
     }
 
     @Override

@@ -8,11 +8,20 @@ import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.vecmath.Vector3f;
-
 public class VehicleBeamerPickup extends EntityVehicleSpecial {
 
-    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.8, 0.55, 0).exhaust(-1.8, 0.25, 0).build();
+    private static final PositionManager POSITIONS = PositionManager.Builder.create()
+            .engine(1.8, 0.55, 0)
+            .exhaust(-1.8, 0.25, 0)
+            .frontNeon(2.0)
+            .backNeon(1.5)
+            .sideNeons(0.85, 0.2)
+            .frontLength(1.6)
+            .sideLength(1.4)
+            .backLength(1.4)
+            .nitroExit(2.0, 0.6, 0.75, -0.05, 0.1, 0.1)
+            .nitroExit(2.0, 0.6, -0.75, -0.05, 0.1, -0.1)
+            .build();
 
     public VehicleBeamerPickup(World world) {
         super(world);
@@ -57,18 +66,7 @@ public class VehicleBeamerPickup extends EntityVehicleSpecial {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(1.8, 0.55, 0)
-                .exhaust(-1.8, 0.25, 0)
-                .frontNeon(2.0)
-                .backNeon(1.5)
-                .sideNeons(0.85, 0.2)
-                .frontLength(1.6)
-                .sideLength(1.4)
-                .backLength(1.4)
-                .nitroExit(2.0, 0.6, 0.75, -0.05, 0.1, 0.1)
-                .nitroExit(2.0, 0.6, -0.75, -0.05, 0.1, -0.1)
-                .build();
+        return POSITIONS;
     }
 
     @Override

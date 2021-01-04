@@ -14,10 +14,17 @@ public class VehicleFedorattiNightStalker extends EntityVehicleSuperSport {
     static final PositionManager POSITIONS = PositionManager.Builder.create()
             .engine(-1.5, 0.65, 0)
             .exhaust(-2.25, 0.45, 0)
-            .frontNeon(2.75)
-            .backNeon(2.3)
-            .sideNeons(1.0)
+            .frontNeon(2.8)
+            .backNeon(2.1)
+            .sideNeons(1.0, 0.1)
             .sideLength(2.5)
+            .backLength(1.5)
+            .nitroExit(1.6, 0.8, 0.65, -0.1, 0.1, 0.1)
+            .nitroExit(1.6, 0.8, -0.65, -0.1, 0.1, -0.1)
+            .nitroExit(2.7, 0.2, 0.65, 0.1, 0.0, 0.05)
+            .nitroExit(2.7, 0.2, -0.65, 0.1, 0.0, -0.05)
+            .nitroExit(-1.4, 0.8, 0.3, -0.1, 0.1, 0.05)
+            .nitroExit(-1.4, 0.8, -0.3, -0.1, 0.1, -0.05)
             .build();
 
     public VehicleFedorattiNightStalker(World world) {
@@ -63,21 +70,7 @@ public class VehicleFedorattiNightStalker extends EntityVehicleSuperSport {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(-1.5, 0.65, 0)
-                .exhaust(-2.25, 0.45, 0)
-                .frontNeon(2.8)
-                .backNeon(2.1)
-                .sideNeons(1.0, 0.1)
-                .sideLength(2.5)
-                .backLength(1.5)
-                .nitroExit(1.6, 0.8, 0.65, -0.1, 0.1, 0.1)
-                .nitroExit(1.6, 0.8, -0.65, -0.1, 0.1, -0.1)
-                .nitroExit(2.7, 0.2, 0.65, 0.1, 0.0, 0.05)
-                .nitroExit(2.7, 0.2, -0.65, 0.1, 0.0, -0.05)
-                .nitroExit(-1.4, 0.8, 0.3, -0.1, 0.1, 0.05)
-                .nitroExit(-1.4, 0.8, -0.3, -0.1, 0.1, -0.05)
-                .build();
+        return POSITIONS;
     }
 
     @Override

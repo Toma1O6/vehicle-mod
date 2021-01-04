@@ -3,17 +3,29 @@ package dev.toma.vehiclemod.common.entity.vehicle.sport;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
-import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleProtonP1;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class VehicleProtonP1Tunned extends EntityVehicleSport {
 
-    static final PositionManager POSITIONS = PositionManager.Builder.create().engine(1.5, 0.45, 0).exhaust(new Vec3d(-2.3, 0.45, 0.75), new Vec3d(-2.3, 0.45, -0.75)).build();
+    static final PositionManager POSITIONS = PositionManager.Builder.create()
+            .engine(1.5, 0.45, 0)
+            .exhaust(-2.3, 0.45, 0.6)
+            .frontNeon(1.7)
+            .backNeon(2.0)
+            .sideNeons(0.85, -0.1)
+            .frontLength(1.7)
+            .sideLength(1.5)
+            .backLength(1.7)
+            .nitroExit(1.0, 0.9, 0.7, -0.1, 0.1, 0.1)
+            .nitroExit(1.0, 0.9, -0.7, -0.1, 0.1, -0.1)
+            .nitroExit(1.7, 0.5, 0.0, 0.1, 0.0, 0.0)
+            .nitroExit(1.7, 0.5, 0.9, 0.1, 0.0, 0.1)
+            .nitroExit(1.7, 0.5, -0.9, 0.1, 0.0, -0.1)
+            .build();
 
     public VehicleProtonP1Tunned(World world) {
         super(world);
@@ -48,21 +60,7 @@ public class VehicleProtonP1Tunned extends EntityVehicleSport {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(1.5, 0.45, 0)
-                .exhaust(-2.3, 0.45, 0.6)
-                .frontNeon(1.7)
-                .backNeon(2.0)
-                .sideNeons(0.85, -0.1)
-                .frontLength(1.7)
-                .sideLength(1.5)
-                .backLength(1.7)
-                .nitroExit(1.0, 0.9, 0.7, -0.1, 0.1, 0.1)
-                .nitroExit(1.0, 0.9, -0.7, -0.1, 0.1, -0.1)
-                .nitroExit(1.7, 0.5, 0.0, 0.1, 0.0, 0.0)
-                .nitroExit(1.7, 0.5, 0.9, 0.1, 0.0, 0.1)
-                .nitroExit(1.7, 0.5, -0.9, 0.1, 0.0, -0.1)
-                .build();
+        return POSITIONS;
     }
 
     @Override

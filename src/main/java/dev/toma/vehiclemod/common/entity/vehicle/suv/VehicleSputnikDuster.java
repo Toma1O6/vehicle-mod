@@ -10,7 +10,21 @@ import net.minecraft.world.World;
 
 public class VehicleSputnikDuster extends EntityVehicleSUV {
 
-    static final PositionManager POSITIONS = PositionManager.Builder.create().engine(2.0, 0.65, 0).exhaust(-2.0, 0.35, 0.4).build();
+    static final PositionManager POSITIONS = PositionManager.Builder.create()
+            .engine(2.0, 0.65, 0)
+            .exhaust(-2.0, 0.35, 0.4)
+            .frontNeon(2.6)
+            .backNeon(1.8)
+            .sideNeons(1.1, 0.2)
+            .frontLength(2.2)
+            .backLength(1.8)
+            .nitroExit(1.5, 1.2, 0.7, -0.05, 0.1, 0.1)
+            .nitroExit(1.5, 1.2, -0.7, -0.05, 0.1, -0.1)
+            .nitroExit(2.4, 0.6, 1.0, -0.1, 0.02, 0.1)
+            .nitroExit(2.4, 0.6, -1.0, -0.1, 0.02, -0.1)
+            .nitroExit(2.5, 0.6, 0.8, 0.15, 0.0, 0.0)
+            .nitroExit(2.5, 0.6, -0.8, 0.15, 0.0, 0.0)
+            .build();
 
     public VehicleSputnikDuster(World world) {
         super(world);
@@ -61,21 +75,7 @@ public class VehicleSputnikDuster extends EntityVehicleSUV {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(2.0, 0.65, 0)
-                .exhaust(-2.0, 0.35, 0.4)
-                .frontNeon(2.6)
-                .backNeon(1.8)
-                .sideNeons(1.1, 0.2)
-                .frontLength(2.2)
-                .backLength(1.8)
-                .nitroExit(1.5, 1.2, 0.7, -0.05, 0.1, 0.1)
-                .nitroExit(1.5, 1.2, -0.7, -0.05, 0.1, -0.1)
-                .nitroExit(2.4, 0.6, 1.0, -0.1, 0.02, 0.1)
-                .nitroExit(2.4, 0.6, -1.0, -0.1, 0.02, -0.1)
-                .nitroExit(2.5, 0.6, 0.8, 0.15, 0.0, 0.0)
-                .nitroExit(2.5, 0.6, -0.8, 0.15, 0.0, 0.0)
-                .build();
+        return POSITIONS;
     }
 
     @Override

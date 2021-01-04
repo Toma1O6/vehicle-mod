@@ -14,7 +14,18 @@ import net.minecraft.world.World;
 public class VehicleSputnikAmbulance extends EntityVehicleSirens {
 
     private static final VehicleTexture[] VALID_TEXTURES = {VehicleTexture.BLUE, VehicleTexture.RED, VehicleTexture.UTILITY_YELLOW, VehicleTexture.BRICK};
-    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(2.5, 0.65, 0).exhaust(-2.8, -0.35, 0.7).build();
+    private static final PositionManager POSITIONS = PositionManager.Builder.create()
+            .engine(2.5, 0.65, 0)
+            .exhaust(-2.8, -0.35, 0.7)
+            .frontNeon(2.8)
+            .backNeon(2.6)
+            .sideNeons(1.15, 0.1)
+            .sideLength(3.0)
+            .nitroExit(2.5, 1.0, 0.8, -0.05, 0.1, 0.1)
+            .nitroExit(2.5, 1.0, -0.8, -0.05, 0.1, -0.1)
+            .nitroExit(2.8, 0.65, 0.35, 0.1, 0.0, 0.1)
+            .nitroExit(2.8, 0.65, -0.35, 0.1, 0.0, -0.1)
+            .build();
 
     public VehicleSputnikAmbulance(World world) {
         super(world);
@@ -50,18 +61,7 @@ public class VehicleSputnikAmbulance extends EntityVehicleSirens {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(2.5, 0.65, 0)
-                .exhaust(-2.8, -0.35, 0.7)
-                .frontNeon(2.8)
-                .backNeon(2.6)
-                .sideNeons(1.15, 0.1)
-                .sideLength(3.0)
-                .nitroExit(2.5, 1.0, 0.8, -0.05, 0.1, 0.1)
-                .nitroExit(2.5, 1.0, -0.8, -0.05, 0.1, -0.1)
-                .nitroExit(2.8, 0.65, 0.35, 0.1, 0.0, 0.1)
-                .nitroExit(2.8, 0.65, -0.35, 0.1, 0.0, -0.1)
-                .build();
+        return POSITIONS;
     }
 
     @Override

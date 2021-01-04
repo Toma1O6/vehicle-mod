@@ -12,7 +12,22 @@ import net.minecraft.world.World;
 
 public class VehicleFedorattiVulcan extends EntityVehicleSuperSport {
 
-    private static final PositionManager POSITIONS = PositionManager.Builder.create().engine(-1.3, 0.95, 0).exhaust(new Vec3d(-2.1, 0.4, -0.55), new Vec3d(-2.1, 0.4, 0.55)).build();
+    private static final PositionManager POSITIONS = PositionManager.Builder.create()
+            .engine(-1.3, 0.95, 0)
+            .exhaust(new Vec3d(-2.1, 0.4, -0.55), new Vec3d(-2.1, 0.4, 0.55))
+            .frontNeon(3.3)
+            .backNeon(1.9)
+            .rightNeon(0.9, 0.15)
+            .leftNeon(0.95, 0.15)
+            .backLength(1.4)
+            .frontLength(1.6)
+            .nitroExit(1.4, 0.8, 0.7, -0.2, 0.15, 0.1)
+            .nitroExit(1.4, 0.8, -0.7, -0.2, 0.15, -0.1)
+            .nitroExit(3.0, 0.3, 0.8, -0.05, 0.05, 0.1)
+            .nitroExit(3.0, 0.3, -0.8, -0.05, 0.05, -0.1)
+            .nitroExit(-1.1, 0.8, 0.2, -0.1, 0.15, 0.05)
+            .nitroExit(-1.1, 0.8, -0.2, -0.1, 0.15, -0.05)
+            .build();
 
     public VehicleFedorattiVulcan(World world) {
         super(world);
@@ -47,22 +62,7 @@ public class VehicleFedorattiVulcan extends EntityVehicleSuperSport {
 
     @Override
     public PositionManager getVehiclePositions() {
-        return PositionManager.Builder.create()
-                .engine(-1.3, 0.95, 0)
-                .exhaust(new Vec3d(-2.1, 0.4, -0.55), new Vec3d(-2.1, 0.4, 0.55))
-                .frontNeon(3.3)
-                .backNeon(1.9)
-                .rightNeon(0.9, 0.15)
-                .leftNeon(0.95, 0.15)
-                .backLength(1.4)
-                .frontLength(1.6)
-                .nitroExit(1.4, 0.8, 0.7, -0.2, 0.15, 0.1)
-                .nitroExit(1.4, 0.8, -0.7, -0.2, 0.15, -0.1)
-                .nitroExit(3.0, 0.3, 0.8, -0.05, 0.05, 0.1)
-                .nitroExit(3.0, 0.3, -0.8, -0.05, 0.05, -0.1)
-                .nitroExit(-1.1, 0.8, 0.2, -0.1, 0.15, 0.05)
-                .nitroExit(-1.1, 0.8, -0.2, -0.1, 0.15, -0.05)
-                .build();
+        return POSITIONS;
     }
 
     @Override
