@@ -89,5 +89,6 @@
     "nitro_start": {"category": "master", "sounds": [{"name": "vehiclemod:nitro_start", "stream": "true"}]},
     "nitro_end": {"category": "master", "sounds": [{"name": "vehiclemod:nitro_end", "stream": "true"}]},
     "nitro_a": {"category": "master", "sounds": [{"name": "vehiclemod:nitro_a", "stream": "true"}]},
-    "nitro_b": {"category": "master", "sounds": [{"name": "vehiclemod:nitro_b", "stream": "true"}]}
+    "nitro_b": {"category": "master", "sounds": [{"name": "vehiclemod:nitro_b", "stream": "true"}]},
+    "nitro_cloud": {"category": "master", "sounds": [{"name": "vehiclemod:nitro_cloud", "stream": "true"}]}
 }

@@ -14,6 +14,9 @@ public class NitroCloudSound extends PositionedSound implements ITickableSound {
         super(VMSounds.NITRO_CLOUD, SoundCategory.MASTER);
         this.vehicle = vehicle;
         this.repeat = true;
+        this.xPosF = (float) vehicle.posX;
+        this.yPosF = (float) vehicle.posY;
+        this.zPosF = (float) vehicle.posZ;
     }
 
     @Override
