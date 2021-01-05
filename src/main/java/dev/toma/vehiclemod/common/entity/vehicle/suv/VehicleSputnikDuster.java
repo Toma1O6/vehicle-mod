@@ -55,7 +55,7 @@ public class VehicleSputnikDuster extends EntityVehicleSUV {
 
     @Override
     public double getMountedYOffset() {
-        return 0.2;
+        return 0.3;
     }
 
     @Override

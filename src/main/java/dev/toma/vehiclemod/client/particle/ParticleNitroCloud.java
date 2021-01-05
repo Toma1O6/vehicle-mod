@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class ParticleNitroCloud extends ParticleCloud {
 
     public static final int LIGHT_FLAG = 0x1;
-    private static final ResourceLocation PARTICLE_TEXTURES = new ResourceLocation("textures/particle/particles.png");
+    public static final ResourceLocation PARTICLE_TEXTURES = new ResourceLocation("textures/particle/particles.png");
     // allows me to change texture index
     boolean fakeFX;
     boolean useLight;
