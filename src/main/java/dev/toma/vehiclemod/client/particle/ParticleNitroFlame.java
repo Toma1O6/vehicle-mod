@@ -23,6 +23,7 @@ public class ParticleNitroFlame extends ParticleFlame {
         this.originalScale = particleScale;
         initialized = true;
         particleRed = 0.0F;
+        particleMaxAge = 5;
     }
 
     @Override

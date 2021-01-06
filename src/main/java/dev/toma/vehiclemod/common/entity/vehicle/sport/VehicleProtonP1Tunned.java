@@ -71,7 +71,7 @@ public class VehicleProtonP1Tunned extends EntityVehicleSport {
 
     @Override
     public double getMountedYOffset() {
-        return -0.2;
+        return -0.15;
     }
 
     @Override
