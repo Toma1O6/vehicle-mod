@@ -12,7 +12,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public class NitroHandler implements INBTSerializable<NBTTagList> {
 
-    private final InventoryBasic inventory;
+    private final InventoryNitro inventory;
     private final EntityVehicle vehicle;
     private int useTicksLeft;
     private int startDelay;
@@ -21,12 +21,7 @@ public class NitroHandler implements INBTSerializable<NBTTagList> {
 
     public NitroHandler(EntityVehicle vehicle) {
         this.vehicle = vehicle;
-        this.inventory = new InventoryBasic("inventory.nitro", false, 12) {
-            @Override
-            public int getInventoryStackLimit() {
-                return 1;
-            }
-        };
+        this.inventory = new InventoryNitro();
     }
 
     public void setCloudState(boolean state) {
@@ -101,5 +96,25 @@ public class NitroHandler implements INBTSerializable<NBTTagList> {
 
     public EntityVehicle getVehicle() {
         return vehicle;
+    }
+
+    public class InventoryNitro extends InventoryBasic {
+
+        public InventoryNitro() {
+            super("inventory.nitro", false, 12);
+        }
+
+        @Override
+        public int getInventoryStackLimit() {
+            return 1;
+        }
+
+        @Override
+        public void markDirty() {
+            super.markDirty();
+            EntityVehicle vehicle = NitroHandler.this.vehicle;
+            if(!vehicle.world.isRemote)
+                vehicle.sync();
+        }
     }
 }
