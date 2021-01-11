@@ -30,6 +30,7 @@ import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleSputnikDuster;
 import dev.toma.vehiclemod.common.items.ItemNitroCan;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
@@ -62,7 +63,11 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void playSoundAt(EntityVehicle v) {
-		SoundHandler handler = Minecraft.getMinecraft().getSoundHandler();
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayer player = mc.player;
+		if(!v.isPassenger(player))
+			return;
+		SoundHandler handler = mc.getSoundHandler();
 		SoundEvent event = v.getVehicleSound();
 		if(v.currentSound != null && handler.isSoundPlaying(v.currentSound)) {
 			handler.stopSound(v.currentSound);
