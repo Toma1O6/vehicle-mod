@@ -592,6 +592,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         ByteBufUtils.writeTag(buf, lockManager.serializeNBT());
         ByteBufUtils.writeTag(buf, lightController.serializeNBT());
         ByteBufUtils.writeTag(buf, neonHandler.serializeNBT());
+        NBTTagCompound nitro = new NBTTagCompound();
+        nitro.setTag("tag", nitroHandler.serializeNBT());
+        ByteBufUtils.writeTag(buf, nitro);
     }
 
     @Override
@@ -607,6 +610,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         lockManager.deserializeNBT(ByteBufUtils.readTag(buf));
         lightController.deserializeNBT(ByteBufUtils.readTag(buf));
         neonHandler.deserializeNBT(ByteBufUtils.readTag(buf));
+        NBTTagCompound nbt = ByteBufUtils.readTag(buf);
+        nitroHandler.deserializeNBT(nbt.getTagList("tag", Constants.NBT.TAG_COMPOUND));
     }
 
     @Override
