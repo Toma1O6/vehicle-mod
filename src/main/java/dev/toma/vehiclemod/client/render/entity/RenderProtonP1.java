@@ -20,18 +20,11 @@ public class RenderProtonP1<V extends EntityVehicle, M extends ModelVehicle<V>> 
     }
 
     @Override
-    public void doRender(V entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        GlStateManager.pushMatrix();
-        bindEntityTexture(entity);
+    public void prepareRender(V entity, double x, double y, double z, float entityYaw, float partialTicks) {
         GlStateManager.translate(x, y, z);
         GlStateManager.scale(0.06, 0.06, 0.06);
         GlStateManager.rotate(180f, 1f, 0f, 0f);
         GlStateManager.translate(0, -24, 0);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
-        GlStateManager.disableLighting();
-        getVehicleModel().render(entity);
-        GlStateManager.enableLighting();
-        GlStateManager.popMatrix();
-        super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 }

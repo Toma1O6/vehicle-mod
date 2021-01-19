@@ -21,19 +21,11 @@ public class RenderSputnik2000L extends RenderVehicle<VehicleSputnik2000L> {
     }
 
     @Override
-    public void doRender(VehicleSputnik2000L entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        GlStateManager.pushMatrix();
-        GlStateManager.color(1f, 1f, 1f);
-        bindEntityTexture(entity);
+    public void prepareRender(VehicleSputnik2000L entity, double x, double y, double z, float entityYaw, float partialTicks) {
         GlStateManager.translate(x, y, z);
         GlStateManager.scale(0.03, 0.03, 0.03);
         GlStateManager.rotate(180F, 1F, 0F, 0F);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.translate(0, -20, 0);
-        GlStateManager.disableLighting();
-        sputnik2000L.render(entity);
-        GlStateManager.enableLighting();
-        GlStateManager.popMatrix();
-        super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 }

@@ -50,12 +50,30 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		return VehicleTexture.WHITE.getResource();
 	}
 
+	public void prepareRender(V entity, double x, double y, double z, float entityYaw, float partialTicks) {
+
+	}
+
 	@Override
-	public void doRender(V entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		if(entity != null)
-			if(this.renderOutlines) {
+	public final void doRender(V entity, double x, double y, double z, float entityYaw, float partialTicks) {
+		GlStateManager.pushMatrix();
+		if(this.renderOutlines) {
+			GlStateManager.enableColorMaterial();
+			GlStateManager.enableOutlineMode(this.getTeamColor(entity));
+		}
+		this.prepareRender(entity, x, y, z, entityYaw, partialTicks);
+		this.bindEntityTexture(entity);
+		this.getVehicleModel().render(entity);
+		if(this.renderOutlines) {
+			GlStateManager.disableOutlineMode();
+			GlStateManager.disableColorMaterial();
+		}
+		GlStateManager.popMatrix();
+		if(entity != null) {
+			if (this.renderOutlines) {
 				this.renderName(entity, x, y, z);
 			}
+		}
 		Minecraft mc = Minecraft.getMinecraft();
 		EntityPlayerSP player = mc.player;
 		RayTraceResult result = mc.objectMouseOver;
