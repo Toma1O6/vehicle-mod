@@ -9,31 +9,22 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class SPacketInput implements IMessage {
 	
-	boolean forward, back, right, left;
+	int value;
 	
 	public SPacketInput() {}
 	
-	public SPacketInput(boolean forward, boolean back, boolean right, boolean left) {
-		this.forward = forward;
-		this.back = back;
-		this.right = right;
-		this.left = left;
+	public SPacketInput(int value) {
+		this.value = value;
 	}
 	
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeBoolean(forward);
-		buf.writeBoolean(back);
-		buf.writeBoolean(right);
-		buf.writeBoolean(left);
+		buf.writeInt(value);
 	}
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		forward = buf.readBoolean();
-		back = buf.readBoolean();
-		right = buf.readBoolean();
-		left = buf.readBoolean();
+		value = buf.readInt();
 	}
 	
 	public static class Handler implements IMessageHandler<SPacketInput, IMessage> {
@@ -43,7 +34,7 @@ public class SPacketInput implements IMessage {
 			EntityPlayerMP player = ctx.getServerHandler().player;
 			player.getServer().addScheduledTask(() -> {
 				if(player.isRiding() && player.getRidingEntity() instanceof EntityVehicle) {
-					((EntityVehicle)player.getRidingEntity()).updateInput(p.forward, p.back, p.right, p.left, player);
+					((EntityVehicle)player.getRidingEntity()).updateInput(p.value, player);
 				}
 			});
 			return null;

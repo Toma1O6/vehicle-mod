@@ -237,13 +237,12 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         VehicleMod.proxy.playSoundAt(this);
     }
 
-    public void updateInput(boolean forward, boolean back, boolean right, boolean left, EntityPlayer player) {
+    public void updateInput(int value, EntityPlayer player) {
         if (isStarted) {
-            this.rotationYaw = rotationYaw < 0f ? rotationYaw + 360f : rotationYaw > 360f ? rotationYaw - 360f : rotationYaw;
-            this.inputForward = forward;
-            this.inputBack = back;
-            this.inputRight = right;
-            this.inputLeft = left;
+            this.inputForward = (value & 0b0001) != 0;
+            this.inputBack = (value & 0b0010) != 0;
+            this.inputRight = (value & 0b0100) != 0;
+            this.inputLeft = (value & 0b1000) != 0;
         }
     }
 
