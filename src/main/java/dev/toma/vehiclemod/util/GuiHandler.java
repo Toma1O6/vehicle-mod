@@ -10,7 +10,6 @@ import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.container.*;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
-import dev.toma.vehiclemod.common.inventory.InventoryComponents;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,7 +38,9 @@ public class GuiHandler implements IGuiHandler {
             case VEHICLE:
                 return new ContainerVehicle(player.inventory, (EntityVehicle) world.getEntityByID(x));
             case VEHICLE_COMPONENT:
-                return new ContainerVehicleComponents(player.inventory, new InventoryComponents(player));
+                if(player.getRidingEntity() instanceof EntityVehicle)
+                    return new ContainerVehicleComponents(player.inventory, ((EntityVehicle) player.getRidingEntity()).getUpgrades().getInventory());
+                return null;
             case VEHICLE_NEON:
                 if(player.getRidingEntity() instanceof EntityVehicle)
                     return new ContainerNeons(player.inventory, ((EntityVehicle) player.getRidingEntity()).getNeonHandler().getNeons());
@@ -63,7 +64,9 @@ public class GuiHandler implements IGuiHandler {
             case VEHICLE:
                 return new GuiVehicleInventory(player.inventory, (EntityVehicle) world.getEntityByID(x));
             case VEHICLE_COMPONENT:
-                return new GuiVehicleComponents(player.inventory, new InventoryComponents(player));
+                if(player.getRidingEntity() instanceof EntityVehicle)
+                    return new GuiVehicleComponents(player.inventory, ((EntityVehicle) player.getRidingEntity()).getUpgrades().getInventory());
+                return null;
             case VEHICLE_NEON:
                 if(player.getRidingEntity() instanceof EntityVehicle)
                     return new GuiNeons(player.inventory, ((EntityVehicle) player.getRidingEntity()).getNeonHandler().getNeons());

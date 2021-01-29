@@ -236,7 +236,7 @@ public class Registries {
                 registry.register(new ItemRepairKit("repair_kit", tier));
             }
             for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
-                for (int i = 1; i < 8; i++) {
+                for (int i = 0; i < 8; i++) {
                     registry.register(new ItemVehicleUpgrade(type, i));
                 }
             }

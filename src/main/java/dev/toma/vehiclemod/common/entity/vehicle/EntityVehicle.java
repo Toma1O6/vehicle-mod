@@ -7,6 +7,7 @@ import dev.toma.vehiclemod.client.CarSound;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.items.IVehicleAction;
+import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketUpdateEntity;
@@ -75,13 +76,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         return Math.sqrt(vehicle.motionX * vehicle.motionX + vehicle.motionZ * vehicle.motionZ);
     }
 
-    public static int[] fill(int l, int v) {
-        int[] arr = new int[l];
-        for (int i = 0; i < l; i++)
-            arr[i] = v;
-        return arr;
-    }
-
     public EntityVehicle(World world) {
         super(world);
         setSize(2f, 1.5f);
@@ -117,7 +111,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public abstract PositionManager getVehiclePositions();
 
     public VehicleUpgrades createVehicleUpgrades() {
-        return new VehicleUpgrades(this.getConfigStats());
+        return new VehicleUpgrades(this);
     }
 
     private void updateVehicle() {
@@ -452,10 +446,19 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     public void initiateStart() {
-        if (!isStarted && startCooldown == 0) {
+        if (!isStarted && startCooldown == 0 && validateComponents()) {
             this.startCooldown = 22;
             world.playSound(null, posX, posY, posZ, this.soundPack.starting(), SoundCategory.MASTER, 1.0F, 1.0F);
         }
+    }
+
+    public boolean validateComponents() {
+        VehicleUpgrades upgrades = this.getUpgrades();
+        for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
+            if(upgrades.getLevel(type) < 0)
+                return false;
+        }
+        return true;
     }
 
     public int getStartCooldown() {

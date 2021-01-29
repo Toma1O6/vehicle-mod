@@ -22,6 +22,7 @@ public class ItemVehicleUpgrade extends VMItem {
         this.type = type;
         this.level = level;
         setMaxStackSize(1);
+        setMaxDamage(1250);
     }
 
     public Type getType() {
@@ -34,8 +35,10 @@ public class ItemVehicleUpgrade extends VMItem {
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add("Attributes:");
-        this.type.getPackage().forEachModifier(mod -> mod.getType().addToTooltip(tooltip, mod.getValue(level - 1)));
+        if(level > 0) {
+            tooltip.add("Attributes:");
+            this.type.getPackage().forEachModifier(mod -> mod.getType().addToTooltip(tooltip, mod.getValue(level - 1)));
+        }
     }
 
     public enum Type {

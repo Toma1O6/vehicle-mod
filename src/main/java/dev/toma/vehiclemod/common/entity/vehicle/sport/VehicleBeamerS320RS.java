@@ -91,6 +91,6 @@ public class VehicleBeamerS320RS extends EntityVehicleSport {
 
     @Override
     public VehicleUpgrades createVehicleUpgrades() {
-        return new VehicleUpgrades(getConfigStats(), fill(9, 2));
+        return new VehicleUpgrades(this, 2);
     }
 }

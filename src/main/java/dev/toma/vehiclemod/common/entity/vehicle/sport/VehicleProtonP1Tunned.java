@@ -91,6 +91,6 @@ public class VehicleProtonP1Tunned extends EntityVehicleSport {
 
     @Override
     public VehicleUpgrades createVehicleUpgrades() {
-        return new VehicleUpgrades(getConfigStats(), fill(9, 3));
+        return new VehicleUpgrades(this, 3);
     }
 }

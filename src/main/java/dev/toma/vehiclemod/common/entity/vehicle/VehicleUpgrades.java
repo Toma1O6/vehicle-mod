@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.common.entity.vehicle;
 
+import dev.toma.vehiclemod.common.inventory.InventoryUpgrades;
 import dev.toma.vehiclemod.common.items.ItemPerk;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.common.tunning.IStatApplicator;
@@ -7,23 +8,17 @@ import dev.toma.vehiclemod.common.tunning.StatPackage;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.util.DevUtil;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-import java.util.Comparator;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class VehicleUpgrades {
 
-    private final SortedMap<ItemVehicleUpgrade.Type, Integer> upgradeMap;
-    private final ItemPerk[] perks = new ItemPerk[3];
+    private final InventoryUpgrades inventory;
     private final VehicleStats configStats;
     private VehicleStats modifiedStats;
 
@@ -36,33 +31,34 @@ public class VehicleUpgrades {
     float fuelCap;
     float nitroPower;
 
-    public VehicleUpgrades(VehicleStats stats) {
-        this(stats, new int[9]);
+    public VehicleUpgrades(EntityVehicle vehicle) {
+        this(vehicle, 0);
     }
 
-    public VehicleUpgrades(VehicleStats stats, int[] defaults) {
-        this.configStats = stats;
+    public VehicleUpgrades(EntityVehicle vehicle, int defaultPartLevel) {
+        this.inventory = new InventoryUpgrades(vehicle);
+        this.configStats = vehicle.getConfigStats();
         this.setDefaults();
-        this.upgradeMap = DevUtil.make(new TreeMap<>(Comparator.comparingInt(Enum::ordinal)), map -> {
-            for (int i = 0; i < ItemVehicleUpgrade.Type.values().length; i++) {
-                ItemVehicleUpgrade.Type type = ItemVehicleUpgrade.Type.values()[i];
-                map.put(type, defaults[i]);
+        for (ItemVehicleUpgrade upgrade : ForgeRegistries.ITEMS.getValuesCollection().stream().filter(i -> i instanceof ItemVehicleUpgrade).map(i -> (ItemVehicleUpgrade) i).collect(Collectors.toList())) {
+            for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
+                if(upgrade.getType() == type && upgrade.getLevel() == defaultPartLevel) {
+                    inventory.setInventorySlotContents(type.ordinal(), new ItemStack(upgrade));
+                }
             }
-        });
-        recalculate();
-    }
-
-    public boolean canUpgradeWith(ItemVehicleUpgrade upgrade) {
-        ItemVehicleUpgrade.Type type = upgrade.getType();
-        int level = upgradeMap.get(type);
-        int toSet = upgrade.getLevel();
-        return toSet > level;
-    }
-
-    public void upgrade(ItemVehicleUpgrade upgrade, EntityPlayer player) {
-        if(canUpgradeWith(upgrade)) {
-            upgradeMap.put(upgrade.getType(), upgrade.getLevel());
         }
+    }
+
+    public int getLevel(ItemVehicleUpgrade.Type type) {
+        ItemStack stack = inventory.getStackInSlot(type.ordinal());
+        if(!stack.isEmpty() && stack.getItem() instanceof ItemVehicleUpgrade) {
+            return ((ItemVehicleUpgrade) stack.getItem()).getLevel();
+        }
+        return -1;
+    }
+
+    public void upgrade(ItemStack stack, EntityPlayer player) {
+        ItemVehicleUpgrade upgrade = (ItemVehicleUpgrade) stack.getItem();
+        inventory.setInventorySlotContents(upgrade.getType().ordinal(), stack.copy());
         EntityVehicle vehicle = null;
         if(player.getRidingEntity() instanceof EntityVehicle) {
             vehicle = (EntityVehicle) player.getRidingEntity();
@@ -76,10 +72,10 @@ public class VehicleUpgrades {
         }
     }
 
-    private void recalculate() {
+    public void recalculate() {
         setDefaults();
         for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
-            int level = upgradeMap.get(type);
+            int level = this.getLevel(type);
             if(level <= 0)
                 continue;
             StatPackage statPackage = type.getPackage();
@@ -88,7 +84,7 @@ public class VehicleUpgrades {
                 applicator.applyOnStat(this, modifier.getValues()[level - 1]);
             });
         }
-        for (int i = 0; i < perks.length; i++) {
+        for (int i = 0; i < 3; i++) {
             if(this.hasPerk(i)) {
                 ItemPerk perk = this.getPerk(i);
                 IStatApplicator applicator = perk.getModifierType().getApplicator();
@@ -142,12 +138,8 @@ public class VehicleUpgrades {
     }
 
     public ItemPerk getPerk(int id) {
-        return perks[id];
-    }
-
-    public void setPerk(int id, ItemPerk perk) {
-        perks[id] = perk;
-        recalculate();
+        ItemStack stack = inventory.getStackInSlot(9 + id);
+        return stack.getItem() instanceof ItemPerk ? (ItemPerk) stack.getItem() : null;
     }
 
     public boolean hasPerk(int id) {
@@ -155,49 +147,19 @@ public class VehicleUpgrades {
     }
 
     public void writeToNBT(NBTTagCompound nbt) {
-        NBTTagList list = new NBTTagList();
-        for (Map.Entry<ItemVehicleUpgrade.Type, Integer> entry : upgradeMap.entrySet()) {
-            list.appendTag(new NBTTagInt(entry.getValue()));
-        }
-        nbt.setTag("upgrades", list);
-        NBTTagList perks = new NBTTagList();
-        for (int i = 0; i < this.perks.length; i++) {
-            ItemPerk perk = this.perks[i];
-            if(perk == null)
-                continue;
-            NBTTagCompound compound = new NBTTagCompound();
-            compound.setByte("key", (byte) i);
-            compound.setString("value", perk.getRegistryName().toString());
-            perks.appendTag(compound);
-        }
-        nbt.setTag("perks", perks);
+        NBTTagList upgrades = DevUtil.inventoryToNBT(inventory);
+        nbt.setTag("upgrades", upgrades);
     }
 
     public void readFromNBT(NBTTagCompound compound) {
         if(compound.hasKey("upgrades", Constants.NBT.TAG_LIST)) {
-            NBTTagList list = compound.getTagList("upgrades", Constants.NBT.TAG_INT);
-            for (int i = 0; i < list.tagCount(); i++) {
-                int v = list.getIntAt(i);
-                upgradeMap.put(ItemVehicleUpgrade.Type.values()[i], v);
-            }
-        }
-        if(compound.hasKey("perks", Constants.NBT.TAG_LIST)) {
-            NBTTagList list = compound.getTagList("perks", Constants.NBT.TAG_COMPOUND);
-            for (int i = 0; i < list.tagCount(); i++) {
-                NBTTagCompound nbt = list.getCompoundTagAt(i);
-                int index = nbt.getByte("key");
-                ResourceLocation location = new ResourceLocation(nbt.getString("value"));
-                Item item = ForgeRegistries.ITEMS.getValue(location);
-                if(!(item instanceof ItemPerk))
-                    continue;
-                perks[index] = (ItemPerk) item;
-            }
+            DevUtil.loadInventoryFromNBT(inventory, compound.getTagList("upgrades", Constants.NBT.TAG_COMPOUND));
         }
         recalculate();
     }
 
-    public Map<ItemVehicleUpgrade.Type, Integer> getUpgradeMap() {
-        return upgradeMap;
+    public InventoryUpgrades getInventory() {
+        return inventory;
     }
 
     public float getNitroPower() {
