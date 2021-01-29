@@ -7,6 +7,7 @@ import dev.toma.vehiclemod.client.CarSound;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.items.IVehicleAction;
+import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketUpdateEntity;
@@ -75,13 +76,6 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         return Math.sqrt(vehicle.motionX * vehicle.motionX + vehicle.motionZ * vehicle.motionZ);
     }
 
-    public static int[] fill(int l, int v) {
-        int[] arr = new int[l];
-        for (int i = 0; i < l; i++)
-            arr[i] = v;
-        return arr;
-    }
-
     public EntityVehicle(World world) {
         super(world);
         setSize(2f, 1.5f);
@@ -117,7 +111,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public abstract PositionManager getVehiclePositions();
 
     public VehicleUpgrades createVehicleUpgrades() {
-        return new VehicleUpgrades(this.getConfigStats());
+        return new VehicleUpgrades(this);
     }
 
     private void updateVehicle() {
@@ -237,13 +231,12 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         VehicleMod.proxy.playSoundAt(this);
     }
 
-    public void updateInput(boolean forward, boolean back, boolean right, boolean left, EntityPlayer player) {
+    public void updateInput(int value, EntityPlayer player) {
         if (isStarted) {
-            this.rotationYaw = rotationYaw < 0f ? rotationYaw + 360f : rotationYaw > 360f ? rotationYaw - 360f : rotationYaw;
-            this.inputForward = forward;
-            this.inputBack = back;
-            this.inputRight = right;
-            this.inputLeft = left;
+            this.inputForward = (value & 0b0001) != 0;
+            this.inputBack = (value & 0b0010) != 0;
+            this.inputRight = (value & 0b0100) != 0;
+            this.inputLeft = (value & 0b1000) != 0;
         }
     }
 
@@ -453,10 +446,19 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     public void initiateStart() {
-        if (!isStarted && startCooldown == 0) {
+        if (!isStarted && startCooldown == 0 && validateComponents()) {
             this.startCooldown = 22;
             world.playSound(null, posX, posY, posZ, this.soundPack.starting(), SoundCategory.MASTER, 1.0F, 1.0F);
         }
+    }
+
+    public boolean validateComponents() {
+        VehicleUpgrades upgrades = this.getUpgrades();
+        for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
+            if(upgrades.getLevel(type) < 0)
+                return false;
+        }
+        return true;
     }
 
     public int getStartCooldown() {

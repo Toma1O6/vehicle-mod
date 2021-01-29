@@ -1,27 +1,19 @@
 package dev.toma.vehiclemod.client.gui.tunning;
 
 import dev.toma.vehiclemod.VehicleMod;
-import dev.toma.vehiclemod.client.SpeedDisplayUnit;
 import dev.toma.vehiclemod.common.container.ContainerVehicleComponents;
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
-import dev.toma.vehiclemod.common.inventory.InventoryComponents;
-import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
-import dev.toma.vehiclemod.config.VMConfig;
+import dev.toma.vehiclemod.common.inventory.InventoryUpgrades;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.util.DevUtil;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
-import java.text.DecimalFormat;
-import java.util.Map;
-
-public class GuiVehicleComponents extends GuiTunning<InventoryComponents, ContainerVehicleComponents> {
+public class GuiVehicleComponents extends GuiTunning<InventoryUpgrades, ContainerVehicleComponents> {
 
     private static final ResourceLocation TEXTURE = VehicleMod.getResource("textures/gui/tunning_tab.png");
 
-    public GuiVehicleComponents(InventoryPlayer player, InventoryComponents components) {
+    public GuiVehicleComponents(InventoryPlayer player, InventoryUpgrades components) {
         super(player, components, ContainerVehicleComponents::new, EnumTunningType.STATS);
         xSize = 205;
         ySize = 176;
@@ -39,8 +31,8 @@ public class GuiVehicleComponents extends GuiTunning<InventoryComponents, Contai
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        InventoryComponents components = ((ContainerVehicleComponents) inventorySlots).getIInventory();
-        VehicleUpgrades upgrades = components.getUpgrades();
+        InventoryUpgrades components = ((ContainerVehicleComponents) inventorySlots).getIInventory();
+        VehicleUpgrades upgrades = components.getVehicle().getUpgrades();
         if(components.getVehicle() != null) {
             VehicleStats stats = components.getVehicle().getActualStats();
             float speedStat = fixValue((stats.maxSpeed - VehicleStats.topSpeedMin) / (VehicleStats.topSpeedMax - VehicleStats.topSpeedMin));
@@ -56,13 +48,14 @@ public class GuiVehicleComponents extends GuiTunning<InventoryComponents, Contai
             DevUtil.drawColor(27, 73, (int)(27 + 142 * handlingStat), 78, 0.0F, 0.0F, 1.0F, 1.0F);
             DevUtil.drawColor(27, 82, (int)(27 + 142 * brakingStat), 87, 1.0F, 1.0F, 0.0F, 1.0F);
         }
-        Map<ItemVehicleUpgrade.Type, Integer> map = upgrades.getUpgradeMap();
+        // TODO
+       /* Map<ItemVehicleUpgrade.Type, Integer> map = upgrades.getUpgradeMap();
         int j = 0;
         for (Map.Entry<ItemVehicleUpgrade.Type, Integer> entry : map.entrySet()) {
             String text = String.format("[%d]", entry.getValue());
             fontRenderer.drawString(text, 8 + j * 18 + (18 - fontRenderer.getStringWidth(text)) / 2, 28, ItemVehicleUpgrade.Type.getColor(entry.getValue()).getColorValue());
             ++j;
-        }
+        }*/
     }
 
     static float fixValue(float in) {

@@ -102,7 +102,7 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSirens {
 
     @Override
     public VehicleUpgrades createVehicleUpgrades() {
-        return new VehicleUpgrades(getConfigStats(), fill(9, 2));
+        return new VehicleUpgrades(this, 2);
     }
 
     @Override

@@ -37,7 +37,7 @@ public class ClientEventHandler {
 
 	private static final ResourceLocation VEHICLE_HUD = new ResourceLocation(VehicleMod.MODID + ":textures/entity/vehicle_hud.png");
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void openGUI(GuiOpenEvent event) {
 		EntityPlayer player = Minecraft.getMinecraft().player;
 		if(event.getGui() instanceof InventoryEffectRenderer && player.getRidingEntity() instanceof EntityVehicle) {
@@ -48,12 +48,12 @@ public class ClientEventHandler {
 
 	@SubscribeEvent
 	public static void stitchTextures(TextureStitchEvent.Pre event) {
-		TextureMap map = event.getMap();
+		TextureMap map = event.getMap();/*
 		for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
 			for (int i = 0; i < 8; i++) {
 				map.registerSprite(VehicleMod.getResource("items/" + type.name().toLowerCase() + "_" + i));
 			}
-		}
+		}*/
 		List<ItemPerk> perks = ForgeRegistries.ITEMS.getValuesCollection().stream().filter(i -> i instanceof ItemPerk).map(i -> (ItemPerk) i).collect(Collectors.toList());
 		for (ItemPerk perk : perks) {
 			ResourceLocation name = perk.getRegistryName();

@@ -89,6 +89,6 @@ public class VehicleTracerT1 extends EntityVehicleMuscles {
 
     @Override
     public VehicleUpgrades createVehicleUpgrades() {
-        return new VehicleUpgrades(getConfigStats(), fill(9, 1));
+        return new VehicleUpgrades(this, 1);
     }
 }

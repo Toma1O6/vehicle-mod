@@ -87,6 +87,6 @@ public class VehicleFedorattiVulcan extends EntityVehicleSuperSport {
 
     @Override
     public VehicleUpgrades createVehicleUpgrades() {
-        return new VehicleUpgrades(getConfigStats(), fill(9, 4));
+        return new VehicleUpgrades(this, 4);
     }
 }
