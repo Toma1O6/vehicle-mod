@@ -28,6 +28,8 @@ import java.text.DecimalFormat;
 public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 
 	static final ResourceLocation NEON = VehicleMod.getResource("textures/entity/neon_texture.png");
+	static Vec3d LIGHT0_POS = (new Vec3d(0.2D, -10.0D, -0.7D));
+	static Vec3d LIGHT1_POS = (new Vec3d(-0.2D, -10.0D, 0.7D));
 
 	public RenderVehicle(RenderManager manager) {
 		super(manager);
@@ -59,8 +61,10 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 			GlStateManager.enableOutlineMode(this.getTeamColor(entity));
 		}
 		this.prepareRender(entity, x, y, z, entityYaw, partialTicks);
+		doLighting();
 		this.bindEntityTexture(entity);
 		this.getVehicleModel().render(entity);
+		GlStateManager.disableLighting();
 		if(this.renderOutlines) {
 			GlStateManager.disableOutlineMode();
 			GlStateManager.disableColorMaterial();
@@ -261,5 +265,25 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		buffer.pos(x2, y2, z).color(r, g, b, a).endVertex();
 		buffer.pos(x2, y1, z).color(r, g, b, a).endVertex();
 		buffer.pos(x1, y1, z).color(r, g, b, a).endVertex();
+	}
+
+	static void doLighting() {
+		GlStateManager.enableLighting();
+		GlStateManager.enableLight(0);
+		GlStateManager.enableLight(1);
+		GlStateManager.enableColorMaterial();
+		GlStateManager.colorMaterial(1032, 5634);
+		GlStateManager.glLight(16384, 4611, RenderHelper.setColorBuffer((float) LIGHT0_POS.x, (float) LIGHT0_POS.y, (float) LIGHT0_POS.z, 0.0F));
+		float f = 0.6F;
+		GlStateManager.glLight(16384, 4609, RenderHelper.setColorBuffer(0.6F, 0.6F, 0.6F, 1.0F));
+		GlStateManager.glLight(16384, 4608, RenderHelper.setColorBuffer(0.0F, 0.0F, 0.0F, 1.0F));
+		GlStateManager.glLight(16384, 4610, RenderHelper.setColorBuffer(0.0F, 0.0F, 0.0F, 1.0F));
+		GlStateManager.glLight(16385, 4611, RenderHelper.setColorBuffer((float) LIGHT1_POS.x, (float) LIGHT1_POS.y, (float) LIGHT1_POS.z, (float) 0.0D));
+		GlStateManager.glLight(16385, 4609, RenderHelper.setColorBuffer(0.6F, 0.6F, 0.6F, 1.0F));
+		GlStateManager.glLight(16385, 4608, RenderHelper.setColorBuffer(0.0F, 0.0F, 0.0F, 1.0F));
+		GlStateManager.glLight(16385, 4610, RenderHelper.setColorBuffer(0.0F, 0.0F, 0.0F, 1.0F));
+		GlStateManager.shadeModel(7424);
+		float f1 = 0.4F;
+		GlStateManager.glLightModel(2899, RenderHelper.setColorBuffer(0.4F, 0.4F, 0.4F, 1.0F));
 	}
 }

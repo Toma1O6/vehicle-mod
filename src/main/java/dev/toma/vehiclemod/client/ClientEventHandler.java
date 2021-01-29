@@ -41,8 +41,11 @@ public class ClientEventHandler {
 	public static void openGUI(GuiOpenEvent event) {
 		EntityPlayer player = Minecraft.getMinecraft().player;
 		if(event.getGui() instanceof InventoryEffectRenderer && player.getRidingEntity() instanceof EntityVehicle) {
-			event.setCanceled(true);
-			VMNetworkManager.instance().sendToServer(new SPacketOpenVehicleComponentGUI(GuiHandler.VEHICLE_COMPONENT));
+			EntityVehicle vehicle = (EntityVehicle) player.getRidingEntity();
+			if(!vehicle.isStarted() && vehicle.isStationary() && vehicle.getControllingPassenger() == player) {
+				event.setCanceled(true);
+				VMNetworkManager.instance().sendToServer(new SPacketOpenVehicleComponentGUI(GuiHandler.VEHICLE_COMPONENT));
+			}
 		}
 	}
 
