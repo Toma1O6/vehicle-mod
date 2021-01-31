@@ -5,8 +5,7 @@ import dev.toma.vehiclemod.common.entity.vehicle.LightController;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.entity.player.EntityPlayer;
 
 public class TurnIndicatorLights<V extends EntityVehicle> extends BasicLightEntry<V> {
 
@@ -33,7 +32,10 @@ public class TurnIndicatorLights<V extends EntityVehicle> extends BasicLightEntr
             flag = time % cycle < cycleSwap;
             if(prevState != flag) {
                 if(status != LightController.TurnLightStatus.WARNING || this.status == LightController.TurnLightStatus.RIGHT) {
-                    Minecraft.getMinecraft().player.playSound(flag ? VMSounds.INDICATOR_ON : VMSounds.INDICATOR_OFF, 1.0F, 1.0F);
+                    EntityPlayer player = Minecraft.getMinecraft().player;
+                    if(vehicle.isPassenger(player)) {
+                        player.playSound(flag ? VMSounds.INDICATOR_ON : VMSounds.INDICATOR_OFF, 1.0F, 1.0F);
+                    }
                 }
             }
             prevState = flag;

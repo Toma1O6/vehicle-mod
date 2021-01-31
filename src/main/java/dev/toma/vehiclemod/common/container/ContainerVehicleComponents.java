@@ -54,7 +54,11 @@ public class ContainerVehicleComponents extends ModContainer<InventoryUpgrades> 
 
         @Override
         public boolean isItemValid(ItemStack stack) {
-            return stack.getItem() instanceof ItemVehicleUpgrade;
+            if(stack.getItem() instanceof ItemVehicleUpgrade) {
+                ItemVehicleUpgrade upgrade = (ItemVehicleUpgrade) stack.getItem();
+                return type == upgrade.getType();
+            }
+            return false;
         }
 
         @Override

@@ -6,6 +6,7 @@ import java.util.Map;
 
 @IFMLLoadingPlugin.TransformerExclusions("dev.toma.vehiclemod.asm")
 @IFMLLoadingPlugin.MCVersion("1.12.2")
+@IFMLLoadingPlugin.SortingIndex(Integer.MAX_VALUE)
 public class VMPlugin implements IFMLLoadingPlugin {
 
     @Override
