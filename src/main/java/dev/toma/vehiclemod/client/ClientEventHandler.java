@@ -4,8 +4,6 @@ import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.NitroHandler;
 import dev.toma.vehiclemod.common.items.ItemNitroCan;
-import dev.toma.vehiclemod.common.items.ItemPerk;
-import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
@@ -14,7 +12,10 @@ import dev.toma.vehiclemod.util.DevUtil;
 import dev.toma.vehiclemod.util.GuiHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.InventoryEffectRenderer;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,12 +26,8 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.GL11;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @EventBusSubscriber(Side.CLIENT)
 public class ClientEventHandler {
@@ -51,17 +48,7 @@ public class ClientEventHandler {
 
 	@SubscribeEvent
 	public static void stitchTextures(TextureStitchEvent.Pre event) {
-		TextureMap map = event.getMap();/*
-		for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
-			for (int i = 0; i < 8; i++) {
-				map.registerSprite(VehicleMod.getResource("items/" + type.name().toLowerCase() + "_" + i));
-			}
-		}*/
-		List<ItemPerk> perks = ForgeRegistries.ITEMS.getValuesCollection().stream().filter(i -> i instanceof ItemPerk).map(i -> (ItemPerk) i).collect(Collectors.toList());
-		for (ItemPerk perk : perks) {
-			ResourceLocation name = perk.getRegistryName();
-			map.registerSprite(new ResourceLocation(name.getResourceDomain(), "items/" + name.getResourcePath()));
-		}
+		TextureMap map = event.getMap();
 		map.registerSprite(VehicleMod.getResource("items/perk_empty"));
 		map.registerSprite(VehicleMod.getResource("items/filter_empty"));
 		map.registerSprite(VehicleMod.getResource("items/bucket_empty"));
@@ -147,20 +134,6 @@ public class ClientEventHandler {
 				DevUtil.drawImage2D(mc, VEHICLE_HUD, 128, resolution.getScaledHeight() - 25, 20, 20, type.uv.uStart, type.uv.vStart, type.uv.uEnd, type.uv.vEnd);
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public static void onRenderPlayerPre(RenderPlayerEvent.Pre e) {
-		GlStateManager.pushMatrix();
-		if(e.getEntityPlayer().isRiding() && e.getEntityPlayer().getRidingEntity() instanceof EntityVehicle) {
-			GlStateManager.translate(0, 0.6, 0);
-			GlStateManager.scale(0.6, 0.6, 0.6);
-		}
-	}
-
-	@SubscribeEvent
-	public static void onRenderPlayerPost(RenderPlayerEvent.Post e) {
-		GlStateManager.popMatrix();
 	}
 
 	private enum VehicleHUDType {
