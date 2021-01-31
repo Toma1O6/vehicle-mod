@@ -32,7 +32,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
-@Mod(modid = VehicleMod.MODID, name = "Vehicle mod", version = "1.1.1", updateJSON = "https://raw.githubusercontent.com/Toma1O6/vehicle-mod/master/updatechecker.json")
+@Mod(modid = VehicleMod.MODID, name = "Vehicle mod", version = "1.1.2", updateJSON = "https://raw.githubusercontent.com/Toma1O6/vehicle-mod/master/updatechecker.json")
 public class VehicleMod {
 
 	public static final String MODID = "vehiclemod";
