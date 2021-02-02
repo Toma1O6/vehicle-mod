@@ -6,6 +6,7 @@ import dev.toma.vehiclemod.client.CarHonkSound;
 import dev.toma.vehiclemod.client.CarSound;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.ILockpickable;
+import dev.toma.vehiclemod.common.inventory.InventoryUpgrades;
 import dev.toma.vehiclemod.common.items.IVehicleAction;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.config.VehicleStats;
@@ -17,6 +18,7 @@ import dev.toma.vehiclemod.util.GuiHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -223,6 +225,22 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         if (!world.isRemote && health < 0) {
             world.createExplosion(null, posX, posY, posZ, 4.0F, false);
             setDead();
+        }
+        if(!isStationary() && isStarted) {
+            if(ticksExisted % (ecoMode ? 200 : 100) == 0) {
+                InventoryUpgrades inventory = this.getUpgrades().getInventory();
+                Entity entity = this.getControllingPassenger();
+                if(entity instanceof EntityLivingBase) {
+                    for(int i = 0; i < 9; i++) {
+                        ItemStack stack = inventory.getStackInSlot(i);
+                        stack.damageItem(1, (EntityLivingBase) entity);
+                    }
+                    if(!this.validateComponents()) {
+                        this.isStarted = false;
+                        sync();
+                    }
+                }
+            }
         }
         currentState = this.getVehicleState();
     }
