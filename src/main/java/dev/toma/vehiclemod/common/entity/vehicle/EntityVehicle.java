@@ -219,11 +219,8 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             motionY = -0.15d;
         }
 
-        if (isInLava()) {
-            health -= 10;
-        }
-        if (!world.isRemote && health < 0) {
-            world.createExplosion(null, posX, posY, posZ, 4.0F, false);
+        if (isInLava() && !world.isRemote) {
+            world.createExplosion(null, posX, posY, posZ, 3.0F, false);
             setDead();
         }
         if(!isStationary() && isStarted) {
@@ -240,6 +237,9 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
                         sync();
                     }
                 }
+            }
+            if(health <= 0) {
+                isStarted = false;
             }
         }
         currentState = this.getVehicleState();
@@ -453,7 +453,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     private void attemptStart() {
-        if (!world.isRemote && this.hasFuel() && rand.nextFloat() <= MathHelper.clamp(health / getActualStats().maxHealth, 0.05F, 0.95F)) {
+        if (!world.isRemote && this.hasFuel() && rand.nextFloat() <= (health > 0 ? MathHelper.clamp(health / getActualStats().maxHealth, 0.05F, 0.95F) : 0.0F)) {
             isStarted = true;
             WorldServer server = (WorldServer) world;
             for (EntityPlayerMP playerMP : server.getPlayers(EntityPlayerMP.class, p -> p.dimension == dimension)) {
@@ -464,7 +464,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     }
 
     public void initiateStart() {
-        if (!isStarted && startCooldown == 0 && validateComponents()) {
+        if (!isStarted && startCooldown == 0 && validateComponents() && health > 0) {
             this.startCooldown = 22;
             world.playSound(null, posX, posY, posZ, this.soundPack.starting(), SoundCategory.MASTER, 1.0F, 1.0F);
         }
@@ -554,7 +554,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
         if (!this.getPassengers().contains(source.getTrueSource())) {
-            this.health -= amount;
+            this.health -= Math.min(this.health, amount);
         }
         return true;
     }

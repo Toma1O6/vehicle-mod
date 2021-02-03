@@ -224,6 +224,7 @@ public class Registries {
                     new ItemNitroCloud("nitro_cloud_spray_purple", 3, 0x5200a5),
                     new ItemNitroCloud("nitro_cloud_spray_ruby", 3, 0xbf0046),
                     new ItemNitroCloudLED("nitro_led"),
+                    new ItemWrench("wrench"),
                     new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {

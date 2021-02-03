@@ -11,10 +11,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PositionManager {
 
@@ -51,12 +48,19 @@ public class PositionManager {
     public void tickParticles(EntityVehicle vehicle, World world, float healthPct, boolean engineFlag, boolean nitro, double x, double y, double z, float yaw) {
         if(healthPct <= 0.5F) {
             Vec3d eng = rotateVectorYaw(engine, yaw);
-            world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, true, x + eng.x, y + eng.y, z + eng.z, 0.0D, 0.1D, 0.0D);
+            world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, x + eng.x, y + eng.y, z + eng.z, 0.0D, 0.1D, 0.0D);
+            if(healthPct <= 0.0F) {
+                Random random = world.rand;
+                double dx = (random.nextDouble() - random.nextDouble()) / 8;
+                double dy = Math.max(random.nextDouble() / 15, 0.05);
+                double dz = (random.nextDouble() - random.nextDouble()) / 8;
+                world.spawnParticle(EnumParticleTypes.CLOUD, x + eng.x, y + eng.y, z + eng.z, dx, dy, dz);
+            }
         }
         if(engineFlag) {
             for (Vec3d vec3d : exhausts) {
                 Vec3d ex = rotateVectorYaw(vec3d, yaw);
-                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, true, x + ex.x, y + ex.y, z + ex.z, 0, 0.02d, 0);
+                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + ex.x, y + ex.y, z + ex.z, 0, 0.02d, 0);
                 if(nitro) {
                     VehicleMod.proxy.spawnParticle(Particles.NITRO_FLAME, world, x + ex.x, y + ex.y, z + ex.z, 0, 0, 0, 1);
                 }
