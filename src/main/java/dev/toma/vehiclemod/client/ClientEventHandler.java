@@ -3,7 +3,9 @@ package dev.toma.vehiclemod.client;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.NitroHandler;
+import dev.toma.vehiclemod.common.inventory.InventoryUpgrades;
 import dev.toma.vehiclemod.common.items.ItemNitroCan;
+import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
@@ -22,7 +24,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -33,6 +38,11 @@ import org.lwjgl.opengl.GL11;
 public class ClientEventHandler {
 
 	private static final ResourceLocation VEHICLE_HUD = new ResourceLocation(VehicleMod.MODID + ":textures/entity/vehicle_hud.png");
+	private static final ResourceLocation[] COMPONENT_ICONS = DevUtil.make(new ResourceLocation[9], resourceLocations -> {
+		for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
+			resourceLocations[type.ordinal()] = VehicleMod.getResource("textures/items/" + type.name().toLowerCase() + ".png");
+		}
+	});
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void openGUI(GuiOpenEvent event) {
@@ -103,6 +113,26 @@ public class ClientEventHandler {
 					}
 					DevUtil.drawImage2D(mc, icon, 74 + i * 10, resolution.getScaledHeight() - 40, 16, 16);
 				}
+				int componentRenderIndex = 0;
+				InventoryUpgrades upgrades = car.getUpgrades().getInventory();
+				for (int i = 0; i < 9; i++) {
+					ItemStack stack = upgrades.getStackInSlot(i);
+					if(!stack.isEmpty()) {
+						float dmgPct = 1.0F - (stack.getItemDamage() / (float) stack.getMaxDamage());
+						float r = 0.0F;
+						float g = 0.0F;
+						if(dmgPct < 0.5F) {
+							r = 1.0F;
+							g = 1.0F;
+							if(dmgPct < 0.15F) {
+								g = 0.0F;
+							}
+							mc.getTextureManager().bindTexture(COMPONENT_ICONS[i]);
+							coloredShape(10 + componentRenderIndex * 18, resolution.getScaledHeight() - 60, 16, 16, r, g, 0.0F, 1.0F);
+							++componentRenderIndex;
+						}
+					}
+				}
 				VehicleHUDType type = VehicleHUDType.FUEL_STATE;
 				int x = (int)((33 * 120) / 256F);
 				int y = resolution.getScaledHeight() - 15;
@@ -134,6 +164,17 @@ public class ClientEventHandler {
 				DevUtil.drawImage2D(mc, VEHICLE_HUD, 128, resolution.getScaledHeight() - 25, 20, 20, type.uv.uStart, type.uv.vStart, type.uv.uEnd, type.uv.vEnd);
 			}
 		}
+	}
+
+	private static void coloredShape(int x, int y, int width, int height, float r, float g, float b, float a) {
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder builder = tessellator.getBuffer();
+		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+		builder.pos(x, y + height, 0).tex(0, 1).color(r, g, b, a).endVertex();
+		builder.pos(x + width, y + height, 0).tex(1, 1).color(r, g, b, a).endVertex();
+		builder.pos(x + width, y, 0).tex(1, 0).color(r, g, b, a).endVertex();
+		builder.pos(x, y, 0).tex(0, 0).color(r, g, b, a).endVertex();
+		tessellator.draw();
 	}
 
 	private enum VehicleHUDType {
