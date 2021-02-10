@@ -454,12 +454,18 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     private void attemptStart() {
         if (!world.isRemote && this.hasFuel() && rand.nextFloat() <= (health > 0 ? MathHelper.clamp(health / getActualStats().maxHealth, 0.05F, 0.95F) : 0.0F)) {
-            isStarted = true;
-            WorldServer server = (WorldServer) world;
-            for (EntityPlayerMP playerMP : server.getPlayers(EntityPlayerMP.class, p -> p.dimension == dimension)) {
-                playerMP.connection.sendPacket(new SPacketSoundEffect(soundPack.start(), SoundCategory.MASTER, posX, posY, posZ, 1.0F, 1.0F));
+            Entity entity = this.getControllingPassenger();
+            if(entity instanceof EntityPlayer) {
+                ((EntityPlayer) entity).closeScreen();
             }
-            sync();
+            if(validateComponents()) {
+                isStarted = true;
+                WorldServer server = (WorldServer) world;
+                for (EntityPlayerMP playerMP : server.getPlayers(EntityPlayerMP.class, p -> p.dimension == dimension)) {
+                    playerMP.connection.sendPacket(new SPacketSoundEffect(soundPack.start(), SoundCategory.MASTER, posX, posY, posZ, 1.0F, 1.0F));
+                }
+                sync();
+            }
         }
     }
 

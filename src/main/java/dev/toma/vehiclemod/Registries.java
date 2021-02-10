@@ -91,7 +91,12 @@ public class Registries {
         public static final BlockMechanicPackage MECHANIC_PACKAGE_SILVER = null;
         public static final BlockMechanicPackage MECHANIC_PACKAGE_GOLDEN = null;
         public static final BlockMechanicPackage MECHANIC_PACKAGE_PLATINUM = null;
-        public static final BlockSecret SECRET = null;
+        public static final BlockSecret SECRET_1 = null;
+        public static final BlockSecret SECRET_2 = null;
+        public static final BlockSecret SECRET_3 = null;
+        public static final BlockSecret SECRET_4 = null;
+        public static final BlockSecret SECRET_5 = null;
+        public static final BlockSecret SECRET_6 = null;
         public static final BlockTunerPackage BRONZE_TUNER_PACKAGE = null;
         public static final BlockTunerPackage SILVER_TUNER_PACKAGE = null;
         public static final BlockTunerPackage GOLDEN_TUNER_PACKAGE = null;
@@ -124,7 +129,12 @@ public class Registries {
             registry.registerAll(
                     new BlockPetrolPump("petrol_pump"),
                     new BlockFuelMaker("fuel_maker"),
-                    new BlockSecret("secret"),
+                    new BlockSecret("secret_1"),
+                    new BlockSecret("secret_2"),
+                    new BlockSecret("secret_3"),
+                    new BlockSecret("secret_4"),
+                    new BlockSecret("secret_5"),
+                    new BlockSecret("secret_6"),
                     new BlockTunerPackage("bronze_tuner_package", 0),
                     new BlockTunerPackage("silver_tuner_package", 1),
                     new BlockTunerPackage("golden_tuner_package", 2),

@@ -119,11 +119,9 @@ public class ClientEventHandler {
 					ItemStack stack = upgrades.getStackInSlot(i);
 					if(!stack.isEmpty()) {
 						float dmgPct = 1.0F - (stack.getItemDamage() / (float) stack.getMaxDamage());
-						float r = 0.0F;
-						float g = 0.0F;
 						if(dmgPct < 0.5F) {
-							r = 1.0F;
-							g = 1.0F;
+							float r = 1.0F;
+							float g = 1.0F;
 							if(dmgPct < 0.15F) {
 								g = 0.0F;
 							}
@@ -131,6 +129,11 @@ public class ClientEventHandler {
 							coloredShape(10 + componentRenderIndex * 18, resolution.getScaledHeight() - 60, 16, 16, r, g, 0.0F, 1.0F);
 							++componentRenderIndex;
 						}
+					} else {
+						mc.getTextureManager().bindTexture(COMPONENT_ICONS[i]);
+						coloredShape(10 + componentRenderIndex * 18, resolution.getScaledHeight() - 60, 16, 16, 0.3F, 0.3F, 0.3F, 1.0F);
+						mc.fontRenderer.drawString("!", 8 + componentRenderIndex * 18, resolution.getScaledHeight() - 59, 0xFF0000);
+						++componentRenderIndex;
 					}
 				}
 				VehicleHUDType type = VehicleHUDType.FUEL_STATE;

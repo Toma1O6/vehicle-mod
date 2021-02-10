@@ -117,6 +117,7 @@ public class DevUtil {
     }
 
     public static void loadInventoryFromNBT(IInventory inventory, NBTTagList list) {
+        inventory.clear();
         for (int i = 0; i < list.tagCount(); i++) {
             NBTTagCompound nbt = list.getCompoundTagAt(i);
             int index = nbt.getInteger("index");

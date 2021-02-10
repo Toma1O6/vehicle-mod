@@ -67,6 +67,12 @@ public class VMConfig {
 	@Name("Sputnik Firetruck")
 	public static VehicleStats sputnikFiretruck = new VehicleStats(500F, 1.0F, 0.0037F, 0.011F, 0.09F, 1.4F, 0.0082F, 100, new VehicleStats.Vector3i(0, 0, -5)).track();
 
+	@Name("Tracer Jester")
+	public static VehicleStats tracerJester = new VehicleStats(300F, 1.2F, 0.0045F, 0.018F, 0.22F, 2.2F, 0.004F, 65).track();
+
+	@Name("Tracer Outlander")
+	public static VehicleStats tracerOutlander = new VehicleStats(300F, 1.2F, 0.0045F, 0.018F, 0.22F, 2.2F, 0.004F, 65).track();
+
 	@Mod.EventBusSubscriber(modid = VehicleMod.MODID)
 	public static class Event {
 		
