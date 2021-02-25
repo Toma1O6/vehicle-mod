@@ -58,8 +58,8 @@ public class VMConfig {
 	@Name("Proton P1")
 	public static VehicleStats protonP1 = new VehicleStats(250F, 1.37F, 0.0054F, 0.019F, 0.22F, 2.4F, 0.0036F, 50).track();
 
-	@Name("Proton P1 Tunned")
-	public static VehicleStats protonP1_tunned = new VehicleStats(220F, 1.4F, 0.0059F, 0.022F, 0.23F, 2.5F, 0.0041F, 50).track();
+	@Name("Proton P3")
+	public static VehicleStats protonP3 = new VehicleStats(220F, 1.4F, 0.0059F, 0.022F, 0.23F, 2.5F, 0.0041F, 50).track();
 
 	@Name("Sputnik Ambulance")
 	public static VehicleStats sputnikAmbulance = new VehicleStats(300F, 1.14F, 0.004F, 0.016F, 0.14F, 1.9F, 0.0064F, 70, new VehicleStats.Vector3i(0, 0, -3)).track();

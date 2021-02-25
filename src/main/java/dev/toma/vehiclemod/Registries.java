@@ -14,13 +14,14 @@ import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
 import dev.toma.vehiclemod.common.entity.vehicle.special.*;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleBeamerS320RS;
-import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleProtonP1Tunned;
+import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleProtonP3;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleProtonP1;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik2000L;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
 import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiNightStalker;
 import dev.toma.vehiclemod.common.entity.vehicle.supersport.VehicleFedorattiVulcan;
 import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleSputnikDuster;
+import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleTracerOutlander;
 import dev.toma.vehiclemod.common.fluids.FluidItemBehavior;
 import dev.toma.vehiclemod.common.fluids.FluidType;
 import dev.toma.vehiclemod.common.items.*;
@@ -162,9 +163,11 @@ public class Registries {
                     new ItemVehicleSpawner<>("spawn_sputnikduster", VehicleSputnikDuster.class, VehicleSputnikDuster::new),
                     new ItemVehicleSpawner<>("spawn_fedorattinightstalker", VehicleFedorattiNightStalker.class, VehicleFedorattiNightStalker::new),
                     new ItemVehicleSpawner<>("spawn_protonp1", VehicleProtonP1.class, VehicleProtonP1::new),
-                    new ItemVehicleSpawner<>("spawn_protonp1tunned", VehicleProtonP1Tunned.class, VehicleProtonP1Tunned::new),
+                    new ItemVehicleSpawner<>("spawn_protonp3", VehicleProtonP3.class, VehicleProtonP3::new),
                     new ItemVehicleSpawner<>("spawn_sputnikambulance", VehicleSputnikAmbulance.class, VehicleSputnikAmbulance::new),
                     new ItemVehicleSpawner<>("spawn_sputnikfiretruck", VehicleSputnikFiretruck.class, VehicleSputnikFiretruck::new),
+                    new ItemVehicleSpawner<>("spawn_traceroutlander", VehicleTracerOutlander.class, VehicleTracerOutlander::new),
+                    new ItemVehicleSpawner<>("spawn_traceroutlandert", VehicleTracerOutlander.VehicleTracerOutlanderT.class, VehicleTracerOutlander.VehicleTracerOutlanderT::new),
                     new VMItem("bucket_of_liquid_coal"),
                     new ItemFluidBucket("bucket_of_activated_fuel_substance", () -> FluidTypes.ACTIVATED_FUEL_SUBSTANCE),
                     new ItemFluidBucket("bucket_of_fuel", () -> FluidTypes.FUEL),
@@ -270,9 +273,11 @@ public class Registries {
                     registerVehicle("sputnik_duster", VehicleSputnikDuster.class),
                     registerVehicle("fedoratti_nighstalker", VehicleFedorattiNightStalker.class),
                     registerVehicle("proton_p1", VehicleProtonP1.class),
-                    registerVehicle("proton_p1_tunned", VehicleProtonP1Tunned.class),
+                    registerVehicle("proton_p1_tunned", VehicleProtonP3.class),
                     registerVehicle("sputnik_ambulance", VehicleSputnikAmbulance.class),
-                    registerVehicle("sputnik_firetruck", VehicleSputnikFiretruck.class)
+                    registerVehicle("sputnik_firetruck", VehicleSputnikFiretruck.class),
+                    registerVehicle("tracer_outlander", VehicleTracerOutlander.class),
+                    registerVehicle("tracer_outlandert", VehicleTracerOutlander.VehicleTracerOutlanderT.class)
             );
         }
 
@@ -323,10 +328,10 @@ public class Registries {
                     registerSound("proton_p1_brake"),
                     registerSound("proton_p1_gas"),
                     registerSound("proton_p1_start"),
-                    registerSound("proton_p1_tunned_acc"),
-                    registerSound("proton_p1_tunned_brake"),
-                    registerSound("proton_p1_tunned_gas"),
-                    registerSound("proton_p1_tunned_start"),
+                    registerSound("proton_p3_acc"),
+                    registerSound("proton_p3_brake"),
+                    registerSound("proton_p3_gas"),
+                    registerSound("proton_p3_start"),
                     registerSound("secret"),
                     registerSound("lock_unlocked"),
                     registerSound("lockpick_success"),
@@ -340,6 +345,10 @@ public class Registries {
                     registerSound("sputnik_firetruck_brake"),
                     registerSound("sputnik_firetruck_gas"),
                     registerSound("sputnik_firetruck_start"),
+                    registerSound("tracer_outlander_acc"),
+                    registerSound("tracer_outlander_brake"),
+                    registerSound("tracer_outlander_gas"),
+                    registerSound("tracer_outlander_start"),
                     registerSound("car_locked"),
                     registerSound("car_unlocked"),
                     registerSound("police_siren"),

@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class VehicleProtonP1Tunned extends EntityVehicleSport {
+public class VehicleProtonP3 extends EntityVehicleSport {
 
     static final PositionManager POSITIONS = PositionManager.Builder.create()
             .engine(1.5, 0.45, 0)
@@ -28,11 +28,11 @@ public class VehicleProtonP1Tunned extends EntityVehicleSport {
             .nitroExit(1.7, 0.5, -0.9, 0.1, 0.0, -0.1)
             .build();
 
-    public VehicleProtonP1Tunned(World world) {
+    public VehicleProtonP3(World world) {
         super(world);
     }
 
-    public VehicleProtonP1Tunned(World world, BlockPos pos) {
+    public VehicleProtonP3(World world, BlockPos pos) {
         super(world, pos);
         setSize(2.0f, 1.5f);
     }
@@ -45,10 +45,10 @@ public class VehicleProtonP1Tunned extends EntityVehicleSport {
     @Override
     public VehicleSoundPack createSoundPack() {
         return VehicleSoundPack.Builder.create(this)
-                .acc(VMSounds.PROTON_P1_TUNNED_ACC)
-                .brk(VMSounds.PROTON_P1_TUNNED_BRAKE)
-                .rls(VMSounds.PROTON_P1_TUNNED_GAS)
-                .str(VMSounds.PROTON_P1_TUNNED_START)
+                .acc(VMSounds.PROTON_P3_ACC)
+                .brk(VMSounds.PROTON_P3_BRAKE)
+                .rls(VMSounds.PROTON_P3_GAS)
+                .str(VMSounds.PROTON_P3_START)
                 .honk(VMSounds.HORN_1)
                 .starting(VMSounds.CAR_START_G)
                 .build();
@@ -56,7 +56,7 @@ public class VehicleProtonP1Tunned extends EntityVehicleSport {
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.protonP1_tunned;
+        return VMConfig.protonP3;
     }
 
     @Override

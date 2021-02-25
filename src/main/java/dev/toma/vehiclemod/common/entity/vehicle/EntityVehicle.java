@@ -118,7 +118,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
 
     private void updateVehicle() {
         updateMotion();
-        if (!this.isBeingRidden() && (!noAccelerationInput() || !noTurningInput() || !hasFuel() || !isStarted())) {
+        if (!this.isBeingRidden() && (!noAccelerationInput() || !noTurningInput() || !hasFuel() || !isStarted() || health <= 0.0F)) {
             inputForward = false;
             inputBack = false;
             inputRight = false;
@@ -177,10 +177,14 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
         }
 
         if (inputRight && !inputLeft) {
-            turnModifier = turnModifier < stats.maxTurningAngle ? turnModifier < 0 ? turnModifier + stats.turnSpeed + 0.5F : turnModifier + (stats.turnSpeed * 0.6F) : stats.maxTurningAngle;
+            float maxAnMod = Math.max(0.3F, 1.0F - (currentSpeed / stats.maxSpeed));
+            float maxAngle = stats.maxTurningAngle * maxAnMod;
+            turnModifier = turnModifier < maxAngle ? turnModifier < 0 ? turnModifier + stats.turnSpeed + 0.5F : turnModifier + stats.turnSpeed : maxAngle;
         }
         if (inputLeft && !inputRight) {
-            turnModifier = turnModifier > -stats.maxTurningAngle ? turnModifier > 0 ? turnModifier - stats.turnSpeed - 0.5F : turnModifier - (stats.turnSpeed * 0.6F) : -stats.maxTurningAngle;
+            float maxAnMod = Math.max(0.3F, 1.0F - (currentSpeed / stats.maxSpeed));
+            float maxAngle = stats.maxTurningAngle * maxAnMod;
+            turnModifier = turnModifier > -maxAngle ? turnModifier > 0 ? turnModifier - stats.turnSpeed - 0.5F : turnModifier - stats.turnSpeed : -maxAngle;
         }
 
         if (noAccelerationInput() || !hasFuel()) {

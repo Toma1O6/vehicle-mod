@@ -22,7 +22,7 @@ public class ItemVehicleUpgrade extends VMItem {
         this.type = type;
         this.level = level;
         setMaxStackSize(1);
-        setMaxDamage(1250);
+        setMaxDamage(2000);
     }
 
     public Type getType() {

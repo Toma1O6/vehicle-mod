@@ -20,7 +20,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.input.Keyboard;
 
 import java.util.function.BiConsumer;
-import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 
 @Mod.EventBusSubscriber(Side.CLIENT)

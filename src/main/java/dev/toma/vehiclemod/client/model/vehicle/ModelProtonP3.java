@@ -2,11 +2,11 @@ package dev.toma.vehiclemod.client.model.vehicle;
 
 import dev.toma.vehiclemod.client.lights.*;
 import dev.toma.vehiclemod.common.entity.vehicle.LightController;
-import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleProtonP1Tunned;
+import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleProtonP3;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 
-public class ModelProtonP1Tunned extends ModelVehicle<VehicleProtonP1Tunned> {
+public class ModelProtonP3 extends ModelVehicle<VehicleProtonP3> {
 
     private final ModelRenderer bb_main;
     private final ModelRenderer bone2;
@@ -91,7 +91,7 @@ public class ModelProtonP1Tunned extends ModelVehicle<VehicleProtonP1Tunned> {
     private final ModelRenderer rear_lights_brake;
     private final ModelRenderer interier;
 
-    public ModelProtonP1Tunned() {
+    public ModelProtonP3() {
         textureWidth = 512;
         textureHeight = 512;
 

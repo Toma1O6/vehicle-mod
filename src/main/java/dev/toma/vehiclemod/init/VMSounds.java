@@ -50,10 +50,10 @@ public class VMSounds {
     public static final SoundEvent PROTON_P1_BRAKE = null;
     public static final SoundEvent PROTON_P1_GAS = null;
     public static final SoundEvent PROTON_P1_START = null;
-    public static final SoundEvent PROTON_P1_TUNNED_ACC = null;
-    public static final SoundEvent PROTON_P1_TUNNED_BRAKE = null;
-    public static final SoundEvent PROTON_P1_TUNNED_GAS = null;
-    public static final SoundEvent PROTON_P1_TUNNED_START = null;
+    public static final SoundEvent PROTON_P3_ACC = null;
+    public static final SoundEvent PROTON_P3_BRAKE = null;
+    public static final SoundEvent PROTON_P3_GAS = null;
+    public static final SoundEvent PROTON_P3_START = null;
     public static final SoundEvent SPUTNIK_AMBULANCE_ACC = null;
     public static final SoundEvent SPUTNIK_AMBULANCE_BRAKE = null;
     public static final SoundEvent SPUTNIK_AMBULANCE_GAS = null;
@@ -62,6 +62,10 @@ public class VMSounds {
     public static final SoundEvent SPUTNIK_FIRETRUCK_BRAKE = null;
     public static final SoundEvent SPUTNIK_FIRETRUCK_GAS = null;
     public static final SoundEvent SPUTNIK_FIRETRUCK_START = null;
+    public static final SoundEvent TRACER_OUTLANDER_ACC = null;
+    public static final SoundEvent TRACER_OUTLANDER_BRAKE = null;
+    public static final SoundEvent TRACER_OUTLANDER_GAS = null;
+    public static final SoundEvent TRACER_OUTLANDER_START = null;
     public static final SoundEvent SECRET = null;
     public static final SoundEvent LOCK_UNLOCKED = null;
     public static final SoundEvent LOCKPICK_SUCCESS = null;
