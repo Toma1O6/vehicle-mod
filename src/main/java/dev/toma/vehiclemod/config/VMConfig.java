@@ -61,11 +61,11 @@ public class VMConfig {
 	@Name("Proton P3")
 	public static VehicleStats protonP3 = new VehicleStats(220F, 1.4F, 0.0059F, 0.022F, 0.23F, 2.5F, 0.0041F, 50).track();
 
-	@Name("Sputnik Ambulance")
-	public static VehicleStats sputnikAmbulance = new VehicleStats(300F, 1.14F, 0.004F, 0.016F, 0.14F, 1.9F, 0.0064F, 70, new VehicleStats.Vector3i(0, 0, -3)).track();
+	@Name("MCG Ambulance")
+	public static VehicleStats mcgAmbulance = new VehicleStats(300F, 1.14F, 0.004F, 0.016F, 0.14F, 1.9F, 0.0064F, 70, new VehicleStats.Vector3i(0, 0, -3)).track();
 
-	@Name("Sputnik Firetruck")
-	public static VehicleStats sputnikFiretruck = new VehicleStats(500F, 1.0F, 0.0037F, 0.011F, 0.09F, 1.4F, 0.0082F, 100, new VehicleStats.Vector3i(0, 0, -5)).track();
+	@Name("MCG Firetruck")
+	public static VehicleStats mcgFiretruck = new VehicleStats(500F, 1.0F, 0.0037F, 0.011F, 0.09F, 1.4F, 0.0082F, 100, new VehicleStats.Vector3i(0, 0, -5)).track();
 
 	@Name("Tracer Jester")
 	public static VehicleStats tracerJester = new VehicleStats(300F, 1.2F, 0.0045F, 0.018F, 0.22F, 2.2F, 0.004F, 65).track();

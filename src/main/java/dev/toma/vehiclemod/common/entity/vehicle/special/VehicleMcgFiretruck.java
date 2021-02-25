@@ -71,7 +71,7 @@ public class VehicleMcgFiretruck extends EntityVehicleSirens {
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.sputnikFiretruck;
+        return VMConfig.mcgFiretruck;
     }
 
     @Override

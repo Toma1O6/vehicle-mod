@@ -11,6 +11,7 @@ import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.EnumCarLockType;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
+import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerJester;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
 import dev.toma.vehiclemod.common.entity.vehicle.special.*;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleBeamerS320RS;
@@ -168,6 +169,8 @@ public class Registries {
                     new ItemVehicleSpawner<>("spawn_mcgfiretruck", VehicleMcgFiretruck.class, VehicleMcgFiretruck::new),
                     new ItemVehicleSpawner<>("spawn_traceroutlander", VehicleTracerOutlander.class, VehicleTracerOutlander::new),
                     new ItemVehicleSpawner<>("spawn_traceroutlandert", VehicleTracerOutlander.VehicleTracerOutlanderT.class, VehicleTracerOutlander.VehicleTracerOutlanderT::new),
+                    new ItemVehicleSpawner<>("spawn_tracerjester", VehicleTracerJester.class, VehicleTracerJester::new),
+                    new ItemVehicleSpawner<>("spawn_tracerjestert", VehicleTracerJester.VehicleTracerJesterT.class, VehicleTracerJester.VehicleTracerJesterT::new),
                     new VMItem("bucket_of_liquid_coal"),
                     new ItemFluidBucket("bucket_of_activated_fuel_substance", () -> FluidTypes.ACTIVATED_FUEL_SUBSTANCE),
                     new ItemFluidBucket("bucket_of_fuel", () -> FluidTypes.FUEL),
@@ -277,7 +280,9 @@ public class Registries {
                     registerVehicle("mcg_ambulance", VehicleMcgAmbulance.class),
                     registerVehicle("mcg_firetruck", VehicleMcgFiretruck.class),
                     registerVehicle("tracer_outlander", VehicleTracerOutlander.class),
-                    registerVehicle("tracer_outlandert", VehicleTracerOutlander.VehicleTracerOutlanderT.class)
+                    registerVehicle("tracer_outlandert", VehicleTracerOutlander.VehicleTracerOutlanderT.class),
+                    registerVehicle("tracer_jester", VehicleTracerJester.class),
+                    registerVehicle("tracer_jestert", VehicleTracerJester.VehicleTracerJesterT.class)
             );
         }
 
@@ -349,6 +354,10 @@ public class Registries {
                     registerSound("tracer_outlander_brake"),
                     registerSound("tracer_outlander_gas"),
                     registerSound("tracer_outlander_start"),
+                    registerSound("tracer_jester_acc"),
+                    registerSound("tracer_jester_brake"),
+                    registerSound("tracer_jester_gas"),
+                    registerSound("tracer_jester_start"),
                     registerSound("car_locked"),
                     registerSound("car_unlocked"),
                     registerSound("police_siren"),

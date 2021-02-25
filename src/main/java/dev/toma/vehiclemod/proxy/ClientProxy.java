@@ -14,6 +14,7 @@ import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.NitroHandler;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
+import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerJester;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
 import dev.toma.vehiclemod.common.entity.vehicle.special.*;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleBeamerS320RS;
@@ -119,5 +120,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(VehicleMcgFiretruck.class, RenderMcgFiretruck::new);
 		RenderingRegistry.registerEntityRenderingHandler(VehicleTracerOutlander.class, manager -> new RenderTracerOutlander<>(manager, new ModelTracerOutlander()));
 		RenderingRegistry.registerEntityRenderingHandler(VehicleTracerOutlander.VehicleTracerOutlanderT.class, manager -> new RenderTracerOutlander<>(manager, new ModelTracerOutlanderT()));
+		RenderingRegistry.registerEntityRenderingHandler(VehicleTracerJester.class, manager -> new RenderTracerJester<>(manager, new ModelTracerJester()));
+		RenderingRegistry.registerEntityRenderingHandler(VehicleTracerJester.VehicleTracerJesterT.class, manager -> new RenderTracerJester<>(manager, new ModelTracerJesterT()));
 	}
 }

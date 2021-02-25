@@ -66,6 +66,10 @@ public class VMSounds {
     public static final SoundEvent TRACER_OUTLANDER_BRAKE = null;
     public static final SoundEvent TRACER_OUTLANDER_GAS = null;
     public static final SoundEvent TRACER_OUTLANDER_START = null;
+    public static final SoundEvent TRACER_JESTER_ACC = null;
+    public static final SoundEvent TRACER_JESTER_BRAKE = null;
+    public static final SoundEvent TRACER_JESTER_GAS = null;
+    public static final SoundEvent TRACER_JESTER_START = null;
     public static final SoundEvent SECRET = null;
     public static final SoundEvent LOCK_UNLOCKED = null;
     public static final SoundEvent LOCKPICK_SUCCESS = null;

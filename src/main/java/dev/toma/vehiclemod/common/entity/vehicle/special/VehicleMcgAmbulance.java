@@ -71,7 +71,7 @@ public class VehicleMcgAmbulance extends EntityVehicleSirens {
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.sputnikAmbulance;
+        return VMConfig.mcgAmbulance;
     }
 
     @Override
