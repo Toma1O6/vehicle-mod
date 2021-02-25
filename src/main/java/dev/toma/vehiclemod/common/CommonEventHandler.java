@@ -25,7 +25,6 @@ public class CommonEventHandler {
     public static void onEntityJoin(EntityJoinWorldEvent e) {
         if(e.getEntity() instanceof EntityCreature) {
             EntityCreature livingEntity = (EntityCreature)e.getEntity();
-            EntityAINearestAttackableTarget<?> ai = getTaskToBeRemoved(livingEntity);
             EntityAITasks.EntityAITaskEntry[] entries = ((EntityCreature) e.getEntity()).targetTasks.taskEntries.toArray(new EntityAITasks.EntityAITaskEntry[0]);
             for (EntityAITasks.EntityAITaskEntry entry : entries) {
                 if (entry.action instanceof EntityAINearestAttackableTarget<?>) {
@@ -53,6 +52,9 @@ public class CommonEventHandler {
                 break;
             default:
                 event.player.sendMessage(new TextComponentString(getMessageLogo() + TextFormatting.GREEN + " No updates available"));
+                TextComponentString discordInvite = new TextComponentString(getMessageLogo() + TextFormatting.GREEN + "You can also join our Discord channel HERE");
+                discordInvite.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/WEFYxwS8E3"));
+                event.player.sendMessage(discordInvite);
                 break;
         }
     }
@@ -75,14 +77,5 @@ public class CommonEventHandler {
 
     private static String getMessageLogo() {
         return TextFormatting.BLUE + "[" + TextFormatting.YELLOW + "VehicleMod" + TextFormatting.BLUE + "]" + TextFormatting.RESET;
-    }
-
-    public static EntityAINearestAttackableTarget<?> getTaskToBeRemoved(EntityCreature e) {
-        for(EntityAITasks.EntityAITaskEntry ai : e.targetTasks.taskEntries) {
-            if(ai.action.getClass() == EntityAINearestAttackableTarget.class) {
-                return (EntityAINearestAttackableTarget<?>) ai.action;
-            }
-        }
-        return null;
     }
 }
