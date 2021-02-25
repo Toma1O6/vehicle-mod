@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class VehicleSputnikFiretruck extends EntityVehicleSirens {
+public class VehicleMcgFiretruck extends EntityVehicleSirens {
 
     static final VehicleTexture[] VALID_COLORS = {VehicleTexture.GRAY, VehicleTexture.RED, VehicleTexture.UTILITY_YELLOW, VehicleTexture.HELL};
     private static final PositionManager POSITIONS = PositionManager.Builder.create()
@@ -32,12 +32,12 @@ public class VehicleSputnikFiretruck extends EntityVehicleSirens {
             .nitroExit(-2.5, 0.6, -1.0, -0.1, 0.0, -0.1)
             .build();
 
-    public VehicleSputnikFiretruck(World world) {
+    public VehicleMcgFiretruck(World world) {
         super(world);
         setSize(2.0F, 2.4F);
     }
 
-    public VehicleSputnikFiretruck(World world, BlockPos pos) {
+    public VehicleMcgFiretruck(World world, BlockPos pos) {
         super(world, pos);
         setSize(2.0F, 2.4F);
     }
@@ -82,10 +82,10 @@ public class VehicleSputnikFiretruck extends EntityVehicleSirens {
     @Override
     public VehicleSoundPack createSoundPack() {
         return VehicleSoundPack.Builder.create(this)
-                .acc(VMSounds.SPUTNIK_FIRETRUCK_ACC)
-                .brk(VMSounds.SPUTNIK_FIRETRUCK_BRAKE)
-                .rls(VMSounds.SPUTNIK_FIRETRUCK_GAS)
-                .str(VMSounds.SPUTNIK_FIRETRUCK_START)
+                .acc(VMSounds.MCG_FIRETRUCK_ACC)
+                .brk(VMSounds.MCG_FIRETRUCK_BRAKE)
+                .rls(VMSounds.MCG_FIRETRUCK_GAS)
+                .str(VMSounds.MCG_FIRETRUCK_START)
                 .honk(VMSounds.HORN_12)
                 .starting(VMSounds.CAR_START_D)
                 .build();

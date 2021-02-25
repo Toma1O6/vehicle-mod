@@ -1,20 +1,20 @@
 package dev.toma.vehiclemod.client.render.entity;
 
-import dev.toma.vehiclemod.client.model.vehicle.ModelSputnikFiretruck;
+import dev.toma.vehiclemod.client.model.vehicle.ModelMcgFiretruck;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
-import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleSputnikFiretruck;
+import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleMcgFiretruck;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderSputnikFiretruck extends RenderVehicle<VehicleSputnikFiretruck> {
+public class RenderMcgFiretruck extends RenderVehicle<VehicleMcgFiretruck> {
 
-    private final ModelSputnikFiretruck model;
+    private final ModelMcgFiretruck model;
 
-    public RenderSputnikFiretruck(RenderManager manager) {
+    public RenderMcgFiretruck(RenderManager manager) {
         super(manager);
-        this.model = new ModelSputnikFiretruck();
+        this.model = new ModelMcgFiretruck();
     }
 
     @Override
@@ -23,12 +23,12 @@ public class RenderSputnikFiretruck extends RenderVehicle<VehicleSputnikFiretruc
     }
 
     @Override
-    public ModelVehicle<VehicleSputnikFiretruck> getVehicleModel() {
+    public ModelVehicle<VehicleMcgFiretruck> getVehicleModel() {
         return model;
     }
 
     @Override
-    public void prepareRender(VehicleSputnikFiretruck entity, double x, double y, double z, float entityYaw, float partialTicks) {
+    public void prepareRender(VehicleMcgFiretruck entity, double x, double y, double z, float entityYaw, float partialTicks) {
         GlStateManager.translate(x, y, z);
         GlStateManager.scale(0.06, 0.06, 0.06);
         GlStateManager.rotate(180f, 1f, 0f, 0f);

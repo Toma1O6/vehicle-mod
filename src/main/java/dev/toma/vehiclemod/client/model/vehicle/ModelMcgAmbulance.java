@@ -2,11 +2,11 @@ package dev.toma.vehiclemod.client.model.vehicle;
 
 import dev.toma.vehiclemod.client.lights.*;
 import dev.toma.vehiclemod.common.entity.vehicle.LightController;
-import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleSputnikAmbulance;
+import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleMcgAmbulance;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 
-public class ModelSputnikAmbulance extends ModelVehicle<VehicleSputnikAmbulance> {
+public class ModelMcgAmbulance extends ModelVehicle<VehicleMcgAmbulance> {
 
     private final ModelRenderer bb_main;
 	private final ModelRenderer bone2;
@@ -65,7 +65,7 @@ public class ModelSputnikAmbulance extends ModelVehicle<VehicleSputnikAmbulance>
 	private final ModelRenderer siren_g;
 	private final ModelRenderer plate;
 
-	public ModelSputnikAmbulance() {
+	public ModelMcgAmbulance() {
 		textureWidth = 512;
 		textureHeight = 512;
 

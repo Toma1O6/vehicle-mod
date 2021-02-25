@@ -11,7 +11,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class VehicleSputnikAmbulance extends EntityVehicleSirens {
+public class VehicleMcgAmbulance extends EntityVehicleSirens {
 
     private static final VehicleTexture[] VALID_TEXTURES = {VehicleTexture.BLUE, VehicleTexture.RED, VehicleTexture.UTILITY_YELLOW, VehicleTexture.BRICK};
     private static final PositionManager POSITIONS = PositionManager.Builder.create()
@@ -27,12 +27,12 @@ public class VehicleSputnikAmbulance extends EntityVehicleSirens {
             .nitroExit(2.8, 0.65, -0.35, 0.1, 0.0, -0.1)
             .build();
 
-    public VehicleSputnikAmbulance(World world) {
+    public VehicleMcgAmbulance(World world) {
         super(world);
         setSize(2.25F, 1.8F);
     }
 
-    public VehicleSputnikAmbulance(World world, BlockPos pos) {
+    public VehicleMcgAmbulance(World world, BlockPos pos) {
         super(world, pos);
         setSize(2.25F, 1.8F);
     }
@@ -82,10 +82,10 @@ public class VehicleSputnikAmbulance extends EntityVehicleSirens {
     @Override
     public VehicleSoundPack createSoundPack() {
         return VehicleSoundPack.Builder.create(this)
-                .acc(VMSounds.SPUTNIK_AMBULANCE_ACC)
-                .brk(VMSounds.SPUTNIK_AMBULANCE_BRAKE)
-                .rls(VMSounds.SPUTNIK_AMBULANCE_GAS)
-                .str(VMSounds.SPUTNIK_AMBULANCE_START)
+                .acc(VMSounds.MCG_AMBULANCE_ACC)
+                .brk(VMSounds.MCG_AMBULANCE_BRAKE)
+                .rls(VMSounds.MCG_AMBULANCE_GAS)
+                .str(VMSounds.MCG_AMBULANCE_START)
                 .honk(VMSounds.HORN_2)
                 .starting(VMSounds.CAR_START_E)
                 .build();

@@ -2,11 +2,11 @@ package dev.toma.vehiclemod.client.model.vehicle;
 
 import dev.toma.vehiclemod.client.lights.*;
 import dev.toma.vehiclemod.common.entity.vehicle.LightController;
-import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleSputnikFiretruck;
+import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleMcgFiretruck;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 
-public class ModelSputnikFiretruck extends ModelVehicle<VehicleSputnikFiretruck> {
+public class ModelMcgFiretruck extends ModelVehicle<VehicleMcgFiretruck> {
 
     private final ModelRenderer bb_main;
     private final ModelRenderer bone2;
@@ -53,7 +53,7 @@ public class ModelSputnikFiretruck extends ModelVehicle<VehicleSputnikFiretruck>
     private final ModelRenderer siren_f;
     private final ModelRenderer siren_g;
 
-    public ModelSputnikFiretruck() {
+    public ModelMcgFiretruck() {
         textureWidth = 512;
         textureHeight = 512;
 
