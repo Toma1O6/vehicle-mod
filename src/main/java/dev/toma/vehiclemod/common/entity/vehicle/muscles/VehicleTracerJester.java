@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.common.entity.vehicle.muscles;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
+import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -29,6 +30,11 @@ public class VehicleTracerJester extends EntityVehicleMuscles {
 
     public VehicleTracerJester(World world, BlockPos pos) {
         super(world, pos);
+    }
+
+    @Override
+    public VehicleUpgrades createVehicleUpgrades() {
+        return new VehicleUpgrades(this, 2);
     }
 
     @Override
@@ -65,7 +71,7 @@ public class VehicleTracerJester extends EntityVehicleMuscles {
 
     @Override
     public int getNitroCloudSpraySlotCount() {
-        return 4;
+        return 6;
     }
 
     @Override
@@ -85,12 +91,36 @@ public class VehicleTracerJester extends EntityVehicleMuscles {
 
     public static class VehicleTracerJesterT extends VehicleTracerJester {
 
+        static final PositionManager POSITIONS = PositionManager.Builder.create()
+                .engine(1.6, 0.7, 0)
+                .exhaust(new Vec3d( -2.6, 0.3, 0.8), new Vec3d(-2.6, 0.3, -0.8))
+                .sideNeons(0.9)
+                .frontNeon(2.1)
+                .backNeon(2.4)
+                .nitroExit(0.9, 1.0, 0.8, -0.1, 0.1, 0.05)
+                .nitroExit(0.9, 1.0, -0.8, -0.1, 0.1, -0.05)
+                .nitroExit(2.0, 0.4, 0.9, -0.1, 0.05, 0.1)
+                .nitroExit(2.0, 0.4, -0.9, -0.1, 0.05, -0.1)
+                .nitroExit(2.35, 0.5, 0.7, 0.1, 0, 0.03)
+                .nitroExit(2.35, 0.5, -0.7, 0.1, 0, -0.03)
+                .build();
+
         public VehicleTracerJesterT(World world) {
             super(world);
         }
 
         public VehicleTracerJesterT(World world, BlockPos pos) {
             super(world, pos);
+        }
+
+        @Override
+        public int getNitroCloudSpraySlotCount() {
+            return 6;
+        }
+
+        @Override
+        public PositionManager getVehiclePositions() {
+            return POSITIONS;
         }
     }
 }
