@@ -39,23 +39,22 @@ public class GuiVehicleComponents extends GuiTunning<InventoryUpgrades, Containe
             float accelerationStat = fixValue((stats.acceleration - VehicleStats.accelerationMin) / (VehicleStats.accelerationMax - VehicleStats.accelerationMin));
             float handlingStat = fixValue((stats.turnSpeed - VehicleStats.handlingMin) / (VehicleStats.handlingMax - VehicleStats.handlingMin));
             float brakingStat = fixValue((stats.brakeSpeed - VehicleStats.brakingMin) / (VehicleStats.brakingMax - VehicleStats.brakingMin));
+            String text = "Power rating: " + VehicleStats.getTotalVehicleRating(stats);
+            int w = fontRenderer.getStringWidth(text);
+            fontRenderer.drawString(text, (xSize - w) / 2 - 10, 45, 0x222222);
             fontRenderer.drawString("SPD", 8, 54, 0xaa00);
             fontRenderer.drawString("ACC", 8, 63, 0xaa0000);
             fontRenderer.drawString("HDL", 8, 72, 0xaa);
             fontRenderer.drawString("BRK", 8, 81, 0xaaaa00);
-            DevUtil.drawColor(27, 55, (int)(27 + 142 * speedStat), 60, 0.0F, 1.0F, 0.0F, 1.0F);
-            DevUtil.drawColor(27, 64, (int)(27 + 142 * accelerationStat), 69, 1.0F, 0.0F, 0.0F, 1.0F);
-            DevUtil.drawColor(27, 73, (int)(27 + 142 * handlingStat), 78, 0.0F, 0.0F, 1.0F, 1.0F);
-            DevUtil.drawColor(27, 82, (int)(27 + 142 * brakingStat), 87, 1.0F, 1.0F, 0.0F, 1.0F);
+            DevUtil.drawColor(27, 55, (int)(27 + 119 * speedStat), 60, 0.0F, 1.0F, 0.0F, 1.0F);
+            DevUtil.drawColor(27, 64, (int)(27 + 119 * accelerationStat), 69, 1.0F, 0.0F, 0.0F, 1.0F);
+            DevUtil.drawColor(27, 73, (int)(27 + 119 * handlingStat), 78, 0.0F, 0.0F, 1.0F, 1.0F);
+            DevUtil.drawColor(27, 82, (int)(27 + 119 * brakingStat), 87, 1.0F, 1.0F, 0.0F, 1.0F);
+            fontRenderer.drawString(VehicleStats.getTopSpeedRating(stats) + "", 150, 54, 0xaa00);
+            fontRenderer.drawString(VehicleStats.getAccelerationRating(stats) + "", 150, 63, 0xaa0000);
+            fontRenderer.drawString(VehicleStats.getHandlingRating(stats) + "", 150, 72, 0xaa);
+            fontRenderer.drawString(VehicleStats.getBrakeRating(stats) + "", 150, 81, 0xaaaa00);
         }
-        // TODO
-       /* Map<ItemVehicleUpgrade.Type, Integer> map = upgrades.getUpgradeMap();
-        int j = 0;
-        for (Map.Entry<ItemVehicleUpgrade.Type, Integer> entry : map.entrySet()) {
-            String text = String.format("[%d]", entry.getValue());
-            fontRenderer.drawString(text, 8 + j * 18 + (18 - fontRenderer.getStringWidth(text)) / 2, 28, ItemVehicleUpgrade.Type.getColor(entry.getValue()).getColorValue());
-            ++j;
-        }*/
     }
 
     static float fixValue(float in) {

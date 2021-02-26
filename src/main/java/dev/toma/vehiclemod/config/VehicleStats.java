@@ -104,6 +104,34 @@ public final class VehicleStats {
 		trackingList.forEach(VehicleStats::calculateRanges);
 	}
 
+	public static int getTotalVehicleRating(VehicleStats stats) {
+		return getTopSpeedRating(stats) + getAccelerationRating(stats) + getBrakeRating(stats) + getHandlingRating(stats);
+	}
+
+	public static int getTopSpeedRating(VehicleStats stats) {
+		float f = fix((stats.maxSpeed - topSpeedMin) / (topSpeedMax - topSpeedMin));
+		return (int) (300 * f);
+	}
+
+	public static int getAccelerationRating(VehicleStats stats) {
+		float f = fix((stats.acceleration - accelerationMin) / (accelerationMax - accelerationMin));
+		return (int) (250 * f);
+	}
+
+	public static int getBrakeRating(VehicleStats stats) {
+		float f = fix((stats.brakeSpeed - brakingMin) / (brakingMax - brakingMin));
+		return (int) (250 * f);
+	}
+
+	public static int getHandlingRating(VehicleStats stats) {
+		float f = fix((stats.turnSpeed - handlingMin) / (handlingMax - handlingMin));
+		return (int) (250 * f);
+	}
+
+	public static float fix(float f) {
+		return f > 0.999F ? 1.0F : f;
+	}
+
 	private void calculateRanges() {
 		List<ItemPerk> perks = ForgeRegistries.ITEMS.getValuesCollection().stream().filter(it -> it instanceof ItemPerk && it.getRegistryName().getResourcePath().contains("gold")).map(i -> (ItemPerk) i).collect(Collectors.toList());
 		float f0 = getTotalModifierWith(StatModifierType.TOP_SPEED, perks);
