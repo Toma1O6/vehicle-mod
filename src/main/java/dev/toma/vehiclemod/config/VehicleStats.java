@@ -110,7 +110,7 @@ public final class VehicleStats {
 
 	public static int getTopSpeedRating(VehicleStats stats) {
 		float f = fix((stats.maxSpeed - topSpeedMin) / (topSpeedMax - topSpeedMin));
-		return (int) (300 * f);
+		return (int) (250 * f);
 	}
 
 	public static int getAccelerationRating(VehicleStats stats) {
