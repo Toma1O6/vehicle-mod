@@ -19,6 +19,7 @@ import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
 import dev.toma.vehiclemod.common.entity.vehicle.special.*;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleBeamerS320RS;
 import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleProtonP3;
+import dev.toma.vehiclemod.common.entity.vehicle.sport.VehicleProtonP9X;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleProtonP1;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik2000L;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
@@ -122,5 +123,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(VehicleTracerOutlander.VehicleTracerOutlanderT.class, manager -> new RenderTracerOutlander<>(manager, new ModelTracerOutlanderT()));
 		RenderingRegistry.registerEntityRenderingHandler(VehicleTracerJester.class, manager -> new RenderTracerJester<>(manager, new ModelTracerJester()));
 		RenderingRegistry.registerEntityRenderingHandler(VehicleTracerJester.VehicleTracerJesterT.class, manager -> new RenderTracerJester<>(manager, new ModelTracerJesterT()));
+		RenderingRegistry.registerEntityRenderingHandler(VehicleProtonP9X.class, manager -> new RenderProtonP9X<>(manager, new ModelProtonP9X()));
+		RenderingRegistry.registerEntityRenderingHandler(VehicleProtonP9X.VehicleProtonP9XT.class, manager -> new RenderProtonP9X<>(manager, new ModelProtonP9XT()));
 	}
 }
