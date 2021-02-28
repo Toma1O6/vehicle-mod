@@ -7,7 +7,6 @@ import dev.toma.vehiclemod.common.tunning.IStatApplicator;
 import dev.toma.vehiclemod.common.tunning.StatPackage;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.util.DevUtil;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -56,24 +55,10 @@ public class VehicleUpgrades {
         return -1;
     }
 
-    public void upgrade(ItemStack stack, EntityPlayer player) {
-        ItemVehicleUpgrade upgrade = (ItemVehicleUpgrade) stack.getItem();
-        inventory.setInventorySlotContents(upgrade.getType().ordinal(), stack.copy());
-        EntityVehicle vehicle = null;
-        if(player.getRidingEntity() instanceof EntityVehicle) {
-            vehicle = (EntityVehicle) player.getRidingEntity();
-        }
-        float prevMaxHealth = getActualStats().maxHealth;
-        float pct = vehicle != null ? vehicle.health / prevMaxHealth : 1.0F;
-        recalculate();
-        float actualMax = getActualStats().maxHealth;
-        if(prevMaxHealth != actualMax && vehicle != null) {
-            vehicle.health = actualMax * pct;
-        }
-    }
-
     public void recalculate() {
         setDefaults();
+        EntityVehicle vehicle = inventory.getVehicle();
+        float missingHealth = vehicle != null ? getActualStats().maxHealth - vehicle.health : 0.0F;
         for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
             int level = this.getLevel(type);
             if(level <= 0)
@@ -99,6 +84,9 @@ public class VehicleUpgrades {
         float fuelCons = configStats.fuelConsumption * (1.0F + (1.0F - this.fuelCons));
         float fuelCap = configStats.fuelCapacity * this.fuelCap;
         this.modifiedStats = new VehicleStats(health, topSpeed, acceleration, braking, handling, configStats.maxTurningAngle, fuelCons, (int) fuelCap);
+        if(vehicle != null) {
+            vehicle.health = Math.max(1.0F, getActualStats().maxHealth - missingHealth);
+        }
     }
 
     public VehicleStats getActualStats() {
