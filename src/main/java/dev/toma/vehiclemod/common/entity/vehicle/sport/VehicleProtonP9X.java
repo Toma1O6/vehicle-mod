@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.common.entity.vehicle.sport;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
+import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
@@ -80,6 +81,11 @@ public class VehicleProtonP9X extends EntityVehicleSport {
     @Override
     public int getNitroCloudSpraySlotCount() {
         return 4;
+    }
+
+    @Override
+    public VehicleUpgrades createVehicleUpgrades() {
+        return new VehicleUpgrades(this, 3);
     }
 
     public static class VehicleProtonP9XT extends VehicleProtonP9X {
