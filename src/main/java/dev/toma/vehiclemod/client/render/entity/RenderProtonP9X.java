@@ -22,7 +22,7 @@ public class RenderProtonP9X<V extends VehicleProtonP9X, M extends ModelVehicle<
     @Override
     public void prepareRender(V entity, double x, double y, double z, float entityYaw, float partialTicks) {
         GlStateManager.translate(x, y, z);
-        GlStateManager.scale(0.053, 0.053, 0.053);
+        GlStateManager.scale(0.050, 0.053, 0.053);
         GlStateManager.rotate(180F, 1F, 0F, 0F);
         GlStateManager.rotate(entityYaw, 0f, 1f, 0f);
         GlStateManager.translate(0, -25, 0);
