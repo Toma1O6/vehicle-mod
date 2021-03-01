@@ -16,6 +16,7 @@ public class ItemPerk extends VMItem {
         super(name);
         this.statModifierType = type;
         this.value = value;
+        setMaxStackSize(1);
     }
 
     public float getValue() {
