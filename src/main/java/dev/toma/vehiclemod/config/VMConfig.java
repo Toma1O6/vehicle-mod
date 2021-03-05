@@ -74,7 +74,7 @@ public class VMConfig {
 	public static VehicleStats tracerOutlander = new VehicleStats(300F, 1.2F, 0.0045F, 0.018F, 0.22F, 2.2F, 0.004F, 65).track();
 
 	@Name("Proton P9X")
-	public static VehicleStats protonP9X = new VehicleStats(250F, 1.5F, 0.06F, 0.025F, 0.23F, 2.5F, 0.004F, 60).track();
+	public static VehicleStats protonP9X = new VehicleStats(250F, 1.5F, 0.006F, 0.025F, 0.23F, 2.5F, 0.004F, 60).track();
 
 	@Mod.EventBusSubscriber(modid = VehicleMod.MODID)
 	public static class Event {

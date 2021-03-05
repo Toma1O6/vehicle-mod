@@ -17,6 +17,6 @@ public abstract class EntityVehicleSpecial extends EntityVehicle {
 
     @Override
     public EnumVehicleType getVehicleType() {
-        return EnumVehicleType.SPECIAL;
+        return EnumVehicleType.UTILITY;
     }
 }

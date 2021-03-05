@@ -7,7 +7,7 @@ public enum EnumVehicleType {
     MUSCLE(20, EnumCarLockType.IRON),
     SPORT(15, EnumCarLockType.DIAMOND),
     SUPER(10, EnumCarLockType.DIAMOND),
-    SPECIAL(15, EnumCarLockType.GOLD);
+    UTILITY(15, EnumCarLockType.GOLD);
 
     private final int spawnChance;
     private final EnumCarLockType carLockType;

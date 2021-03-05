@@ -52,7 +52,7 @@ public class CommonEventHandler {
                 break;
             default:
                 event.player.sendMessage(new TextComponentString(getMessageLogo() + TextFormatting.GREEN + " No updates available"));
-                TextComponentString discordInvite = new TextComponentString(getMessageLogo() + TextFormatting.GREEN + "You can also join our Discord channel HERE");
+                TextComponentString discordInvite = new TextComponentString(getMessageLogo() + TextFormatting.GREEN + " You can also join our Discord channel HERE");
                 discordInvite.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/WEFYxwS8E3"));
                 event.player.sendMessage(discordInvite);
                 break;
