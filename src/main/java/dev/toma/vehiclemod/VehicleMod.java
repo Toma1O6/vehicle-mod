@@ -5,6 +5,8 @@ import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.capability.StorageImpl;
 import dev.toma.vehiclemod.common.capability.chunks.ChunkData;
 import dev.toma.vehiclemod.common.capability.chunks.ChunkDataFactory;
+import dev.toma.vehiclemod.common.capability.world.RacingData;
+import dev.toma.vehiclemod.common.capability.world.RacingDataImpl;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
@@ -52,6 +54,7 @@ public class VehicleMod {
 		proxy.preInit(e);
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 		CapabilityManager.INSTANCE.register(ChunkData.class, new StorageImpl<>(), ChunkDataFactory::new);
+		CapabilityManager.INSTANCE.register(RacingData.class, new StorageImpl<>(), RacingDataImpl::new);
 	}
 	
 	@EventHandler

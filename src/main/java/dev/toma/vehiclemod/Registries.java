@@ -244,6 +244,11 @@ public class Registries {
                     new ItemNitroCloud("nitro_cloud_spray_ruby", 3, 0xbf0046),
                     new ItemNitroCloudLED("nitro_led"),
                     new ItemWrench("wrench"),
+                    new ItemTrackManager<>("track_radius_add", new ItemTrackManager.RadiusChangeAction(1)),
+                    new ItemTrackManager<>("track_radius_subtract", new ItemTrackManager.RadiusChangeAction(-1)),
+                    new ItemTrackManager<>("track_rotate_startpoint", new ItemTrackManager.RotateStartingPoint()),
+                    new ItemTrackManager<>("track_remove_startpoint", new ItemTrackManager.DeleteStartingPoint()),
+                    new ItemTrackManager<>("track_remove_checkpoint", new ItemTrackManager.DeleteCheckpoint()),
                     new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {
