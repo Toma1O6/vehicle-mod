@@ -33,9 +33,9 @@ public class CommandTrack extends CommandBase {
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos targetPos) {
         RacingData data = RacingDataImpl.get(sender.getEntityWorld());
         switch (args.length) {
-            case 0:
-                return getListOfStringsMatchingLastWord(args, "create", "delete", "checkpoint", "startpoint");
             case 1:
+                return getListOfStringsMatchingLastWord(args, "create", "delete", "checkpoint", "startpoint");
+            case 2:
                 switch (args[0]) {
                     case "delete":
                     case "checkpoint":
@@ -71,7 +71,7 @@ public class CommandTrack extends CommandBase {
                     if(track.id().equalsIgnoreCase(args[1])) {
                         sender.sendMessage(new TextComponentString("Removed track " + track.id()));
                         itr.remove();
-                        break;
+                        return;
                     }
                 }
                 throw new CommandException("Unknown track: " + args[1]);

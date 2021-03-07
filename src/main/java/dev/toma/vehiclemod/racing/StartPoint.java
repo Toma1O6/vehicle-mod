@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.racing;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 
 public class StartPoint extends Point {
@@ -8,6 +9,10 @@ public class StartPoint extends Point {
 
     public StartPoint(BlockPos pos) {
         super(pos);
+    }
+
+    public StartPoint(NBTTagCompound nbt) {
+        super(nbt);
     }
 
     public BlockPos getPos() {
@@ -24,5 +29,15 @@ public class StartPoint extends Point {
             newYaw = 0;
         }
         this.yaw = newYaw;
+    }
+
+    @Override
+    protected void writeAdditional(NBTTagCompound nbt) {
+        nbt.setFloat("yaw", yaw);
+    }
+
+    @Override
+    protected void readAdditional(NBTTagCompound nbt) {
+        yaw = nbt.getFloat("yaw");
     }
 }

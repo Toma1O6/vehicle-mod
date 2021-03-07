@@ -7,6 +7,7 @@ import dev.toma.vehiclemod.common.capability.chunks.ChunkData;
 import dev.toma.vehiclemod.common.capability.chunks.ChunkDataFactory;
 import dev.toma.vehiclemod.common.capability.world.RacingData;
 import dev.toma.vehiclemod.common.capability.world.RacingDataImpl;
+import dev.toma.vehiclemod.common.command.CommandTrack;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
@@ -28,6 +29,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
@@ -72,6 +74,11 @@ public class VehicleMod {
 	public static void postInit(FMLPostInitializationEvent e) {
 		proxy.postInit(e);
 		VehicleStats.initiateValueRefresh();
+	}
+
+	@EventHandler
+	public static void serverStarting(FMLServerStartingEvent event) {
+		event.registerServerCommand(new CommandTrack());
 	}
 	
 	public static void registerItemBlock(Block block) {

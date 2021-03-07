@@ -1,7 +1,13 @@
 package dev.toma.vehiclemod.racing;
 
+import com.google.common.base.Preconditions;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.Constants;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class RaceTrack {
 
@@ -14,11 +20,24 @@ public class RaceTrack {
         this.name = name;
     }
 
-    public Checkpoint getNextPoint(int index) {
-        if(index >= checkpoints.size()) {
-            return checkpoints.get(0);
+    public RaceTrack(NBTTagCompound nbt) {
+        name = nbt.getString("name");
+        isLoop = nbt.getBoolean("isLoop");
+        fillList(nbt.getTagList("checkpoints", Constants.NBT.TAG_COMPOUND), checkpoints, Checkpoint::new);
+        fillList(nbt.getTagList("startpoints", Constants.NBT.TAG_COMPOUND), points, StartPoint::new);
+        Preconditions.checkState(name != null && !name.isEmpty(), "Invalid track name");
+    }
+
+    public int getNextCheckpoint(int last) {
+        int next = last + 1;
+        if(next >= checkpoints.size()) {
+            next = isLoop ? 0 : -1;
         }
-        return checkpoints.get(index + 1);
+        return next;
+    }
+
+    public Checkpoint getCheckpoint(int index) {
+        return checkpoints.get(index);
     }
 
     public void toggleLoop() {
@@ -39,5 +58,31 @@ public class RaceTrack {
 
     public String id() {
         return name;
+    }
+
+    public NBTTagCompound writeNBT() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setString("name", name);
+        nbt.setBoolean("isLoop", isLoop);
+        nbt.setTag("checkpoints", createList(checkpoints));
+        nbt.setTag("startpoints", createList(points));
+        return nbt;
+    }
+
+    <P extends Point> NBTTagList createList(List<P> points) {
+        NBTTagList list = new NBTTagList();
+        for (P point : points) {
+            list.appendTag(point.writeNBT());
+        }
+        return list;
+    }
+
+    <P extends Point> void fillList(NBTTagList nbt, List<P> list, Function<NBTTagCompound, P> factory) {
+        list.clear();
+        for (int i = 0; i < nbt.tagCount(); i++) {
+            NBTTagCompound nbtc = nbt.getCompoundTagAt(i);
+            P p = factory.apply(nbtc);
+            list.add(p);
+        }
     }
 }
