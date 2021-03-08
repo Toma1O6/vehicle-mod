@@ -249,6 +249,8 @@ public class Registries {
                     new ItemTrackManager<>("track_rotate_startpoint", new ItemTrackManager.RotateStartingPoint()),
                     new ItemTrackManager<>("track_remove_startpoint", new ItemTrackManager.DeleteStartingPoint()),
                     new ItemTrackManager<>("track_remove_checkpoint", new ItemTrackManager.DeleteCheckpoint()),
+                    new ItemTrackManager<>("track_toggle_loop", new ItemTrackManager.ToggleLoop()),
+                    new ItemTrackDebug("toggle_track_render"),
                     new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {

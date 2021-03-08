@@ -25,6 +25,8 @@ public class VMNetworkManager {
 		registerClientPacket(CPacketHonk.Handler.class, CPacketHonk.class);
 		registerClientPacket(CPacketSendLightStatus.Handler.class, CPacketSendLightStatus.class);
 		registerClientPacket(CPacketCloudStatus.Handler.class, CPacketCloudStatus.class);
+		registerClientPacket(CPacketSyncRaceCap.Handler.class, CPacketSyncRaceCap.class);
+		registerClientPacket(CPacketOpenRaceScreen.Handler.class, CPacketOpenRaceScreen.class);
 	}
 	
 	private static void registerServerPackets() {

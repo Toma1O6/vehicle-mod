@@ -27,7 +27,7 @@ import java.text.DecimalFormat;
 
 public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 
-	static final ResourceLocation NEON = VehicleMod.getResource("textures/entity/neon_texture.png");
+	public static final ResourceLocation NEON = VehicleMod.getResource("textures/entity/neon_texture.png");
 	static Vec3d LIGHT0_POS = (new Vec3d(0.2D, -10.0D, -0.7D));
 	static Vec3d LIGHT1_POS = (new Vec3d(-0.2D, -10.0D, 0.7D));
 

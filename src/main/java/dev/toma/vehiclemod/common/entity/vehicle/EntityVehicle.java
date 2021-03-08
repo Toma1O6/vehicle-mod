@@ -81,7 +81,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
     public EntityVehicle(World world) {
         super(world);
         setSize(2f, 1.5f);
-        stepHeight = 1f;
+        stepHeight = 1.25f;
         preventEntitySpawning = true;
         this.upgrades = this.createVehicleUpgrades();
         this.nitroHandler = new NitroHandler(this);

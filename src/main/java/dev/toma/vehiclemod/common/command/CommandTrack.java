@@ -8,6 +8,8 @@ import dev.toma.vehiclemod.racing.StartPoint;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
@@ -101,6 +103,21 @@ public class CommandTrack extends CommandBase {
                 for (RaceTrack track : data.getTracks()) {
                     if(track.id().equalsIgnoreCase(args[1])) {
                         StartPoint sp = new StartPoint(sender.getPosition());
+                        Entity entity = sender.getCommandSenderEntity();
+                        if(entity != null) {
+                            float rawYaw = entity.rotationYaw;
+                            float[] rotations = {0.0F, 45.0F, 90.0F, 135.0F, 180.0F, 225.0F, 270.0F, 315.0F, 360.0F};
+                            while (rawYaw < 0)
+                                rawYaw += 360;
+                            rawYaw %= 360;
+                            for (float f : rotations) {
+                                float diff = Math.abs(rawYaw - f);
+                                if(diff <= 22.5F) {
+                                    sp.setYaw(f % 360);
+                                    break;
+                                }
+                            }
+                        }
                         track.getPoints().add(sp);
                         sender.sendMessage(new TextComponentString(String.format("Added start position (%s) to %s track", sp.getPos().toString(), track.id())));
                         break;
@@ -110,6 +127,7 @@ public class CommandTrack extends CommandBase {
             default:
                 throw new CommandException("Unknown argument: " + args[0]);
         }
+        data.syncAll();
     }
 
     @Override

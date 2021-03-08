@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod;
 
+import dev.toma.vehiclemod.client.command.CommandRace;
 import dev.toma.vehiclemod.common.VMTab;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.capability.StorageImpl;
@@ -36,7 +37,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
-@Mod(modid = VehicleMod.MODID, name = "Vehicle mod", version = "1.1.0", updateJSON = "https://raw.githubusercontent.com/Toma1O6/vehicle-mod/master/updatechecker.json")
+@Mod(modid = VehicleMod.MODID, name = "Vehicle mod", version = "1.2.0", updateJSON = "https://raw.githubusercontent.com/Toma1O6/vehicle-mod/master/updatechecker.json")
 public class VehicleMod {
 
 	public static final String MODID = "vehiclemod";
@@ -79,6 +80,7 @@ public class VehicleMod {
 	@EventHandler
 	public static void serverStarting(FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandTrack());
+		event.registerServerCommand(new CommandRace());
 	}
 	
 	public static void registerItemBlock(Block block) {

@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.common.capability.world;
 
 import dev.toma.vehiclemod.racing.Race;
 import dev.toma.vehiclemod.racing.RaceTrack;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -20,4 +21,8 @@ public interface RacingData extends INBTSerializable<NBTTagCompound> {
     List<RaceTrack> getTracks();
 
     void addTrack(RaceTrack track);
+
+    void syncAll();
+
+    void sync(EntityPlayerMP player);
 }

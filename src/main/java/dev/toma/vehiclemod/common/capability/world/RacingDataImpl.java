@@ -1,8 +1,11 @@
 package dev.toma.vehiclemod.common.capability.world;
 
 import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.network.VMNetworkManager;
+import dev.toma.vehiclemod.network.packets.CPacketSyncRaceCap;
 import dev.toma.vehiclemod.racing.Race;
 import dev.toma.vehiclemod.racing.RaceTrack;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
@@ -10,6 +13,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,12 +90,28 @@ public class RacingDataImpl implements RacingData {
         }
     }
 
+    @Override
+    public void sync(EntityPlayerMP player) {
+        VMNetworkManager.instance().sendTo(new CPacketSyncRaceCap(this.serializeNBT()), player);
+    }
+
+    @Override
+    public void syncAll() {
+        VMNetworkManager.instance().sendToAll(new CPacketSyncRaceCap(this.serializeNBT()));
+    }
+
     @Mod.EventBusSubscriber
     public static class EventHandler {
 
         @SubscribeEvent
         public static void attach(AttachCapabilitiesEvent<World> event) {
             event.addCapability(VehicleMod.getResource("racing_data"), new RacingDataProvider(event.getObject()));
+        }
+
+        @SubscribeEvent
+        public static void logIn(PlayerEvent.PlayerLoggedInEvent event) {
+            RacingData data = RacingDataImpl.get(event.player.world);
+            data.sync((EntityPlayerMP) event.player);
         }
     }
 }

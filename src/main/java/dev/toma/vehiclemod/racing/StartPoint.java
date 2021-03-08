@@ -23,6 +23,10 @@ public class StartPoint extends Point {
         return yaw;
     }
 
+    public void setYaw(float yaw) {
+        this.yaw = yaw;
+    }
+
     public void rotate() {
         float newYaw = yaw + 45.0F;
         if(newYaw >= 360) {

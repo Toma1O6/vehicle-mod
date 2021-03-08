@@ -103,4 +103,17 @@ public class ItemTrackManager<T extends Point> extends VMItem {
             track.getCheckpoints().remove(point);
         }
     }
+
+    public static class ToggleLoop implements Action<Checkpoint> {
+
+        @Override
+        public List<Checkpoint> getCollection(RaceTrack track) {
+            return track.getCheckpoints();
+        }
+
+        @Override
+        public void interactWithPoint(EntityPlayer player, Checkpoint point, RaceTrack track) {
+            track.toggleLoop();
+        }
+    }
 }
