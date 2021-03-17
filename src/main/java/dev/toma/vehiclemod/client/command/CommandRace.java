@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.client.command;
 
 import com.mojang.authlib.GameProfile;
+import dev.toma.vehiclemod.common.properties.DefaultProperties;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketOpenRaceScreen;
 import net.minecraft.command.CommandBase;
@@ -29,7 +30,7 @@ public class CommandRace extends CommandBase {
             GameProfile profile = player.getGameProfile();
             UserListOpsEntry entry = server.getPlayerList().getOppedPlayers().getEntry(profile);
             boolean flag = entry != null ? entry.getPermissionLevel() >= server.getOpPermissionLevel() : server.getOpPermissionLevel() >= 2;
-            VMNetworkManager.instance().sendTo(new CPacketOpenRaceScreen(flag), player);
+            VMNetworkManager.instance().sendTo(new CPacketOpenRaceScreen(DefaultProperties.CREATE_RACE.getProperty().get(player)), player);
         }
     }
 

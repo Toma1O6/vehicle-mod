@@ -9,6 +9,7 @@ import dev.toma.vehiclemod.common.capability.chunks.ChunkDataFactory;
 import dev.toma.vehiclemod.common.capability.world.RacingData;
 import dev.toma.vehiclemod.common.capability.world.RacingDataImpl;
 import dev.toma.vehiclemod.common.command.CommandTrack;
+import dev.toma.vehiclemod.common.properties.Properties;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
@@ -75,6 +76,7 @@ public class VehicleMod {
 	public static void postInit(FMLPostInitializationEvent e) {
 		proxy.postInit(e);
 		VehicleStats.initiateValueRefresh();
+		Properties.instance().loadProperties();
 	}
 
 	@EventHandler

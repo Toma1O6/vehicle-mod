@@ -8,10 +8,10 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 public abstract class Widget {
 
-    protected int x;
-    protected int y;
-    protected int width;
-    protected int height;
+    public int x;
+    public int y;
+    public int width;
+    public int height;
     protected boolean focused;
 
     public Widget(int x, int y, int width, int height) {

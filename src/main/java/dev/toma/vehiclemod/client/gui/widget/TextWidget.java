@@ -30,8 +30,7 @@ public class TextWidget extends Widget {
         this.alignment = alignment;
     }
 
-    @Override
-    public void render(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
+    public void renderBackground(int mouseX, int mouseY) {
         if(bgColor != -1) {
             float a = ((bgColor >> 24) & 0xff) / 255.0F;
             float r = ((bgColor >> 16) & 0xff) / 255.0F;
@@ -39,6 +38,11 @@ public class TextWidget extends Widget {
             float b = ( bgColor        & 0xff) / 255.0F;
             drawColorShape(x, y, width, height, r, g, b, a);
         }
+    }
+
+    @Override
+    public void render(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(mouseX, mouseY);
         alignment.getRender().render(mc.fontRenderer, text, x, y, width, height, color);
     }
 
@@ -56,15 +60,15 @@ public class TextWidget extends Widget {
             renderer.drawString(text, x + width - textWidth, y, color);
         }),
         CENTER_LEFT((renderer, text, x, y, width, height, color) -> {
-            renderer.drawString(text, x, y + (height - renderer.FONT_HEIGHT) / 2, color);
+            renderer.drawString(text, x, y + (height - renderer.FONT_HEIGHT) / 2f, color, false);
         }),
         CENTER_CENTER((renderer, text, x, y, width, height, color) -> {
             int textWidth = renderer.getStringWidth(text);
-            renderer.drawString(text, x + (width - textWidth) / 2, y + (height - renderer.FONT_HEIGHT) / 2, color);
+            renderer.drawString(text, x + (width - textWidth) / 2f, y + (height - renderer.FONT_HEIGHT) / 2f, color, false);
         }),
         CENTER_RIGHT((renderer, text, x, y, width, height, color) -> {
             int textWidth = renderer.getStringWidth(text);
-            renderer.drawString(text, x + width - textWidth, y + (height - renderer.FONT_HEIGHT) / 2, color);
+            renderer.drawString(text, x + width - textWidth, y + (height - renderer.FONT_HEIGHT) / 2f, color, false);
         }),
         BOTTOM_LEFT((renderer, text, x, y, width, height, color) -> {
             renderer.drawString(text, x, y + height - renderer.FONT_HEIGHT, color);

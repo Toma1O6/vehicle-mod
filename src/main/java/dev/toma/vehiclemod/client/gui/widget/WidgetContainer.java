@@ -22,4 +22,14 @@ public class WidgetContainer extends Widget {
     public void render(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
         widgets.forEach(widget -> widget.render(mc, mouseX, mouseY, partialTicks));
     }
+
+    @Override
+    public boolean handleClicked(int mouseX, int mouseY, int button) {
+        for (Widget widget : widgets) {
+            if(widget.handleClicked(mouseX, mouseY, button)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

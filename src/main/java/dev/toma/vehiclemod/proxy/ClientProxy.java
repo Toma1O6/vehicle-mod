@@ -4,7 +4,6 @@ import dev.toma.vehiclemod.client.CarNitroSound;
 import dev.toma.vehiclemod.client.CarSound;
 import dev.toma.vehiclemod.client.VMKeybinds;
 import dev.toma.vehiclemod.client.VehicleInputHandler;
-import dev.toma.vehiclemod.client.command.CommandRace;
 import dev.toma.vehiclemod.client.gui.GuiLockpicking;
 import dev.toma.vehiclemod.client.model.vehicle.*;
 import dev.toma.vehiclemod.client.particle.Particles;
@@ -31,12 +30,13 @@ import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleTracerOutlander;
 import dev.toma.vehiclemod.common.items.ItemNitroCan;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -103,6 +103,13 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void spawnParticle(Particles.Type<?> type, World world, double posX, double posY, double posZ, double xSpeed, double ySpeed, double zSpeed, int data) {
 		Minecraft.getMinecraft().effectRenderer.addEffect(type.produce(world, posX, posY, posZ, xSpeed, ySpeed, zSpeed, data));
+	}
+
+	@Override
+	public boolean isOp(EntityPlayer player) {
+		EntityPlayerSP sp = (EntityPlayerSP) player;
+		MinecraftServer server = sp.getServer();
+		return sp.getPermissionLevel() >= server.getOpPermissionLevel();
 	}
 
 	private static void registerEntityRenderers() {

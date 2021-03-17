@@ -5,6 +5,7 @@ import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -28,5 +29,9 @@ public class CommonProxy {
 
     public void spawnParticle(Particles.Type<?> type, World world, double posX, double posY, double posZ, double xSpeed, double ySpeed, double zSpeed, int data) {
 
+    }
+
+    public boolean isOp(EntityPlayer player) {
+        return false;
     }
 }
