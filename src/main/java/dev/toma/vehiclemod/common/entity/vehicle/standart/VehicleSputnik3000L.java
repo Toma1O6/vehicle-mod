@@ -61,7 +61,7 @@ public class VehicleSputnik3000L extends EntityVehicleStandart {
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.sputnik3000L;
+        return VMConfig.vehicleConfig.sputnik3000L;
     }
 
     @Override

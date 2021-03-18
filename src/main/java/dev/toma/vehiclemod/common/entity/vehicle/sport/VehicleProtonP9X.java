@@ -4,6 +4,7 @@ import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
 import dev.toma.vehiclemod.config.VMConfig;
+import dev.toma.vehiclemod.config.VehicleConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
@@ -33,7 +34,7 @@ public class VehicleProtonP9X extends EntityVehicleSport {
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.protonP9X;
+        return VMConfig.vehicleConfig.protonP9X;
     }
 
     @Override
@@ -86,40 +87,5 @@ public class VehicleProtonP9X extends EntityVehicleSport {
     @Override
     public VehicleUpgrades createVehicleUpgrades() {
         return new VehicleUpgrades(this, 3);
-    }
-
-    public static class VehicleProtonP9XT extends VehicleProtonP9X {
-
-        static final PositionManager POSITIONS = PositionManager.Builder.create()
-                .engine(1.5, 0.6, 0)
-                .exhaust(-2.4, 0.2, 0.65)
-                .sideNeons(1.05, -0.15)
-                .frontNeon(2.1)
-                .backNeon(2.1)
-                .nitroExit(0.8, 0.9, 0.8, -0.12, 0.1, 0.1)
-                .nitroExit(0.8, 0.9, -0.8, -0.12, 0.1, -0.1)
-                .nitroExit(2.0, 0.5, 1.0, 0.08, -0.05, 0.1)
-                .nitroExit(2.0, 0.5, -1.0, 0.08, -0.05, -0.1)
-                .nitroExit(2.2, 0.5, 0.4, 0.1, 0.0, 0.02)
-                .nitroExit(2.2, 0.5, -0.4, 0.1, 0.0, -0.02)
-                .build();
-
-        public VehicleProtonP9XT(World world) {
-            super(world);
-        }
-
-        public VehicleProtonP9XT(World world, BlockPos pos) {
-            super(world, pos);
-        }
-
-        @Override
-        public int getNitroCloudSpraySlotCount() {
-            return 6;
-        }
-
-        @Override
-        public PositionManager getVehiclePositions() {
-            return POSITIONS;
-        }
     }
 }

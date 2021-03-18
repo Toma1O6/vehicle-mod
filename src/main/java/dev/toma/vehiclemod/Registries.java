@@ -169,11 +169,8 @@ public class Registries {
                     new ItemVehicleSpawner<>("spawn_mcgambulance", VehicleMcgAmbulance.class, VehicleMcgAmbulance::new),
                     new ItemVehicleSpawner<>("spawn_mcgfiretruck", VehicleMcgFiretruck.class, VehicleMcgFiretruck::new),
                     new ItemVehicleSpawner<>("spawn_traceroutlander", VehicleTracerOutlander.class, VehicleTracerOutlander::new),
-                    new ItemVehicleSpawner<>("spawn_traceroutlandert", VehicleTracerOutlander.VehicleTracerOutlanderT.class, VehicleTracerOutlander.VehicleTracerOutlanderT::new),
                     new ItemVehicleSpawner<>("spawn_tracerjester", VehicleTracerJester.class, VehicleTracerJester::new),
-                    new ItemVehicleSpawner<>("spawn_tracerjestert", VehicleTracerJester.VehicleTracerJesterT.class, VehicleTracerJester.VehicleTracerJesterT::new),
                     new ItemVehicleSpawner<>("spawn_protonp9x", VehicleProtonP9X.class, VehicleProtonP9X::new),
-                    new ItemVehicleSpawner<>("spawn_protonp9xt", VehicleProtonP9X.VehicleProtonP9XT.class, VehicleProtonP9X.VehicleProtonP9XT::new),
                     new VMItem("bucket_of_liquid_coal"),
                     new ItemFluidBucket("bucket_of_activated_fuel_substance", () -> FluidTypes.ACTIVATED_FUEL_SUBSTANCE),
                     new ItemFluidBucket("bucket_of_fuel", () -> FluidTypes.FUEL),
@@ -243,14 +240,14 @@ public class Registries {
                     new ItemNitroCloud("nitro_cloud_spray_purple", 3, 0x5200a5),
                     new ItemNitroCloud("nitro_cloud_spray_ruby", 3, 0xbf0046),
                     new ItemNitroCloudLED("nitro_led"),
-                    new ItemWrench("wrench"),
-                    new ItemTrackManager<>("track_radius_add", new ItemTrackManager.RadiusChangeAction(1)),
-                    new ItemTrackManager<>("track_radius_subtract", new ItemTrackManager.RadiusChangeAction(-1)),
-                    new ItemTrackManager<>("track_rotate_startpoint", new ItemTrackManager.RotateStartingPoint()),
-                    new ItemTrackManager<>("track_remove_startpoint", new ItemTrackManager.DeleteStartingPoint()),
-                    new ItemTrackManager<>("track_remove_checkpoint", new ItemTrackManager.DeleteCheckpoint()),
-                    new ItemTrackManager<>("track_toggle_loop", new ItemTrackManager.ToggleLoop()),
-                    new ItemTrackDebug("toggle_track_render"),
+                    //new ItemWrench("wrench"),
+                    //new ItemTrackManager<>("track_radius_add", new ItemTrackManager.RadiusChangeAction(1)),
+                    //new ItemTrackManager<>("track_radius_subtract", new ItemTrackManager.RadiusChangeAction(-1)),
+                    //new ItemTrackManager<>("track_rotate_startpoint", new ItemTrackManager.RotateStartingPoint()),
+                    //new ItemTrackManager<>("track_remove_startpoint", new ItemTrackManager.DeleteStartingPoint()),
+                    //new ItemTrackManager<>("track_remove_checkpoint", new ItemTrackManager.DeleteCheckpoint()),
+                    //new ItemTrackManager<>("track_toggle_loop", new ItemTrackManager.ToggleLoop()),
+                    //new ItemTrackDebug("toggle_track_render"),
                     new VMItem("empty_spray_can")
             );
             for (int i = 0; i < VehicleTexture.values().length; i++) {
@@ -290,11 +287,8 @@ public class Registries {
                     registerVehicle("mcg_ambulance", VehicleMcgAmbulance.class),
                     registerVehicle("mcg_firetruck", VehicleMcgFiretruck.class),
                     registerVehicle("tracer_outlander", VehicleTracerOutlander.class),
-                    registerVehicle("tracer_outlandert", VehicleTracerOutlander.VehicleTracerOutlanderT.class),
                     registerVehicle("tracer_jester", VehicleTracerJester.class),
-                    registerVehicle("tracer_jestert", VehicleTracerJester.VehicleTracerJesterT.class),
-                    registerVehicle("proton_p9x", VehicleProtonP9X.class),
-                    registerVehicle("proton_p9xt", VehicleProtonP9X.VehicleProtonP9XT.class)
+                    registerVehicle("proton_p9x", VehicleProtonP9X.class)
             );
         }
 
@@ -457,11 +451,11 @@ public class Registries {
             final IForgeRegistry<Block> BLOCKS = ForgeRegistries.BLOCKS;
             RenderItemSpawner renderItemSpawner = new RenderItemSpawner();
             for (ResourceLocation rl : ITEMS.getKeys()) {
+                Item item = ITEMS.getValue(rl);
+                if(item instanceof ItemVehicleSpawner) {
+                    item.setTileEntityItemStackRenderer(renderItemSpawner);
+                }
                 if (rl.getResourceDomain().equalsIgnoreCase(VehicleMod.MODID)) {
-                    Item item = ITEMS.getValue(rl);
-                    if(item instanceof ItemVehicleSpawner) {
-                        item.setTileEntityItemStackRenderer(renderItemSpawner);
-                    }
                     registerModel(item);
                 }
             }
@@ -477,7 +471,7 @@ public class Registries {
             IRegistry<ModelResourceLocation, IBakedModel> modelRegistry = event.getModelRegistry();
             DummyBakedModel bakedModelInstance = new DummyBakedModel();
             ForgeRegistries.ITEMS.getValuesCollection().stream()
-                    .filter(it -> it.getRegistryName().getResourceDomain().equals(VehicleMod.MODID) && it instanceof ItemVehicleSpawner)
+                    .filter(it -> it instanceof ItemVehicleSpawner)
                     .forEach(it -> modelRegistry.putObject(getModelResourceLocation(it), bakedModelInstance));
         }
 

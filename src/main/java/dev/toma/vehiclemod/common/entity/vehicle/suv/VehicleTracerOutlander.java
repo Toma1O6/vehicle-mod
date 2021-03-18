@@ -32,7 +32,7 @@ public class VehicleTracerOutlander extends EntityVehicleSUV {
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.tracerOutlander;
+        return VMConfig.vehicleConfig.tracerOutlander;
     }
 
     @Override
@@ -81,40 +81,5 @@ public class VehicleTracerOutlander extends EntityVehicleSUV {
     @Override
     public int getNitroCloudSpraySlotCount() {
         return 4;
-    }
-
-    public static class VehicleTracerOutlanderT extends VehicleTracerOutlander {
-
-        static final PositionManager POSITIONS = PositionManager.Builder.create()
-                .engine(1.7, 0.8, 0)
-                .exhaust(-3.1, 0.2, 0.75)
-                .sideNeons(1.0)
-                .frontNeon(2.2)
-                .backNeon(2.9)
-                .nitroExit(1.0, 1.0, 0.9, -0.1, 0.2, 0.1)
-                .nitroExit(1.0, 1.0, -0.9, -0.1, 0.2, -0.1)
-                .nitroExit(2.2, 0.4, 1.0, -0.1, 0.05, 0.1)
-                .nitroExit(2.2, 0.4, -1.0, -0.1, 0.05, -0.1)
-                .nitroExit(2.3, 0.5, 0.3, 0.1, 0, 0.03)
-                .nitroExit(2.3, 0.5, -0.3, 0.1, 0, -0.03)
-                .build();
-
-        public VehicleTracerOutlanderT(World world) {
-            super(world);
-        }
-
-        public VehicleTracerOutlanderT(World world, BlockPos pos) {
-            super(world, pos);
-        }
-
-        @Override
-        public int getNitroCloudSpraySlotCount() {
-            return 6;
-        }
-
-        @Override
-        public PositionManager getVehiclePositions() {
-            return POSITIONS;
-        }
     }
 }

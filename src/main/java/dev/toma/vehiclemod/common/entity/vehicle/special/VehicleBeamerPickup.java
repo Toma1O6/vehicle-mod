@@ -3,6 +3,7 @@ package dev.toma.vehiclemod.common.entity.vehicle.special;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.config.VMConfig;
+import dev.toma.vehiclemod.config.VehicleConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
@@ -61,7 +62,7 @@ public class VehicleBeamerPickup extends EntityVehicleSpecial {
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.beamerPickup;
+        return VMConfig.vehicleConfig.beamerPickup;
     }
 
     @Override

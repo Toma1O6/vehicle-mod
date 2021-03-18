@@ -3,6 +3,7 @@ package dev.toma.vehiclemod.common.entity.vehicle.muscles;
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.config.VMConfig;
+import dev.toma.vehiclemod.config.VehicleConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;
@@ -71,7 +72,7 @@ public class VehicleBeamerS120 extends EntityVehicleMuscles {
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.beamer_s120;
+        return VMConfig.vehicleConfig.beamer_s120;
     }
 
     @Override

@@ -38,7 +38,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
-@Mod(modid = VehicleMod.MODID, name = "Vehicle mod", version = "1.2.0", updateJSON = "https://raw.githubusercontent.com/Toma1O6/vehicle-mod/master/updatechecker.json")
+@Mod(modid = VehicleMod.MODID, name = "Vehicle mod", version = "1.1.1", updateJSON = "https://raw.githubusercontent.com/Toma1O6/vehicle-mod/master/updatechecker.json")
 public class VehicleMod {
 
 	public static final String MODID = "vehiclemod";
@@ -76,13 +76,13 @@ public class VehicleMod {
 	public static void postInit(FMLPostInitializationEvent e) {
 		proxy.postInit(e);
 		VehicleStats.initiateValueRefresh();
-		Properties.instance().loadProperties();
 	}
 
 	@EventHandler
 	public static void serverStarting(FMLServerStartingEvent event) {
-		event.registerServerCommand(new CommandTrack());
-		event.registerServerCommand(new CommandRace());
+		// TODO
+		//event.registerServerCommand(new CommandTrack());
+		//event.registerServerCommand(new CommandRace());
 	}
 	
 	public static void registerItemBlock(Block block) {

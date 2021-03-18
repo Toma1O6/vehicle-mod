@@ -129,10 +129,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(VehicleMcgAmbulance.class, RenderMcgAmbulance::new);
 		RenderingRegistry.registerEntityRenderingHandler(VehicleMcgFiretruck.class, RenderMcgFiretruck::new);
 		RenderingRegistry.registerEntityRenderingHandler(VehicleTracerOutlander.class, manager -> new RenderTracerOutlander<>(manager, new ModelTracerOutlander()));
-		RenderingRegistry.registerEntityRenderingHandler(VehicleTracerOutlander.VehicleTracerOutlanderT.class, manager -> new RenderTracerOutlander<>(manager, new ModelTracerOutlanderT()));
 		RenderingRegistry.registerEntityRenderingHandler(VehicleTracerJester.class, manager -> new RenderTracerJester<>(manager, new ModelTracerJester()));
-		RenderingRegistry.registerEntityRenderingHandler(VehicleTracerJester.VehicleTracerJesterT.class, manager -> new RenderTracerJester<>(manager, new ModelTracerJesterT()));
 		RenderingRegistry.registerEntityRenderingHandler(VehicleProtonP9X.class, manager -> new RenderProtonP9X<>(manager, new ModelProtonP9X()));
-		RenderingRegistry.registerEntityRenderingHandler(VehicleProtonP9X.VehicleProtonP9XT.class, manager -> new RenderProtonP9X<>(manager, new ModelProtonP9XT()));
 	}
 }

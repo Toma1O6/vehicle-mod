@@ -60,7 +60,7 @@ public class VehicleFedorattiNightStalker extends EntityVehicleSuperSport {
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.fedorattiNightStalker;
+        return VMConfig.vehicleConfig.fedorattiNightStalker;
     }
 
     @Override

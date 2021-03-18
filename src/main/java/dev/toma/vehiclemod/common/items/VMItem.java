@@ -8,7 +8,7 @@ public class VMItem extends Item {
 
     public VMItem(String name) {
         this.setUnlocalizedName(name);
-        this.setRegistryName(new ResourceLocation(VehicleMod.MODID, name));
+        this.setRegistryName(name);
         this.setCreativeTab(VehicleMod.TAB);
     }
 }

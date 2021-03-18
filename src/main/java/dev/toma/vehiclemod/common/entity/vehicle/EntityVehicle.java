@@ -9,6 +9,7 @@ import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.inventory.InventoryUpgrades;
 import dev.toma.vehiclemod.common.items.IVehicleAction;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
+import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.CPacketUpdateEntity;
@@ -227,7 +228,7 @@ public abstract class EntityVehicle extends Entity implements IEntityAdditionalS
             world.createExplosion(null, posX, posY, posZ, 3.0F, false);
             setDead();
         }
-        if(!isStationary() && isStarted) {
+        if(VMConfig.damageVehicleParts && !isStationary() && isStarted) {
             if(ticksExisted % (ecoMode ? 200 : 100) == 0) {
                 InventoryUpgrades inventory = this.getUpgrades().getInventory();
                 Entity entity = this.getControllingPassenger();

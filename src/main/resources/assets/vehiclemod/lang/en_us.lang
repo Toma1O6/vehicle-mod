@@ -64,11 +64,8 @@ item.spawn_protonp3.name=Spawn Proton P3
 item.spawn_mcgambulance.name=Spawn MCG Ambulance
 item.spawn_mcgfiretruck.name=Spawn MCG Firetruck
 item.spawn_traceroutlander.name=Spawn Tracer Outlander
-item.spawn_traceroutlandert.name=Spawn Tracer Outlander (T)
 item.spawn_tracerjester.name=Spawn Tracer Jester
-item.spawn_tracerjestert.name=Spawn Tracer Jester (T)
 item.spawn_protonp9x.name=Spawn Proton P9X
-item.spawn_protonp9xt.name=Spawn Proton P9X (T)
 item.bucket_of_liquid_coal.name=Liquid Coal Bucket
 item.bucket_of_fuel.name=Fuel Bucket
 item.bucket_of_activated_fuel_substance.name=Activated Fuel Substance Bucket
@@ -234,11 +231,8 @@ entity.vehiclemod:proton_p3.name=Proton P3
 entity.vehiclemod:mcg_ambulance.name=MCG Ambulance
 entity.vehiclemod:mcg_firetruck.name=MCG Firetruck
 entity.vehiclemod:tracer_outlander.name=Tracer Outlander
-entity.vehiclemod:tracer_outlandert.name=Tracer Outlander (T)
 entity.vehiclemod:tracer_jester.name=Tracer Jester
-entity.vehiclemod:tracer_jestert.name=Tracer Jester (T)
 entity.vehiclemod:proton_p9x.name=Proton P9X
-entity.vehiclemod:proton_p9xt.name=Proton P9X (T)
 
 itemGroup.vehicle_mod=Vehicle Mod
 

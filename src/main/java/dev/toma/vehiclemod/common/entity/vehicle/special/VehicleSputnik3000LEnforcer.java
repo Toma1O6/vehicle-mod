@@ -1,19 +1,15 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
-import dev.toma.vehiclemod.common.entity.vehicle.NeonHandler;
 import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
 import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
-import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleSputnik3000L;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import javax.vecmath.Vector3f;
 
 public class VehicleSputnik3000LEnforcer extends EntityVehicleSirens {
 
@@ -72,7 +68,7 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSirens {
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.sputnik3000LEnf;
+        return VMConfig.vehicleConfig.sputnik3000LEnf;
     }
 
     @Override
