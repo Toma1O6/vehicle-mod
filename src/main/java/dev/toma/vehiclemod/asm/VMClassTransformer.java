@@ -1,20 +1,21 @@
 package dev.toma.vehiclemod.asm;
 
-import dev.toma.vehiclemod.VehicleMod;
 import net.minecraft.launchwrapper.IClassTransformer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
 
-import java.util.function.Function;
-
 public class VMClassTransformer implements IClassTransformer {
+
+    final Logger log = LogManager.getLogger("vehiclemod-core");
 
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
         boolean obfuscated = !name.equals(transformedName);
-        if(transformedName.equals("net.minecraft.client.renderer.entity.RenderPlayer")) {
+        if (transformedName.equals("net.minecraft.client.renderer.entity.RenderPlayer")) {
             return patchPlayerRender(basicClass, obfuscated);
         }
         return basicClass;
@@ -24,16 +25,17 @@ public class VMClassTransformer implements IClassTransformer {
         ClassNode node = new ClassNode();
         ClassReader reader = new ClassReader(data);
         reader.accept(node, 0);
-        VehicleMod.logger.info("Patching player render");
+        log.info("Patching player render");
         Name m_prepareScale = new Name("func_77041_b", "preRenderCallback");
         String parameters = "(Lnet/minecraft/client/entity/AbstractClientPlayer;F)V";
         boolean patched = false;
         for (MethodNode method : node.methods) {
             if (method.name.equals(m_prepareScale.get(isObfuscated)) && method.desc.equals(parameters)) {
                 InsnList insnList = method.instructions;
+                boolean foundReturn = false;
                 for (int i = insnList.size() - 1; i >= 0; i--) {
                     AbstractInsnNode abstractInsnNode = insnList.get(i);
-                    if(abstractInsnNode.getOpcode() == Opcodes.RETURN) {
+                    if (abstractInsnNode.getOpcode() == Opcodes.RETURN) {
                         InsnList list = new InsnList();
                         list.add(new VarInsnNode(Opcodes.ALOAD, 1));
                         list.add(new MethodInsnNode(
@@ -44,16 +46,16 @@ public class VMClassTransformer implements IClassTransformer {
                                 false
                         ));
                         insnList.insertBefore(abstractInsnNode, list);
-                        VehicleMod.logger.info("Player render patched successfully");
+                        log.info("Player render patched successfully");
                         patched = true;
                         break;
                     }
                 }
+                if (!patched) {
+                    log.fatal("Player render patch was unsuccessful");
+                }
+                break;
             }
-        }
-
-        if (!patched) {
-            VehicleMod.logger.fatal("Player render patch was unsuccessful");
         }
 
         ClassWriter writer = new ClassWriter(0);

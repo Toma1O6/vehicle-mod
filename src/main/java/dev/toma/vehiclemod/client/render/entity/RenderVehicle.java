@@ -86,6 +86,7 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		if(entity != null && entity.lightController.areLightsOn(entity)) {
 			drawNeons(entity, x, y, z, entityYaw);
 		}
+		RenderHelper.enableStandardItemLighting();
 	}
 
 	private void drawNeons(V vehicle, double x, double y, double z, float yaw) {
