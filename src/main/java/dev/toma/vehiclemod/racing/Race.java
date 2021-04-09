@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.racing;
 
 import dev.toma.vehiclemod.racing.argument.ArgumentMap;
+import dev.toma.vehiclemod.racing.points.Checkpoint;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -41,7 +42,7 @@ public abstract class Race {
                     continue;
                 }
                 Checkpoint checkpoint = track.getCheckpoint(nextCheckpoint);
-                if(checkpoint.isInside(player.posX, player.posY, player.posZ)) {
+                if(checkpoint.hasPassed(player)) {
                     if(nextCheckpoint == 0) {
                         data.onLapFinish(player, time);
                     }

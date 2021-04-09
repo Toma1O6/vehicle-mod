@@ -2,14 +2,13 @@ package dev.toma.vehiclemod.common.command;
 
 import dev.toma.vehiclemod.common.capability.world.RacingData;
 import dev.toma.vehiclemod.common.capability.world.RacingDataImpl;
-import dev.toma.vehiclemod.racing.Checkpoint;
+import dev.toma.vehiclemod.racing.points.Checkpoint;
 import dev.toma.vehiclemod.racing.RaceTrack;
-import dev.toma.vehiclemod.racing.StartPoint;
+import dev.toma.vehiclemod.racing.points.RotatedPoint;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
@@ -102,7 +101,7 @@ public class CommandTrack extends CommandBase {
                     throw new CommandException("You must specify track name");
                 for (RaceTrack track : data.getTracks()) {
                     if(track.id().equalsIgnoreCase(args[1])) {
-                        StartPoint sp = new StartPoint(sender.getPosition());
+                        RotatedPoint sp = new RotatedPoint(sender.getPosition());
                         Entity entity = sender.getCommandSenderEntity();
                         if(entity != null) {
                             float rawYaw = entity.rotationYaw;
@@ -113,7 +112,7 @@ public class CommandTrack extends CommandBase {
                             for (float f : rotations) {
                                 float diff = Math.abs(rawYaw - f);
                                 if(diff <= 22.5F) {
-                                    sp.setYaw(f % 360);
+                                    sp.setRotation(f % 360);
                                     break;
                                 }
                             }

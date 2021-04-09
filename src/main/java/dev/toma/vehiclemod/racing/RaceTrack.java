@@ -1,6 +1,9 @@
 package dev.toma.vehiclemod.racing;
 
 import com.google.common.base.Preconditions;
+import dev.toma.vehiclemod.racing.points.Checkpoint;
+import dev.toma.vehiclemod.racing.points.Point;
+import dev.toma.vehiclemod.racing.points.RotatedPoint;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
@@ -13,7 +16,7 @@ public class RaceTrack {
 
     final String name;
     final List<Checkpoint> checkpoints = new ArrayList<>();
-    final List<StartPoint> points = new ArrayList<>();
+    final List<RotatedPoint> points = new ArrayList<>();
     boolean isLoop;
 
     public RaceTrack(String name) {
@@ -24,7 +27,7 @@ public class RaceTrack {
         name = nbt.getString("name");
         isLoop = nbt.getBoolean("isLoop");
         fillList(nbt.getTagList("checkpoints", Constants.NBT.TAG_COMPOUND), checkpoints, Checkpoint::new);
-        fillList(nbt.getTagList("startpoints", Constants.NBT.TAG_COMPOUND), points, StartPoint::new);
+        fillList(nbt.getTagList("startpoints", Constants.NBT.TAG_COMPOUND), points, RotatedPoint::new);
         Preconditions.checkState(name != null && !name.isEmpty(), "Invalid track name");
     }
 
@@ -52,7 +55,7 @@ public class RaceTrack {
         return checkpoints;
     }
 
-    public List<StartPoint> getPoints() {
+    public List<RotatedPoint> getPoints() {
         return points;
     }
 

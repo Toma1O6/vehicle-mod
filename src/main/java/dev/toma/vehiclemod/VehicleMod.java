@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod;
 
+import dev.toma.vehiclemod.client.command.CommandRace;
 import dev.toma.vehiclemod.common.VMTab;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.capability.StorageImpl;
@@ -7,6 +8,7 @@ import dev.toma.vehiclemod.common.capability.chunks.ChunkData;
 import dev.toma.vehiclemod.common.capability.chunks.ChunkDataFactory;
 import dev.toma.vehiclemod.common.capability.world.RacingData;
 import dev.toma.vehiclemod.common.capability.world.RacingDataImpl;
+import dev.toma.vehiclemod.common.command.CommandTrack;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
@@ -77,9 +79,8 @@ public class VehicleMod {
 
 	@EventHandler
 	public static void serverStarting(FMLServerStartingEvent event) {
-		// TODO
-		//event.registerServerCommand(new CommandTrack());
-		//event.registerServerCommand(new CommandRace());
+		event.registerServerCommand(new CommandTrack());
+		event.registerServerCommand(new CommandRace());
 	}
 	
 	public static void registerItemBlock(Block block) {

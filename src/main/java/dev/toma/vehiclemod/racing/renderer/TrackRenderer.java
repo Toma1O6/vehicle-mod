@@ -1,16 +1,20 @@
 package dev.toma.vehiclemod.racing.renderer;
 
+import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.render.entity.RenderVehicle;
 import dev.toma.vehiclemod.config.VMConfig;
-import dev.toma.vehiclemod.racing.Checkpoint;
+import dev.toma.vehiclemod.config.VehicleConfig;
+import dev.toma.vehiclemod.racing.points.Checkpoint;
 import dev.toma.vehiclemod.racing.Race;
 import dev.toma.vehiclemod.racing.RaceTrack;
-import dev.toma.vehiclemod.racing.StartPoint;
+import dev.toma.vehiclemod.racing.points.RotatedPoint;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -20,6 +24,8 @@ import java.util.List;
 
 public abstract class TrackRenderer<R extends Race> implements RenderRace<R> {
 
+    public static final ResourceLocation CHECKPOINT_TEXTURE = VehicleMod.getResource("textures/gui/checkpoint.png");
+
     @Override
     public final void renderRaceInfo(World world, R r, double x, double y, double z, float partialTicks) {
 
@@ -27,16 +33,14 @@ public abstract class TrackRenderer<R extends Race> implements RenderRace<R> {
 
     public static void renderTracks(List<RaceTrack> tracks, double x, double y, double z) {
         GlStateManager.disableCull();
-        GlStateManager.enableBlend();
-        GlStateManager.shadeModel(GL11.GL_SMOOTH);
         GlStateManager.translate(x, y, z);
         for (RaceTrack track : tracks) {
             List<Checkpoint> checkpoints = track.getCheckpoints();
-            List<StartPoint> startPoints = track.getPoints();
+            List<RotatedPoint> startPoints = track.getPoints();
             int i = 0;
             for (Checkpoint checkpoint : checkpoints) {
-                drawCheckpoint(checkpoint);
                 int j = track.getNextCheckpoint(i);
+                drawCheckpoint(checkpoint, j);
                 if(j < 0)
                     continue;
                 Checkpoint next = track.getCheckpoint(j);
@@ -52,16 +56,16 @@ public abstract class TrackRenderer<R extends Race> implements RenderRace<R> {
                 GlStateManager.enableTexture2D();
                 ++i;
             }
-            for (StartPoint point : startPoints) {
+            GlStateManager.enableBlend();
+            for (RotatedPoint point : startPoints) {
                 drawStartpoint(point);
             }
         }
-        GlStateManager.shadeModel(GL11.GL_FLAT);
         GlStateManager.disableBlend();
         GlStateManager.enableCull();
     }
 
-    public static void drawStartpoint(StartPoint point) {
+    public static void drawStartpoint(RotatedPoint point) {
         GlStateManager.pushMatrix();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
@@ -89,7 +93,7 @@ public abstract class TrackRenderer<R extends Race> implements RenderRace<R> {
         builder.pos(x + 1, y + 1, z).tex(0, 1).color(0.0F, 0.7F, 0.0F, 0.1F).endVertex();
         tessellator.draw();
 
-        Vec3d face = new Vec3d(2.5, 0.0, 0.0).rotateYaw(-point.getYaw() * 0.017453292F - ((float) Math.PI / 2f)).addVector(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+        Vec3d face = new Vec3d(2.5, 0.0, 0.0).rotateYaw(-point.getRotation() * 0.017453292F - ((float) Math.PI / 2f)).addVector(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
         builder.begin(3, DefaultVertexFormats.POSITION_COLOR);
         builder.pos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5).color(0.0F, 0.0F, 0.7F, 1.0F).endVertex();
         builder.pos(face.x, face.y, face.z).color(0.0F, 0.0F, 0.7F, 1.0F).endVertex();
@@ -97,56 +101,54 @@ public abstract class TrackRenderer<R extends Race> implements RenderRace<R> {
         GlStateManager.popMatrix();
     }
 
-    public static void drawCheckpoint(Checkpoint checkpoint) {
+    public static void drawCheckpoint(Checkpoint checkpoint, int idx) {
         GlStateManager.pushMatrix();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
-        builder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        BlockPos pos = checkpoint.getPos();
-        int rad = checkpoint.getRadius();
-        double height = VMConfig.clientConfig.checkpointHeight;
-        float r = 1.0F;
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.alphaFunc(516, 0.003921569F);
+        builder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+        float r = 0.4F;
         float g = 0.98F;
-        float b = 0.43F;
-        float as = 0.80F;
-        float am = 0.15F;
-        double cx = pos.getX() + 0.5;
-        double cy = pos.getY();
-        double cz = pos.getZ() + 0.5;
-        Minecraft.getMinecraft().getTextureManager().bindTexture(RenderVehicle.NEON);
-        builder.pos(cx - rad, cy - 3, cz + rad).tex(0, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy - 3, cz + rad).tex(1, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy + height, cz + rad).tex(1, 1).color(r, g, b, as).endVertex();
-        builder.pos(cx - rad, cy + height, cz + rad).tex(0, 1).color(r, g, b, as).endVertex();
-        builder.pos(cx - rad, cy + height, cz + rad).tex(0, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy + height, cz + rad).tex(1, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy + height * 2, cz + rad).tex(1, 1).color(r, g, b, am).endVertex();
-        builder.pos(cx - rad, cy + height * 2, cz + rad).tex(0, 1).color(r, g, b, am).endVertex();
-        builder.pos(cx + rad, cy - 3, cz - rad).tex(0, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy - 3, cz + rad).tex(1, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy + height, cz + rad).tex(1, 1).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy + height, cz - rad).tex(0, 1).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy + height, cz - rad).tex(0, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy + height, cz + rad).tex(1, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy + height * 2, cz + rad).tex(1, 1).color(r, g, b, am).endVertex();
-        builder.pos(cx + rad, cy + height * 2, cz - rad).tex(0, 1).color(r, g, b, am).endVertex();
-        builder.pos(cx - rad, cy - 3, cz - rad).tex(0, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy - 3, cz - rad).tex(1, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy + height, cz - rad).tex(1, 1).color(r, g, b, as).endVertex();
-        builder.pos(cx - rad, cy + height, cz - rad).tex(0, 1).color(r, g, b, as).endVertex();
-        builder.pos(cx - rad, cy + height, cz - rad).tex(0, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy + height, cz - rad).tex(1, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx + rad, cy + height * 2, cz - rad).tex(1, 1).color(r, g, b, am).endVertex();
-        builder.pos(cx - rad, cy + height * 2, cz - rad).tex(0, 1).color(r, g, b, am).endVertex();
-        builder.pos(cx - rad, cy - 3, cz - rad).tex(0, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx - rad, cy - 3, cz + rad).tex(1, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx - rad, cy + height, cz + rad).tex(1, 1).color(r, g, b, as).endVertex();
-        builder.pos(cx - rad, cy + height, cz - rad).tex(0, 1).color(r, g, b, as).endVertex();
-        builder.pos(cx - rad, cy + height, cz - rad).tex(0, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx - rad, cy + height, cz + rad).tex(1, 0).color(r, g, b, as).endVertex();
-        builder.pos(cx - rad, cy + height * 2, cz + rad).tex(1, 0).color(r, g, b, am).endVertex();
-        builder.pos(cx - rad, cy + height * 2, cz - rad).tex(0, 1).color(r, g, b, am).endVertex();
+        float b = 0.4F;
+        float a = 1.0F;
+        int i = 240;
+        int j = 240;
+        switch (idx) {
+            case -1:
+                r = 1.0F;
+                g = 0.0F;
+                b = 0.0F;
+                break;
+            case 1:
+                r = 1.0F;
+                g = 0.98F;
+                b = 0.43F;
+                break;
+        }
+        double rad = Math.toRadians(checkpoint.getRotation());
+        double sin = Math.sin(rad);
+        double cos = Math.cos(rad);
+        double dx = cos * 0.3;
+        double dz = sin * 0.3;
+        Minecraft.getMinecraft().entityRenderer.enableLightmap();
+        Minecraft.getMinecraft().getTextureManager().bindTexture(CHECKPOINT_TEXTURE);
+        Vec3d left = checkpoint.getLeft();
+        Vec3d right = checkpoint.getRight();
+        builder.pos(left.x - dx, left.y, left.z - dz).tex(0, 1).color(r, g, b, a).lightmap(i, j).endVertex();
+        builder.pos(left.x + dx, left.y, left.z + dz).tex(1, 1).color(r, g, b, a).lightmap(i, j).endVertex();
+        builder.pos(left.x + dx, left.y + 4, left.z + dz).tex(1, 0).color(r, g, b, a).lightmap(i, j).endVertex();
+        builder.pos(left.x - dx, left.y + 4, left.z - dz).tex(0, 0).color(r, g, b, a).lightmap(i, j).endVertex();
+        builder.pos(right.x - dx, right.y, right.z - dz).tex(0, 1).color(r, g, b, a).lightmap(i, j).endVertex();
+        builder.pos(right.x + dx, right.y, right.z + dz).tex(1, 1).color(r, g, b, a).lightmap(i, j).endVertex();
+        builder.pos(right.x + dx, right.y + 4, right.z + dz).tex(1, 0).color(r, g, b, a).lightmap(i, j).endVertex();
+        builder.pos(right.x - dx, right.y + 4, right.z - dz).tex(0, 0).color(r, g, b, a).lightmap(i, j).endVertex();
         tessellator.draw();
         GlStateManager.popMatrix();
+        GlStateManager.depthMask(true);
+        GlStateManager.disableBlend();
+        GlStateManager.alphaFunc(516, 0.1F);
+        RenderHelper.disableStandardItemLighting();
     }
 }

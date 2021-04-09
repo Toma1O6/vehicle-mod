@@ -1,4 +1,4 @@
-package dev.toma.vehiclemod.racing;
+package dev.toma.vehiclemod.racing.points;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.nbt.NBTTagCompound;
@@ -39,6 +39,13 @@ public class Point {
 
     public double getDistance(double x, double y, double z) {
         return Math.sqrt(this.getDistanceSq(x, y, z));
+    }
+
+    public void rotate() {
+    }
+
+    public float getRotation() {
+        return 0.0F;
     }
 
     public final NBTTagCompound writeNBT() {
