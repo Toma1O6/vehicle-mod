@@ -6,6 +6,7 @@ import dev.toma.vehiclemod.racing.RaceTrack;
 import dev.toma.vehiclemod.racing.points.Checkpoint;
 import dev.toma.vehiclemod.racing.points.Point;
 import dev.toma.vehiclemod.racing.points.RotatedPoint;
+import dev.toma.vehiclemod.racing.renderer.CheckpointStyle;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -125,6 +126,23 @@ public class ItemTrackManager<T extends Point> extends VMItem {
         @Override
         public void interact(EntityPlayer player, Checkpoint point, RaceTrack track) {
             track.toggleLoop();
+        }
+    }
+
+    public static class ChangeCheckpointStyle implements Action<Checkpoint> {
+
+        @Override
+        public Checkpoint getPoint(RaceTrack track, BlockPos pos) {
+            return filterOut(track.getCheckpoints(), pos);
+        }
+
+        @Override
+        public void interact(EntityPlayer player, Checkpoint point, RaceTrack track) {
+            CheckpointStyle style1 = track.getCheckpointStyle();
+            CheckpointStyle style2 = CheckpointStyle.nextStyle(style1, player.isSneaking());
+            if(!style1.equals(style2)) {
+                track.setStyle(style2);
+            }
         }
     }
 }

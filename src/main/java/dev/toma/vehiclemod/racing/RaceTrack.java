@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import dev.toma.vehiclemod.racing.points.Checkpoint;
 import dev.toma.vehiclemod.racing.points.Point;
 import dev.toma.vehiclemod.racing.points.RotatedPoint;
+import dev.toma.vehiclemod.racing.renderer.CheckpointStyle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
@@ -17,6 +18,7 @@ public class RaceTrack {
     final String name;
     final List<Checkpoint> checkpoints = new ArrayList<>();
     final List<RotatedPoint> points = new ArrayList<>();
+    private CheckpointStyle style = CheckpointStyle.DEFAULT_STYLE;
     boolean isLoop;
 
     public RaceTrack(String name) {
@@ -57,6 +59,14 @@ public class RaceTrack {
 
     public List<RotatedPoint> getPoints() {
         return points;
+    }
+
+    public CheckpointStyle getCheckpointStyle() {
+        return style;
+    }
+
+    public void setStyle(CheckpointStyle style) {
+        this.style = style;
     }
 
     public String id() {

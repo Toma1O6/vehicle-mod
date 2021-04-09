@@ -24,8 +24,6 @@ import java.util.List;
 
 public abstract class TrackRenderer<R extends Race> implements RenderRace<R> {
 
-    public static final ResourceLocation CHECKPOINT_TEXTURE = VehicleMod.getResource("textures/gui/checkpoint.png");
-
     @Override
     public final void renderRaceInfo(World world, R r, double x, double y, double z, float partialTicks) {
 
@@ -38,9 +36,10 @@ public abstract class TrackRenderer<R extends Race> implements RenderRace<R> {
             List<Checkpoint> checkpoints = track.getCheckpoints();
             List<RotatedPoint> startPoints = track.getPoints();
             int i = 0;
+            CheckpointStyle style = track.getCheckpointStyle();
             for (Checkpoint checkpoint : checkpoints) {
                 int j = track.getNextCheckpoint(i);
-                drawCheckpoint(checkpoint, j);
+                drawCheckpoint(checkpoint, style, j);
                 if(j < 0)
                     continue;
                 Checkpoint next = track.getCheckpoint(j);
@@ -101,7 +100,7 @@ public abstract class TrackRenderer<R extends Race> implements RenderRace<R> {
         GlStateManager.popMatrix();
     }
 
-    public static void drawCheckpoint(Checkpoint checkpoint, int idx) {
+    public static void drawCheckpoint(Checkpoint checkpoint, CheckpointStyle style, int idx) {
         GlStateManager.pushMatrix();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
@@ -109,41 +108,32 @@ public abstract class TrackRenderer<R extends Race> implements RenderRace<R> {
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.alphaFunc(516, 0.003921569F);
         builder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-        float r = 0.4F;
-        float g = 0.98F;
-        float b = 0.4F;
+        int color = style.getColorFromScheme(idx);
+        float r = ((color >> 16) & 0xff) / 255.0F;
+        float g = ((color >>  8) & 0xff) / 255.0F;
+        float b = ( color        & 0xff) / 255.0F;
         float a = 1.0F;
+        // TODO improve lighting values
         int i = 240;
         int j = 240;
-        switch (idx) {
-            case -1:
-                r = 1.0F;
-                g = 0.0F;
-                b = 0.0F;
-                break;
-            case 1:
-                r = 1.0F;
-                g = 0.98F;
-                b = 0.43F;
-                break;
-        }
         double rad = Math.toRadians(checkpoint.getRotation());
         double sin = Math.sin(rad);
         double cos = Math.cos(rad);
-        double dx = cos * 0.3;
-        double dz = sin * 0.3;
-        Minecraft.getMinecraft().entityRenderer.enableLightmap();
-        Minecraft.getMinecraft().getTextureManager().bindTexture(CHECKPOINT_TEXTURE);
+        double dx = cos * style.getWidth();
+        double dz = sin * style.getWidth();
+        Minecraft mc = Minecraft.getMinecraft();
+        mc.entityRenderer.enableLightmap();
+        mc.getTextureManager().bindTexture(style.getTexture());
         Vec3d left = checkpoint.getLeft();
         Vec3d right = checkpoint.getRight();
         builder.pos(left.x - dx, left.y, left.z - dz).tex(0, 1).color(r, g, b, a).lightmap(i, j).endVertex();
         builder.pos(left.x + dx, left.y, left.z + dz).tex(1, 1).color(r, g, b, a).lightmap(i, j).endVertex();
-        builder.pos(left.x + dx, left.y + 4, left.z + dz).tex(1, 0).color(r, g, b, a).lightmap(i, j).endVertex();
-        builder.pos(left.x - dx, left.y + 4, left.z - dz).tex(0, 0).color(r, g, b, a).lightmap(i, j).endVertex();
+        builder.pos(left.x + dx, left.y + style.getHeight(), left.z + dz).tex(1, 0).color(r, g, b, a).lightmap(i, j).endVertex();
+        builder.pos(left.x - dx, left.y + style.getHeight(), left.z - dz).tex(0, 0).color(r, g, b, a).lightmap(i, j).endVertex();
         builder.pos(right.x - dx, right.y, right.z - dz).tex(0, 1).color(r, g, b, a).lightmap(i, j).endVertex();
         builder.pos(right.x + dx, right.y, right.z + dz).tex(1, 1).color(r, g, b, a).lightmap(i, j).endVertex();
-        builder.pos(right.x + dx, right.y + 4, right.z + dz).tex(1, 0).color(r, g, b, a).lightmap(i, j).endVertex();
-        builder.pos(right.x - dx, right.y + 4, right.z - dz).tex(0, 0).color(r, g, b, a).lightmap(i, j).endVertex();
+        builder.pos(right.x + dx, right.y + style.getHeight(), right.z + dz).tex(1, 0).color(r, g, b, a).lightmap(i, j).endVertex();
+        builder.pos(right.x - dx, right.y + style.getHeight(), right.z - dz).tex(0, 0).color(r, g, b, a).lightmap(i, j).endVertex();
         tessellator.draw();
         GlStateManager.popMatrix();
         GlStateManager.depthMask(true);

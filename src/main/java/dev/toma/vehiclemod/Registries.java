@@ -247,6 +247,7 @@ public class Registries {
                     new ItemTrackManager<>("track_remove_startpoint", new ItemTrackManager.DeleteStartingPoint()),
                     new ItemTrackManager<>("track_remove_checkpoint", new ItemTrackManager.DeleteCheckpoint()),
                     new ItemTrackManager<>("track_toggle_loop", new ItemTrackManager.ToggleLoop()),
+                    new ItemTrackManager<>("track_change_style", new ItemTrackManager.ChangeCheckpointStyle()),
                     new ItemTrackDebug("toggle_track_render"),
                     new VMItem("empty_spray_can")
             );
