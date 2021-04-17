@@ -19,8 +19,6 @@ public class VehicleConfig {
     public VehicleStats beamerPickup = new VehicleStats(280F, 0.8F, 0.0035F, 0.012F, 0.1F, 3.2F, 0.0058F, 60, new VehicleStats.Vector3i(0, 0, -2)).track();
     @Config.Name("Sputnik 3000L")
     public VehicleStats sputnik3000L = new VehicleStats(250F, 1.3F, 0.0053F, 0.019F, 0.2F, 3.9F, 0.0031F, 50, new VehicleStats.Vector3i(0, 0, -1)).track();
-    @Config.Name("Sputnik 3000L Enforcer")
-    public VehicleStats sputnik3000LEnf = new VehicleStats(300F, 1.33F, 0.0056F, 0.020F, 0.21F, 3.9F, 0.0034F, 50, new VehicleStats.Vector3i(0, 0, -1)).track();
     @Config.Name("Sputnik Duster")
     public VehicleStats sputnikDuster = new VehicleStats(300F, 1.26F, 0.0047F, 0.0165F, 0.18F, 3.9F, 0.0053f, 70, new VehicleStats.Vector3i(0, 0, -1)).track();
     @Config.Name("Fedoratti NightStalker")

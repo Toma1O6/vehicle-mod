@@ -68,7 +68,7 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSirens {
 
     @Override
     public VehicleStats getConfigStats() {
-        return VMConfig.vehicleConfig.sputnik3000LEnf;
+        return VMConfig.vehicleConfig.sputnik3000L;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class VehicleSputnik3000LEnforcer extends EntityVehicleSirens {
 
     @Override
     public VehicleUpgrades createVehicleUpgrades() {
-        return new VehicleUpgrades(this, 2);
+        return new VehicleUpgrades(this, 1);
     }
 
     @Override
