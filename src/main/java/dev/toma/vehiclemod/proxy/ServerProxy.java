@@ -1,7 +1,6 @@
 package dev.toma.vehiclemod.proxy;
 
 import com.mojang.authlib.GameProfile;
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;

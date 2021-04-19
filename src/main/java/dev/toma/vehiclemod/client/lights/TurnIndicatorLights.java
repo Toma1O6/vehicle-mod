@@ -1,7 +1,6 @@
 package dev.toma.vehiclemod.client.lights;
 
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.LightController;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.LightController;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;

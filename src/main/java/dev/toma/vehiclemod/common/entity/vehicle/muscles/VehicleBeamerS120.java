@@ -1,9 +1,8 @@
 package dev.toma.vehiclemod.common.entity.vehicle.muscles;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
-import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.PositionManager;
 import dev.toma.vehiclemod.config.VMConfig;
-import dev.toma.vehiclemod.config.VehicleConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.util.math.BlockPos;

@@ -1,10 +1,9 @@
 package dev.toma.vehiclemod.client;
 
 import dev.toma.vehiclemod.VehicleMod;
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.ISpecialVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.LightController;
-import dev.toma.vehiclemod.common.entity.vehicle.NitroHandler;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.ISpecialVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.LightController;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.NitroHandler;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.*;
 import net.minecraft.client.Minecraft;

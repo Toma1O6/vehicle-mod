@@ -1,7 +1,6 @@
 package dev.toma.vehiclemod.client.model.vehicle;
 
 import dev.toma.vehiclemod.client.lights.LightEntry;
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;

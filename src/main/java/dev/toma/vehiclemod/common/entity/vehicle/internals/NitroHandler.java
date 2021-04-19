@@ -1,6 +1,7 @@
-package dev.toma.vehiclemod.common.entity.vehicle;
+package dev.toma.vehiclemod.common.entity.vehicle.internals;
 
 import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.items.ItemNitroCan;
 import dev.toma.vehiclemod.init.VMSounds;
 import dev.toma.vehiclemod.util.DevUtil;

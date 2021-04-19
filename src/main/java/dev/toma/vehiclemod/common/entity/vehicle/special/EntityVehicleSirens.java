@@ -1,7 +1,7 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
 import dev.toma.vehiclemod.client.CarSound;
-import dev.toma.vehiclemod.common.entity.vehicle.ISpecialVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.ISpecialVehicle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

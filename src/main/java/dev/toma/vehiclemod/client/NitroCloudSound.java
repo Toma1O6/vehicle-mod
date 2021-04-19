@@ -1,6 +1,5 @@
 package dev.toma.vehiclemod.client;
 
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.client.audio.ITickableSound;
 import net.minecraft.client.audio.PositionedSound;

@@ -2,7 +2,7 @@ package dev.toma.vehiclemod.client.gui.tunning;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.container.ContainerNitro;
-import dev.toma.vehiclemod.common.entity.vehicle.NitroHandler;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.NitroHandler;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.util.ResourceLocation;

@@ -1,6 +1,5 @@
 package dev.toma.vehiclemod.asm;
 
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 

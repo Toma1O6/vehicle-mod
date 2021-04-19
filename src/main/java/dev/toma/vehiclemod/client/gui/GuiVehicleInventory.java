@@ -2,7 +2,6 @@ package dev.toma.vehiclemod.client.gui;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.container.ContainerVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;

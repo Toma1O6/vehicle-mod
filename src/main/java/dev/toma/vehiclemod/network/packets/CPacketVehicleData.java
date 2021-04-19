@@ -1,7 +1,6 @@
 package dev.toma.vehiclemod.network.packets;
 
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.EnumVehicleState;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.EnumVehicleState;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

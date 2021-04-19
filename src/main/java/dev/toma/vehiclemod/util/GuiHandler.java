@@ -9,7 +9,6 @@ import dev.toma.vehiclemod.client.gui.tunning.GuiVehicleComponents;
 import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.container.*;
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.entity.player.EntityPlayer;

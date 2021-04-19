@@ -1,8 +1,7 @@
 package dev.toma.vehiclemod.network.packets;
 
 import dev.toma.vehiclemod.client.CarSound;
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.ISpecialVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.ISpecialVehicle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;

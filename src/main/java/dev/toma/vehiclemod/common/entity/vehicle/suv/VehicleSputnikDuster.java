@@ -1,7 +1,7 @@
 package dev.toma.vehiclemod.common.entity.vehicle.suv;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
-import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.PositionManager;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.init.VMSounds;

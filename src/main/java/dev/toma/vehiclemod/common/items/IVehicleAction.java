@@ -1,6 +1,5 @@
 package dev.toma.vehiclemod.common.items;
 
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

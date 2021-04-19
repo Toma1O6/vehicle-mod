@@ -2,8 +2,7 @@ package dev.toma.vehiclemod.client.gui.tunning;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.container.ContainerVehicleComponents;
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleUpgrades;
 import dev.toma.vehiclemod.common.inventory.InventoryUpgrades;
 import dev.toma.vehiclemod.config.VehicleStats;
 import dev.toma.vehiclemod.util.DevUtil;

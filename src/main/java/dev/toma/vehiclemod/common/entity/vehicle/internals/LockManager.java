@@ -1,4 +1,4 @@
-package dev.toma.vehiclemod.common.entity.vehicle;
+package dev.toma.vehiclemod.common.entity.vehicle.internals;
 
 import dev.toma.vehiclemod.common.ILockpickable;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,8 +15,8 @@ public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagComp
     private boolean unlocked;
     private int[] combinations;
 
-    public LockManager(EnumCarLockType carLockType) {
-        this.setCarLockType(carLockType, false);
+    public LockManager() {
+        this.setCarLockType(EnumCarLockType.IRON, false);
         this.linkedUUID = UUID.randomUUID();
     }
 

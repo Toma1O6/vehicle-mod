@@ -2,7 +2,6 @@ package dev.toma.vehiclemod.client.gui.tunning;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.container.ContainerNeons;
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.inventory.InventoryNeons;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

@@ -1,9 +1,10 @@
-package dev.toma.vehiclemod.common.entity.vehicle;
+package dev.toma.vehiclemod.common.entity.vehicle.internals;
 
 import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.particle.ParticleNitroCloud;
 import dev.toma.vehiclemod.client.particle.Particles;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.items.ItemNitroCloud;
 import dev.toma.vehiclemod.util.DevUtil;
 import net.minecraft.item.ItemStack;

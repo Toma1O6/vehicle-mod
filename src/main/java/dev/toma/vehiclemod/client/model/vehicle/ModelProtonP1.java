@@ -1,7 +1,7 @@
 package dev.toma.vehiclemod.client.model.vehicle;
 
 import dev.toma.vehiclemod.client.lights.*;
-import dev.toma.vehiclemod.common.entity.vehicle.LightController;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.LightController;
 import dev.toma.vehiclemod.common.entity.vehicle.standart.VehicleProtonP1;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;

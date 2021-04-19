@@ -1,11 +1,10 @@
 package dev.toma.vehiclemod.common.capability.chunks;
 
 import dev.toma.vehiclemod.VehicleMod;
-import dev.toma.vehiclemod.common.entity.vehicle.EnumVehicleType;
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.EnumVehicleType;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.util.DevUtil;
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleTexture;
 import dev.toma.vehiclemod.util.WeightedRandom;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;

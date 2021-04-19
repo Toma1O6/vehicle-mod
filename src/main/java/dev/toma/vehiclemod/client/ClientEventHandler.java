@@ -1,8 +1,7 @@
 package dev.toma.vehiclemod.client;
 
 import dev.toma.vehiclemod.VehicleMod;
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.NitroHandler;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.NitroHandler;
 import dev.toma.vehiclemod.common.inventory.InventoryUpgrades;
 import dev.toma.vehiclemod.common.items.ItemNitroCan;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;

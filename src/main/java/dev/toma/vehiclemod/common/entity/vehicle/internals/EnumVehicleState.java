@@ -1,4 +1,4 @@
-package dev.toma.vehiclemod.common.entity.vehicle;
+package dev.toma.vehiclemod.common.entity.vehicle.internals;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import net.minecraft.util.SoundEvent;

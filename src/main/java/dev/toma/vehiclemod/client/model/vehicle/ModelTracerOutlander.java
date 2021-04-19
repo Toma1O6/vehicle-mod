@@ -4,7 +4,7 @@ import dev.toma.vehiclemod.client.lights.BrakeLights;
 import dev.toma.vehiclemod.client.lights.LightControllerEntry;
 import dev.toma.vehiclemod.client.lights.ReverseLights;
 import dev.toma.vehiclemod.client.lights.TurnIndicatorLights;
-import dev.toma.vehiclemod.common.entity.vehicle.LightController;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.LightController;
 import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleTracerOutlander;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;

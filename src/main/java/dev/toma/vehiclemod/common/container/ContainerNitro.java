@@ -1,7 +1,7 @@
 package dev.toma.vehiclemod.common.container;
 
 import dev.toma.vehiclemod.Registries;
-import dev.toma.vehiclemod.common.entity.vehicle.NitroHandler;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.NitroHandler;
 import dev.toma.vehiclemod.common.items.ItemNitroCan;
 import dev.toma.vehiclemod.common.items.ItemNitroCloud;
 import net.minecraft.entity.player.EntityPlayer;

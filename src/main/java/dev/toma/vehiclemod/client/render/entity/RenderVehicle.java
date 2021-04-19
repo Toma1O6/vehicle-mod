@@ -2,10 +2,9 @@ package dev.toma.vehiclemod.client.render.entity;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.NeonHandler;
-import dev.toma.vehiclemod.common.entity.vehicle.PositionManager;
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.NeonHandler;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.PositionManager;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleTexture;
 import dev.toma.vehiclemod.common.items.ItemNeon;
 import dev.toma.vehiclemod.common.items.ItemNeonPulser;
 import dev.toma.vehiclemod.config.VMConfig;

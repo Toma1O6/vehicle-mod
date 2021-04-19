@@ -1,6 +1,6 @@
 package dev.toma.vehiclemod.client;
 
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.IDriveable;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.SPacketInput;
 import net.minecraft.client.Minecraft;
@@ -21,17 +21,13 @@ public class VehicleInputHandler {
 		if(player != null) {
 			GameSettings gs = Minecraft.getMinecraft().gameSettings;
 			if(e.phase == Phase.END) {
-				if(player.getRidingEntity() instanceof EntityVehicle && player.getRidingEntity().getControllingPassenger() == player) {
-					EntityVehicle vehicle = (EntityVehicle) player.getRidingEntity();
-					int value = gs.keyBindForward.isKeyDown() ? 0b0001 : 0;
-					if(gs.keyBindBack.isKeyDown())
-						value |= 0b0010;
-					if(gs.keyBindRight.isKeyDown())
-						value |= 0b0100;
-					if(gs.keyBindLeft.isKeyDown())
-						value |= 0b1000;
-					vehicle.updateInput(value, player);
-					VMNetworkManager.instance().sendToServer(new SPacketInput(value));
+				if(player.getRidingEntity() instanceof IDriveable) {
+					IDriveable driveable = (IDriveable) player.getRidingEntity();
+					if(driveable.shouldAcceptInputFrom(player)) {
+						byte input = driveable.encode(gs);
+						driveable.handleInputs(input);
+						VMNetworkManager.instance().sendToServer(new SPacketInput(input, player.getRidingEntity().getEntityId()));
+					}
 				}
 			}
 		}

@@ -1,8 +1,7 @@
 package dev.toma.vehiclemod.common.items;
 
 import dev.toma.vehiclemod.Registries;
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleTexture;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleTexture;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;

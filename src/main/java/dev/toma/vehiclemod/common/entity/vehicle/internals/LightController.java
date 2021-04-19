@@ -1,5 +1,6 @@
-package dev.toma.vehiclemod.common.entity.vehicle;
+package dev.toma.vehiclemod.common.entity.vehicle.internals;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.util.DevUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;

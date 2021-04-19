@@ -1,6 +1,6 @@
 package dev.toma.vehiclemod.common.tunning;
 
-import dev.toma.vehiclemod.common.entity.vehicle.VehicleUpgrades;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleUpgrades;
 
 public interface IStatApplicator {
 

@@ -1,7 +1,6 @@
 package dev.toma.vehiclemod.common.items;
 
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.LockManager;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.LockManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

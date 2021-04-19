@@ -1,4 +1,4 @@
-package dev.toma.vehiclemod.common.entity.vehicle;
+package dev.toma.vehiclemod.common.entity.vehicle.internals;
 
 public enum EnumCarLockType {
 
