@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.client.lights;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.LightController;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.client.Minecraft;
@@ -23,7 +24,7 @@ public class TurnIndicatorLights<V extends EntityVehicle> extends BasicLightEntr
         boolean flag = false;
         if(vehicle == null)
             return false;
-        LightController controller = vehicle.lightController;
+        LightController controller = vehicle.getLightController();
         LightController.TurnLightStatus status = controller.getTurnLightStatus();
         if(status == LightController.TurnLightStatus.WARNING || status == this.status) {
             long time = System.currentTimeMillis();

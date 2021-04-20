@@ -9,6 +9,7 @@ import dev.toma.vehiclemod.client.gui.tunning.GuiVehicleComponents;
 import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
 import dev.toma.vehiclemod.common.container.*;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +39,7 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerVehicle(player.inventory, (EntityVehicle) world.getEntityByID(x));
             case VEHICLE_COMPONENT:
                 if(player.getRidingEntity() instanceof EntityVehicle)
-                    return new ContainerVehicleComponents(player.inventory, ((EntityVehicle) player.getRidingEntity()).getUpgrades().getInventory());
+                    return new ContainerVehicleComponents(player.inventory, ((EntityVehicle) player.getRidingEntity()).getVehicleUpgrades().getInventory());
                 return null;
             case VEHICLE_NEON:
                 if(player.getRidingEntity() instanceof EntityVehicle)
@@ -64,7 +65,7 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiVehicleInventory(player.inventory, (EntityVehicle) world.getEntityByID(x));
             case VEHICLE_COMPONENT:
                 if(player.getRidingEntity() instanceof EntityVehicle)
-                    return new GuiVehicleComponents(player.inventory, ((EntityVehicle) player.getRidingEntity()).getUpgrades().getInventory());
+                    return new GuiVehicleComponents(player.inventory, ((EntityVehicle) player.getRidingEntity()).getVehicleUpgrades().getInventory());
                 return null;
             case VEHICLE_NEON:
                 if(player.getRidingEntity() instanceof EntityVehicle)

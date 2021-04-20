@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.proxy;
 
 import dev.toma.vehiclemod.client.particle.Particles;
 import dev.toma.vehiclemod.common.ILockpickable;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

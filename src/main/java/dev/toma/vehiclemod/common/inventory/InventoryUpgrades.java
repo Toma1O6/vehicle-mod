@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.common.inventory;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
@@ -21,8 +22,8 @@ public class InventoryUpgrades extends InventoryBasic {
     @Override
     public void markDirty() {
         super.markDirty();
-        if(vehicle.getUpgrades() != null) {
-            vehicle.getUpgrades().recalculate();
+        if(vehicle.getVehicleUpgrades() != null) {
+            vehicle.getVehicleUpgrades().recalculate();
         }
     }
 

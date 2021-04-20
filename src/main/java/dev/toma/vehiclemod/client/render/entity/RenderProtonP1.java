@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.client.render.entity;
 
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 

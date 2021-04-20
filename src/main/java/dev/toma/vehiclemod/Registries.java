@@ -7,6 +7,7 @@ import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.blocks.BlockSecret;
 import dev.toma.vehiclemod.common.blocks.BlockTunerPackage;
 import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.EnumCarLockType;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleTexture;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;

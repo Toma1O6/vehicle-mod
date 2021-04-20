@@ -1,17 +1,19 @@
 package dev.toma.vehiclemod.common.container;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 
-public class ContainerVehicle extends ModContainer<EntityVehicle.VehicleContainer> {
+public class ContainerVehicle extends ModContainer<VehicleContainer> {
 
     private final EntityVehicle vehicle;
 
     public ContainerVehicle(InventoryPlayer player, EntityVehicle vehicle) {
         super(vehicle.getInventory());
         this.vehicle = vehicle;
-        EntityVehicle.VehicleContainer container = vehicle.getInventory();
+        VehicleContainer container = vehicle.getInventory();
         int rows = container.getSizeInventory() / 9 + 1;
         for(int y = 0; y < rows; y++) {
             for(int x = 0; x < 9; x++) {

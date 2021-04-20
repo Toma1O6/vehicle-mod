@@ -1,7 +1,6 @@
 package dev.toma.vehiclemod.proxy;
 
 import dev.toma.vehiclemod.client.CarNitroSound;
-import dev.toma.vehiclemod.client.CarSound;
 import dev.toma.vehiclemod.client.VMKeybinds;
 import dev.toma.vehiclemod.client.VehicleInputHandler;
 import dev.toma.vehiclemod.client.gui.GuiLockpicking;
@@ -11,6 +10,7 @@ import dev.toma.vehiclemod.client.render.block.FuelMakerRenderer;
 import dev.toma.vehiclemod.client.render.entity.*;
 import dev.toma.vehiclemod.common.ILockpickable;
 import dev.toma.vehiclemod.common.blocks.fuel.TileEntityFuelMaker;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.NitroHandler;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerJester;
@@ -28,13 +28,11 @@ import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleSputnikDuster;
 import dev.toma.vehiclemod.common.entity.vehicle.suv.VehicleTracerOutlander;
 import dev.toma.vehiclemod.common.items.ItemNitroCan;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -60,25 +58,6 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void postInit(FMLPostInitializationEvent e) {
 		
-	}
-	
-	@Override
-	public void playSoundAt(EntityVehicle v) {
-		Minecraft mc = Minecraft.getMinecraft();
-		EntityPlayer player = mc.player;
-		if(!v.isPassenger(player))
-			return;
-		SoundHandler handler = mc.getSoundHandler();
-		SoundEvent event = v.getVehicleSound();
-		if(v.currentSound != null && handler.isSoundPlaying(v.currentSound)) {
-			handler.stopSound(v.currentSound);
-		}
-		if(event == null) {
-			return;
-		}
-		CarSound sound = new CarSound(event, v);
-		v.currentSound = sound;
-		handler.playSound(sound);
 	}
 
 	@Override

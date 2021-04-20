@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.network.packets;
 
 import dev.toma.vehiclemod.client.NitroCloudSound;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;

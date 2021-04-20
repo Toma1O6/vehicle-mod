@@ -21,6 +21,10 @@ public class SoundController {
         this.pack = pack;
     }
 
+    public VehicleSoundPack getPack() {
+        return pack;
+    }
+
     @SideOnly(Side.CLIENT)
     public void updateSounds(EntityVehicle vehicle) {
         if(vehicle.hasStateChanged()) {

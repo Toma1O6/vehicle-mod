@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.network.packets;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -46,7 +47,7 @@ public class CPacketSendLightStatus implements IMessage {
                 WorldClient client = mc.world;
                 Entity entity = client.getEntityByID(message.entityID);
                 if(entity instanceof EntityVehicle) {
-                    ((EntityVehicle) entity).lightController.deserializeNBT(message.nbt);
+                    ((EntityVehicle) entity).getLightController().deserializeNBT(message.nbt);
                 }
             });
             return null;

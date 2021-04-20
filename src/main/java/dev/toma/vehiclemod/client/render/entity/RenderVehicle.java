@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.client.render.entity;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.NeonHandler;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.PositionManager;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleTexture;

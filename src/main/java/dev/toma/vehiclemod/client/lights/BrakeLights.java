@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.client.lights;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.client.model.ModelRenderer;
 
 public class BrakeLights<V extends EntityVehicle> extends BasicLightEntry<V> {
@@ -10,6 +11,6 @@ public class BrakeLights<V extends EntityVehicle> extends BasicLightEntry<V> {
 
     @Override
     public boolean shouldApplyLight(V vehicle) {
-        return vehicle != null && vehicle.lightController.isBraking(vehicle);
+        return vehicle != null && vehicle.getLightController().isBraking(vehicle);
     }
 }

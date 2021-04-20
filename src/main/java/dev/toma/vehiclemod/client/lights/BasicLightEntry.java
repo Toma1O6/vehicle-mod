@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.client.lights;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.client.model.ModelRenderer;
 
 public class BasicLightEntry<V extends EntityVehicle> implements LightEntry<V> {

@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.common.entity.vehicle.special;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.EnumVehicleType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

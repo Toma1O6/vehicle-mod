@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.common.entity.vehicle.supersport;
 
 import dev.toma.vehiclemod.client.VehicleSoundPack;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.PositionManager;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleContainer;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleUpgrades;
 import dev.toma.vehiclemod.config.VMConfig;
 import dev.toma.vehiclemod.config.VehicleStats;
@@ -39,7 +40,7 @@ public class VehicleFedorattiVulcan extends EntityVehicleSuperSport {
     }
 
     @Override
-    public VehicleContainer createInvetory() {
+    protected VehicleContainer createInventory() {
         return new VehicleContainer(this, 5);
     }
 

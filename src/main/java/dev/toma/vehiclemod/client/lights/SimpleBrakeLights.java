@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.client.lights;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.LightController;
 import net.minecraft.client.model.ModelRenderer;
 
@@ -17,7 +18,7 @@ public class SimpleBrakeLights<V extends EntityVehicle> extends BrakeLights<V> {
     public boolean shouldApplyLight(V vehicle) {
         if(vehicle == null)
             return false;
-        LightController controller = vehicle.lightController;
+        LightController controller = vehicle.getLightController();
         boolean actual = controller.isBraking(vehicle);
         boolean flag = controller.areLightsOn(vehicle);
         if(actual != brakeState) {

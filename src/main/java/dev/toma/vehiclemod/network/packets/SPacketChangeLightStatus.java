@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.network.packets;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.LightController;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import io.netty.buffer.ByteBuf;
@@ -71,7 +72,7 @@ public class SPacketChangeLightStatus implements IMessage {
                 WorldServer server = player.getServerWorld();
                 Entity entity = server.getEntityByID(message.entityID);
                 if(entity instanceof EntityVehicle) {
-                    LightController controller = ((EntityVehicle) entity).lightController;
+                    LightController controller = ((EntityVehicle) entity).getLightController();
                     switch (message.action) {
                         case HEADLIGHTS:
                             controller.setLightState(message.state);

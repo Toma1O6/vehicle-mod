@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.common.items;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -28,7 +29,7 @@ public class ItemVehicleSpawner<V extends EntityVehicle> extends VMItem {
         ItemStack stack = player.getHeldItem(hand);
         if(!worldIn.isRemote) {
             V v = vehicleFactory.createVehicle(worldIn, pos);
-            v.lockManager.setUnlocked(true);
+            v.getLockManager().setUnlocked(true);
             worldIn.spawnEntity(v);
         }
         if(!player.isCreative()) {

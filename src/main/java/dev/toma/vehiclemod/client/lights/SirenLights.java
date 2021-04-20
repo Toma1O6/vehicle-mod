@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.client.lights;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.ISpecialVehicle;
 import net.minecraft.client.model.ModelRenderer;
 
