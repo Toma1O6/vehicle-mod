@@ -47,7 +47,7 @@ public class CPacketSendLightStatus implements IMessage {
                 WorldClient client = mc.world;
                 Entity entity = client.getEntityByID(message.entityID);
                 if(entity instanceof EntityVehicle) {
-                    ((EntityVehicle) entity).getLightController().deserializeNBT(message.nbt);
+                    ((EntityVehicle) entity).getLightController().onNBTRead(message.nbt);
                 }
             });
             return null;

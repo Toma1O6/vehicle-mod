@@ -6,7 +6,9 @@ import dev.toma.vehiclemod.network.VMNetworkManager;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -81,7 +83,9 @@ public class SPacketChangeLightStatus implements IMessage {
                             controller.setTurnLightStatus(message.status);
                             break;
                     }
-                    VMNetworkManager.instance().sendToAllTracking(new CPacketSendLightStatus(message.entityID, controller.serializeNBT()), entity);
+                    NBTTagCompound nbt = new NBTTagCompound();
+                    controller.onNBTWrite(nbt);
+                    VMNetworkManager.instance().sendToAllTracking(new CPacketSendLightStatus(message.entityID, nbt), entity);
                 }
             });
             return null;

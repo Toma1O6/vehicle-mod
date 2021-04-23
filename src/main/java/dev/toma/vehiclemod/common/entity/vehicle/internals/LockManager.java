@@ -1,14 +1,14 @@
 package dev.toma.vehiclemod.common.entity.vehicle.internals;
 
 import dev.toma.vehiclemod.common.ILockpickable;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagCompound> {
+public class LockManager implements Predicate<UUID>, ISerializationListener {
 
     protected EnumCarLockType carLockType;
     protected UUID linkedUUID;
@@ -27,22 +27,6 @@ public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagComp
     public void handleUnlock() {
         setUnlocked(true);
         this.linkedUUID = UUID.randomUUID();
-    }
-
-    @Override
-    public NBTTagCompound serializeNBT() {
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setByte("lockType", (byte) carLockType.ordinal());
-        nbt.setBoolean("unlocked", unlocked);
-        nbt.setString("key", linkedUUID.toString());
-        return nbt;
-    }
-
-    @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
-        carLockType = EnumCarLockType.values()[nbt.getByte("lockType")];
-        unlocked = nbt.getBoolean("unlocked");
-        linkedUUID = nbt.hasKey("key", Constants.NBT.TAG_STRING) ? UUID.fromString(nbt.getString("key")) : UUID.randomUUID();
     }
 
     @Override
@@ -75,5 +59,39 @@ public class LockManager implements Predicate<UUID>, INBTSerializable<NBTTagComp
 
     public UUID getLinkedUUID() {
         return linkedUUID;
+    }
+
+    @Override
+    public void onNBTWrite(NBTTagCompound nbt) {
+        NBTTagCompound data = new NBTTagCompound();
+        data.setByte("lockType", (byte) carLockType.ordinal());
+        data.setBoolean("unlocked", unlocked);
+        data.setUniqueId("key", linkedUUID);
+        nbt.setTag("lock", data);
+    }
+
+    @Override
+    public void onNBTRead(NBTTagCompound nbt) {
+        if(nbt.hasKey("lock", Constants.NBT.TAG_COMPOUND)) {
+            NBTTagCompound data = nbt.getCompoundTag("lock");
+            carLockType = EnumCarLockType.values()[nbt.getByte("lockType")];
+            unlocked = data.getBoolean("unlocked");
+            linkedUUID = data.getUniqueId("key");
+        }
+    }
+
+    @Override
+    public void onBytesWrite(ByteBuf buf) {
+        buf.writeByte((byte) carLockType.ordinal());
+        buf.writeBoolean(unlocked);
+        buf.writeLong(linkedUUID.getMostSignificantBits());
+        buf.writeLong(linkedUUID.getLeastSignificantBits());
+    }
+
+    @Override
+    public void onBytesRead(ByteBuf buf) {
+        carLockType = EnumCarLockType.values()[buf.readByte()];
+        unlocked = buf.readBoolean();
+        linkedUUID = new UUID(buf.readLong(), buf.readLong());
     }
 }

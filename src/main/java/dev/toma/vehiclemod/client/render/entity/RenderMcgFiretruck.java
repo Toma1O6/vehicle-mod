@@ -2,7 +2,7 @@ package dev.toma.vehiclemod.client.render.entity;
 
 import dev.toma.vehiclemod.client.model.vehicle.ModelMcgFiretruck;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleTexture;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleStyle;
 import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleMcgFiretruck;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -19,7 +19,7 @@ public class RenderMcgFiretruck extends RenderVehicle<VehicleMcgFiretruck> {
 
     @Override
     protected ResourceLocation getDefaultResource() {
-        return VehicleTexture.RED.getResource();
+        return VehicleStyle.Texture.RED.getResource();
     }
 
     @Override

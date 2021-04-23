@@ -1,6 +1,5 @@
 package dev.toma.vehiclemod.client;
 
-import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.util.SoundEvent;
 
 import java.util.Objects;
@@ -14,7 +13,7 @@ public class VehicleSoundPack {
     final SoundEvent honk;
     final SoundEvent starting;
 
-    private VehicleSoundPack(Builder<?> builder) {
+    private VehicleSoundPack(Builder builder) {
         this.accelerate = builder.acc;
         this.brake = builder.brk;
         this.release = builder.rls;
@@ -47,41 +46,39 @@ public class VehicleSoundPack {
         return starting;
     }
 
-    public static class Builder<V extends EntityVehicle> {
+    public static class Builder {
 
-        final V v;
         SoundEvent acc, brk, rls, str, honk, starting;
 
-        Builder(V v) {
-            this.v = v;
+        private Builder() {
         }
 
-        public Builder<V> acc(SoundEvent event) {
+        public Builder acc(SoundEvent event) {
             this.acc = event;
             return this;
         }
 
-        public Builder<V> brk(SoundEvent event) {
+        public Builder brk(SoundEvent event) {
             this.brk = event;
             return this;
         }
 
-        public Builder<V> rls(SoundEvent event) {
+        public Builder rls(SoundEvent event) {
             this.rls = event;
             return this;
         }
 
-        public Builder<V> str(SoundEvent event) {
+        public Builder str(SoundEvent event) {
             this.str = event;
             return this;
         }
 
-        public Builder<V> honk(SoundEvent event) {
+        public Builder honk(SoundEvent event) {
             this.honk = event;
             return this;
         }
 
-        public Builder<V> starting(SoundEvent event) {
+        public Builder starting(SoundEvent event) {
             this.starting = event;
             return this;
         }
@@ -96,8 +93,8 @@ public class VehicleSoundPack {
             return new VehicleSoundPack(this);
         }
 
-        public static <V extends EntityVehicle> Builder<V> create(V v) {
-            return new Builder<>(Objects.requireNonNull(v, "Vehicle cannot be null!"));
+        public static Builder create() {
+            return new Builder();
         }
     }
 }

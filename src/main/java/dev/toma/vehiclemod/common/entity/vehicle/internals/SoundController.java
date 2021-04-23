@@ -36,10 +36,23 @@ public class SoundController {
             if(currentSound != null && handler.isSoundPlaying(currentSound)) {
                 handler.stopSound(currentSound);
             }
-            if(event == null) return;
+            currentSound = null;
+            if(event == null || !vehicle.getStats().isStarted()) return;
             CarSound sound = new CarSound(event, vehicle);
             currentSound = sound;
             handler.playSound(sound);
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void updateHornSound(boolean play, SoundHandler handler, EntityVehicle vehicle) {
+        if(hornSound != null && handler.isSoundPlaying(hornSound)) {
+            handler.stopSound(hornSound);
+        }
+        hornSound = null;
+        if(play) {
+            hornSound = new CarSound(pack.honk(), vehicle);
+            handler.playSound(hornSound);
         }
     }
 }

@@ -9,7 +9,7 @@ import dev.toma.vehiclemod.common.blocks.BlockTunerPackage;
 import dev.toma.vehiclemod.common.blocks.fuel.BlockFuelMaker;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.EnumCarLockType;
-import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleTexture;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleStyle;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleBeamerS120;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerJester;
 import dev.toma.vehiclemod.common.entity.vehicle.muscles.VehicleTracerT1;
@@ -251,8 +251,8 @@ public class Registries {
                     new ItemTrackDebug("toggle_track_render"),
                     new VMItem("empty_spray_can")
             );
-            for (int i = 0; i < VehicleTexture.values().length; i++) {
-                VehicleTexture texture = VehicleTexture.values()[i];
+            for (int i = 0; i < VehicleStyle.Texture.values().length; i++) {
+                VehicleStyle.Texture texture = VehicleStyle.Texture.values()[i];
                 if(texture.isIgnored())
                     continue;
                 registry.register(new ItemSprayCan(texture.name().toLowerCase() + "_spray_can", texture));

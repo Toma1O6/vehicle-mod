@@ -1,12 +1,14 @@
 package dev.toma.vehiclemod.client;
 
 import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.NitroHandler;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleStats;
 import dev.toma.vehiclemod.common.inventory.InventoryUpgrades;
 import dev.toma.vehiclemod.common.items.ItemNitroCan;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.config.VMConfig;
-import dev.toma.vehiclemod.config.VehicleStats;
+import dev.toma.vehiclemod.config.VehicleProperties;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.SPacketOpenVehicleComponentGUI;
 import dev.toma.vehiclemod.util.DevUtil;
@@ -48,7 +50,7 @@ public class ClientEventHandler {
 		EntityPlayer player = Minecraft.getMinecraft().player;
 		if(event.getGui() instanceof InventoryEffectRenderer && player.getRidingEntity() instanceof EntityVehicle) {
 			EntityVehicle vehicle = (EntityVehicle) player.getRidingEntity();
-			if(!vehicle.isStarted() && vehicle.isStationary() && vehicle.getControllingPassenger() == player) {
+			if(!vehicle.getStats().isStarted() && vehicle.isStationary() && vehicle.getControllingPassenger() == player) {
 				event.setCanceled(true);
 				VMNetworkManager.instance().sendToServer(new SPacketOpenVehicleComponentGUI(GuiHandler.VEHICLE_COMPONENT));
 			}
@@ -74,7 +76,7 @@ public class ClientEventHandler {
 		if(Minecraft.getMinecraft().gameSettings.thirdPersonView != 1) return;
 		if(event.getEntity().isRiding() && event.getEntity().getRidingEntity() instanceof EntityVehicle) {
 			EntityVehicle vehicle = (EntityVehicle) event.getEntity().getRidingEntity();
-			VehicleStats.Vector3i vector3i = vehicle.getConfigStats().cameraOff;
+			VehicleProperties.Vector3i vector3i = vehicle.getConfigProperties().cameraOff;
 			GlStateManager.translate(vector3i.getX(), vector3i.getY(), vector3i.getZ());
 		}
 	}
@@ -87,15 +89,17 @@ public class ClientEventHandler {
 			EntityPlayer player = mc.player;
 			if(player.isRiding() && player.getRidingEntity() instanceof EntityVehicle) {
 				EntityVehicle car = (EntityVehicle)player.getRidingEntity();
-				float fuel = car.fuel / (float)car.getActualStats().fuelCapacity;
+				VehicleStats stats = car.getStats();
+				VehicleProperties properties = car.getProperties();
+				float fuel = stats.getFuel() / (float)properties.fuelCapacity;
 				boolean lowFuel = fuel <= 0.17F;
-				float health = car.health / car.getActualStats().maxHealth;
+				float health = stats.getHealth() / properties.maxHealth;
 				boolean lowHealth = health <= 0.5;
 				double speed = Math.sqrt(car.motionX*car.motionX + car.motionZ*car.motionZ) * 40;
 				SpeedDisplayUnit unit = VMConfig.speedUnit;
 				String speedString = unit.getDisplayString(speed);
 				mc.fontRenderer.drawStringWithShadow(speedString, 16, resolution.getScaledHeight() - 35, 0xFFFFFF);
-				if(car.isEcoMode()) {
+				if(stats.isEcoModeActive()) {
 					mc.fontRenderer.drawStringWithShadow("Eco", 16, resolution.getScaledHeight() - 45, 0x00ff00);
 				}
 				NitroHandler nitroHandler = car.getNitroHandler();
@@ -113,7 +117,7 @@ public class ClientEventHandler {
 					DevUtil.drawImage2D(mc, icon, 74 + i * 10, resolution.getScaledHeight() - 40, 16, 16);
 				}
 				int componentRenderIndex = 0;
-				InventoryUpgrades upgrades = car.getUpgrades().getInventory();
+				InventoryUpgrades upgrades = car.getVehicleUpgrades().getInventory();
 				for (int i = 0; i < 9; i++) {
 					ItemStack stack = upgrades.getStackInSlot(i);
 					if(!stack.isEmpty()) {

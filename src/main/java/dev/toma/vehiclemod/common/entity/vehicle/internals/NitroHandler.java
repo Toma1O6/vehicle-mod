@@ -1,17 +1,22 @@
 package dev.toma.vehiclemod.common.entity.vehicle.internals;
 
+import dev.toma.vehiclemod.Registries;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.items.ItemNitroCan;
 import dev.toma.vehiclemod.init.VMSounds;
 import dev.toma.vehiclemod.util.DevUtil;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 
-public class NitroHandler implements INBTSerializable<NBTTagList> {
+public class NitroHandler implements ISerializationListener {
 
     private final InventoryNitro inventory;
     private final EntityVehicle vehicle;
@@ -58,9 +63,17 @@ public class NitroHandler implements INBTSerializable<NBTTagList> {
         }
     }
 
+    public boolean hasNitroLED() {
+        return inventory.getStackInSlot(11).getItem() == Registries.VMItems.NITRO_LED;
+    }
+
     public boolean hasNitro(int slotID) {
         ItemStack stack = inventory.getStackInSlot(slotID);
         return stack.getItem() instanceof ItemNitroCan && stack.getItemDamage() < stack.getMaxDamage();
+    }
+
+    public ItemStack getNitroCloud(int index) {
+        return inventory.getStackInSlot(5 + index);
     }
 
     public InventoryBasic getInventory() {
@@ -75,16 +88,6 @@ public class NitroHandler implements INBTSerializable<NBTTagList> {
         return useTicksLeft > 0;
     }
 
-    @Override
-    public NBTTagList serializeNBT() {
-        return DevUtil.inventoryToNBT(inventory);
-    }
-
-    @Override
-    public void deserializeNBT(NBTTagList nbt) {
-        DevUtil.loadInventoryFromNBT(inventory, nbt);
-    }
-
     public int getFirstUsableNitroSlot() {
         for (int i = 0; i < 5; i++) {
             ItemStack stack = inventory.getStackInSlot(i);
@@ -97,6 +100,32 @@ public class NitroHandler implements INBTSerializable<NBTTagList> {
 
     public EntityVehicle getVehicle() {
         return vehicle;
+    }
+
+    @Override
+    public void onNBTWrite(NBTTagCompound nbt) {
+        NBTTagList list = DevUtil.inventoryToNBT(inventory);
+        nbt.setTag("nitro", list);
+    }
+
+    @Override
+    public void onNBTRead(NBTTagCompound nbt) {
+        if(nbt.hasKey("nitro", Constants.NBT.TAG_LIST)) {
+            DevUtil.loadInventoryFromNBT(inventory, nbt.getTagList("nitro", Constants.NBT.TAG_COMPOUND));
+        }
+    }
+
+    @Override
+    public void onBytesWrite(ByteBuf buf) {
+        NBTTagCompound data = new NBTTagCompound();
+        onNBTWrite(data);
+        ByteBufUtils.writeTag(buf, data);
+    }
+
+    @Override
+    public void onBytesRead(ByteBuf buf) {
+        NBTTagCompound data = ByteBufUtils.readTag(buf);
+        onNBTRead(data);
     }
 
     public class InventoryNitro extends InventoryBasic {

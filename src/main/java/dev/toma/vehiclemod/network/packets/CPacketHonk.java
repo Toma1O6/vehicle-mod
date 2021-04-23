@@ -1,6 +1,5 @@
 package dev.toma.vehiclemod.network.packets;
 
-import dev.toma.vehiclemod.client.CarHonkSound;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -52,16 +51,7 @@ public class CPacketHonk implements IMessage {
                 if(entity instanceof EntityVehicle) {
                     EntityVehicle vehicle = (EntityVehicle) entity;
                     SoundHandler handler = mc.getSoundHandler();
-                    CarHonkSound honkSound = vehicle.honkSound;
-                    if(honkSound != null && handler.isSoundPlaying(honkSound)) {
-                        handler.stopSound(honkSound);
-                    }
-                    vehicle.honkSound = null;
-                    if(state) {
-                        CarHonkSound carHonkSound = new CarHonkSound(vehicle);
-                        vehicle.honkSound = carHonkSound;
-                        handler.playSound(carHonkSound);
-                    }
+                    vehicle.getSoundController().updateHornSound(state, handler, vehicle);
                 }
             });
             return null;

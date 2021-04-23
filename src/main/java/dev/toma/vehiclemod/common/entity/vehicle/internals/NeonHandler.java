@@ -3,14 +3,18 @@ package dev.toma.vehiclemod.common.entity.vehicle.internals;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.inventory.InventoryNeons;
 import dev.toma.vehiclemod.util.DevUtil;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 import java.util.function.Function;
 
-public class NeonHandler implements INBTSerializable<NBTTagCompound> {
+public class NeonHandler implements ISerializationListener {
 
     private final EntityVehicle vehicle;
     private InventoryNeons neons;
@@ -28,38 +32,54 @@ public class NeonHandler implements INBTSerializable<NBTTagCompound> {
         return neons.getStackInSlot(1 + direction.ordinal());
     }
 
-    @Override
-    public NBTTagCompound serializeNBT() {
-        return DevUtil.inventoryToNBTCompound(neons);
-    }
-
-    @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
-        DevUtil.loadInventoryFromNBTCompound(neons, nbt);
-    }
-
     public InventoryNeons getNeons() {
         return neons;
     }
 
-    public enum Direction {
-        FRONT(PositionManager::getFrontNeon, false, false),
-        RIGHT(PositionManager::getRightNeon, true, false),
-        BACK(PositionManager::getBackNeon, false, true),
-        LEFT(PositionManager::getLeftNeon, true, true);
+    @Override
+    public void onNBTWrite(NBTTagCompound nbt) {
+        NBTTagList list = DevUtil.inventoryToNBT(neons);
+        nbt.setTag("neons", list);
+    }
 
-        final Function<PositionManager, Vec3d> position;
+    @Override
+    public void onNBTRead(NBTTagCompound nbt) {
+        if(nbt.hasKey("neons", Constants.NBT.TAG_LIST)) {
+            DevUtil.loadInventoryFromNBT(neons, nbt.getTagList("neons", Constants.NBT.TAG_COMPOUND));
+        }
+    }
+
+    @Override
+    public void onBytesWrite(ByteBuf buf) {
+        NBTTagCompound data = new NBTTagCompound();
+        onNBTWrite(data);
+        ByteBufUtils.writeTag(buf, data);
+    }
+
+    @Override
+    public void onBytesRead(ByteBuf buf) {
+        NBTTagCompound data = ByteBufUtils.readTag(buf);
+        onNBTRead(data);
+    }
+
+    public enum Direction {
+        FRONT(VehicleStyle::getNeonFront, false, false),
+        RIGHT(VehicleStyle::getNeonRight, true, false),
+        BACK(VehicleStyle::getNeonBack, false, true),
+        LEFT(VehicleStyle::getNeonLeft, true, true);
+
+        final Function<VehicleStyle, Vec3d> position;
         final boolean vertical;
         final boolean invert;
 
-        Direction(Function<PositionManager, Vec3d> position, boolean vertical, boolean invert) {
+        Direction(Function<VehicleStyle, Vec3d> position, boolean vertical, boolean invert) {
             this.position = position;
             this.vertical = vertical;
             this.invert = invert;
         }
 
-        public Vec3d getPosition(PositionManager manager) {
-            return position.apply(manager);
+        public Vec3d getPosition(VehicleStyle style) {
+            return position.apply(style);
         }
 
         public boolean isVertical() {

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class VehicleStats {
+public final class VehicleProperties {
 
 	@Config.Ignore
 	public static float topSpeedMin = 500.0F;
@@ -32,7 +32,7 @@ public final class VehicleStats {
 	@Config.Ignore
 	public static float brakingMax;
 	@Config.Ignore
-	protected static List<VehicleStats> trackingList = new ArrayList<>();
+	protected static List<VehicleProperties> trackingList = new ArrayList<>();
 
 	@Config.Name("Max Health")
 	@Config.RequiresMcRestart
@@ -70,7 +70,7 @@ public final class VehicleStats {
 	@Config.Name("TPP Camera Offset")
 	public Vector3i cameraOff;
 	
-	public VehicleStats(float maxHP, float maxSpeed, float acceleration, float brakeSpeed, float turningSpeed, float maxAngle, float fuelConsumption, int capacity, Vector3i offset) {
+	public VehicleProperties(float maxHP, float maxSpeed, float acceleration, float brakeSpeed, float turningSpeed, float maxAngle, float fuelConsumption, int capacity, Vector3i offset) {
 		this.maxHealth = maxHP;
 		this.maxSpeed = maxSpeed;
 		this.acceleration = acceleration;
@@ -82,11 +82,11 @@ public final class VehicleStats {
 		this.cameraOff = offset;
 	}
 
-	public VehicleStats(float maxHP, float maxSpeed, float acceleration, float brakeSpeed, float turningSpeed, float maxAngle, float fuelConsumption, int capacity) {
+	public VehicleProperties(float maxHP, float maxSpeed, float acceleration, float brakeSpeed, float turningSpeed, float maxAngle, float fuelConsumption, int capacity) {
 		this(maxHP, maxSpeed, acceleration, brakeSpeed, turningSpeed, maxAngle, fuelConsumption, capacity, new Vector3i(0, 0, 0));
 	}
 
-	public VehicleStats track() {
+	public VehicleProperties track() {
 		trackingList.add(this);
 		calculateRanges();
 		return this;
@@ -101,29 +101,29 @@ public final class VehicleStats {
 		accelerationMax = 0.0F;
 		handlingMax = 0.0F;
 		brakingMax = 0.0F;
-		trackingList.forEach(VehicleStats::calculateRanges);
+		trackingList.forEach(VehicleProperties::calculateRanges);
 	}
 
-	public static int getTotalVehicleRating(VehicleStats stats) {
+	public static int getTotalVehicleRating(VehicleProperties stats) {
 		return getTopSpeedRating(stats) + getAccelerationRating(stats) + getBrakeRating(stats) + getHandlingRating(stats);
 	}
 
-	public static int getTopSpeedRating(VehicleStats stats) {
+	public static int getTopSpeedRating(VehicleProperties stats) {
 		float f = fix((stats.maxSpeed - topSpeedMin) / (topSpeedMax - topSpeedMin));
 		return (int) (250 * f);
 	}
 
-	public static int getAccelerationRating(VehicleStats stats) {
+	public static int getAccelerationRating(VehicleProperties stats) {
 		float f = fix((stats.acceleration - accelerationMin) / (accelerationMax - accelerationMin));
 		return (int) (250 * f);
 	}
 
-	public static int getBrakeRating(VehicleStats stats) {
+	public static int getBrakeRating(VehicleProperties stats) {
 		float f = fix((stats.brakeSpeed - brakingMin) / (brakingMax - brakingMin));
 		return (int) (250 * f);
 	}
 
-	public static int getHandlingRating(VehicleStats stats) {
+	public static int getHandlingRating(VehicleProperties stats) {
 		float f = fix((stats.turnSpeed - handlingMin) / (handlingMax - handlingMin));
 		return (int) (250 * f);
 	}

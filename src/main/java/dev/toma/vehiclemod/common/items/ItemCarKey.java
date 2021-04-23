@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.common.items;
 
 import dev.toma.vehiclemod.Registries;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.LockManager;
 import dev.toma.vehiclemod.init.VMSounds;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +27,7 @@ public class ItemCarKey extends VMItem {
     public static ItemStack createKeysFor(EntityVehicle vehicle, EntityPlayer player) {
         ItemStack stack = new ItemStack(Registries.VMItems.CAR_KEY);
         stack.setStackDisplayName(vehicle.getDisplayName().getFormattedText());
-        setUUID(stack, vehicle.lockManager.getLinkedUUID());
+        setUUID(stack, vehicle.getLockManager().getLinkedUUID());
         return stack;
     }
 
@@ -37,7 +38,7 @@ public class ItemCarKey extends VMItem {
         int keyRange = 30;
         List<EntityVehicle> nearbyVehicles = worldIn.getEntitiesWithinAABB(EntityVehicle.class, playerIn.getEntityBoundingBox().grow(keyRange));
         for (EntityVehicle vehicle : nearbyVehicles) {
-            LockManager manager = vehicle.lockManager;
+            LockManager manager = vehicle.getLockManager();
             if(manager.test(uuid)) {
                 manager.setUnlocked(!manager.isUnlocked());
                 worldIn.playSound(null, vehicle.posX, vehicle.posY, vehicle.posZ, manager.isUnlocked() ? VMSounds.CAR_UNLOCKED : VMSounds.CAR_LOCKED, SoundCategory.MASTER, 2.0F, 1.0F);

@@ -18,7 +18,7 @@ public class GuiNitro extends GuiTunning<InventoryBasic, ContainerNitro> {
 
     @Override
     public boolean isButtonEnabled(EnumTunningType tunningType) {
-        return tunningType != EnumTunningType.NEONS || !container.getNitroHandler().getVehicle().getVehiclePositions().areNeonsDisabled();
+        return tunningType != EnumTunningType.NEONS || !container.getNitroHandler().getVehicle().getStyle().areNeonsDisabled();
     }
 
     @Override

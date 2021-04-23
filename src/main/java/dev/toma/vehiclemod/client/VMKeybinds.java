@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.client;
 
 import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.ISpecialVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.LightController;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.NitroHandler;
@@ -69,7 +70,7 @@ public class VMKeybinds {
             Entity entity = player.getRidingEntity();
             if(entity instanceof EntityVehicle && player == entity.getControllingPassenger()) {
                 EntityVehicle vehicle = (EntityVehicle) entity;
-                VMNetworkManager.instance().sendToServer(SPacketChangeLightStatus.headlights(vehicle, !vehicle.lightController.getLightFlag()));
+                VMNetworkManager.instance().sendToServer(SPacketChangeLightStatus.headlights(vehicle, !vehicle.getLightController().getLightFlag()));
             }
         } else if(INDICATOR_RIGHT.isPressed()) {
             Entity entity = player.getRidingEntity();
@@ -93,13 +94,13 @@ public class VMKeybinds {
             Entity entity = player.getRidingEntity();
             if(entity instanceof EntityVehicle && player == entity.getControllingPassenger()) {
                 EntityVehicle vehicle = (EntityVehicle) entity;
-                VMNetworkManager.instance().sendToServer(SPacketVehicleAction.eco(!vehicle.isEcoMode()));
+                VMNetworkManager.instance().sendToServer(SPacketVehicleAction.eco(!vehicle.getStats().isEcoModeActive()));
             }
         } else if(START.isPressed()) {
             Entity entity = player.getRidingEntity();
             if(entity instanceof EntityVehicle && player == entity.getControllingPassenger()) {
                 EntityVehicle vehicle = (EntityVehicle) entity;
-                if(!vehicle.isStarted() && vehicle.getStartCooldown() == 0) {
+                if(!vehicle.getStats().isStarted() && vehicle.getStats().getStartCooldown() == 0) {
                     VMNetworkManager.instance().sendToServer(SPacketVehicleAction.start());
                 }
             }
@@ -111,7 +112,7 @@ public class VMKeybinds {
                     return;
                 NitroHandler handler = vehicle.getNitroHandler();
                 int slot = handler.getFirstUsableNitroSlot();
-                if(vehicle.isStarted() && slot != -1) {
+                if(vehicle.getStats().isStarted() && slot != -1) {
                     handler.initiateUse(player, slot);
                     VMNetworkManager.instance().sendToServer(SPacketVehicleAction.nitro(slot));
                 }

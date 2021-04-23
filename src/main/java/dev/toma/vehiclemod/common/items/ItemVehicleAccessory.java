@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.common.items;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -39,7 +40,7 @@ public abstract class ItemVehicleAccessory extends VMItem {
     public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
         if(!player.world.isRemote) {
             if(player.isRiding() && player.getRidingEntity() instanceof EntityVehicle) {
-                if(((EntityVehicle) player.getRidingEntity()).currentSpeed != 0) {
+                if(!((EntityVehicle) player.getRidingEntity()).isStationary()) {
                     player.sendMessage(new TextComponentString(TextFormatting.RED + "Vehicle must be stationary!"));
                     player.resetActiveHand();
                     return;
@@ -55,7 +56,7 @@ public abstract class ItemVehicleAccessory extends VMItem {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         if(playerIn.isRiding() && playerIn.getRidingEntity() instanceof EntityVehicle) {
-            if(((EntityVehicle) playerIn.getRidingEntity()).currentSpeed != 0) {
+            if(!((EntityVehicle) playerIn.getRidingEntity()).isStationary()) {
                 if(!worldIn.isRemote) {
                     playerIn.sendStatusMessage(new TextComponentString(TextFormatting.RED + "Vehicle must be stationary!"), true);
                     return new ActionResult<>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));

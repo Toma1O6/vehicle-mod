@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.common.items;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.EnumCarLockType;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.LockManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +18,7 @@ public class ItemCarLock extends VMItem implements IVehicleAction {
 
     @Override
     public void apply(EntityPlayer player, World world, ItemStack stack, EntityVehicle vehicle) {
-        LockManager manager = vehicle.lockManager;
+        LockManager manager = vehicle.getLockManager();
         if(manager.isUnlocked()) {
             manager.setCarLockType(carLockType, false);
             manager.setUnlocked(false);

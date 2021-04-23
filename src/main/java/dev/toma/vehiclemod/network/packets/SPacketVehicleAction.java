@@ -1,6 +1,7 @@
 package dev.toma.vehiclemod.network.packets;
 
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleStats;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -71,15 +72,16 @@ public class SPacketVehicleAction implements IMessage {
                 Entity entity = player.getRidingEntity();
                 if(entity instanceof EntityVehicle && entity.getControllingPassenger() == player) {
                     EntityVehicle vehicle = (EntityVehicle) entity;
+                    VehicleStats stats = vehicle.getStats();
                     switch (message.action) {
                         case START:
-                            if(vehicle.getStartCooldown() == 0 && !vehicle.isStarted()) {
-                                vehicle.initiateStart();
+                            if(stats.getStartCooldown() == 0 && !stats.isStarted()) {
+                                stats.initiateStart(server, vehicle.getVehicleUpgrades(), vehicle.posX, vehicle.posY, vehicle.posZ, vehicle.getSoundController().getPack());
                                 vehicle.sync();
                             }
                             break;
                         case ECO:
-                            vehicle.setEcoMode(message.eco);
+                            stats.setEcoMode(message.eco);
                             vehicle.sync();
                             break;
                         case NITRO:

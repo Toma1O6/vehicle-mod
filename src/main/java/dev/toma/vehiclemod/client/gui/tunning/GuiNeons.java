@@ -2,6 +2,7 @@ package dev.toma.vehiclemod.client.gui.tunning;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.container.ContainerNeons;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.inventory.InventoryNeons;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -31,7 +32,7 @@ public class GuiNeons extends GuiTunning<InventoryNeons, ContainerNeons> {
 
     @Override
     public boolean isButtonEnabled(EnumTunningType tunningType) {
-        return tunningType != EnumTunningType.NEONS || !container.getIInventory().getVehicle().getVehiclePositions().areNeonsDisabled();
+        return tunningType != EnumTunningType.NEONS || !container.getIInventory().getVehicle().getStyle().areNeonsDisabled();
     }
 
     @Override

@@ -1,6 +1,8 @@
 package dev.toma.vehiclemod.common.tileentity;
 
 import dev.toma.vehiclemod.Registries;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleStats;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
@@ -88,8 +90,11 @@ public class TileEntityPetrolPump extends TileEntityInventory implements ITickab
         }
         if(this.pairedVehicle != null) {
             if(canReach()) {
-                if(transfer && pairedVehicle.fuel < pairedVehicle.getActualStats().fuelCapacity && storedAmount > 0.0F) {
-                    pairedVehicle.fuel += 0.1F;
+                int fuelCap = pairedVehicle.getProperties().fuelCapacity;
+                VehicleStats stats = pairedVehicle.getStats();
+                if(transfer && stats.getFuel() < fuelCap && storedAmount > 0.0F) {
+                    float fuel = Math.min(stats.getFuel() + 0.1F, fuelCap);
+                    stats.setFuel(fuel);
                     storedAmount -= 0.1F;
                 } else transfer = false;
             } else {

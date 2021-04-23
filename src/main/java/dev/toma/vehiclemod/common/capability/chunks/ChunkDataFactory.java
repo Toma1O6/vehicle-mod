@@ -1,10 +1,13 @@
 package dev.toma.vehiclemod.common.capability.chunks;
 
 import dev.toma.vehiclemod.VehicleMod;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.EnumVehicleType;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleStats;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleStyle;
 import dev.toma.vehiclemod.config.VMConfig;
+import dev.toma.vehiclemod.config.VehicleProperties;
 import dev.toma.vehiclemod.util.DevUtil;
-import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleTexture;
 import dev.toma.vehiclemod.util.WeightedRandom;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -91,12 +94,15 @@ public class ChunkDataFactory implements ChunkData {
                         EntityEntry entry = list.get(random.nextInt(list.size()));
                         EntityVehicle vehicle = (EntityVehicle) entry.newInstance(world);
                         vehicle.setPosition(x + 0.5, y + 1.0, z + 0.5);
-                        vehicle.fuel = 0.0F;
-                        vehicle.health = vehicle.getActualStats().maxHealth * 0.1F;
-                        vehicle.setTexture(VehicleTexture.RUST);
+                        VehicleStats stats = vehicle.getStats();
+                        VehicleStyle style = vehicle.getStyle();
+                        VehicleProperties properties = vehicle.getProperties();
+                        stats.setFuel(0.0F);
+                        stats.setHealth(properties.maxHealth * 0.1F);
+                        style.repaint(VehicleStyle.Texture.RUST);
                         vehicle.rotationYaw = random.nextInt(180) - random.nextInt(180);
-                        vehicle.lockManager.setCarLockType(vehicle.getVehicleType().getCarLockType(), true);
-                        vehicle.lightController.setLightState(false);
+                        vehicle.getLockManager().setCarLockType(vehicle.getVehicleType().getCarLockType(), true);
+                        vehicle.getLightController().setLightState(false);
                         world.spawnEntity(vehicle);
                     }
                 }

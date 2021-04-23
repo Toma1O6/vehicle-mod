@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.common.items;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -26,7 +27,7 @@ public class ItemRepairKit extends ItemVehicleAccessory {
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
         if(entityLiving.isRiding() && entityLiving.getRidingEntity() instanceof EntityVehicle) {
-            ((EntityVehicle)entityLiving.getRidingEntity()).repair(tier.getAmount());
+            ((EntityVehicle)entityLiving.getRidingEntity()).getStats().addHealth(tier.getAmount());
             stack.shrink(1);
         }
         return stack;

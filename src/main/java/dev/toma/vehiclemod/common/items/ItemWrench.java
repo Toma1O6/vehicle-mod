@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.common.items;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.LockManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +20,7 @@ public class ItemWrench extends VMItem implements IVehicleAction {
 
     @Override
     public void apply(EntityPlayer player, World world, ItemStack stack, EntityVehicle vehicle) {
-        LockManager lock = vehicle.lockManager;
+        LockManager lock = vehicle.getLockManager();
         if ((vehicle.getPassengers().size() == 0 && lock.isUnlocked()) || player.capabilities.isCreativeMode) {
             vehicle.setDead();
         } else {

@@ -3,6 +3,7 @@ package dev.toma.vehiclemod.client.gui;
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.blocks.BlockPetrolPump;
 import dev.toma.vehiclemod.common.container.ContainerPetrolPump;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.network.packets.SPacketUpdateTileEntity;
@@ -16,8 +17,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-
-import java.io.IOException;
 
 public class GuiPetrolPump extends GuiContainer {
 
@@ -40,7 +39,7 @@ public class GuiPetrolPump extends GuiContainer {
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(GuiButton button) {
         switch (button.id) {
             case 0:
                 petrolPump.pair(mc.world.getBlockState(petrolPump.getPos()).getValue(BlockPetrolPump.FACING));
@@ -62,11 +61,12 @@ public class GuiPetrolPump extends GuiContainer {
         mc.getTextureManager().bindTexture(TEXTURE);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
         drawFuelBar(11, petrolPump.storedAmount / TileEntityPetrolPump.CAPACITY);
-        if(petrolPump.pairedVehicle != null) {
-            drawFuelBar(50, petrolPump.pairedVehicle.fuel / (float)petrolPump.pairedVehicle.getActualStats().fuelCapacity);
+        EntityVehicle vehicle = petrolPump.pairedVehicle;
+        if(vehicle != null) {
+            drawFuelBar(50, vehicle.getStats().getFuel() / (float)vehicle.getProperties().fuelCapacity);
         }
         mc.fontRenderer.drawStringWithShadow("Stored: " + (int)petrolPump.storedAmount + "L", guiLeft + 33, guiTop + 25, 0xFFFFFFFF);
-        mc.fontRenderer.drawStringWithShadow("Vehicle: " + (petrolPump.pairedVehicle != null ? (int)petrolPump.pairedVehicle.fuel + "L" : "No vehicle"), guiLeft + 33, guiTop + 63, 0xFFFFFFFF);
+        mc.fontRenderer.drawStringWithShadow("Vehicle: " + (vehicle != null ? (int)vehicle.getStats().getFuel() + "L" : "No vehicle"), guiLeft + 33, guiTop + 63, 0xFFFFFFFF);
     }
 
     private void sync() {

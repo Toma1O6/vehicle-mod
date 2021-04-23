@@ -20,7 +20,7 @@ public class ContainerNitro extends ModContainer<InventoryBasic> {
     public ContainerNitro(InventoryPlayer player, NitroHandler handler) {
         super(handler.getInventory());
         this.handler = handler;
-        int slots = handler.getVehicle().getNitroCloudSpraySlotCount();
+        int slots = handler.getVehicle().getStyle().getNitroSprayCount();
 
         for (int i = 0; i < 5; i++) {
             addSlotToContainer(new SlotNitroCan(handler.getInventory(), i, 8 + i * 18, 17));

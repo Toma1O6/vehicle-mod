@@ -9,12 +9,13 @@ import dev.toma.vehiclemod.common.capability.chunks.ChunkDataFactory;
 import dev.toma.vehiclemod.common.capability.world.RacingData;
 import dev.toma.vehiclemod.common.capability.world.RacingDataImpl;
 import dev.toma.vehiclemod.common.command.CommandTrack;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.PropertyList;
 import dev.toma.vehiclemod.common.tileentity.TileEntityMechanicPackage;
 import dev.toma.vehiclemod.common.tileentity.TileEntityPetrolPump;
 import dev.toma.vehiclemod.common.tileentity.TileEntitySecret;
 import dev.toma.vehiclemod.common.tileentity.TileEntityTunerPackage;
 import dev.toma.vehiclemod.common.world.PackageGenerator;
-import dev.toma.vehiclemod.config.VehicleStats;
+import dev.toma.vehiclemod.config.VehicleProperties;
 import dev.toma.vehiclemod.network.VMNetworkManager;
 import dev.toma.vehiclemod.proxy.CommonProxy;
 import dev.toma.vehiclemod.util.GuiHandler;
@@ -58,6 +59,7 @@ public class VehicleMod {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 		CapabilityManager.INSTANCE.register(ChunkData.class, new StorageImpl<>(), ChunkDataFactory::new);
 		CapabilityManager.INSTANCE.register(RacingData.class, new StorageImpl<>(), RacingDataImpl::new);
+		PropertyList.registerProperties();
 	}
 	
 	@EventHandler
@@ -74,7 +76,7 @@ public class VehicleMod {
 	@EventHandler
 	public static void postInit(FMLPostInitializationEvent e) {
 		proxy.postInit(e);
-		VehicleStats.initiateValueRefresh();
+		VehicleProperties.initiateValueRefresh();
 	}
 
 	@EventHandler

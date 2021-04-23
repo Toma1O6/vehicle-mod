@@ -4,12 +4,11 @@ import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.NeonHandler;
-import dev.toma.vehiclemod.common.entity.vehicle.internals.PositionManager;
-import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleTexture;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleStyle;
 import dev.toma.vehiclemod.common.items.ItemNeon;
 import dev.toma.vehiclemod.common.items.ItemNeonPulser;
 import dev.toma.vehiclemod.config.VMConfig;
-import dev.toma.vehiclemod.config.VehicleStats;
+import dev.toma.vehiclemod.config.VehicleProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -40,13 +39,13 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 	@Override
 	protected ResourceLocation getEntityTexture(V entity) {
 		if(entity != null) {
-			return entity.getTexture().getResource();
+			return entity.getStyle().getTexture().getResource();
 		}
 		return this.getDefaultResource();
 	}
 
 	protected ResourceLocation getDefaultResource() {
-		return VehicleTexture.WHITE.getResource();
+		return VehicleStyle.Texture.WHITE.getResource();
 	}
 
 	public void prepareRender(V entity, double x, double y, double z, float entityYaw, float partialTicks) {
@@ -83,15 +82,15 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 			this.drawInfo(entity, mc, (float)x, (float)y + f2, (float)z);
 		}
 		// neons
-		if(entity != null && entity.lightController.areLightsOn(entity)) {
+		if(entity != null && entity.getLightController().areLightsOn(entity)) {
 			drawNeons(entity, x, y, z, entityYaw);
 		}
 		RenderHelper.enableStandardItemLighting();
 	}
 
 	private void drawNeons(V vehicle, double x, double y, double z, float yaw) {
-		PositionManager positions = vehicle.getVehiclePositions();
-		if(positions.areNeonsDisabled())
+		VehicleStyle style = vehicle.getStyle();
+		if(style.areNeonsDisabled())
 			return;
 		NeonHandler neonHandler = vehicle.getNeonHandler();
 		ItemStack pulserStack = neonHandler.getPulserUpgrade();
@@ -117,7 +116,7 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		GlStateManager.disableCull();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(NEON);
 		for (NeonHandler.Direction direction : NeonHandler.Direction.values()) {
-			drawNeon(vehicle, direction, neonHandler, positions, yaw, aMax, aMin);
+			drawNeon(vehicle, direction, neonHandler, style, yaw, aMax, aMin);
 		}
 		GlStateManager.enableCull();
 		GlStateManager.shadeModel(GL11.GL_FLAT);
@@ -126,7 +125,7 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		GlStateManager.popMatrix();
 	}
 
-	private void drawNeon(V vehicle, NeonHandler.Direction direction, NeonHandler handler, PositionManager manager, float yaw, float aMax, float aMin) {
+	private void drawNeon(V vehicle, NeonHandler.Direction direction, NeonHandler handler, VehicleStyle style, float yaw, float aMax, float aMin) {
 		ItemStack stack = handler.getNeon(direction);
 		if(stack.isEmpty())
 			return;
@@ -141,10 +140,10 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		double neonWidth = 0.15;
 		double w14 = (2 * neonWidth) / 4;
 		double w34 = 3 * w14;
-		Vec3d pos = direction.getPosition(manager);
+		Vec3d pos = direction.getPosition(style);
 		if(direction.isVertical()) {
-			if(manager.hasCustomLength(direction)) {
-				length = manager.getLength(direction);
+			if(style.hasCustomNeonLength(direction)) {
+				length = style.getCustomNeonLength(direction);
 			}
 			double l = length / 2.0;
 			Vec3d p1 = new Vec3d(pos.x - neonWidth, 0.01, pos.z + l);
@@ -171,8 +170,8 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 				builder.pos(p1.x + w14, p1.y, p1.z).tex(0, 0).color(r, g, b, a1).endVertex();
 			}
 		} else {
-			if(manager.hasCustomLength(direction)) {
-				length = manager.getLength(direction);
+			if(style.hasCustomNeonLength(direction)) {
+				length = style.getCustomNeonLength(direction);
 			}
 			double d = length / 2.0;
 			Vec3d p1 = new Vec3d(+d, 0.01, pos.z - neonWidth);
@@ -222,11 +221,11 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		double of = -vehicle.height - 70;
 		int left = -i - 1;
 		int right = i + 10;
-		VehicleStats stats = vehicle.getActualStats();
-		float speedStat = (stats.maxSpeed - VehicleStats.topSpeedMin) / (VehicleStats.topSpeedMax - VehicleStats.topSpeedMin);
-		float accelerationStat = (stats.acceleration - VehicleStats.accelerationMin) / (VehicleStats.accelerationMax - VehicleStats.accelerationMin);
-		float handlingStat = (stats.turnSpeed - VehicleStats.handlingMin) / (VehicleStats.handlingMax - VehicleStats.handlingMin);
-		float brakingStat = (stats.brakeSpeed - VehicleStats.brakingMin) / (VehicleStats.brakingMax - VehicleStats.brakingMin);
+		VehicleProperties properties = vehicle.getProperties();
+		float speedStat = (properties.maxSpeed - VehicleProperties.topSpeedMin) / (VehicleProperties.topSpeedMax - VehicleProperties.topSpeedMin);
+		float accelerationStat = (properties.acceleration - VehicleProperties.accelerationMin) / (VehicleProperties.accelerationMax - VehicleProperties.accelerationMin);
+		float handlingStat = (properties.turnSpeed - VehicleProperties.handlingMin) / (VehicleProperties.handlingMax - VehicleProperties.handlingMin);
+		float brakingStat = (properties.brakeSpeed - VehicleProperties.brakingMin) / (VehicleProperties.brakingMax - VehicleProperties.brakingMin);
 		int px = left + 19;
 		int width = right - px - 2;
 		Tessellator tessellator = Tessellator.getInstance();
@@ -248,9 +247,9 @@ public abstract class RenderVehicle<V extends EntityVehicle> extends Render<V> {
 		GlStateManager.enableTexture2D();
 		GlStateManager.depthMask(true);
 		renderer.drawString(vehicle.getName(), -i + 5, -68, -1);
-		renderer.drawString("Health: " + (int)((vehicle.health/vehicle.getActualStats().maxHealth)*100) + " %", -i + 5, -57, -1);
-		renderer.drawString("Fuel: " + (int)(100 * (vehicle.fuel / vehicle.getActualStats().fuelCapacity)) + " %", -i + 5, -44, -1);
-		renderer.drawString("Distance: " + new DecimalFormat("#.#").format(vehicle.getTravelledDistance()) + " km", -i + 5, -33, -1);
+		renderer.drawString("Health: " + (int)((vehicle.getStats().getHealth() / properties.maxHealth) * 100) + " %", -i + 5, -57, -1);
+		renderer.drawString("Fuel: " + (int)(100 * (vehicle.getStats().getFuel() / properties.fuelCapacity)) + " %", -i + 5, -44, -1);
+		renderer.drawString("Distance: " + new DecimalFormat("#.#").format(vehicle.getStats().getDistanceTravelled()) + " km", -i + 5, -33, -1);
 		renderer.drawString("SPD", left + 1, -23, 0x00ff00);
 		renderer.drawString("ACC", left + 1, -14, 0xff0000);
 		renderer.drawString("HDL", left + 1, -5, 0xff);

@@ -2,7 +2,7 @@ package dev.toma.vehiclemod.client.render.entity;
 
 import dev.toma.vehiclemod.client.model.vehicle.ModelMcgAmbulance;
 import dev.toma.vehiclemod.client.model.vehicle.ModelVehicle;
-import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleTexture;
+import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleStyle;
 import dev.toma.vehiclemod.common.entity.vehicle.special.VehicleMcgAmbulance;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -24,7 +24,7 @@ public class RenderMcgAmbulance extends RenderVehicle<VehicleMcgAmbulance> {
 
     @Override
     protected ResourceLocation getDefaultResource() {
-        return VehicleTexture.RED.getResource();
+        return VehicleStyle.Texture.RED.getResource();
     }
 
     @Override

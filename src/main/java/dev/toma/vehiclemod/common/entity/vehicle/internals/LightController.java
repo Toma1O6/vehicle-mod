@@ -1,14 +1,13 @@
 package dev.toma.vehiclemod.common.entity.vehicle.internals;
 
 import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
-import dev.toma.vehiclemod.util.DevUtil;
-import net.minecraft.client.Minecraft;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class LightController implements INBTSerializable<NBTTagCompound> {
+public class LightController implements ISerializationListener {
 
     private boolean lights = true;
     private TurnLightStatus turnLightStatus = TurnLightStatus.OFF;
@@ -20,32 +19,24 @@ public class LightController implements INBTSerializable<NBTTagCompound> {
 
     @SideOnly(Side.CLIENT)
     public boolean isReversing(EntityVehicle vehicle) {
+        /*double current = vehicle.getEntitySpeed();
+        double prev = vehicle.getLastEntitySpeed();
         if(vehicle.getControllingPassenger() == Minecraft.getMinecraft().player) {
-            return vehicle.currentSpeed <= vehicle.prevSpeed && vehicle.currentSpeed < 0 && vehicle.inputBack;
+            return current >= prev && vehicle.isBitActive(EntityDriveable.BACKWARD);
         }
-        return vehicle.currentSpeed < 0 && vehicle.currentSpeed <= vehicle.prevSpeed;
+        // ??
+        return vehicle.currentSpeed < 0 && vehicle.currentSpeed <= vehicle.prevSpeed;*/
+        return false;
     }
 
     @SideOnly(Side.CLIENT)
     public boolean isBraking(EntityVehicle vehicle) {
-        if(vehicle.getControllingPassenger() == Minecraft.getMinecraft().player) {
-            return vehicle.inputBack && vehicle.currentSpeed >= 0;
+        /*if(vehicle.getControllingPassenger() == Minecraft.getMinecraft().player) {
+            return vehicle.isBitActive(EntityDriveable.BACKWARD) && vehicle.currentSpeed >= 0;
         }
-        return vehicle.currentSpeed > 0 && vehicle.currentState == EnumVehicleState.BRAKING;
-    }
-
-    @Override
-    public NBTTagCompound serializeNBT() {
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setBoolean("lights", lights);
-        nbt.setInteger("turnStatus", turnLightStatus.ordinal());
-        return nbt;
-    }
-
-    @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
-        lights = nbt.getBoolean("lights");
-        turnLightStatus = DevUtil.getEnumFromNBT("turnStatus", nbt, TurnLightStatus.class);
+        // ?
+        return vehicle.currentSpeed > 0 && vehicle.currentState == EnumVehicleState.BRAKING;*/
+        return false;
     }
 
     public void setLightState(boolean lights) {
@@ -68,8 +59,36 @@ public class LightController implements INBTSerializable<NBTTagCompound> {
         return turnLightStatus;
     }
 
-    public enum TurnLightStatus {
+    @Override
+    public void onNBTWrite(NBTTagCompound nbt) {
+        NBTTagCompound data = new NBTTagCompound();
+        data.setBoolean("lights", lights);
+        data.setByte("turnStatus", (byte) turnLightStatus.ordinal());
+        nbt.setTag("lightController", data);
+    }
 
+    @Override
+    public void onNBTRead(NBTTagCompound nbt) {
+        if(nbt.hasKey("lightController", Constants.NBT.TAG_COMPOUND)) {
+            NBTTagCompound data = nbt.getCompoundTag("lightController");
+            lights = data.getBoolean("lights");
+            turnLightStatus = TurnLightStatus.values()[nbt.getByte("turnStatus")];
+        }
+    }
+
+    @Override
+    public void onBytesWrite(ByteBuf buf) {
+        buf.writeBoolean(lights);
+        buf.writeByte(turnLightStatus.ordinal());
+    }
+
+    @Override
+    public void onBytesRead(ByteBuf buf) {
+        lights = buf.readBoolean();
+        turnLightStatus = TurnLightStatus.values()[buf.readByte()];
+    }
+
+    public enum TurnLightStatus {
         OFF,
         RIGHT,
         LEFT,

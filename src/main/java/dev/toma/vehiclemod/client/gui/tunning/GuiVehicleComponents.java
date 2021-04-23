@@ -2,9 +2,10 @@ package dev.toma.vehiclemod.client.gui.tunning;
 
 import dev.toma.vehiclemod.VehicleMod;
 import dev.toma.vehiclemod.common.container.ContainerVehicleComponents;
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import dev.toma.vehiclemod.common.entity.vehicle.internals.VehicleUpgrades;
 import dev.toma.vehiclemod.common.inventory.InventoryUpgrades;
-import dev.toma.vehiclemod.config.VehicleStats;
+import dev.toma.vehiclemod.config.VehicleProperties;
 import dev.toma.vehiclemod.util.DevUtil;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -21,7 +22,7 @@ public class GuiVehicleComponents extends GuiTunning<InventoryUpgrades, Containe
 
     @Override
     public boolean isButtonEnabled(EnumTunningType tunningType) {
-        return tunningType != EnumTunningType.NEONS || !container.getIInventory().getVehicle().getVehiclePositions().areNeonsDisabled();
+        return tunningType != EnumTunningType.NEONS || !container.getIInventory().getVehicle().getStyle().areNeonsDisabled();
     }
 
     @Override
@@ -33,14 +34,14 @@ public class GuiVehicleComponents extends GuiTunning<InventoryUpgrades, Containe
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         InventoryUpgrades components = ((ContainerVehicleComponents) inventorySlots).getIInventory();
         EntityVehicle vehicle = components.getVehicle();
-        VehicleUpgrades upgrades = vehicle.getUpgrades();
+        VehicleUpgrades upgrades = vehicle.getVehicleUpgrades();
         if(components.getVehicle() != null) {
-            VehicleStats stats = components.getVehicle().getActualStats();
-            float speedStat = fixValue((stats.maxSpeed - VehicleStats.topSpeedMin) / (VehicleStats.topSpeedMax - VehicleStats.topSpeedMin));
-            float accelerationStat = fixValue((stats.acceleration - VehicleStats.accelerationMin) / (VehicleStats.accelerationMax - VehicleStats.accelerationMin));
-            float handlingStat = fixValue((stats.turnSpeed - VehicleStats.handlingMin) / (VehicleStats.handlingMax - VehicleStats.handlingMin));
-            float brakingStat = fixValue((stats.brakeSpeed - VehicleStats.brakingMin) / (VehicleStats.brakingMax - VehicleStats.brakingMin));
-            int total = VehicleStats.getTotalVehicleRating(stats);
+            VehicleProperties properties = components.getVehicle().getProperties();
+            float speedStat = fixValue((properties.maxSpeed - VehicleProperties.topSpeedMin) / (VehicleProperties.topSpeedMax - VehicleProperties.topSpeedMin));
+            float accelerationStat = fixValue((properties.acceleration - VehicleProperties.accelerationMin) / (VehicleProperties.accelerationMax - VehicleProperties.accelerationMin));
+            float handlingStat = fixValue((properties.turnSpeed - VehicleProperties.handlingMin) / (VehicleProperties.handlingMax - VehicleProperties.handlingMin));
+            float brakingStat = fixValue((properties.brakeSpeed - VehicleProperties.brakingMin) / (VehicleProperties.brakingMax - VehicleProperties.brakingMin));
+            int total = VehicleProperties.getTotalVehicleRating(properties);
             String text = "Power rating: " + total;
             int w = fontRenderer.getStringWidth(text);
             fontRenderer.drawString(text, (xSize - w) / 2 - 10, 45, 0x222222);
@@ -58,10 +59,10 @@ public class GuiVehicleComponents extends GuiTunning<InventoryUpgrades, Containe
             DevUtil.drawColor(27, 64, (int)(27 + 119 * accelerationStat), 69, 1.0F, 0.0F, 0.0F, 1.0F);
             DevUtil.drawColor(27, 73, (int)(27 + 119 * handlingStat), 78, 0.0F, 0.0F, 1.0F, 1.0F);
             DevUtil.drawColor(27, 82, (int)(27 + 119 * brakingStat), 87, 1.0F, 1.0F, 0.0F, 1.0F);
-            fontRenderer.drawString(VehicleStats.getTopSpeedRating(stats) + "", 150, 54, 0xaa00);
-            fontRenderer.drawString(VehicleStats.getAccelerationRating(stats) + "", 150, 63, 0xaa0000);
-            fontRenderer.drawString(VehicleStats.getHandlingRating(stats) + "", 150, 72, 0xaa);
-            fontRenderer.drawString(VehicleStats.getBrakeRating(stats) + "", 150, 81, 0xaaaa00);
+            fontRenderer.drawString(VehicleProperties.getTopSpeedRating(properties) + "", 150, 54, 0xaa00);
+            fontRenderer.drawString(VehicleProperties.getAccelerationRating(properties) + "", 150, 63, 0xaa0000);
+            fontRenderer.drawString(VehicleProperties.getHandlingRating(properties) + "", 150, 72, 0xaa);
+            fontRenderer.drawString(VehicleProperties.getBrakeRating(properties) + "", 150, 81, 0xaaaa00);
         }
     }
 

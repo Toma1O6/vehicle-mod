@@ -6,21 +6,23 @@ import dev.toma.vehiclemod.common.items.ItemPerk;
 import dev.toma.vehiclemod.common.items.ItemVehicleUpgrade;
 import dev.toma.vehiclemod.common.tunning.IStatApplicator;
 import dev.toma.vehiclemod.common.tunning.StatPackage;
-import dev.toma.vehiclemod.config.VehicleStats;
+import dev.toma.vehiclemod.config.VehicleProperties;
 import dev.toma.vehiclemod.util.DevUtil;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.stream.Collectors;
 
-public class VehicleUpgrades {
+public class VehicleUpgrades implements ISerializationListener {
 
     private final InventoryUpgrades inventory;
-    private final VehicleStats configStats;
-    private VehicleStats modifiedStats;
+    private final VehicleProperties configStats;
+    private VehicleProperties modifiedStats;
 
     float health;
     float topSpeed;
@@ -37,7 +39,7 @@ public class VehicleUpgrades {
 
     public VehicleUpgrades(EntityVehicle vehicle, int defaultPartLevel) {
         this.inventory = new InventoryUpgrades(vehicle);
-        this.configStats = vehicle.getConfigStats();
+        this.configStats = vehicle.getConfigProperties();
         this.setDefaults();
         for (ItemVehicleUpgrade upgrade : ForgeRegistries.ITEMS.getValuesCollection().stream().filter(i -> i instanceof ItemVehicleUpgrade).map(i -> (ItemVehicleUpgrade) i).collect(Collectors.toList())) {
             for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
@@ -59,7 +61,7 @@ public class VehicleUpgrades {
     public void recalculate() {
         setDefaults();
         EntityVehicle vehicle = inventory.getVehicle();
-        float missingHealth = vehicle != null ? getActualStats().maxHealth - vehicle.health : 0.0F;
+        float missingHealth = vehicle != null ? getActualStats().maxHealth - vehicle.getStats().getHealth() : 0.0F;
         for (ItemVehicleUpgrade.Type type : ItemVehicleUpgrade.Type.values()) {
             int level = this.getLevel(type);
             if(level <= 0)
@@ -84,13 +86,13 @@ public class VehicleUpgrades {
         float handling = configStats.turnSpeed * this.handling;
         float fuelCons = configStats.fuelConsumption * (1.0F + (1.0F - this.fuelCons));
         float fuelCap = configStats.fuelCapacity * this.fuelCap;
-        this.modifiedStats = new VehicleStats(health, topSpeed, acceleration, braking, handling, configStats.maxTurningAngle, fuelCons, (int) fuelCap);
+        this.modifiedStats = new VehicleProperties(health, topSpeed, acceleration, braking, handling, configStats.maxTurningAngle, fuelCons, (int) fuelCap);
         if(vehicle != null) {
-            vehicle.health = Math.max(1.0F, getActualStats().maxHealth - missingHealth);
+            vehicle.getStats().setHealth(Math.max(1.0F, getActualStats().maxHealth - missingHealth));
         }
     }
 
-    public VehicleStats getActualStats() {
+    public VehicleProperties getActualStats() {
         return modifiedStats != null ? modifiedStats : configStats;
     }
 
@@ -153,6 +155,32 @@ public class VehicleUpgrades {
 
     public float getNitroPower() {
         return nitroPower;
+    }
+
+    @Override
+    public void onNBTWrite(NBTTagCompound nbt) {
+        NBTTagList inv = DevUtil.inventoryToNBT(inventory);
+        nbt.setTag("upgrades", inv);
+    }
+
+    @Override
+    public void onNBTRead(NBTTagCompound nbt) {
+        if(nbt.hasKey("upgrades", Constants.NBT.TAG_LIST)) {
+            DevUtil.loadInventoryFromNBT(inventory, nbt.getTagList("upgrades", Constants.NBT.TAG_COMPOUND));
+        }
+    }
+
+    @Override
+    public void onBytesWrite(ByteBuf buf) {
+        NBTTagCompound data = new NBTTagCompound();
+        onNBTWrite(data);
+        ByteBufUtils.writeTag(buf, data);
+    }
+
+    @Override
+    public void onBytesRead(ByteBuf buf) {
+        NBTTagCompound data = ByteBufUtils.readTag(buf);
+        onNBTRead(data);
     }
 
     private void setDefaults() {

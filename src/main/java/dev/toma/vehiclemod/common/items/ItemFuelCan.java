@@ -1,5 +1,6 @@
 package dev.toma.vehiclemod.common.items;
 
+import dev.toma.vehiclemod.common.entity.vehicle.EntityVehicle;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,7 @@ public class ItemFuelCan extends ItemVehicleAccessory {
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
 		if(entityLiving instanceof EntityPlayer && entityLiving.isRiding() && entityLiving.getRidingEntity() instanceof EntityVehicle) {
 			EntityVehicle vehicle = (EntityVehicle) entityLiving.getRidingEntity();
-			vehicle.refillFuel();
+			vehicle.getStats().addFuel(10);
 			if(!((EntityPlayer)entityLiving).isCreative()) {
 				stack.shrink(1);
 			}
